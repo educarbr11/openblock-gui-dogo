@@ -54,6 +54,15 @@ class Storage extends ScratchStorage {
         this.assetHost = assetHost;
     }
     getAssetGetConfig (asset) {
+        if (this.assetHost && this.assetHost.includes('cdn.assets.scratch.mit.edu')) {
+            if (this.assetHost.includes('internalapi/asset')) {
+                return `${this.assetHost}/${asset.assetId}.${asset.dataFormat}/get/`;
+            }
+            return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        }
+        if (this.assetHost && this.assetHost.includes('assets.scratch.mit.edu')) {
+            return `https://cdn.assets.scratch.mit.edu/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        }
         return `${this.assetHost}/assets/${asset.assetId}.${asset.dataFormat}`;
     }
     getAssetCreateConfig (asset) {
