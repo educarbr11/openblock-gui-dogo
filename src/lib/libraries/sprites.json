@@ -60,6 +60,93 @@
         "blocks": {}
     },
     {
+    "name": "Blue Bit",
+    "tags": ["custom", "personagem", "dogomaker", "dogo", "dogo maker"],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "c0f9a316ae5f1fdb91cc274f50dabebd",
+        "name": "blue-bit",
+        "bitmapResolution": 2,
+        "md5ext": "c0f9a316ae5f1fdb91cc274f50dabebd.png",
+        "dataFormat": "png",
+        "rotationCenterX": 200,
+        "rotationCenterY": 300
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+    "name": "selo",
+    "tags": [
+        "dogo",
+        "maker"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "61624d3239c80bcf4e32d2a48b3946b3",
+        "name": "selo-bncc",
+        "bitmapResolution": 2,
+        "md5ext": "61624d3239c80bcf4e32d2a48b3946b3.png",
+        "dataFormat": "png",
+        "rotationCenterX": 992,
+        "rotationCenterY": 1185
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+    "name": "dogo",
+    "tags": [
+        "dogo",
+        "maker"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "0eb8087b51b13f719b748fe0c955216e",
+        "name": "dogo",
+        "bitmapResolution": 2,
+        "md5ext": "0eb8087b51b13f719b748fe0c955216e.png",
+        "dataFormat": "png",
+        "rotationCenterX": 19,
+        "rotationCenterY": 25
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+  "name": "astronauta",
+  "tags": [
+    "dogo",
+    "astronauta",
+    "space"
+  ],
+  "isStage": false,
+  "variables": {},
+  "costumes": [
+    {
+      "assetId": "59871b0a8b0951d128a67367d001dcf9",
+      "name": "astronauta",
+      "bitmapResolution": 1,
+      "md5ext": "59871b0a8b0951d128a67367d001dcf9.svg",
+      "dataFormat": "svg",
+      "rotationCenterX": 2,
+      "rotationCenterY": 15
+    }
+  ],
+  "sounds": [],
+  "blocks": {}
+},
+
+    {
         "name": "Amon",
         "tags": [
             "people",
