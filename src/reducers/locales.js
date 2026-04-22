@@ -2,6 +2,10 @@ import {addLocaleData} from 'react-intl';
 
 import {localeData, isRtl} from 'openblock-l10n';
 import editorMessages from 'openblock-l10n/locales/editor-msgs';
+import ptBrBlockMessages from 'openblock-l10n/editor/blocks/pt-br.json';
+import ptBrExtensionMessages from 'openblock-l10n/editor/extensions/pt-br.json';
+import ptBrInterfaceMessages from 'openblock-l10n/editor/interface/pt-br.json';
+import ptBrPaintMessages from 'openblock-l10n/editor/paint-editor/pt-br.json';
 import ptBrMessages from '../../translations/pt.json';
 
 addLocaleData(localeData);
@@ -12,7 +16,14 @@ const SELECT_LOCALE = 'scratch-gui/locales/SELECT_LOCALE';
 const normalizeLocale = locale => (locale || '').replace('_', '-').toLowerCase();
 
 const englishMessages = editorMessages.en || {};
-const portugueseMessages = Object.assign({}, englishMessages, ptBrMessages);
+const portugueseMessages = Object.assign({},
+    englishMessages,
+    ptBrInterfaceMessages,
+    ptBrExtensionMessages,
+    ptBrPaintMessages,
+    ptBrBlockMessages,
+    ptBrMessages
+);
 
 const messagesByLocale = Object.assign({}, editorMessages, {
     'pt': portugueseMessages,

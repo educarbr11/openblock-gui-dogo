@@ -27,7 +27,8 @@ const base = {
     output: {
         library: 'GUI',
         filename: '[name].js',
-        chunkFilename: 'chunks/[name].js'
+        chunkFilename: 'chunks/[name].js',
+        hashFunction: 'sha256'
     },
     resolve: {
         symlinks: false
