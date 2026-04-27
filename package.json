@@ -4,19 +4,19 @@
   "description": "GraphicaL User Interface for creating and running OpenBlock projects",
   "main": "./main/scratch-gui.js",
   "scripts": {
-    "build": "npm run clean && NODE_OPTIONS=--max-old-space-size=8192 webpack --colors --bail",
+    "build": "npm run clean && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --bail",
     "clean": "rimraf ./build && mkdirp build",
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1) [skip ci]\"",
     "prune": "./prune-gh-pages.sh",
     "i18n:push": "tx-push-src openblock-editor interface translations/en.json",
     "i18n:src": "rimraf ./translations/messages/src && babel src > tmp.js && rimraf tmp.js && build-i18n-src ./translations/messages/src ./translations/",
-    "start": "NODE_OPTIONS=--max-old-space-size=8192 webpack-dev-server --open --host 127.0.0.1",
+    "start": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack-dev-server --open --host 127.0.0.1",
     "test": "npm run test:lint && npm run test:unit && npm run build && npm run test:integration",
     "test:integration": "jest --runInBand test[\\\\/]integration",
     "test:lint": "eslint . --ext .js,.jsx --fix",
     "test:unit": "",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
-    "watch": "NODE_OPTIONS=--max-old-space-size=8192 webpack --colors --watch"
+    "watch": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --watch"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",

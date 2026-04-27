@@ -2,6 +2,12 @@ import ScratchStorage from 'scratch-storage';
 
 import defaultProject from './default-project';
 
+const normalizeHost = host => {
+    if (!host) return host;
+    const hostWithProtocol = /^https?:\/\//.test(host) ? host : `https://${host}`;
+    return hostWithProtocol.replace(/\/+$/, '');
+};
+
 /**
  * Wrapper for ScratchStorage which adds default web sources.
  * @todo make this more configurable
@@ -33,7 +39,7 @@ class Storage extends ScratchStorage {
         );
     }
     setProjectHost (projectHost) {
-        this.projectHost = projectHost;
+        this.projectHost = normalizeHost(projectHost);
     }
     getProjectGetConfig (projectAsset) {
         return `${this.projectHost}/${projectAsset.assetId}`;
@@ -51,9 +57,12 @@ class Storage extends ScratchStorage {
         };
     }
     setAssetHost (assetHost) {
-        this.assetHost = assetHost;
+        this.assetHost = normalizeHost(assetHost);
     }
     getAssetGetConfig (asset) {
+        if (this.assetHost && this.assetHost.includes('dogoblockcdn.dogomaker.com')) {
+            return `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`;
+        }
         if (this.assetHost && this.assetHost.includes('cdn.assets.scratch.mit.edu')) {
             if (this.assetHost.includes('internalapi/asset')) {
                 return `${this.assetHost}/${asset.assetId}.${asset.dataFormat}/get/`;
