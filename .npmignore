@@ -22,3 +22,5 @@ npm-*
 
 # generated translation files
 /translations
+!/translations
+!/translations/*.json
