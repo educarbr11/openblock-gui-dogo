@@ -7,6 +7,7 @@ import ptBrExtensionMessages from 'openblock-l10n/editor/extensions/pt-br.json';
 import ptBrInterfaceMessages from 'openblock-l10n/editor/interface/pt-br.json';
 import ptBrPaintMessages from 'openblock-l10n/editor/paint-editor/pt-br.json';
 import ptBrMessages from '../../translations/pt.json';
+import ptBrMachineLearningMessages from '../lib/machine-learning/pt-br-messages';
 
 addLocaleData(localeData);
 
@@ -22,7 +23,8 @@ const portugueseMessages = Object.assign({},
     ptBrExtensionMessages,
     ptBrPaintMessages,
     ptBrBlockMessages,
-    ptBrMessages
+    ptBrMessages,
+    ptBrMachineLearningMessages
 );
 
 const messagesByLocale = Object.assign({}, editorMessages, {
