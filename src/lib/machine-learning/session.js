@@ -96,7 +96,11 @@ class MachineLearningSession {
                 this.tf = libs.tf;
                 this.stream = stream;
                 this.classifier = libs.knnClassifier.create();
-                return libs.mobilenet.load({version: 2, alpha: 1.0})
+                return libs.mobilenet.load({
+                    version: 2,
+                    alpha: 1.0,
+                    modelUrl: libs.mobilenetModelUrl
+                })
                     .then(model => {
                         if (!this.requested || startToken !== this.startToken) {
                             stream.getTracks().forEach(track => track.stop());

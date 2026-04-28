@@ -127,12 +127,12 @@ class HandPoseDetectionSession {
                     video.play();
                 });
                 const model = libs.handPoseDetection.SupportedModels.MediaPipeHands;
-                return libs.handPoseDetection.createDetector(model, {
+                return libs.runWithBrowserEnvironment(() => libs.handPoseDetection.createDetector(model, {
                     runtime: 'mediapipe',
                     modelType: 'full',
                     maxHands: 2,
                     solutionPath: libs.solutionPath
-                });
+                }));
             })
             .then(detector => {
                 if (!detector) return;

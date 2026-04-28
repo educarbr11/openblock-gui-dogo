@@ -1,12 +1,31 @@
+import getMlVendorPath from '../ml-vendor-path';
+
 const MEDIAPIPE_VERSION = '0.4.1675469240';
 
 const scripts = [
-    'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
-    `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${MEDIAPIPE_VERSION}/hands.js`,
-    'https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.0/dist/hand-pose-detection.min.js'
+    getMlVendorPath('tfjs/4.22.0/tf.min.js'),
+    getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}/hands.js`),
+    getMlVendorPath('hand-pose-detection/2.0.0/hand-pose-detection.min.js')
 ];
 
+const solutionPath = getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}`);
+
 let loadingPromise = null;
+
+const runWithBrowserEnvironment = callback => {
+    if (typeof window === 'undefined' || !window.process) {
+        return callback();
+    }
+
+    const process = window.process;
+    window.process = void 0;
+
+    return Promise.resolve()
+        .then(callback)
+        .finally(() => {
+            window.process = process;
+        });
+};
 
 const loadScript = src => new Promise((resolve, reject) => {
     const existing = document.querySelector(`script[src="${src}"]`);
@@ -42,7 +61,8 @@ const loadHandPoseDetection = () => {
             }
             return {
                 handPoseDetection: window.handPoseDetection,
-                solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${MEDIAPIPE_VERSION}`
+                solutionPath,
+                runWithBrowserEnvironment
             };
         });
     }

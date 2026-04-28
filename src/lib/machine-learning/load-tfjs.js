@@ -1,8 +1,12 @@
+import getMlVendorPath from '../ml-vendor-path';
+
 const scripts = [
-    'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
-    'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
-    'https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier@1.2.6/dist/knn-classifier.min.js'
+    getMlVendorPath('tfjs/4.22.0/tf.min.js'),
+    getMlVendorPath('mobilenet/2.1.1/mobilenet.min.js'),
+    getMlVendorPath('knn-classifier/1.2.6/knn-classifier.min.js')
 ];
+
+const mobilenetModelUrl = getMlVendorPath('mobilenet/model/model.json');
 
 let loadingPromise = null;
 
@@ -41,7 +45,8 @@ const loadTensorflow = () => {
             return {
                 tf: window.tf,
                 mobilenet: window.mobilenet,
-                knnClassifier: window.knnClassifier
+                knnClassifier: window.knnClassifier,
+                mobilenetModelUrl
             };
         });
     }
