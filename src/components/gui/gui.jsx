@@ -37,6 +37,7 @@ import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import UpdateModal from '../../containers/update-modal.jsx';
 import MachineLearningModal from '../../containers/machine-learning-modal.jsx';
 import MachineLearningResult from '../../containers/machine-learning-result.jsx';
+import HandPoseDetectionResult from '../../containers/hand-pose-detection-result.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -94,6 +95,7 @@ const GUIComponent = props => {
         intl,
         isCreating,
         isFullScreen,
+        handPoseDetectionResultVisible,
         isPlayerOnly,
         isRtl,
         isShared,
@@ -250,6 +252,9 @@ const GUIComponent = props => {
                 ) : null}
                 {machineLearningResultVisible ? (
                     <MachineLearningResult vm={vm} />
+                ) : null}
+                {handPoseDetectionResultVisible ? (
+                    <HandPoseDetectionResult vm={vm} />
                 ) : null}
                 <MenuBar
                     accountNavOpen={accountNavOpen}
@@ -460,6 +465,7 @@ GUIComponent.propTypes = {
     costumeLibraryVisible: PropTypes.bool,
     costumesTabVisible: PropTypes.bool,
     enableCommunity: PropTypes.bool,
+    handPoseDetectionResultVisible: PropTypes.bool,
     intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
     isFullScreen: PropTypes.bool,

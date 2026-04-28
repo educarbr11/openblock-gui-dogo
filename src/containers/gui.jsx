@@ -22,6 +22,7 @@ import {
     closeCostumeLibrary,
     closeBackdropLibrary,
     closeTelemetryModal,
+    openHandPoseDetectionResult,
     openMachineLearningResult,
     openMachineLearningTrainer,
     openExtensionLibrary
@@ -49,6 +50,7 @@ class GUI extends React.Component {
         this.props.onVmInit(this.props.vm);
         this.props.vm.addListener('MACHINE_LEARNING_OPEN_TRAINER', this.props.onOpenMachineLearningTrainer);
         this.props.vm.addListener('MACHINE_LEARNING_OPEN_RESULT', this.props.onOpenMachineLearningResult);
+        this.props.vm.addListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -66,6 +68,7 @@ class GUI extends React.Component {
     componentWillUnmount () {
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_TRAINER', this.props.onOpenMachineLearningTrainer);
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_RESULT', this.props.onOpenMachineLearningResult);
+        this.props.vm.removeListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
     }
     render () {
         if (this.props.isError) {
@@ -117,12 +120,14 @@ GUI.propTypes = {
     isScratchDesktop: PropTypes.bool,
     isShowingProject: PropTypes.bool,
     loadingStateVisible: PropTypes.bool,
+    handPoseDetectionResultVisible: PropTypes.bool,
     machineLearningTrainerVisible: PropTypes.bool,
     machineLearningResultVisible: PropTypes.bool,
     onActivateBlocksTab: PropTypes.func,
     onProjectLoaded: PropTypes.func,
     onOpenMachineLearningTrainer: PropTypes.func,
     onOpenMachineLearningResult: PropTypes.func,
+    onOpenHandPoseDetectionResult: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onStorageInit: PropTypes.func,
     onUpdateProjectId: PropTypes.func,
@@ -161,6 +166,7 @@ const mapStateToProps = state => {
         isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
         isRtl: state.locales.isRtl,
         isShowingProject: getIsShowingProject(loadingState),
+        handPoseDetectionResultVisible: state.scratchGui.modals.handPoseDetectionResult,
         loadingStateVisible: state.scratchGui.modals.loadingProject,
         machineLearningResultVisible: state.scratchGui.modals.machineLearningResult,
         machineLearningTrainerVisible: state.scratchGui.modals.machineLearningTrainer,
@@ -181,6 +187,7 @@ const mapDispatchToProps = dispatch => ({
     onExtensionButtonClick: () => dispatch(openExtensionLibrary()),
     onOpenMachineLearningTrainer: () => dispatch(openMachineLearningTrainer()),
     onOpenMachineLearningResult: () => dispatch(openMachineLearningResult()),
+    onOpenHandPoseDetectionResult: () => dispatch(openHandPoseDetectionResult()),
     onActivateTab: tab => dispatch(activateTab(tab)),
     onActivateBlocksTab: () => dispatch(activateTab(BLOCKS_TAB_INDEX)),
     onActivateCostumesTab: () => dispatch(activateTab(COSTUMES_TAB_INDEX)),
