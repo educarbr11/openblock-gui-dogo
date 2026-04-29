@@ -35,6 +35,9 @@ import ConnectionModal from '../../containers/connection-modal.jsx';
 import UploadProgress from '../../containers/upload-progress.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import UpdateModal from '../../containers/update-modal.jsx';
+import MachineLearningModal from '../../containers/machine-learning-modal.jsx';
+import MachineLearningResult from '../../containers/machine-learning-result.jsx';
+import HandPoseDetectionResult from '../../containers/hand-pose-detection-result.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -92,12 +95,15 @@ const GUIComponent = props => {
         intl,
         isCreating,
         isFullScreen,
+        handPoseDetectionResultVisible,
         isPlayerOnly,
         isRtl,
         isShared,
         isTelemetryEnabled,
         loading,
         logo,
+        machineLearningResultVisible,
+        machineLearningTrainerVisible,
         renderLogin,
         onClickAbout,
         onClickAccountNav,
@@ -240,6 +246,15 @@ const GUIComponent = props => {
                         onClickUpdate={onClickUpdate}
                         onShowMessageBox={onShowMessageBox}
                     />
+                ) : null}
+                {machineLearningTrainerVisible ? (
+                    <MachineLearningModal vm={vm} />
+                ) : null}
+                {machineLearningResultVisible ? (
+                    <MachineLearningResult vm={vm} />
+                ) : null}
+                {handPoseDetectionResultVisible ? (
+                    <HandPoseDetectionResult vm={vm} />
                 ) : null}
                 <MenuBar
                     accountNavOpen={accountNavOpen}
@@ -450,6 +465,7 @@ GUIComponent.propTypes = {
     costumeLibraryVisible: PropTypes.bool,
     costumesTabVisible: PropTypes.bool,
     enableCommunity: PropTypes.bool,
+    handPoseDetectionResultVisible: PropTypes.bool,
     intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
     isFullScreen: PropTypes.bool,
@@ -458,6 +474,8 @@ GUIComponent.propTypes = {
     isShared: PropTypes.bool,
     loading: PropTypes.bool,
     logo: PropTypes.string,
+    machineLearningResultVisible: PropTypes.bool,
+    machineLearningTrainerVisible: PropTypes.bool,
     onActivateCostumesTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,

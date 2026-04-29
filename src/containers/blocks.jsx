@@ -4,6 +4,8 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import makeToolboxXML from '../lib/make-toolbox-xml';
 import PropTypes from 'prop-types';
 import React from 'react';
+import enBlockMessages from 'openblock-l10n/editor/blocks/en.json';
+import ptBrBlockMessages from 'openblock-l10n/editor/blocks/pt-br.json';
 import VMScratchBlocks from '../lib/blocks';
 import VM from 'openblock-vm';
 import MessageBoxType from '../lib/message-box.js';
@@ -51,6 +53,13 @@ const addFunctionListener = (object, property, callback) => {
 const DroppableBlocks = DropAreaHOC([
     DragConstants.BACKPACK_CODE
 ])(BlocksComponent);
+
+const ptBrScratchMessages = Object.assign({}, enBlockMessages, ptBrBlockMessages);
+
+const registerScratchMessages = ScratchBlocks => {
+    ScratchBlocks.ScratchMsgs.locales.pt = ptBrScratchMessages;
+    ScratchBlocks.ScratchMsgs.locales['pt-br'] = ptBrScratchMessages;
+};
 
 class Blocks extends React.Component {
     constructor (props) {
@@ -107,6 +116,7 @@ class Blocks extends React.Component {
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
+        registerScratchMessages(this.ScratchBlocks);
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const workspaceConfig = defaultsDeep({},
@@ -241,6 +251,7 @@ class Blocks extends React.Component {
         }, 0);
     }
     setLocale (refreshWorkspace = true) {
+        registerScratchMessages(this.ScratchBlocks);
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
         this.props.vm.setLocale(this.props.locale, this.props.messages)
             .then(() => {
