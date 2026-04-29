@@ -19,6 +19,11 @@ import translateInsetIconURL from './translate/translate-small.png';
 import makeymakeyIconURL from './makeymakey/makeymakey.png';
 import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
 
+import machineLearningIconURL from './machineLearning/machine-learning.svg';
+import machineLearningInsetIconURL from './machineLearning/machine-learning-small.svg';
+import handPoseDetectionIconURL from './handPoseDetection/hand-pose-detection.svg';
+import handPoseDetectionInsetIconURL from './handPoseDetection/hand-pose-detection-small.svg';
+
 // import ev3IconURL from './ev3/ev3.png';
 // import ev3InsetIconURL from './ev3/ev3-small.svg';
 // import ev3ConnectionIconURL from './ev3/ev3-hub-illustration.svg';
@@ -166,6 +171,48 @@ export default [
             />
         ),
         featured: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Machine Learning"
+                description="Name for the Machine Learning extension"
+                id="gui.extension.machineLearning.name"
+            />
+        ),
+        extensionId: 'machineLearning',
+        iconURL: machineLearningIconURL,
+        insetIconURL: machineLearningInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Train image classes with your camera."
+                description="Description for the Machine Learning extension"
+                id="gui.extension.machineLearning.description"
+            />
+        ),
+        featured: true,
+        internetConnectionRequired: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Hand Pose Detection"
+                description="Name for the Hand Pose Detection extension"
+                id="gui.extension.handPoseDetection.name"
+            />
+        ),
+        extensionId: 'handPoseDetection',
+        iconURL: handPoseDetectionIconURL,
+        insetIconURL: handPoseDetectionInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Detect hand poses and gestures with your camera."
+                description="Description for the Hand Pose Detection extension"
+                id="gui.extension.handPoseDetection.description"
+            />
+        ),
+        featured: true,
+        internetConnectionRequired: true
     }
     // {
     //     name: 'LEGO MINDSTORMS EV3',

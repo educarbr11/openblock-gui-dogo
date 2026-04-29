@@ -14,6 +14,9 @@ const MODAL_TIPS_LIBRARY = 'tipsLibrary';
 const MODAL_UPLOAD_PROGRESS = 'uploadProgress';
 const MODAL_DEVICE_LIBRARY = 'deviceLibrary';
 const MODAL_UPDATE = 'updateModal';
+const MODAL_MACHINE_LEARNING_TRAINER = 'machineLearningTrainer';
+const MODAL_MACHINE_LEARNING_RESULT = 'machineLearningResult';
+const MODAL_HAND_POSE_DETECTION_RESULT = 'handPoseDetectionResult';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
@@ -28,7 +31,10 @@ const initialState = {
     [MODAL_UPLOAD_PROGRESS]: false,
     [MODAL_DEVICE_LIBRARY]: false,
     [MODAL_TIPS_LIBRARY]: false,
-    [MODAL_UPDATE]: false
+    [MODAL_UPDATE]: false,
+    [MODAL_MACHINE_LEARNING_TRAINER]: false,
+    [MODAL_MACHINE_LEARNING_RESULT]: false,
+    [MODAL_HAND_POSE_DETECTION_RESULT]: false
 };
 
 const reducer = function (state, action) {
@@ -97,6 +103,15 @@ const openTipsLibrary = function () {
 const openUpdateModal = function () {
     return openModal(MODAL_UPDATE);
 };
+const openMachineLearningTrainer = function () {
+    return openModal(MODAL_MACHINE_LEARNING_TRAINER);
+};
+const openMachineLearningResult = function () {
+    return openModal(MODAL_MACHINE_LEARNING_RESULT);
+};
+const openHandPoseDetectionResult = function () {
+    return openModal(MODAL_HAND_POSE_DETECTION_RESULT);
+};
 const closeBackdropLibrary = function () {
     return closeModal(MODAL_BACKDROP_LIBRARY);
 };
@@ -136,6 +151,15 @@ const closeDeviceLibrary = function () {
 const closeUpdateModal = function () {
     return closeModal(MODAL_UPDATE);
 };
+const closeMachineLearningTrainer = function () {
+    return closeModal(MODAL_MACHINE_LEARNING_TRAINER);
+};
+const closeMachineLearningResult = function () {
+    return closeModal(MODAL_MACHINE_LEARNING_RESULT);
+};
+const closeHandPoseDetectionResult = function () {
+    return closeModal(MODAL_HAND_POSE_DETECTION_RESULT);
+};
 export {
     reducer as default,
     initialState as modalsInitialState,
@@ -152,6 +176,9 @@ export {
     openTipsLibrary,
     openUploadProgress,
     openUpdateModal,
+    openMachineLearningTrainer,
+    openMachineLearningResult,
+    openHandPoseDetectionResult,
     closeBackdropLibrary,
     closeConnectionModal,
     closeCostumeLibrary,
@@ -164,5 +191,8 @@ export {
     closeTelemetryModal,
     closeTipsLibrary,
     closeUploadProgress,
-    closeUpdateModal
+    closeUpdateModal,
+    closeMachineLearningTrainer,
+    closeMachineLearningResult,
+    closeHandPoseDetectionResult
 };

@@ -1,0 +1,302 @@
+diff --git a/src/components/fixed-tools/fixed-tools.jsx b/src/components/fixed-tools/fixed-tools.jsx
+--- a/src/components/fixed-tools/fixed-tools.jsx	1985-10-26 05:15:00.000000000 -0300
++++ b/src/components/fixed-tools/fixed-tools.jsx	2026-04-27 15:47:01.685391666 -0300
+@@ -23,6 +23,7 @@
+ 
+ import groupIcon from './icons/group.svg';
+ import redoIcon from './icons/redo.svg';
++import rotationCenterIcon from './icons/rotation-center.svg';
+ import sendBackIcon from './icons/send-back.svg';
+ import sendBackwardIcon from './icons/send-backward.svg';
+ import sendForwardIcon from './icons/send-forward.svg';
+@@ -81,6 +82,11 @@
+         defaultMessage: 'More',
+         description: 'Label for dropdown to access more action buttons',
+         id: 'paint.paintEditor.more'
++    },
++    rotationCenter: {
++        defaultMessage: 'Center',
++        description: 'Label for the button to set the costume rotation center by clicking the canvas',
++        id: 'paint.paintEditor.rotationCenter'
+     }
+ });
+ 
+@@ -159,6 +165,17 @@
+                 </ButtonGroup>
+             </InputGroup>
+ 
++            {/* Rotation center */}
++            <InputGroup className={styles.modDashedBorder}>
++                <LabeledIconButton
++                    highlighted={props.isPickingRotationCenter}
++                    hideLabel={hideLabel(props.intl.locale)}
++                    imgSrc={rotationCenterIcon}
++                    title={props.intl.formatMessage(messages.rotationCenter)}
++                    onClick={props.onActivateRotationCenter}
++                />
++            </InputGroup>
++
+             {/* Group/Ungroup */}
+             {isVector(props.format) ?
+                 <InputGroup className={styles.modDashedBorder}>
+@@ -217,16 +234,6 @@
+                             onClick={props.onSendToBack}
+                         />
+                     </InputGroup>
+-
+-                    {/* To be rotation point */}
+-                    {/* <InputGroup>
+-                        <LabeledIconButton
+-                            imgAlt="Rotation Point"
+-                            imgSrc={rotationPointIcon}
+-                            title="Rotation Point"
+-                            onClick={function () {}}
+-                        />
+-                    </InputGroup> */}
+                 </MediaQuery> : null
+             }
+             {isVector(props.format) ?
+@@ -268,19 +275,6 @@
+                                         />
+                                         <span>{props.intl.formatMessage(messages.back)}</span>
+                                     </Button>
+-
+-                                    {/* To be rotation point */}
+-                                    {/* <Button
+-                                        className={classNames(styles.modMenuItem, styles.modTopDivider)}
+-                                        onClick={function () {}}
+-                                    >
+-                                        <img
+-                                            className={styles.menuItemIcon}
+-                                            draggable={false}
+-                                            src={rotationPointIcon}
+-                                        />
+-                                        <span>{'Rotation Point'}</span>
+-                                    </Button> */}
+                                 </InputGroup>
+                             }
+                             tipSize={.01}
+@@ -299,7 +293,9 @@
+     canUndo: PropTypes.func.isRequired,
+     format: PropTypes.oneOf(Object.keys(Formats)),
+     intl: intlShape,
++    isPickingRotationCenter: PropTypes.bool,
+     name: PropTypes.string,
++    onActivateRotationCenter: PropTypes.func.isRequired,
+     onGroup: PropTypes.func.isRequired,
+     onRedo: PropTypes.func.isRequired,
+     onSendBackward: PropTypes.func.isRequired,
+diff --git a/src/components/fixed-tools/icons/rotation-center.svg b/src/components/fixed-tools/icons/rotation-center.svg
+new file mode 100644
+--- /dev/null
++++ b/src/components/fixed-tools/icons/rotation-center.svg
+@@ -0,0 +1,5 @@
++<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
++    <circle cx="12" cy="12" r="8" fill="none" stroke="#575E75" stroke-width="2"/>
++    <path d="M12 3v6M12 15v6M3 12h6M15 12h6" fill="none" stroke="#575E75" stroke-linecap="round" stroke-width="2"/>
++    <circle cx="12" cy="12" r="2.5" fill="#4D97FF"/>
++</svg>
+diff --git a/src/components/paint-editor/paint-editor.jsx b/src/components/paint-editor/paint-editor.jsx
+--- a/src/components/paint-editor/paint-editor.jsx	1985-10-26 05:15:00.000000000 -0300
++++ b/src/components/paint-editor/paint-editor.jsx	2026-04-27 15:46:42.227255775 -0300
+@@ -67,7 +67,9 @@
+                     <FixedToolsContainer
+                         canRedo={props.canRedo}
+                         canUndo={props.canUndo}
++                        isPickingRotationCenter={props.isPickingRotationCenter}
+                         name={props.name}
++                        onActivateRotationCenter={props.onActivateRotationCenter}
+                         onRedo={props.onRedo}
+                         onUndo={props.onUndo}
+                         onUpdateImage={props.onUpdateImage}
+@@ -209,6 +211,7 @@
+                         imageId={props.imageId}
+                         rotationCenterX={props.rotationCenterX}
+                         rotationCenterY={props.rotationCenterY}
++                        isPickingRotationCenter={props.isPickingRotationCenter}
+                         zoomLevelId={props.zoomLevelId}
+                         onUpdateImage={props.onUpdateImage}
+                     />
+@@ -317,7 +320,9 @@
+     imageId: PropTypes.string,
+     intl: intlShape,
+     isEyeDropping: PropTypes.bool,
++    isPickingRotationCenter: PropTypes.bool,
+     name: PropTypes.string,
++    onActivateRotationCenter: PropTypes.func.isRequired,
+     onRedo: PropTypes.func.isRequired,
+     onSwitchToBitmap: PropTypes.func.isRequired,
+     onSwitchToVector: PropTypes.func.isRequired,
+diff --git a/src/containers/fixed-tools.jsx b/src/containers/fixed-tools.jsx
+--- a/src/containers/fixed-tools.jsx	1985-10-26 05:15:00.000000000 -0300
++++ b/src/containers/fixed-tools.jsx	2026-04-27 15:46:53.696335675 -0300
+@@ -57,7 +57,9 @@
+             <FixedToolsComponent
+                 canRedo={this.props.canRedo}
+                 canUndo={this.props.canUndo}
++                isPickingRotationCenter={this.props.isPickingRotationCenter}
+                 name={this.props.name}
++                onActivateRotationCenter={this.props.onActivateRotationCenter}
+                 onGroup={this.handleGroup}
+                 onRedo={this.props.onRedo}
+                 onSendBackward={this.handleSendBackward}
+@@ -78,7 +80,9 @@
+     canUndo: PropTypes.func.isRequired,
+     clearSelectedItems: PropTypes.func.isRequired,
+     format: PropTypes.oneOf(Object.keys(Formats)),
++    isPickingRotationCenter: PropTypes.bool,
+     name: PropTypes.string,
++    onActivateRotationCenter: PropTypes.func.isRequired,
+     onRedo: PropTypes.func.isRequired,
+     onUndo: PropTypes.func.isRequired,
+     onUpdateImage: PropTypes.func.isRequired,
+diff --git a/src/containers/paint-editor.jsx b/src/containers/paint-editor.jsx
+--- a/src/containers/paint-editor.jsx	1985-10-26 05:15:00.000000000 -0300
++++ b/src/containers/paint-editor.jsx	2026-04-27 15:46:37.520223149 -0300
+@@ -18,9 +18,10 @@
+ import {updateViewBounds} from '../reducers/view-bounds';
+ import {setLayout} from '../reducers/layout';
+ 
+-import {getSelectedLeafItems} from '../helper/selection';
++import {getAllRootItems, getSelectedLeafItems} from '../helper/selection';
+ import {convertToBitmap, convertToVector} from '../helper/bitmap';
+-import {resetZoom, zoomOnSelection, OUTERMOST_ZOOM_LEVEL} from '../helper/view';
++import {CENTER, resetZoom, resizeCrosshair, setWorkspaceBounds, zoomOnSelection, OUTERMOST_ZOOM_LEVEL} from '../helper/view';
++import {getRaster} from '../helper/layer';
+ import EyeDropperTool from '../helper/tools/eye-dropper';
+ 
+ import Modes, {BitmapModes, VectorModes} from '../lib/modes';
+@@ -82,6 +83,9 @@
+             'setTextArea',
+             'startEyeDroppingLoop',
+             'stopEyeDroppingLoop',
++            'startRotationCenterPick',
++            'stopRotationCenterPick',
++            'handleSetRotationCenter',
+             'handleSetSelectedItems',
+             'handleZoomIn',
+             'handleZoomOut',
+@@ -89,7 +93,8 @@
+         ]);
+         this.state = {
+             canvas: null,
+-            colorInfo: null
++            colorInfo: null,
++            isPickingRotationCenter: false
+         };
+         this.props.setLayout(this.props.rtl ? 'rtl' : 'ltr');
+     }
+@@ -133,6 +138,7 @@
+     componentWillUnmount () {
+         document.removeEventListener('keydown', this.props.onKeyPress);
+         this.stopEyeDroppingLoop();
++        this.stopRotationCenterPick();
+         document.removeEventListener('mousedown', this.onMouseDown);
+         document.removeEventListener('touchstart', this.onMouseDown);
+         document.removeEventListener('mouseup', this.onMouseUp);
+@@ -303,6 +309,69 @@
+         clearInterval(this.intervalId);
+         this.setState({colorInfo: null});
+     }
++    startRotationCenterPick () {
++        if (this.state.isPickingRotationCenter) {
++            this.stopRotationCenterPick();
++            return;
++        }
++        if (this.props.isEyeDropping) {
++            if (this.props.previousTool) this.props.previousTool.activate();
++            this.props.onDeactivateEyeDropper();
++            this.stopEyeDroppingLoop();
++        }
++
++        this.rotationCenterPreviousTool = paper.tool;
++        this.rotationCenterTool = new paper.Tool();
++        this.rotationCenterTool.onMouseDown = event => {
++            if (event.event) {
++                event.event.preventDefault();
++                event.event.stopPropagation();
++            }
++            this.handleSetRotationCenter(event.point);
++            this.stopRotationCenterPick();
++        };
++        this.rotationCenterTool.activate();
++        this.setState({isPickingRotationCenter: true});
++    }
++    stopRotationCenterPick () {
++        if (this.rotationCenterTool) {
++            this.rotationCenterTool.remove();
++            this.rotationCenterTool = null;
++        }
++        if (this.rotationCenterPreviousTool) {
++            this.rotationCenterPreviousTool.activate();
++            this.rotationCenterPreviousTool = null;
++        }
++        if (this.state && this.state.isPickingRotationCenter) {
++            this.setState({isPickingRotationCenter: false});
++        }
++    }
++    handleSetRotationCenter (point) {
++        const delta = CENTER.subtract(point);
++
++        if (isBitmap(this.props.format)) {
++            const raster = getRaster();
++            const shiftedCanvas = document.createElement('canvas');
++            shiftedCanvas.width = raster.canvas.width;
++            shiftedCanvas.height = raster.canvas.height;
++            shiftedCanvas.getContext('2d').imageSmoothingEnabled = false;
++            shiftedCanvas.getContext('2d').drawImage(
++                raster.canvas,
++                Math.round(delta.x),
++                Math.round(delta.y)
++            );
++            raster.canvas = shiftedCanvas;
++        }
++
++        for (const item of getAllRootItems()) {
++            item.translate(delta);
++        }
++
++        setWorkspaceBounds();
++        resizeCrosshair();
++        this.props.updateViewBounds(paper.view.matrix);
++        this.props.onUpdateImage();
++    }
+     render () {
+         return (
+             <PaintEditorComponent
+@@ -315,6 +384,7 @@
+                 imageFormat={this.props.imageFormat}
+                 imageId={this.props.imageId}
+                 isEyeDropping={this.props.isEyeDropping}
++                isPickingRotationCenter={this.state.isPickingRotationCenter}
+                 name={this.props.name}
+                 rotationCenterX={this.props.rotationCenterX}
+                 rotationCenterY={this.props.rotationCenterY}
+@@ -329,6 +399,7 @@
+                 onUndo={this.props.onUndo}
+                 onUpdateImage={this.props.onUpdateImage}
+                 onUpdateName={this.props.onUpdateName}
++                onActivateRotationCenter={this.startRotationCenterPick}
+                 onZoomIn={this.handleZoomIn}
+                 onZoomOut={this.handleZoomOut}
+                 onZoomReset={this.handleZoomReset}
+diff --git a/src/containers/paper-canvas.jsx b/src/containers/paper-canvas.jsx
+--- a/src/containers/paper-canvas.jsx	1985-10-26 05:15:00.000000000 -0300
++++ b/src/containers/paper-canvas.jsx	2026-04-27 15:46:46.016282108 -0300
+@@ -339,7 +339,7 @@
+             <canvas
+                 className={styles.paperCanvas}
+                 ref={this.setCanvas}
+-                style={{cursor: this.props.cursor}}
++                style={{cursor: this.props.isPickingRotationCenter ? 'crosshair' : this.props.cursor}}
+                 resize="true"
+             />
+         );
+@@ -361,6 +361,7 @@
+     ]),
+     imageFormat: PropTypes.string, // The incoming image's data format, used during import. The user could switch this.
+     imageId: PropTypes.string,
++    isPickingRotationCenter: PropTypes.bool,
+     rotationCenterX: PropTypes.number,
+     rotationCenterY: PropTypes.number,
+     saveZoomLevel: PropTypes.func.isRequired,

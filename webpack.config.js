@@ -23,6 +23,11 @@ const hasLocalOpenBlockVM = require('fs').existsSync(path.join(localOpenBlockVMP
 const openBlockVMPath = hasLocalOpenBlockVM ?
     localOpenBlockVMPath :
     path.resolve(__dirname, 'node_modules', 'openblock-vm');
+const WATCH_IGNORED = [
+    path.resolve(__dirname, 'build'),
+    path.resolve(__dirname, 'dist'),
+    path.resolve(__dirname, 'node_modules')
+];
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -30,12 +35,19 @@ const base = {
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         host: '0.0.0.0',
-        port: process.env.PORT || 8601
+        port: process.env.PORT || 8601,
+        watchOptions: {
+            ignored: WATCH_IGNORED
+        }
+    },
+    watchOptions: {
+        ignored: WATCH_IGNORED
     },
     output: {
         library: 'GUI',
         filename: '[name].js',
-        chunkFilename: 'chunks/[name].js'
+        chunkFilename: 'chunks/[name].js',
+        hashFunction: 'sha256'
     },
     resolve: {
         symlinks: false,

@@ -1,0 +1,2437 @@
+{
+  "gui.alerts.lostPeripheralConnection": {
+    "message": "OpenBlock lost connection to {extensionName}.",
+    "description": "Message indicating that an extension peripheral has been disconnected"
+  },
+  "gui.alerts.tryAgain": {
+    "message": "Try Again",
+    "description": "Button to try saving again"
+  },
+  "gui.alerts.download": {
+    "message": "Download",
+    "description": "Button to download project locally"
+  },
+  "gui.connection.reconnect": {
+    "message": "Reconnect",
+    "description": "Button to reconnect the device"
+  },
+  "gui.alerts.uploadFirmware": {
+    "message": "Upload firmware",
+    "description": "Button to upload the realtime firmware"
+  },
+  "gui.backpack.costumeLabel": {
+    "message": "costume",
+    "description": "Label for costume backpack item"
+  },
+  "gui.backpack.soundLabel": {
+    "message": "sound",
+    "description": "Label for sound backpack item"
+  },
+  "gui.backpack.scriptLabel": {
+    "message": "script",
+    "description": "Label for script backpack item"
+  },
+  "gui.backpack.spriteLabel": {
+    "message": "sprite",
+    "description": "Label for sprite backpack item"
+  },
+  "gui.backpack.header": {
+    "message": "Backpack",
+    "description": "Button to open the backpack"
+  },
+  "gui.backpack.errorBackpack": {
+    "message": "Error loading backpack",
+    "description": "Error backpack message"
+  },
+  "gui.backpack.loadingBackpack": {
+    "message": "Loading...",
+    "description": "Loading backpack message"
+  },
+  "gui.backpack.more": {
+    "message": "More",
+    "description": "Load more from backpack"
+  },
+  "gui.backpack.emptyBackpack": {
+    "message": "Backpack is empty",
+    "description": "Empty backpack message"
+  },
+  "gui.unsupportedBrowser.label": {
+    "message": "Browser is not supported"
+  },
+  "gui.unsupportedBrowser.errorLabel": {
+    "message": "An Error Occurred",
+    "description": "Heading shown when there is an unhandled exception in an unsupported browser"
+  },
+  "gui.unsupportedBrowser.notRecommended": {
+    "message": "We are very sorry, but it looks like you are using a browser version that OpenBlock does not support. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
+    "description": "Error message when the browser does not meet our minimum requirements"
+  },
+  "gui.unsupportedBrowser.description": {
+    "message": "We are very sorry, but OpenBlock does not support this browser. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
+    "description": "Error message when the browser does not work at all (IE)"
+  },
+  "gui.unsupportedBrowser.back": {
+    "message": "Back",
+    "description": "Button to go back in unsupported browser modal"
+  },
+  "gui.unsupportedBrowser.previewfaq": {
+    "message": "To learn more, go to the {previewFaqLink}.",
+    "description": "Invitation to try 3.0 preview"
+  },
+  "gui.unsupportedBrowser.previewfaqlinktext": {
+    "message": "FAQ",
+    "description": "link to OpenBlock FAQ page"
+  },
+  "gui.cards.all-tutorials": {
+    "message": "Tutorials",
+    "description": "Title for button to return to tutorials library"
+  },
+  "gui.cards.shrink": {
+    "message": "Shrink",
+    "description": "Title for button to shrink how-to card"
+  },
+  "gui.cards.expand": {
+    "message": "Expand",
+    "description": "Title for button to expand how-to card"
+  },
+  "gui.cards.close": {
+    "message": "Close",
+    "description": "Title for button to close how-to card"
+  },
+  "gui.cards.more-things-to-try": {
+    "message": "More things to try!",
+    "description": "Title card with more things to try"
+  },
+  "gui.cards.see-more": {
+    "message": "See more",
+    "description": "Title for button to see more in how-to library"
+  },
+  "gui.comingSoon.message1": {
+    "message": "Don't worry, we're on it {emoji}",
+    "description": "One of the \"coming soon\" random messages for yet-to-be-done features"
+  },
+  "gui.comingSoon.message2": {
+    "message": "Coming Soon...",
+    "description": "One of the \"coming soon\" random messages for yet-to-be-done features"
+  },
+  "gui.comingSoon.message3": {
+    "message": "We're working on it {emoji}",
+    "description": "One of the \"coming soon\" random messages for yet-to-be-done features"
+  },
+  "gui.connection.auto-scanning.noPeripheralsFound": {
+    "message": "No devices found",
+    "description": "Text shown when no devices could be found"
+  },
+  "gui.connection.auto-scanning.prescan": {
+    "message": "Have your device nearby, then begin searching.",
+    "description": "Prompt for beginning the search"
+  },
+  "gui.connection.auto-scanning.pressbutton": {
+    "message": "Press the button on your device.",
+    "description": "Prompt for pushing the button on the device"
+  },
+  "gui.connection.auto-scanning.start-search": {
+    "message": "Start Searching",
+    "description": "Button in prompt for starting a search"
+  },
+  "gui.connection.connecting-searchbutton": {
+    "message": "Searching...",
+    "description": "Label indicating that search is in progress"
+  },
+  "gui.connection.auto-scanning.try-again": {
+    "message": "Try again",
+    "description": "Button in prompt for trying a device search again"
+  },
+  "gui.connection.connected": {
+    "message": "Connected",
+    "description": "Message indicating that a device was connected"
+  },
+  "gui.connection.disconnect": {
+    "message": "Disconnect",
+    "description": "Button to disconnect the device"
+  },
+  "gui.connection.go-to-editor": {
+    "message": "Go to Editor",
+    "description": "Button to return to the editor"
+  },
+  "gui.connection.connecting-cancelbutton": {
+    "message": "Connecting...",
+    "description": "Label indicating that connection is in progress"
+  },
+  "gui.connection.accessDeniedError.errorMessage": {
+    "message": "Oops, serialport access denied, please check whether the serial port is occupied.",
+    "description": "The device serialport connection process has encountered an 'Access denied' error."
+  },
+  "gui.connection.unknownErrorCode31.errorMessage": {
+    "message": "Oops, Unknown error code 31, it is recommended to re-plug the device.",
+    "description": "The device serialport connection process has encountered an 'Unknown error code 31' error."
+  },
+  "gui.connection.error.errorMessage": {
+    "message": "Oops, looks like something went wrong.",
+    "description": "The device connection process has encountered an error."
+  },
+  "gui.connection.error.tryagainbutton": {
+    "message": "Try again",
+    "description": "Button to initiate trying the device connection again after an error"
+  },
+  "gui.connection.error.helpbutton": {
+    "message": "Help",
+    "description": "Button to view help content"
+  },
+  "gui.connection.peripheral-name-label": {
+    "message": "Device name",
+    "description": "Label for field showing the device name"
+  },
+  "gui.connection.connect": {
+    "message": "Connect",
+    "description": "Button to start connecting to a specific device"
+  },
+  "gui.connection.scanning.listAll": {
+    "message": "Show all connectable devices",
+    "description": "Button in prompt for show all connectable devices"
+  },
+  "gui.connection.scanning.lookingforperipherals": {
+    "message": "Looking for devices",
+    "description": "Text shown while scanning for devices"
+  },
+  "gui.connection.scanning.noPeripheralsFound": {
+    "message": "No devices found",
+    "description": "Text shown when no devices could be found"
+  },
+  "gui.connection.scanning.instructions": {
+    "message": "Select your device in the list above.",
+    "description": "Prompt for choosing a device to connect to"
+  },
+  "gui.connection.search": {
+    "message": "Refresh",
+    "description": "Button in prompt for starting a search"
+  },
+  "gui.connection.unavailable.installscratchlink": {
+    "message": "Make sure you have OpenBlock Link installed and running",
+    "description": "Message for getting OpenBlock Link installed"
+  },
+  "gui.connection.unavailable.connectUsbEnableBluetooth": {
+    "message": "Check that USB cable is connected or Bluetooth is enabled",
+    "description": "Message for making sure USB cable is connected or Bluetooth is enabled"
+  },
+  "gui.connection.unavailable.tryagainbutton": {
+    "message": "Try again",
+    "description": "Button to initiate trying the device connection again after an error"
+  },
+  "gui.connection.unavailable.helpbutton": {
+    "message": "Help",
+    "description": "Button to view help content"
+  },
+  "gui.controls.go": {
+    "message": "Go",
+    "description": "Green flag button title"
+  },
+  "gui.controls.stop": {
+    "message": "Stop",
+    "description": "Stop button title"
+  },
+  "gui.crashMessage.label": {
+    "message": "Oops! Something went wrong.",
+    "description": "Crash Message title"
+  },
+  "gui.crashMessage.description": {
+    "message": "We are so sorry, but it looks like OpenBlock has crashed. This bug has been automatically reported to the OpenBlock Team. Please refresh your page to try again.",
+    "description": "Message to inform the user that page has crashed."
+  },
+  "gui.crashMessage.errorNumber": {
+    "message": "Your error was logged with id {errorId}",
+    "description": "Message to inform the user that page has crashed."
+  },
+  "gui.crashMessage.reload": {
+    "message": "Reload",
+    "description": "Button to reload the page when page crashes"
+  },
+  "gui.customProcedures.myblockModalTitle": {
+    "message": "Make a Block",
+    "description": "Title for the modal where you create a custom block."
+  },
+  "gui.customProcedures.addAnInputNumber": {
+    "message": "Add an input",
+    "description": "Label for button to add a number input"
+  },
+  "gui.customProcedures.numberType": {
+    "message": "number",
+    "description": "Description of the number input type"
+  },
+  "gui.customProcedures.addAnInputText": {
+    "message": "Add an input",
+    "description": "Label for button to add a text input"
+  },
+  "gui.customProcedures.TextType": {
+    "message": "text",
+    "description": "Description of the text input type"
+  },
+  "gui.customProcedures.addAnInputBoolean": {
+    "message": "Add an input",
+    "description": "Label for button to add a boolean input"
+  },
+  "gui.customProcedures.booleanType": {
+    "message": "boolean",
+    "description": "Description of the boolean input type"
+  },
+  "gui.customProcedures.addALabel": {
+    "message": "Add a label",
+    "description": "Label for button to add a label"
+  },
+  "gui.customProcedures.runWithoutScreenRefresh": {
+    "message": "Run without screen refresh",
+    "description": "Label for checkbox to run without screen refresh"
+  },
+  "gui.customProcedures.cancel": {
+    "message": "Cancel",
+    "description": "Label for button to cancel custom procedure edits"
+  },
+  "gui.customProcedures.ok": {
+    "message": "OK",
+    "description": "Label for button to save new custom procedure"
+  },
+  "gui.SpriteInfo.direction": {
+    "message": "Direction",
+    "description": "Sprite info direction label"
+  },
+  "gui.directionPicker.rotationStyles.allAround": {
+    "message": "All Around",
+    "description": "Button to change to the all around rotation style"
+  },
+  "gui.directionPicker.rotationStyles.leftRight": {
+    "message": "Left/Right",
+    "description": "Button to change to the left-right rotation style"
+  },
+  "gui.directionPicker.rotationStyles.dontRotate": {
+    "message": "Do not rotate",
+    "description": "Button to change to the dont rotate rotation style"
+  },
+  "gui.gui.addExtension": {
+    "message": "Add Extension",
+    "description": "Button to add an extension in the target pane"
+  },
+  "gui.gui.codeTab": {
+    "message": "Code",
+    "description": "Button to get to the code panel"
+  },
+  "gui.gui.backdropsTab": {
+    "message": "Backdrops",
+    "description": "Button to get to the backdrops panel"
+  },
+  "gui.gui.costumesTab": {
+    "message": "Costumes",
+    "description": "Button to get to the costumes panel"
+  },
+  "gui.gui.soundsTab": {
+    "message": "Sounds",
+    "description": "Button to get to the sounds panel"
+  },
+  "gui.hardwareConsole.send": {
+    "message": "Send",
+    "description": "Button in bottom to send data to serialport"
+  },
+  "gui.hardwareConsole.buadrate": {
+    "message": "Buadrate",
+    "description": "Serial buadrate."
+  },
+  "gui.hardwareConsole.endOfLine": {
+    "message": "End of line",
+    "description": "End of line."
+  },
+  "gui.hardwareConsole.hexform": {
+    "message": "Hex form",
+    "description": "Display serial port data in hexadecimal."
+  },
+  "gui.hardwareConsole.autoScroll": {
+    "message": "Auto scroll",
+    "description": "Auto scroll serialport console data."
+  },
+  "gui.hardwareHeader.upload": {
+    "message": "Upload",
+    "description": "Button to upload program"
+  },
+  "gui.stageHeader.codeStageSizeLarge": {
+    "message": "Switch to large stage",
+    "description": "Button to upload code to device alt"
+  },
+  "gui.stageHeader.codeStageSizeSmall": {
+    "message": "Switch to small stage",
+    "description": "Button to change stage size to small"
+  },
+  "gui.stageHeader.hideStage": {
+    "message": "Hide stage",
+    "description": "Button to hide stage"
+  },
+  "gui.extensionLibrary.comingSoon": {
+    "message": "Coming Soon",
+    "description": "Label for extensions that are not yet implemented"
+  },
+  "gui.extensionLibrary.requires": {
+    "message": "Requires",
+    "description": "Label for extension hardware requirements"
+  },
+  "gui.extensionLibrary.collaboration": {
+    "message": "Collaboration with",
+    "description": "Label for extension collaboration"
+  },
+  "gui.extensionLibrary.manufactor": {
+    "message": "Manufactor",
+    "description": "Label for device manufactor"
+  },
+  "gui.extensionLibrary.version": {
+    "message": "Version",
+    "description": "Label for extension version"
+  },
+  "gui.extensionLibrary.author": {
+    "message": "Author",
+    "description": "Label for extension author"
+  },
+  "gui.extensionLibrary.programMode": {
+    "message": "Program mode",
+    "description": "Label for device program mode"
+  },
+  "gui.extensionLibrary.programLanguage": {
+    "message": "Program language",
+    "description": "Label for device program language"
+  },
+  "gui.extensionLibrary.deviceLearnMore": {
+    "message": "Learn more",
+    "description": "Link text for device manufactor"
+  },
+  "gui.extensionLibrary.extensionHelp": {
+    "message": "Help",
+    "description": "link text for extension help"
+  },
+  "gui.extensionLibrary.Processing": {
+    "message": "Processing...",
+    "description": "Label to indicate that device extension is Processing"
+  },
+  "gui.extensionLibrary.loaded": {
+    "message": "Loaded",
+    "description": "Label to indicate that device extension is loaded"
+  },
+  "gui.extensionLibrary.notLoaded": {
+    "message": "Not loaded",
+    "description": "Label to indicate that device extension is not loaded"
+  },
+  "gui.library.filterPlaceholder": {
+    "message": "Search",
+    "description": "Placeholder text for library search field"
+  },
+  "gui.library.allTag": {
+    "message": "All",
+    "description": "Label for library tag to revert to all items after filtering by tag."
+  },
+  "gui.loader.message1": {
+    "message": "Creating blocks …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message2": {
+    "message": "Loading sprites …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message3": {
+    "message": "Loading sounds …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message4": {
+    "message": "Loading extensions …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message5": {
+    "message": "Herding cats …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message6": {
+    "message": "Transmitting nanos …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message7": {
+    "message": "Inflating gobos …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.message8": {
+    "message": "Preparing emojis …",
+    "description": "One of the loading messages"
+  },
+  "gui.loader.headline": {
+    "message": "Loading Project",
+    "description": "Main loading message"
+  },
+  "gui.loader.creating": {
+    "message": "Creating Project",
+    "description": "Main creating message"
+  },
+  "gui.accountMenu.profile": {
+    "message": "Profile",
+    "description": "Text to link to my user profile, in the account navigation menu"
+  },
+  "gui.accountMenu.myStuff": {
+    "message": "My Stuff",
+    "description": "Text to link to list of my projects, in the account navigation menu"
+  },
+  "gui.accountMenu.myClasses": {
+    "message": "My Classes",
+    "description": "Text to link to my classes (if I am a teacher), in the account navigation menu"
+  },
+  "gui.accountMenu.myClass": {
+    "message": "My Class",
+    "description": "Text to link to my class (if I am a student), in the account navigation menu"
+  },
+  "gui.accountMenu.accountSettings": {
+    "message": "Account settings",
+    "description": "Text to link to my account settings, in the account navigation menu"
+  },
+  "gui.accountMenu.signOut": {
+    "message": "Sign out",
+    "description": "Text to link to sign out, in the account navigation menu"
+  },
+  "gui.authorInfo.byUser": {
+    "message": "by {username}",
+    "description": "Shows that a project was created by this user"
+  },
+  "gui.menuBar.seeProjectPage": {
+    "message": "See Project Page",
+    "description": "Label for see project page button"
+  },
+  "general.username": {
+    "message": "Username",
+    "description": "Label for login username input"
+  },
+  "general.password": {
+    "message": "Password",
+    "description": "Label for login password input"
+  },
+  "general.signIn": {
+    "message": "Sign in",
+    "description": "Button text for user to sign in"
+  },
+  "login.needHelp": {
+    "message": "Need Help?",
+    "description": "Button text for user to indicate that they need help"
+  },
+  "form.validationRequired": {
+    "message": "This field is required",
+    "description": "Message to tell user they must enter text in a form field"
+  },
+  "gui.menuBar.LanguageSelector": {
+    "message": "language selector",
+    "description": "accessibility text for the language selection menu"
+  },
+  "gui.menuBar.tutorialsLibrary": {
+    "message": "Tutorials",
+    "description": "accessibility text for the tutorials button"
+  },
+  "gui.menuBar.community": {
+    "message": "Open Community",
+    "description": "accessibility text for the community button"
+  },
+  "gui.menuBar.wiki": {
+    "message": "Wiki",
+    "description": "accessibility text for the wiki button"
+  },
+  "gui.menuBar.restoreSprite": {
+    "message": "Restore Sprite",
+    "description": "Menu bar item for restoring the last deleted sprite."
+  },
+  "gui.menuBar.restoreSound": {
+    "message": "Restore Sound",
+    "description": "Menu bar item for restoring the last deleted sound."
+  },
+  "gui.menuBar.restoreCostume": {
+    "message": "Restore Costume",
+    "description": "Menu bar item for restoring the last deleted costume."
+  },
+  "gui.menuBar.restore": {
+    "message": "Restore",
+    "description": "Menu bar item for restoring the last deleted item in its disabled state."
+  },
+  "gui.menuBar.saveNow": {
+    "message": "Save now",
+    "description": "Menu bar item for saving now"
+  },
+  "gui.menuBar.saveAsCopy": {
+    "message": "Save as a copy",
+    "description": "Menu bar item for saving as a copy"
+  },
+  "gui.menuBar.remix": {
+    "message": "Remix",
+    "description": "Menu bar item for remixing"
+  },
+  "gui.menuBar.new": {
+    "message": "New",
+    "description": "Menu bar item for creating a new project"
+  },
+  "gui.menuBar.checkUpdate": {
+    "message": "Check update",
+    "description": "Menu bar item for check update"
+  },
+  "gui.menuBar.installDriver": {
+    "message": "Install driver",
+    "description": "Menu bar item for install drivers"
+  },
+  "gui.menuBar.clearCacheAndRestart": {
+    "message": "Clear cache and restart",
+    "description": "Menu bar item for clear cache and restart"
+  },
+  "gui.menuBar.file": {
+    "message": "File",
+    "description": "Text for file dropdown menu"
+  },
+  "gui.menuBar.downloadToComputer": {
+    "message": "Save to your computer",
+    "description": "Menu bar item for downloading a project to your computer"
+  },
+  "gui.menuBar.edit": {
+    "message": "Edit",
+    "description": "Text for edit dropdown menu"
+  },
+  "gui.menuBar.turboModeOff": {
+    "message": "Turn off Turbo Mode",
+    "description": "Menu bar item for turning off turbo mode"
+  },
+  "gui.menuBar.turboModeOn": {
+    "message": "Turn on Turbo Mode",
+    "description": "Menu bar item for turning on turbo mode"
+  },
+  "gui.menuBar.noDeviceSelected": {
+    "message": "No device selected",
+    "description": "Text for menubar no device select button"
+  },
+  "gui.menuBar.noConnection": {
+    "message": "Unconnected",
+    "description": "Text for menubar unconnected button"
+  },
+  "gui.menuBar.uploadFirmware": {
+    "message": "Upload Firmware",
+    "description": "Button to upload the realtime firmware"
+  },
+  "gui.menu-bar.programMode": {
+    "message": "Program Mode",
+    "description": "Button to switch to upload mode"
+  },
+  "gui.gui.projectTitlePlaceholder": {
+    "message": "Project title here",
+    "description": "Placeholder for project title when blank"
+  },
+  "gui.menuBar.saveNowLink": {
+    "message": "Save Now",
+    "description": "Title bar link for saving now"
+  },
+  "gui.menuBar.isShared": {
+    "message": "Shared",
+    "description": "Label for shared project"
+  },
+  "gui.menuBar.share": {
+    "message": "Share",
+    "description": "Label for project share button"
+  },
+  "gui.modal.help": {
+    "message": "Help",
+    "description": "Help button in modal"
+  },
+  "gui.modal.back": {
+    "message": "Back",
+    "description": "Back button in modal"
+  },
+  "gui.monitor.listMonitor.empty": {
+    "message": "(empty)",
+    "description": "Text shown on a list monitor when a list is empty"
+  },
+  "gui.monitor.listMonitor.listLength": {
+    "message": "length {length}",
+    "description": "Length label on list monitors. DO NOT translate {length} (with brackets)."
+  },
+  "gui.monitor.contextMenu.default": {
+    "message": "normal readout",
+    "description": "Menu item to switch to the default monitor"
+  },
+  "gui.monitor.contextMenu.large": {
+    "message": "large readout",
+    "description": "Menu item to switch to the large monitor"
+  },
+  "gui.monitor.contextMenu.slider": {
+    "message": "slider",
+    "description": "Menu item to switch to the slider monitor"
+  },
+  "gui.monitor.contextMenu.sliderRange": {
+    "message": "change slider range",
+    "description": "Menu item to change the slider range"
+  },
+  "gui.monitor.contextMenu.import": {
+    "message": "import",
+    "description": "Menu item to import into list monitors"
+  },
+  "gui.monitor.contextMenu.export": {
+    "message": "export",
+    "description": "Menu item to export from list monitors"
+  },
+  "gui.playButton.play": {
+    "message": "Play",
+    "description": "Title of the button to start playing the sound"
+  },
+  "gui.playButton.stop": {
+    "message": "Stop",
+    "description": "Title of the button to stop the sound"
+  },
+  "gui.gui.variableScopeOptionAllSprites": {
+    "message": "For all sprites",
+    "description": "Option message when creating a variable for making it available to all sprites"
+  },
+  "gui.gui.variableScopeOptionSpriteOnly": {
+    "message": "For this sprite only",
+    "description": "Option message when creating a varaible for making it only available to the current sprite"
+  },
+  "gui.gui.cloudVariableOption": {
+    "message": "Cloud variable (stored on server)",
+    "description": "Option message when creating a variable for making it a cloud variable, a variable that is stored on the server"
+  },
+  "gui.gui.variablePromptAllSpritesMessage": {
+    "message": "This variable will be available to all sprites.",
+    "description": "A message that displays in a variable modal when the stage is selected indicating that the variable being created will available to all sprites."
+  },
+  "gui.gui.listPromptAllSpritesMessage": {
+    "message": "This list will be available to all sprites.",
+    "description": "A message that displays in a list modal when the stage is selected indicating that the list being created will available to all sprites."
+  },
+  "gui.prompt.cancel": {
+    "message": "Cancel",
+    "description": "Button in prompt for cancelling the dialog"
+  },
+  "gui.prompt.ok": {
+    "message": "OK",
+    "description": "Button in prompt for confirming the dialog"
+  },
+  "gui.playbackStep.stopMsg": {
+    "message": "Stop",
+    "description": "Stop/Play button in recording playback"
+  },
+  "gui.playbackStep.playMsg": {
+    "message": "Play",
+    "description": "Stop/Play button in recording playback"
+  },
+  "gui.playbackStep.loadingMsg": {
+    "message": "Loading...",
+    "description": "Loading/Save button in recording playback"
+  },
+  "gui.playbackStep.saveMsg": {
+    "message": "Save",
+    "description": "Loading/Save button in recording playback"
+  },
+  "gui.playbackStep.reRecordMsg": {
+    "message": "Re-record",
+    "description": "Button to re-record sound in recording playback"
+  },
+  "gui.recordModal.title": {
+    "message": "Record Sound",
+    "description": "Recording modal title"
+  },
+  "gui.recordingStep.beginRecord": {
+    "message": "Begin recording by clicking the button below",
+    "description": "Message for recording sound modal"
+  },
+  "gui.recordingStep.permission": {
+    "message": "{arrow}We need your permission to use your microphone",
+    "description": "Permission required notice in recording sound modal. Do not translate {arrow}"
+  },
+  "gui.recordingStep.stop": {
+    "message": "Stop recording",
+    "description": "Stop recording button label"
+  },
+  "gui.recordingStep.record": {
+    "message": "Record",
+    "description": "Record button label"
+  },
+  "gui.sliderModal.min": {
+    "message": "Minimum value",
+    "description": "Label of slider modal"
+  },
+  "gui.sliderModal.max": {
+    "message": "Maximum value",
+    "description": "Label of slider modal"
+  },
+  "gui.sliderModal.title": {
+    "message": "Change slider range",
+    "description": "Title of slider modal"
+  },
+  "gui.sliderPrompt.cancel": {
+    "message": "Cancel",
+    "description": "Button in prompt for cancelling the dialog"
+  },
+  "gui.sliderPrompt.ok": {
+    "message": "OK",
+    "description": "Button in prompt for confirming the dialog"
+  },
+  "gui.soundEditor.sound": {
+    "message": "Sound",
+    "description": "Label for the name of the sound"
+  },
+  "gui.soundEditor.play": {
+    "message": "Play",
+    "description": "Title of the button to start playing the sound"
+  },
+  "gui.soundEditor.stop": {
+    "message": "Stop",
+    "description": "Title of the button to stop the sound"
+  },
+  "gui.soundEditor.copy": {
+    "message": "Copy",
+    "description": "Title of the button to copy the sound"
+  },
+  "gui.soundEditor.paste": {
+    "message": "Paste",
+    "description": "Title of the button to paste the sound"
+  },
+  "gui.soundEditor.copyToNew": {
+    "message": "Copy to New",
+    "description": "Title of the button to copy the selection into a new sound"
+  },
+  "gui.soundEditor.delete": {
+    "message": "Delete",
+    "description": "Title of the button to delete the sound"
+  },
+  "gui.soundEditor.save": {
+    "message": "Save",
+    "description": "Title of the button to save trimmed sound"
+  },
+  "gui.soundEditor.undo": {
+    "message": "Undo",
+    "description": "Title of the button to undo"
+  },
+  "gui.soundEditor.redo": {
+    "message": "Redo",
+    "description": "Title of the button to redo"
+  },
+  "gui.soundEditor.faster": {
+    "message": "Faster",
+    "description": "Title of the button to apply the faster effect"
+  },
+  "gui.soundEditor.slower": {
+    "message": "Slower",
+    "description": "Title of the button to apply the slower effect"
+  },
+  "gui.soundEditor.echo": {
+    "message": "Echo",
+    "description": "Title of the button to apply the echo effect"
+  },
+  "gui.soundEditor.robot": {
+    "message": "Robot",
+    "description": "Title of the button to apply the robot effect"
+  },
+  "gui.soundEditor.louder": {
+    "message": "Louder",
+    "description": "Title of the button to apply the louder effect"
+  },
+  "gui.soundEditor.softer": {
+    "message": "Softer",
+    "description": "Title of the button to apply thr.softer effect"
+  },
+  "gui.soundEditor.reverse": {
+    "message": "Reverse",
+    "description": "Title of the button to apply the reverse effect"
+  },
+  "gui.soundEditor.fadeOut": {
+    "message": "Fade out",
+    "description": "Title of the button to apply the fade out effect"
+  },
+  "gui.soundEditor.fadeIn": {
+    "message": "Fade in",
+    "description": "Title of the button to apply the fade in effect"
+  },
+  "gui.soundEditor.mute": {
+    "message": "Mute",
+    "description": "Title of the button to apply the mute effect"
+  },
+  "gui.SpriteInfo.spritePlaceholder": {
+    "message": "Name",
+    "description": "Placeholder text for sprite name"
+  },
+  "gui.SpriteInfo.sprite": {
+    "message": "Sprite",
+    "description": "Sprite info label"
+  },
+  "gui.SpriteInfo.show": {
+    "message": "Show",
+    "description": "Sprite info show label"
+  },
+  "gui.SpriteInfo.size": {
+    "message": "Size",
+    "description": "Sprite info size label"
+  },
+  "gui.spriteSelectorItem.contextMenuDuplicate": {
+    "message": "duplicate",
+    "description": "Menu item to duplicate in the right click menu"
+  },
+  "gui.spriteSelectorItem.contextMenuExport": {
+    "message": "export",
+    "description": "Menu item to export the selected item"
+  },
+  "gui.spriteSelectorItem.contextMenuDelete": {
+    "message": "delete",
+    "description": "Menu item to delete in the right click menu"
+  },
+  "gui.spriteSelector.addSpriteFromLibrary": {
+    "message": "Choose a Sprite",
+    "description": "Button to add a sprite in the target pane from library"
+  },
+  "gui.spriteSelector.addSpriteFromPaint": {
+    "message": "Paint",
+    "description": "Button to add a sprite in the target pane from paint"
+  },
+  "gui.spriteSelector.addSpriteFromSurprise": {
+    "message": "Surprise",
+    "description": "Button to add a random sprite in the target pane"
+  },
+  "gui.spriteSelector.addSpriteFromFile": {
+    "message": "Upload Sprite",
+    "description": "Button to add a sprite in the target pane from file"
+  },
+  "gui.stageHeader.stageSizeLarge": {
+    "message": "Switch to large stage",
+    "description": "Button to change stage size to large"
+  },
+  "gui.stageHeader.stageSizeSmall": {
+    "message": "Switch to small stage",
+    "description": "Button to change stage size to small"
+  },
+  "gui.stageHeader.stageSizeFull": {
+    "message": "Enter full screen mode",
+    "description": "Button to change stage size to full screen"
+  },
+  "gui.stageHeader.stageSizeUnFull": {
+    "message": "Exit full screen mode",
+    "description": "Button to get out of full screen mode"
+  },
+  "gui.stageHeader.fullscreenControl": {
+    "message": "Full Screen Control",
+    "description": "Button to enter/exit full screen mode"
+  },
+  "gui.spriteSelector.addBackdropFromLibrary": {
+    "message": "Choose a Backdrop",
+    "description": "Button to add a stage in the target pane from library"
+  },
+  "gui.stageSelector.addBackdropFromPaint": {
+    "message": "Paint",
+    "description": "Button to add a stage in the target pane from paint"
+  },
+  "gui.stageSelector.addBackdropFromSurprise": {
+    "message": "Surprise",
+    "description": "Button to add a random stage in the target pane"
+  },
+  "gui.stageSelector.addBackdropFromFile": {
+    "message": "Upload Backdrop",
+    "description": "Button to add a stage in the target pane from file"
+  },
+  "gui.stageSelector.stage": {
+    "message": "Stage",
+    "description": "Label for the stage in the stage selector"
+  },
+  "gui.stageSelector.backdrops": {
+    "message": "Backdrops",
+    "description": "Label for the backdrops in the stage selector"
+  },
+  "gui.telemetryOptIn.label": {
+    "message": "Report statistics to improve OpenBlock",
+    "description": "OpenBlock telemetry modal label - for accessibility"
+  },
+  "gui.telemetryOptIn.body1": {
+    "message": "The OpenBlock Team is always looking to better understand how OpenBlock is used around the world. To help support this effort, you can allow OpenBlock to automatically send usage information to the OpenBlock Team.",
+    "description": "First paragraph of body text for telemetry opt-in modal"
+  },
+  "gui.telemetryOptIn.body2": {
+    "message": "The information we collect includes language selection, blocks usage, and some events like saving, loading, and uploading a project. We DO NOT collect any personal information. Please see our {privacyPolicyLink} for more information.",
+    "description": "First paragraph of body text for telemetry opt-in modal"
+  },
+  "gui.telemetryOptIn.privacyPolicyLink": {
+    "message": "Privacy Policy",
+    "description": "Link to the OpenBlock privacy policy"
+  },
+  "gui.telemetryOptIn.optInText": {
+    "message": "Share my usage data with the Openblock Team",
+    "description": "Text for telemetry modal opt-in button"
+  },
+  "gui.telemetryOptIn.optInTooltip": {
+    "message": "Enable telemetry",
+    "description": "Tooltip for telemetry modal opt-in button"
+  },
+  "gui.telemetryOptIn.optOutText": {
+    "message": "Do not share my usage data with the Openblock Team",
+    "description": "Text for telemetry modal opt-in button"
+  },
+  "gui.telemetryOptIn.optOutTooltip": {
+    "message": "Disable telemetry",
+    "description": "Tooltip for telemetry modal opt-out button"
+  },
+  "gui.telemetryOptIn.settingWasUpdated": {
+    "message": "Your setting was updated.",
+    "description": "Message indicating that the telemetry setting was updated and saved"
+  },
+  "gui.telemetryOptIn.buttonClose": {
+    "message": "Close",
+    "description": "Text for the button which closes the telemetry modal dialog"
+  },
+  "gui.turboMode.active": {
+    "message": "Turbo Mode",
+    "description": "Label indicating turbo mode is active"
+  },
+  "gui.updateModal.close": {
+    "message": "Close",
+    "description": "Button in bottom to close update modal"
+  },
+  "gui.updateModal.downloading": {
+    "message": "Downloading",
+    "description": "Prompt for in downloading porgress"
+  },
+  "gui.updateModal.abort": {
+    "message": "Abort",
+    "description": "Button in bottom to abort update"
+  },
+  "gui.updateModel.tileCheckingForUpdate": {
+    "message": "Checking for update",
+    "description": "Tile of update modal in checking for update"
+  },
+  "gui.updateModel.checkingTips": {
+    "message": "Depending on your network, this step may take a few seconds to a dozen seconds, please wait.",
+    "description": "Prompt for in checking update process"
+  },
+  "gui.updateModel.tileUpdateExternalResource": {
+    "message": "New version of external resource detected",
+    "description": "Tile of update modal in new external resource version detected"
+  },
+  "gui.updateModel.tileUpdateApplication": {
+    "message": "New version of this application adetected",
+    "description": "Tile of update modal in new application version detected"
+  },
+  "gui.updateModal.updateLater": {
+    "message": "Update later",
+    "description": "Button in bottom to update later"
+  },
+  "gui.updateModal.updateAndRestart": {
+    "message": "Update and restart",
+    "description": "Button in bottom to confirm update and restart"
+  },
+  "gui.updateModel.tileAlreadyLatest": {
+    "message": "No new version detected",
+    "description": "Tile of update modal in already latest"
+  },
+  "gui.updateModel.alreadyLatestTips": {
+    "message": "Openblock is already the latest version.",
+    "description": "Prompt for already latest"
+  },
+  "gui.updateModel.tileError": {
+    "message": "Operation failed",
+    "description": "Tile of update modal in error"
+  },
+  "gui.updateModel.upgradingExternalResource": {
+    "message": "Upgrading external resource",
+    "description": "Tile of update modal in external resource upgrading"
+  },
+  "gui.updateModal.deletingCompressedFile": {
+    "message": "Deleting compressed file",
+    "description": "Prompt for in deleting compressed file porgress"
+  },
+  "gui.updateModal.deletingCacheFile": {
+    "message": "Deleting cache file",
+    "description": "Prompt for in deleting cache file porgress"
+  },
+  "gui.updateModal.extractingCompressedFile": {
+    "message": "Extracting compressed file",
+    "description": "Prompt for in extracting compressed file porgress"
+  },
+  "gui.updateModal.verifyingCompressedFile": {
+    "message": "Verifying compressed file",
+    "description": "Prompt for in verifying compressed file porgress"
+  },
+  "gui.updateModal.verifyingCacheFile": {
+    "message": "Verifying cache file",
+    "description": "Prompt for in verifying cache file porgress"
+  },
+  "gui.updateModel.tileResourceUpdateFinish": {
+    "message": "External resource update complete",
+    "description": "Tile of update modal in external resource update finish"
+  },
+  "gui.updateModal.resourceUpdateFinishTips": {
+    "message": "External resource update complete, the application will automatically restart after 3 seconds.",
+    "description": "Prompt for external resource update finish"
+  },
+  "gui.updateModel.downloadingApplication": {
+    "message": "Downloading application",
+    "description": "Tile of update modal in application downloading"
+  },
+  "gui.updateModel.tileApplicationDownloadFinish": {
+    "message": "Application download complete",
+    "description": "Tile of update modal in application download finish"
+  },
+  "gui.updateModal.applicationDownloadeFinishTips": {
+    "message": "Application download complete, it will automatically quit and start installer after 3 seconds.",
+    "description": "Prompt for application download finish"
+  },
+  "gui.uploadProgress.uploading": {
+    "message": "Uploading",
+    "description": "Prompt for upload in progress"
+  },
+  "gui.uploadProgress.uploadSuccess": {
+    "message": "Upload success",
+    "description": "Prompt for upload success"
+  },
+  "gui.uploadProgress.uploadError": {
+    "message": "Upload error",
+    "description": "Prompt for upload error"
+  },
+  "gui.uploadProgress.uploadTimeout": {
+    "message": "Upload timeout",
+    "description": "Prompt for upload timeout"
+  },
+  "gui.uploadProgress.uploadAborted": {
+    "message": "Upload aborted",
+    "description": "Prompt for upload aborted"
+  },
+  "gui.uploadProgress.abort": {
+    "message": "Abort",
+    "description": "Button in bottom to abort upload process"
+  },
+  "gui.uploadProgress.close": {
+    "message": "Close",
+    "description": "Button in bottom to close after upload"
+  },
+  "gui.webglModal.label": {
+    "message": "Your Browser Does Not Support WebGL",
+    "description": "WebGL missing title"
+  },
+  "gui.webglModal.description": {
+    "message": "Unfortunately it looks like your browser or computer {webGlLink}. This technology is needed for OpenBlock to run.",
+    "description": "WebGL missing message"
+  },
+  "gui.webglModal.webgllink": {
+    "message": "does not support WebGL",
+    "description": "link part of your browser does not support WebGL message"
+  },
+  "gui.webglModal.back": {
+    "message": "Back",
+    "description": "Label for button go back when browser is unsupported"
+  },
+  "gui.webglModal.previewfaq": {
+    "message": "To learn more, go to the {previewFaqLink}.",
+    "description": "OpenBlock FAQ description"
+  },
+  "gui.webglModal.previewfaqlinktext": {
+    "message": "FAQ",
+    "description": "link to OpenBlock FAQ page"
+  },
+  "gui.costumeLibrary.chooseABackdrop": {
+    "message": "Choose a Backdrop",
+    "description": "Heading for the backdrop library"
+  },
+  "gui.costumeLibrary.chooseACostume": {
+    "message": "Choose a Costume",
+    "description": "Heading for the costume library"
+  },
+  "gui.costumeTab.addBackdropFromLibrary": {
+    "message": "Choose a Backdrop",
+    "description": "Button to add a backdrop in the editor tab"
+  },
+  "gui.costumeTab.addCostumeFromLibrary": {
+    "message": "Choose a Costume",
+    "description": "Button to add a costume in the editor tab"
+  },
+  "gui.costumeTab.addBlankCostume": {
+    "message": "Paint",
+    "description": "Button to add a blank costume in the editor tab"
+  },
+  "gui.costumeTab.addSurpriseCostume": {
+    "message": "Surprise",
+    "description": "Button to add a surprise costume in the editor tab"
+  },
+  "gui.costumeTab.addFileBackdrop": {
+    "message": "Upload Backdrop",
+    "description": "Button to add a backdrop by uploading a file in the editor tab"
+  },
+  "gui.costumeTab.addFileCostume": {
+    "message": "Upload Costume",
+    "description": "Button to add a costume by uploading a file in the editor tab"
+  },
+  "gui.deviceLibrary.chooseADevice": {
+    "message": "Choose an Device",
+    "description": "Heading for the device library"
+  },
+  "gui.deviceLibrary.deviceUrl": {
+    "message": "Enter the URL of the device",
+    "description": "Prompt for unoffical device url"
+  },
+  "gui.deviceLibrary.arduinoTag": {
+    "message": "Arduino",
+    "description": "Arduino tag to filter all arduino devices."
+  },
+  "gui.deviceLibrary.microPythonTag": {
+    "message": "MicroPython",
+    "description": "Micro python tag to filter all micro python devices."
+  },
+  "gui.deviceLibrary.kitTag": {
+    "message": "Kit",
+    "description": "Kit tag to filter all kit devices."
+  },
+  "gui.extensionLibrary.chooseAnExtension": {
+    "message": "Choose an Extension",
+    "description": "Heading for the extension library"
+  },
+  "gui.extensionLibrary.extensionUrl": {
+    "message": "Enter the URL of the extension",
+    "description": "Prompt for unoffical extension url"
+  },
+  "gui.library.shieldTag": {
+    "message": "Shield",
+    "description": "Shield tag to filter all shield libraries."
+  },
+  "gui.library.actuatorTag": {
+    "message": "Actuator",
+    "description": "Actuator tag to filter all actuator libraries."
+  },
+  "gui.library.sensorTag": {
+    "message": "Sensor",
+    "description": "Sensor tag to filter all sensor libraries."
+  },
+  "gui.library.displayTag": {
+    "message": "Display",
+    "description": "Display tag to filter all display libraries."
+  },
+  "gui.library.communicationTag": {
+    "message": "Communication",
+    "description": "Communication tag to filter all communication libraries."
+  },
+  "gui.library.otherTag": {
+    "message": "Other",
+    "description": "Other tag to filter all other libraries."
+  },
+  "gui.hardwareConsole.noLineTerminators": {
+    "message": "No line terminators",
+    "description": "no line terminators in the end of serialsport messge to send"
+  },
+  "gui.hardwareConsole.lineFeed": {
+    "message": "Line feed",
+    "description": "Line feed in the end of serialsport messge to send"
+  },
+  "gui.hardwareConsole.carriageReturn": {
+    "message": "Carriage return",
+    "description": "Carriage return in the end of serialsport messge to send"
+  },
+  "gui.hardwareConsole.lfAndCr": {
+    "message": "LF & CR",
+    "description": "LF & CR in the end of serialsport messge to send"
+  },
+  "gui.monitors.importListColumnPrompt": {
+    "message": "Which column should be used (1-{numberOfColumns})?",
+    "description": "Prompt for which column should be used"
+  },
+  "gui.recordingStep.alertMsg": {
+    "message": "Could not start recording",
+    "description": "Alert for recording error"
+  },
+  "gui.soundLibrary.chooseASound": {
+    "message": "Choose a Sound",
+    "description": "Heading for the sound library"
+  },
+  "gui.soundTab.fileUploadSound": {
+    "message": "Upload Sound",
+    "description": "Button to upload sound from file in the editor tab"
+  },
+  "gui.soundTab.surpriseSound": {
+    "message": "Surprise",
+    "description": "Button to get a random sound in the editor tab"
+  },
+  "gui.soundTab.recordSound": {
+    "message": "Record",
+    "description": "Button to record a sound in the editor tab"
+  },
+  "gui.soundTab.addSoundFromLibrary": {
+    "message": "Choose a Sound",
+    "description": "Button to add a sound in the editor tab"
+  },
+  "gui.spriteLibrary.chooseASprite": {
+    "message": "Choose a Sprite",
+    "description": "Heading for the sprite library"
+  },
+  "gui.tipsLibrary.tutorials": {
+    "message": "Choose a Tutorial",
+    "description": "Heading for the help/tutorials library"
+  },
+  "gui.updateModal.updateWarning": {
+    "message": "Currently unsaved projects will be lost, continue update and restart?",
+    "description": "Confirmation that user wants update"
+  },
+  "gui.uploadProgress.uploadErrorMessage": {
+    "message": "Upload error",
+    "description": "Prompt for upload error"
+  },
+  "gui.uploadProgress.uploadTimeoutMessage": {
+    "message": "Upload timeout",
+    "description": "Prompt for upload timeout"
+  },
+  "gui.alerts.createsuccess": {
+    "message": "New project created.",
+    "description": "Message indicating that project was successfully created"
+  },
+  "gui.alerts.createcopysuccess": {
+    "message": "Project saved as a copy.",
+    "description": "Message indicating that project was successfully created"
+  },
+  "gui.alerts.createremixsuccess": {
+    "message": "Project saved as a remix.",
+    "description": "Message indicating that project was successfully created"
+  },
+  "gui.alerts.creating": {
+    "message": "Creating new…",
+    "description": "Message indicating that project is in process of creating"
+  },
+  "gui.alerts.creatingCopy": {
+    "message": "Copying project…",
+    "description": "Message indicating that project is in process of copying"
+  },
+  "gui.alerts.creatingRemix": {
+    "message": "Remixing project…",
+    "description": "Message indicating that project is in process of remixing"
+  },
+  "gui.alerts.creatingError": {
+    "message": "Could not create the project. Please try again!",
+    "description": "Message indicating that project could not be created"
+  },
+  "gui.alerts.savingError": {
+    "message": "Project could not save.",
+    "description": "Message indicating that project could not be saved"
+  },
+  "gui.alerts.savesuccess": {
+    "message": "Project saved.",
+    "description": "Message indicating that project was successfully saved"
+  },
+  "gui.alerts.saving": {
+    "message": "Saving project…",
+    "description": "Message indicating that project is in process of saving"
+  },
+  "gui.alerts.cloudInfo": {
+    "message": "Please note, cloud variables only support numbers, not letters or symbols. {learnMoreLink}",
+    "description": "Info about cloud variable limitations"
+  },
+  "gui.alerts.cloudInfoLearnMore": {
+    "message": "Learn more.",
+    "description": "Link text to cloud var faq"
+  },
+  "gui.alerts.importing": {
+    "message": "Importing…",
+    "description": "Message indicating that project is in process of importing"
+  },
+  "gui.alerts.workspaceIsEmpty": {
+    "message": "Workspace is empty",
+    "description": "Message indicating that workspace is empty"
+  },
+  "gui.alerts.workspaceIsNotEmpty": {
+    "message": "Workspace is not empty, plese clean you workspace first",
+    "description": "Message indicating that workspace is not empty"
+  },
+  "gui.alerts.uploadError": {
+    "message": "Upload error",
+    "description": "Message indicating that upload progress is error"
+  },
+  "gui.alerts.uploadSuccess": {
+    "message": "Upload success",
+    "description": "Message indicating that upload progress is success"
+  },
+  "gui.alerts.selectADeviceFirst": {
+    "message": "Plese select a device first",
+    "description": "Message indicating that device is not selected"
+  },
+  "gui.alerts.connectAPeripheralFirst": {
+    "message": "Plese connect a peripheral first",
+    "description": "Message indicating that no peripheral is connected"
+  },
+  "gui.alerts.codeEditorIsLocked": {
+    "message": "Code editor is in lock state, if you want to edit the code, please click the unlock button first",
+    "description": "Message indicating that code editor is in lock state"
+  },
+  "gui.alerts.codeEditorIsUnlocked": {
+    "message": "Code editor is in unlock state, if you want to generate code from block, please click the lock button first",
+    "description": "Message indicating that code editor is in unlock state"
+  },
+  "gui.defaultProject.chirp": {
+    "message": "Chirp",
+    "description": "Name for the chirp sound"
+  },
+  "gui.defaultProject.variable": {
+    "message": "my variable",
+    "description": "Name for the default variable"
+  },
+  "gui.howtos.intro-move-sayhello-hat.name": {
+    "message": "Getting Started",
+    "description": "Name for the 'Getting Started' how-to"
+  },
+  "gui.howtos.intro-move.step_stepMove": {
+    "message": "Add a move block",
+    "description": "Step name for 'Add a move block' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepSay": {
+    "message": "Add a say block",
+    "description": "Step name for 'Add A Say Block' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepGreenFlag": {
+    "message": "Click the green flag to start",
+    "description": "Step name for 'Add A Green Flag' step"
+  },
+  "gui.howtos.intro-getting-started-ASL.name": {
+    "message": "Getting Started - ASL",
+    "description": "Name for the 'Getting Started ASL (American Sign Language)' how-to"
+  },
+  "gui.howtos.animate-a-name.name": {
+    "message": "Animate a Name",
+    "description": "Name for the 'Animate a Name' how-to"
+  },
+  "gui.howtos.animate-a-name.step_AnimatePickLetter": {
+    "message": "Pick a Letter Sprite",
+    "description": "Step name for 'Pick a Letter Sprite' step"
+  },
+  "gui.howtos.animate-a-name.step_AnimatePlaySound": {
+    "message": "Play a Sound When Clicked",
+    "description": "Step name for 'Play a Sound When Clicked' step"
+  },
+  "gui.howtos.animate-a-name.step_AnimatePickLetter2": {
+    "message": "Pick Another Letter Sprite",
+    "description": "Step name for 'Pick Another Letter Sprite"
+  },
+  "gui.howtos.animate-a-name.step_AnimateChangeColor": {
+    "message": "Change color",
+    "description": "Step name for 'Change color' step"
+  },
+  "gui.howtos.animate-a-name.step_AnimateSpin": {
+    "message": "Pick Another Letter Sprite & Make It Spin",
+    "description": "Step name for 'Pick Another Letter Sprite & Make It Spin' step"
+  },
+  "gui.howtos.animate-a-name.step_AnimateGrow": {
+    "message": "Pick Another Letter Sprite & Make It Grow",
+    "description": "Step name for 'Pick Another Letter Sprite & Make It Grow!' step"
+  },
+  "gui.howtos.imagine": {
+    "message": "Imagine a World",
+    "description": "Name for the 'Imagine a World' how-to"
+  },
+  "gui.howtos.imagine.step_imagineTypeWhatYouWant": {
+    "message": "Type What You Want to Say",
+    "description": "Step name for 'Type What You Want to Say' step"
+  },
+  "gui.howtos.imagine.step_imagineClickGreenFlag": {
+    "message": "Click the Green Flag to Start",
+    "description": "Step name for 'Click the Green Flag to Start' step"
+  },
+  "gui.howtos.imagine.step_imagineChooseBackdrop": {
+    "message": "Choose Any Backdrop",
+    "description": "Step name for 'Choose Any Backdrop' step"
+  },
+  "gui.howtos.imagine.step_imagineChooseSprite": {
+    "message": "Choose Any Sprite",
+    "description": "Step name for 'Choose Any Sprite' step"
+  },
+  "gui.howtos.imagine.step_imagineFlyAround": {
+    "message": "Press the Space Key to Glide",
+    "description": "Step name for 'Press the Space Key to Glide' step"
+  },
+  "gui.howtos.imagine.step_imagineChooseAnotherSprite": {
+    "message": "Choose Another Sprite",
+    "description": "Step name for 'Choose Another Sprite' step"
+  },
+  "gui.howtos.imagine.step_imagineLeftRight": {
+    "message": "Move Left-Right",
+    "description": "Step name for 'Move Left-Right' step"
+  },
+  "gui.howtos.imagine.step_imagineUpDown": {
+    "message": "Move Up-Down",
+    "description": "Step name for 'Move Up-Down' step"
+  },
+  "gui.howtos.imagine.step_imagineChangeCostumes": {
+    "message": "Change Costumes",
+    "description": "Step name for 'Change Costumes' step"
+  },
+  "gui.howtos.imagine.step_imagineGlideToPoint": {
+    "message": "Glide to a Point",
+    "description": "Step name for 'Glide to a Point' step"
+  },
+  "gui.howtos.imagine.step_imagineGrowShrink": {
+    "message": "Grow and Shrink",
+    "description": "Step name for 'Grow and Shrink' step"
+  },
+  "gui.howtos.imagine.step_imagineChooseAnotherBackdrop": {
+    "message": "Choose Another Backdrop",
+    "description": "Step name for 'Choose Another Backdrop' step"
+  },
+  "gui.howtos.imagine.step_imagineSwitchBackdrops": {
+    "message": "Switch Backdrops",
+    "description": "Step name for 'Switch Backdrops' step"
+  },
+  "gui.howtos.imagine.step_imagineRecordASound": {
+    "message": "Add a Sound",
+    "description": "Step name for 'Add a Sound' step"
+  },
+  "gui.howtos.imagine.step_imagineChooseSound": {
+    "message": "Choose Your Sound",
+    "description": "Step name for 'Choose Your Sound' step"
+  },
+  "gui.howtos.make-music.name": {
+    "message": "Make Music",
+    "description": "Name for the 'Make Music' how-to"
+  },
+  "gui.howtos.Make-Music.step_PickInstrument": {
+    "message": "Pick an Instrument Sprite",
+    "description": "Step name for 'Pick an Instrument Sprite' step"
+  },
+  "gui.howtos.Make-Music.step_PlaySoundClick": {
+    "message": "Play Sound When Clicked",
+    "description": "Step name for 'Play Sound When Clicked' step"
+  },
+  "gui.howtos.Make-Music.step_MakeSong": {
+    "message": "Create a Song",
+    "description": "Step name for 'Create a Song' step"
+  },
+  "gui.howtos.make-music.step_MakeBeat": {
+    "message": "Choose a Drum & Make a Beat",
+    "description": "Step name for 'Choose a Drum & Make a Beat' step"
+  },
+  "gui.howtos.make-music.step_MakeBeatBox": {
+    "message": "Choose the Microphone Sprite & Surprise Beatbox",
+    "description": "Step name for 'Choose the Microphone Sprite & Surprise Beatbox' step"
+  },
+  "gui.howtos.story.name": {
+    "message": "Create A Story",
+    "description": "Name for the 'Create A Story' how-to"
+  },
+  "gui.howtos.story.step_addbg": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.story.step_addsprite": {
+    "message": "Add a Character",
+    "description": "Step name for 'Add a Character' step"
+  },
+  "gui.howtos.story.step_saysomething": {
+    "message": "Say Something",
+    "description": "Step name for 'Say Something' step"
+  },
+  "gui.howtos.story.step_addanothersprite": {
+    "message": "Add Another Character",
+    "description": "Step name for 'Add Another Character' step"
+  },
+  "gui.howtos.story.step_flip": {
+    "message": "Flip Direction",
+    "description": "Flip Direction' step"
+  },
+  "gui.howtos.story.step_conversation": {
+    "message": "Have A Conversation",
+    "description": "Step name for 'Have A Conversation' step"
+  },
+  "gui.howtos.story.addanotherbg": {
+    "message": "Add Another Backdrop",
+    "description": "Step name for 'Add Another Backdrop' step"
+  },
+  "gui.howtos.story.step_swithbg": {
+    "message": "Switch Backdrops",
+    "description": "Step name for 'Switch Backdrops' step"
+  },
+  "gui.howtos.story.step_hidewizard": {
+    "message": "Hide a Character",
+    "description": "Step name for 'Hide the Wizard' step"
+  },
+  "gui.howtos.story.step_showwizard": {
+    "message": "Show a Character",
+    "description": "Step name for 'Show the Wizard' step"
+  },
+  "gui.howtos.make-a-chase-game.name": {
+    "message": "Make a Chase Game",
+    "description": "Name for the 'Make a Chase Game' how-to"
+  },
+  "gui.howtos.Chase-Game.step_BG": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.chase-game.step_AddOcto": {
+    "message": "Add a Sprite",
+    "description": "Step name for 'Add a Sprite' step"
+  },
+  "gui.howtos.make-music.step_LeftRight": {
+    "message": "Move Right & Left With Arrow Keys",
+    "description": "Step name for 'Move Right & Left With Arrow Keys' step"
+  },
+  "gui.howtos.Chase-Game.step_UpDown": {
+    "message": "Move Up & Down With Arrow Keys",
+    "description": "Step name for 'Move Up & Down With Arrow Keys' step"
+  },
+  "gui.howtos.Chase-Game.step_AddStar": {
+    "message": "Add Another Sprite",
+    "description": "Step name for 'Add Another Sprite' step"
+  },
+  "gui.howtos.Chase-Game.step_MoveRandom": {
+    "message": "Move Randomly",
+    "description": "Step name for 'Move Randomly' step"
+  },
+  "gui.howtos.Chase-Game.step_WhenTouch": {
+    "message": "In Octopus Sprite, When Touching Play Sound",
+    "description": "Step name for 'In Octopus Sprite, When Touching Play Sound' step"
+  },
+  "gui.howtos.Chase-Game.step_ScoreVariable": {
+    "message": "Create Score Variable",
+    "description": "Step name for 'Create Score Variable"
+  },
+  "gui.howtos.Chase-Game.ScoreWhenTouch": {
+    "message": "In Octopus Sprite, When Touching Add Score",
+    "description": "Step name for 'In Octopus Sprite, When Touching Add Score step"
+  },
+  "gui.howtos.animate-char.name": {
+    "message": "Animate A Character",
+    "description": "Name for the 'Animate A Character' how-to"
+  },
+  "gui.howtos.animate-char.step_addbg": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.animate-char.step_addsprite": {
+    "message": "Add a Sprite",
+    "description": "Step name for 'Add a Sprite' step"
+  },
+  "gui.howtos.animate-char.step_saysomething": {
+    "message": "Say Something",
+    "description": "Step name for 'Say Something' step"
+  },
+  "gui.howtos.animate-char.step_addsound": {
+    "message": "Add Sound",
+    "description": "Step name for 'Add Sound' step"
+  },
+  "gui.howtos.animate-char.step_animatetalking": {
+    "message": "Animate Talking",
+    "description": "Step name for 'Animate Talking' step"
+  },
+  "gui.howtos.animate-char.step_arrowkeys": {
+    "message": "Move Using Arrow Keys",
+    "description": "Step name for 'Move Using Arrow Keys' step"
+  },
+  "gui.howtos.animate-char.step_jump": {
+    "message": "Jump",
+    "description": "Step name for 'Jump' step"
+  },
+  "gui.howtos.animate-char.step_changecolor": {
+    "message": "Change Color",
+    "description": "Step name for 'Change Color' step"
+  },
+  "gui.howtos.make-a-game.name": {
+    "message": "Make a Clicker Game",
+    "description": "Name for the 'Make a Clicker Game' how-to"
+  },
+  "gui.howtos.Make-A-Game.step_GamePickSprite": {
+    "message": "Pick A Sprite",
+    "description": "Step name for 'Pick A Sprite' step"
+  },
+  "gui.howtos.make-a-game.step_GamePlaySound": {
+    "message": "Play Sound When Clicked",
+    "description": "Play Sound When Clicked' step"
+  },
+  "gui.howtos.make-a-game.step_GameAddScore": {
+    "message": "Create Score Variable",
+    "description": "Step name for 'Create Score Variable' step"
+  },
+  "gui.howtos.make-a-game.step_GameChangeScore": {
+    "message": "When Clicked Increase Score",
+    "description": "Step name for 'When Clicked Increase Score' step"
+  },
+  "gui.howtos.make-a-game.step_Random": {
+    "message": "Go to a random position",
+    "description": "Step name for 'Go to a random position' step"
+  },
+  "gui.howtos.make-music.step_GameChangeColor": {
+    "message": "Change Color",
+    "description": "Step name for 'Change Color' step"
+  },
+  "gui.howtos.make-music.step_ResetScore": {
+    "message": "Reset Score",
+    "description": "Step name for 'Reset Score' step"
+  },
+  "gui.howtos.make-it-fly.name": {
+    "message": "Make it Fly",
+    "description": "Name for the 'Make it Fly' Make it Fly"
+  },
+  "gui.howtos.fly.step_stepflyChooseBackdrop": {
+    "message": "Choose a Sky Background",
+    "description": "Step name for 'Choose a Sky Background' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyChooseCharacter": {
+    "message": "Choose a Character",
+    "description": "Step name for 'Choose a Character' step"
+  },
+  "gui.howtos.fly.step_stepflySaySomething": {
+    "message": "Say Something",
+    "description": "Step name for 'Say Something' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyMoveArrows": {
+    "message": "Move With Arrow Keys",
+    "description": "Step name for 'Move With Arrow Keys' step"
+  },
+  "gui.howtos.fly.step_stepflyChooseObject": {
+    "message": "Choose an Object to Collect",
+    "description": "Step name for 'Choose an Object to Collect' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyFlyingObject": {
+    "message": "Make the Object Move",
+    "description": "Step name for 'Make the Object Move' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflySelectFlyingSprite": {
+    "message": "Select Your Character",
+    "description": "Step name for 'Select Your Character' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyAddScore": {
+    "message": "Add a Score",
+    "description": "Step name for 'Add a Score' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyKeepScore": {
+    "message": "Keep Score",
+    "description": "Step name for 'Keep Score' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyAddScenery": {
+    "message": "Add Scenery",
+    "description": "Step name for 'Add Scenery' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflyMoveScenery": {
+    "message": "Move the Scenery",
+    "description": "Step name for 'Move the Scenery' step"
+  },
+  "gui.howtos.add-a-move-block.step_stepflySwitchLooks": {
+    "message": "Next Costume",
+    "description": "Step name for 'Change the Scenery' step"
+  },
+  "gui.howtos.pong": {
+    "message": "Pong Game",
+    "description": "Name for the 'Pong Game' how-to"
+  },
+  "gui.howtos.pong.step_pongAddBackdrop": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.pong.step_pongAddBallSprite": {
+    "message": "Add a Ball Sprite",
+    "description": "Step name for 'Add a Ball Sprite' step"
+  },
+  "gui.howtos.pong.step_pongBounceAround": {
+    "message": "Bounce Around",
+    "description": "Step name for 'Bounce Around' step"
+  },
+  "gui.howtos.pong.step_pongAddPaddle": {
+    "message": "Add a Paddle",
+    "description": "Step name for 'Add a Paddle' step"
+  },
+  "gui.howtos.pong.step_pongMoveThePaddle": {
+    "message": "Move the Paddle",
+    "description": "Step name for 'Move the Paddle' step"
+  },
+  "gui.howtos.pong.step_pongSelectBallSprite": {
+    "message": "Select the Ball Sprite",
+    "description": "Step name for 'Select the Ball Sprite' step"
+  },
+  "gui.howtos.pong.step_pongAddMoreCodeToBall": {
+    "message": "Add Code to Bounce the Ball Off the Paddle",
+    "description": "Step name for 'Add Code to Bounce the Ball Off the Paddle' step"
+  },
+  "gui.howtos.pong.step_pongAddAScore": {
+    "message": "Add a Score",
+    "description": "Step name for 'Add a Score' step"
+  },
+  "gui.howtos.pong.step_pongChooseScoreFromMenu": {
+    "message": "Choose 'Score' from the Menu",
+    "description": "Step name for 'Choose 'Score' from the Menu' step"
+  },
+  "gui.howtos.pong.step_pongInsertChangeScoreBlock": {
+    "message": "Insert the 'Change Score' Block",
+    "description": "Step name for 'Insert the 'Change Score' Block' step"
+  },
+  "gui.howtos.pong.step_pongResetScore": {
+    "message": "Reset Score",
+    "description": "Step name for 'Reset Score' step"
+  },
+  "gui.howtos.pong.step_pongAddLineSprite": {
+    "message": "Add the Line Sprite",
+    "description": "Step name for 'Add the Line Sprite' step"
+  },
+  "gui.howtos.pong.step_pongGameOver": {
+    "message": "Game Over",
+    "description": "Step name for 'Game Over' step"
+  },
+  "gui.howtos.code-cartoon": {
+    "message": "Code a Cartoon",
+    "description": "Name for the 'Code a Cartoon' how-to"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonSaySomething": {
+    "message": "Say Something When You Click the Green Flag",
+    "description": "Step name for 'Say Something When You Click the Green Flag' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonAnimate": {
+    "message": "Animate a Character When You Click It",
+    "description": "Step name for 'Animate a Character When You Click It' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonSelectDifferentCharacter": {
+    "message": "Select a Different Character",
+    "description": "Step name for 'Select a Different Character' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonUseMinusSign": {
+    "message": "Use a Minus Sign to Get Smaller",
+    "description": "Step name for 'Use a Minus Sign to Get Smaller' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonGrowShrink": {
+    "message": "Make a Character Grow and Shrink",
+    "description": "Step name for 'Make a Character Grow and Shrink' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonSelectDifferentCharacter2": {
+    "message": "Select a Different Character",
+    "description": "Step name for 'Select a Different Character' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonJump": {
+    "message": "Jump Up and Down",
+    "description": "Step name for 'Jump Up and Down' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonChangeScenes": {
+    "message": "Click a Character to Change Scenes",
+    "description": "Step name for 'Click a Character to Change Scenes' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonGlideAround": {
+    "message": "Glide Around",
+    "description": "Step name for 'Glide Around' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonChangeCostumes": {
+    "message": "Change Costumes",
+    "description": "Step name for 'Change Costumes' step"
+  },
+  "gui.howtos.code-cartoon.step_codeCartoonChooseMoreCharacters": {
+    "message": "Choose More Characters to Add to Your Cartoon",
+    "description": "Step name for 'Choose More Characters to Add to Your Cartoon' step"
+  },
+  "gui.howtos.cartoon-network": {
+    "message": "Animate an Adventure Game",
+    "description": "Animate an Adventure Game' how-to"
+  },
+  "gui.howtos.cartoon-network.step_CNcharacter": {
+    "message": "Choose a Character to Show",
+    "description": "Step name for 'Choose a Character to Show' step"
+  },
+  "gui.howtos.cartoon-network.step_CNsay": {
+    "message": "Say Something",
+    "description": "Step name for 'Say Something' step"
+  },
+  "gui.howtos.cartoon-network.step_CNglide": {
+    "message": "Glide Around",
+    "description": "Step name for 'Glide Around' step"
+  },
+  "gui.howtos.cartoon-network.step_CNpicksprite": {
+    "message": "Choose an Object to Chase",
+    "description": "Step name for 'Choose an Object to Chase' step"
+  },
+  "gui.howtos.cartoon-network.step_CNcollect": {
+    "message": "Collect Objects",
+    "description": "Step name for 'Collect Objects' step"
+  },
+  "gui.howtos.cartoon-network.step_CNvariable": {
+    "message": "Make a Score Variable",
+    "description": "Step name for 'Make a Score Variable' step"
+  },
+  "gui.howtos.cartoon-network.step_CNscore": {
+    "message": "Keep Score",
+    "description": "Step name for 'Keep Score' step"
+  },
+  "gui.howtos.cartoon-network.step_CNbackdrop": {
+    "message": "Level Up: Change Backdrop",
+    "description": "Step name for 'Level Up: Change Backdrop' step"
+  },
+  "gui.howtos.videosens.name": {
+    "message": "Video Sensing",
+    "description": "Name for the 'Video Sensing' how-to"
+  },
+  "gui.howtos.videosens.step_addextension": {
+    "message": "Add Extension",
+    "description": "Step name for 'Add Extension' step"
+  },
+  "gui.howtos.videosens.step_pet": {
+    "message": "Pet the Cat",
+    "description": "Step name for 'Pet the Cat' step"
+  },
+  "gui.howtos.videosens.step_animate": {
+    "message": "Animate",
+    "description": "Step name for 'Animate' step"
+  },
+  "gui.howtos.videosens.step_pop": {
+    "message": "Pop a Balloon",
+    "description": "Step name for 'Pop a Balloon' step"
+  },
+  "gui.howtos.say-it-out-loud": {
+    "message": "Create Animations That Talk",
+    "description": "Name for the 'Create Animations That Talk' how-to"
+  },
+  "gui.howtos.say-it-out-loud.step_AddTXTextension": {
+    "message": "Add the Text to Speech blocks",
+    "description": "Step name for 'Add the Text to Speech blocks' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTSpeech": {
+    "message": "Say Something",
+    "description": "Step name for 'Say Something' step"
+  },
+  "gui.howtos.say-it-out-loud_TXTSetVoice": {
+    "message": "Set a Voice",
+    "description": "Step name for 'Set a Voice"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTMove": {
+    "message": "Move Around",
+    "description": "Step name for 'Move Around' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTBackdrop": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTAddSprite": {
+    "message": "Add Another Character",
+    "description": "Step name for 'Add Another Character' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTSong": {
+    "message": "Perform a Song",
+    "description": "Step name for 'Perform a Song' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTColor": {
+    "message": "Change Color",
+    "description": "Step name for 'Change Color' step"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTSpin": {
+    "message": "Spin Around",
+    "description": "Step name for 'Spin Around"
+  },
+  "gui.howtos.say-it-out-loud.step_TXTGrow": {
+    "message": "Grow and Shrink",
+    "description": "Step name for 'Grow and Shrink' step"
+  },
+  "gui.howtos.talking": {
+    "message": "Talking Tales",
+    "description": "Name for the 'Talking Tales' how-to"
+  },
+  "gui.howtos.talking.step_talesAddExtension": {
+    "message": "Click to Add the Text-to-Speech Blocks",
+    "description": "Step name for 'Click to Add the Text-to-Speech Blocks' step"
+  },
+  "gui.howtos.talking.step_talesChooseSprite": {
+    "message": "Choose a Sprite",
+    "description": "Step name for 'Choose a Sprite' step"
+  },
+  "gui.howtos.talking.step_talesSaySomething": {
+    "message": "Make a Character Speak",
+    "description": "Step name for 'Make a Character Speak' step"
+  },
+  "gui.howtos.talking.step_talesChooseBackdrop": {
+    "message": "Choose a Backdrop",
+    "description": "Step name for 'Choose a Backdrop' step"
+  },
+  "gui.howtos.talking.step_talesSwitchBackdrop": {
+    "message": "Click a Character to Go to the Next Backdrop",
+    "description": "Step name for 'Click a Character to Go to the Next Backdrop' step"
+  },
+  "gui.howtos.talking.step_talesChooseAnotherSprite": {
+    "message": "Choose Another Sprite",
+    "description": "Step name for 'Choose Another Sprite' step"
+  },
+  "gui.howtos.talking.step_talesMoveAround": {
+    "message": "Move Around",
+    "description": "Step name for 'Move Around' step"
+  },
+  "gui.howtos.talking.step_talesChooseAnotherBackdrop": {
+    "message": "Choose Another Backdrop",
+    "description": "Step name for 'Choose Another Backdrop' step"
+  },
+  "gui.howtos.talking.step_talesAnimateTalking": {
+    "message": "Animate Talking",
+    "description": "Step name for 'Animate Talking' step"
+  },
+  "gui.howtos.talking.step_talesChooseThirdBackdrop": {
+    "message": "Choose Another Backdrop",
+    "description": "Step name for 'Choose Another Backdrop' step"
+  },
+  "gui.howtos.talking.step_talesChooseSound": {
+    "message": "Choose a Song to Dance To",
+    "description": "Step name for 'Choose a Song to Dance To' step"
+  },
+  "gui.howtos.talking.step_talesDanceMoves": {
+    "message": "Dance Moves",
+    "description": "Step name for 'Dance Moves' step"
+  },
+  "gui.howtos.talking.step_talesAskAnswer": {
+    "message": "Get the Ask and Answer Blocks from the Sensing Category",
+    "description": "Step name for 'Get the Ask and Answer Blocks from the Sensing Category' step"
+  },
+  "gui.howtos.add-sprite.name": {
+    "message": "Add a Sprite",
+    "description": "Name for the 'Add a Sprite' how-to"
+  },
+  "gui.howtos.add-sprite.step_addSprite": {
+    "message": "Add a Sprite",
+    "description": "Step name for 'Add a new sprite' step"
+  },
+  "gui.howtos.add-a-backdrop.name": {
+    "message": "Add a Backdrop",
+    "description": "Name for the 'Add a Backdrop' how-to"
+  },
+  "gui.howtos.add-a-backdrop.step_addBackdrop": {
+    "message": "Add a Backdrop",
+    "description": "Step name for 'Add a Backdrop' step"
+  },
+  "gui.howtos.change-size.name": {
+    "message": "Change Size",
+    "description": "Name for the 'Change Size' how-to"
+  },
+  "gui.howtos.change-size.step_changeSize": {
+    "message": "Change Size",
+    "description": "Step name for 'Change Size' step"
+  },
+  "gui.howtos.glide-around.name": {
+    "message": "Glide Around",
+    "description": "Name for the 'Glide Around' how-to"
+  },
+  "gui.howtos.change-size.step_glideAroundBackAndForth": {
+    "message": "Glide Around",
+    "description": "Step name for 'Glide Around' step"
+  },
+  "gui.howtos.change-size.step_glideAroundPoint": {
+    "message": "Glide to a Point",
+    "description": "Step name for 'Glide to a Point' step"
+  },
+  "gui.howtos.record-a-sound.name": {
+    "message": "Record a Sound",
+    "description": "Record A Sound' how-to"
+  },
+  "gui.howtos.change-size.step_recordASoundSoundsTab": {
+    "message": "Click on the 'Sounds' Tab",
+    "description": "Step name for 'Click on the Sounds Tab' step"
+  },
+  "gui.howtos.change-size.step_recordASoundClickRecord": {
+    "message": "Click 'Record'",
+    "description": "Step name for 'Click Record' step"
+  },
+  "gui.howtos.change-size.step_recordASoundPressRecordButton": {
+    "message": "Press the Record Button",
+    "description": "Step name for 'Press the Record Button' step"
+  },
+  "gui.howtos.change-size.step_recordASoundChooseSound": {
+    "message": "Choose Your Sound",
+    "description": "Step name for 'Choose Your Sound' step"
+  },
+  "gui.howtos.change-size.step_recordASoundPlayYourSound": {
+    "message": "Play Your Sound",
+    "description": "Step name for 'Play Your Sound' step"
+  },
+  "gui.howtos.spin-video.name": {
+    "message": "Make It Spin",
+    "description": "Name for the 'Make It Spin' how-to"
+  },
+  "gui.howtos.change-size.step_spinTurn": {
+    "message": "Turn",
+    "description": "Step name for 'Turn' step"
+  },
+  "gui.howtos.change-size.step_spinPointInDirection": {
+    "message": "Set Direction",
+    "description": "Step name for 'Set Direction' step"
+  },
+  "gui.howtos.hide-and-show.name": {
+    "message": "Hide and Show",
+    "description": "Name for the 'Hide and Show' how-to"
+  },
+  "gui.howtos.change-size.step_hideAndShow": {
+    "message": "Hide and Show",
+    "description": "Step name for 'Hide and Show' step"
+  },
+  "gui.howtos.switch-costume.name": {
+    "message": "Animate a Sprite",
+    "description": "Name for the 'Animate a Sprite' how-to"
+  },
+  "gui.howtos.change-size.step_switchCostumes": {
+    "message": "Animate a Sprite",
+    "description": "Step name for 'Animate a Sprite' step"
+  },
+  "gui.howtos.move-around-with-arrow-keys.name": {
+    "message": "Use Arrow Keys",
+    "description": "Name for the 'Use Arrow Keys' how-to"
+  },
+  "gui.howtos.add-a-backdrop.step_moveArrowKeysLeftRight": {
+    "message": "Move Left and Right",
+    "description": "Step name for 'Move Left and Right' step"
+  },
+  "gui.howtos.add-a-backdrop.step_moveArrowKeysUpDown": {
+    "message": "Move Up and Down",
+    "description": "Step name for 'Move Up and Down' step"
+  },
+  "gui.howtos.add-effects.name": {
+    "message": "Add Effects",
+    "description": "Name for the 'Add Effects' how-to"
+  },
+  "gui.howtos.videosens.step_addEffects": {
+    "message": "Add Effects",
+    "description": "Step name for 'Add Effects' step"
+  },
+  "gui.device.unselectDevice.name": {
+    "message": "Unselect device",
+    "description": "Name for the unselect device"
+  },
+  "gui.device.unselectDevice.description": {
+    "message": "Unselect the device, return to pure realtime programming mode.",
+    "description": "Description for the unselect device"
+  },
+  "gui.device.arduinoUno.description": {
+    "message": "A great board to get started with electronics and coding.",
+    "description": "Description for the Arduino Uno Rev3 device"
+  },
+  "gui.device.connectingMessage": {
+    "message": "Connecting",
+    "description": "Message to help people connect to their device."
+  },
+  "gui.device.arduinoNano.description": {
+    "message": "The Arduino Nano is a classic small board to build your projects with.",
+    "description": "Description for the Arduino Nano device"
+  },
+  "gui.device.arduinoLeonardo.description": {
+    "message": "The classic Arduino board that can act as a mouse or keyboard.",
+    "description": "Description for the Arduino Leonardo device"
+  },
+  "gui.device.arduinoMega2560.description": {
+    "message": "The 8-bit board with 54 digital pins, 16 analog inputs, and 4 serial ports.",
+    "description": "Description for the Arduino Mega 2560 device"
+  },
+  "gui.device.arduinoUnoR4Minima.description": {
+    "message": "Offers enhanced performance and expanded memory, maintaining compatibility with existing shields and accessories.",
+    "description": "Description for the Arduino Uno R4 Minima device"
+  },
+  "gui.device.arduinoUnoR4Wifi.description": {
+    "message": "Provides Wi-Fi and Bluetooth connectivity, along with an on-board 12x8 LED matrix for visualizations.",
+    "description": "Description for the Arduino Uno R4 WiFi device"
+  },
+  "gui.device.esp32.description": {
+    "message": "Wi-Fi & Bluetooth control board with rich functions.",
+    "description": "Description for the esp32 device"
+  },
+  "gui.device.esp32S3.description": {
+    "message": "Integrates a dedicated AI accelerator and rich peripheral set for efficient, low-power IoT edge and AI workloads.",
+    "description": "Description for the esp32-s3 device"
+  },
+  "gui.device.esp8266NodeMCU.description": {
+    "message": "Low-cost Wi-Fi SOC control board.",
+    "description": "Description for the esp8266 NodeMCU device"
+  },
+  "gui.device.k210MaixDock.description": {
+    "message": "A control board based on the K210 RISC-V chip that only has basic functions and leads out all IO pins.",
+    "description": "Description for the K210 MaixDock device"
+  },
+  "gui.device.k210Maixduino.description": {
+    "message": "The K210 RISC-V board with ESP32 inside.",
+    "description": "Description for the K210 maixduino device"
+  },
+  "gui.device.raspberryPiPicoIconURL.description": {
+    "message": "A friendly, easy-to-use microcontroller board that brings your electronics ideas to life.",
+    "description": "Description for the Raspberry Pi Pico device"
+  },
+  "gui.device.raspberryPiPicoWIconURL.description": {
+    "message": "A Pico with built-in 2.4 GHz Wi-Fi and Bluetooth 5.2, perfect for wireless and IoT projects.",
+    "description": "Description for the Raspberry Pi Pico W device"
+  },
+  "gui.device.raspberryPiPico2IconURL.description": {
+    "message": "High-performance dual-core MCU with ample RAM and flash for complex applications.",
+    "description": "Description for the Raspberry Pi Pico 2 device"
+  },
+  "gui.device.raspberryPiPico2WIconURL.description": {
+    "message": "Built-in 2.4 GHz Wi-Fi and Bluetooth for seamless wireless IoT and smart-home integration.",
+    "description": "Description for the Raspberry Pi Pico 2 W device"
+  },
+  "gui.device.microbit.description": {
+    "message": "The pocket-sized computer transforming digital skills learning.",
+    "description": "Description for the micro:bit device"
+  },
+  "gui.device.microbitV2.description": {
+    "message": "Upgraded processor, built-In speaker and microphone, touch sensitive logo.",
+    "description": "Description for the micro:bit V2 device"
+  },
+  "gui.device.makeymakey.description": {
+    "message": "Make anything into a key.",
+    "description": "Description for the Makey Makey device"
+  },
+  "gui.extension.music.name": {
+    "message": "Music",
+    "description": "Name for the 'Music' extension"
+  },
+  "gui.extension.music.description": {
+    "message": "Play instruments and drums.",
+    "description": "Description for the 'Music' extension"
+  },
+  "gui.extension.pen.name": {
+    "message": "Pen",
+    "description": "Name for the 'Pen' extension"
+  },
+  "gui.extension.pen.description": {
+    "message": "Draw with your sprites.",
+    "description": "Description for the 'Pen' extension"
+  },
+  "gui.extension.videosensing.name": {
+    "message": "Video Sensing",
+    "description": "Name for the 'Video Sensing' extension"
+  },
+  "gui.extension.videosensing.description": {
+    "message": "Sense motion with the camera.",
+    "description": "Description for the 'Video Sensing' extension"
+  },
+  "gui.extension.text2speech.name": {
+    "message": "Text to Speech",
+    "description": "Name for the Text to Speech extension"
+  },
+  "gui.extension.text2speech.description": {
+    "message": "Make your projects talk.",
+    "description": "Description for the Text to speech extension"
+  },
+  "gui.extension.translate.name": {
+    "message": "Translate",
+    "description": "Name for the Translate extension"
+  },
+  "gui.extension.translate.description": {
+    "message": "Translate text into many languages.",
+    "description": "Description for the Translate extension"
+  },
+  "gui.extension.makeymakey.name": {
+    "message": "Makey Makey",
+    "description": "Name for the Makey Makey extension"
+  },
+  "gui.extension.makeymakey.description": {
+    "message": "Make anything into a key.",
+    "description": "Description for the 'Makey Makey' extension"
+  },
+  "gui.libraryTags.all": {
+    "message": "All",
+    "description": "Tag for filtering a library for everything"
+  },
+  "gui.libraryTags.animals": {
+    "message": "Animals",
+    "description": "Tag for filtering a library for animals"
+  },
+  "gui.libraryTags.dance": {
+    "message": "Dance",
+    "description": "Tag for filtering a library for dance"
+  },
+  "gui.libraryTags.effects": {
+    "message": "Effects",
+    "description": "Tag for filtering a library for effects"
+  },
+  "gui.libraryTags.fantasy": {
+    "message": "Fantasy",
+    "description": "Tag for filtering a library for fantasy"
+  },
+  "gui.libraryTags.fashion": {
+    "message": "Fashion",
+    "description": "Tag for filtering a library for fashion"
+  },
+  "gui.libraryTags.food": {
+    "message": "Food",
+    "description": "Tag for filtering a library for food"
+  },
+  "gui.libraryTags.indoors": {
+    "message": "Indoors",
+    "description": "Tag for filtering a library for indoors"
+  },
+  "gui.libraryTags.loops": {
+    "message": "Loops",
+    "description": "Tag for filtering a library for loops"
+  },
+  "gui.libraryTags.music": {
+    "message": "Music",
+    "description": "Tag for filtering a library for music"
+  },
+  "gui.libraryTags.notes": {
+    "message": "Notes",
+    "description": "Tag for filtering a library for notes"
+  },
+  "gui.libraryTags.outdoors": {
+    "message": "Outdoors",
+    "description": "Tag for filtering a library for outdoors"
+  },
+  "gui.libraryTags.patterns": {
+    "message": "Patterns",
+    "description": "Tag for filtering a library for patterns"
+  },
+  "gui.libraryTags.people": {
+    "message": "People",
+    "description": "Tag for filtering a library for people"
+  },
+  "gui.libraryTags.percussion": {
+    "message": "Percussion",
+    "description": "Tag for filtering a library for percussion"
+  },
+  "gui.libraryTags.space": {
+    "message": "Space",
+    "description": "Tag for filtering a library for space"
+  },
+  "gui.libraryTags.sports": {
+    "message": "Sports",
+    "description": "Tag for filtering a library for sports"
+  },
+  "gui.libraryTags.underwater": {
+    "message": "Underwater",
+    "description": "Tag for filtering a library for underwater"
+  },
+  "gui.libraryTags.voice": {
+    "message": "Voice",
+    "description": "Tag for filtering a library for voice"
+  },
+  "gui.libraryTags.wacky": {
+    "message": "Wacky",
+    "description": "Tag for filtering a library for wacky"
+  },
+  "gui.libraryTags.animation": {
+    "message": "Animation",
+    "description": "Tag for filtering a library for animation"
+  },
+  "gui.libraryTags.art": {
+    "message": "Art",
+    "description": "Tag for filtering a library for art"
+  },
+  "gui.libraryTags.games": {
+    "message": "Games",
+    "description": "Tag for filtering a library for games"
+  },
+  "gui.libraryTags.stories": {
+    "message": "Stories",
+    "description": "Tag for filtering a library for stories"
+  },
+  "gui.libraryTags.letters": {
+    "message": "Letters",
+    "description": "Tag for filtering a library for letters"
+  },
+  "gui.opcodeLabels.direction": {
+    "message": "direction",
+    "description": "Label for the direction monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.xposition": {
+    "message": "x position",
+    "description": "Label for the x position monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.yposition": {
+    "message": "y position",
+    "description": "Label for the y position monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.size": {
+    "message": "size",
+    "description": "Label for the size monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.costumename": {
+    "message": "costume name",
+    "description": "Label for the costume name monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.costumenumber": {
+    "message": "costume number",
+    "description": "Label for the costume number monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.backdropname": {
+    "message": "backdrop name",
+    "description": "Label for the backdrop name monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.backdropnumber": {
+    "message": "backdrop number",
+    "description": "Label for the backdrop number monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.volume": {
+    "message": "volume",
+    "description": "Label for the volume monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.tempo": {
+    "message": "tempo",
+    "description": "Label for the tempo monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.answer": {
+    "message": "answer",
+    "description": "Label for the answer monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.loudness": {
+    "message": "loudness",
+    "description": "Label for the loudness monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.username": {
+    "message": "username",
+    "description": "Label for the username monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.year": {
+    "message": "year",
+    "description": "Label for the current year monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.month": {
+    "message": "month",
+    "description": "Label for the current month monitor when shown on the stage."
+  },
+  "gui.opcodeLabels.date": {
+    "message": "date",
+    "description": "Label for the current date monitor when shown on the stage. Shows the current day of the month"
+  },
+  "gui.opcodeLabels.dayofweek": {
+    "message": "day of week",
+    "description": "Label for the current day of week monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.hour": {
+    "message": "hour",
+    "description": "Label for the current hour monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.minute": {
+    "message": "minute",
+    "description": "Label for the current minute monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.second": {
+    "message": "second",
+    "description": "Label for the current second monitor when shown on the stage"
+  },
+  "gui.opcodeLabels.timer": {
+    "message": "timer",
+    "description": "Label for the timer monitor when shown on the stage"
+  },
+  "gui.projectLoader.loadError": {
+    "message": "The project file that was selected failed to load.",
+    "description": "An error that displays when a local project file fails to load."
+  },
+  "gui.sharedMessages.backdrop": {
+    "message": "backdrop{index}",
+    "description": "Default name for a new backdrop, scratch will automatically adjust the number if necessary"
+  },
+  "gui.sharedMessages.costume": {
+    "message": "costume{index}",
+    "description": "Default name for a new costume, scratch will automatically adjust the number if necessary"
+  },
+  "gui.sharedMessages.sprite": {
+    "message": "Sprite{index}",
+    "description": "Default name for a new sprite, scratch will automatically adjust the number if necessary"
+  },
+  "gui.sharedMessages.pop": {
+    "message": "pop",
+    "description": "Name of the pop sound, the default sound added to a sprite"
+  },
+  "gui.sharedMessages.replaceProjectWarning": {
+    "message": "Replace contents of the current project?",
+    "description": "Confirmation that user wants to overwrite the current project contents"
+  },
+  "gui.sharedMessages.clearCacheWarning": {
+    "message": "Make sure you want to clear cache and restart?",
+    "description": "Confirmation that user wants clear cache"
+  },
+  "gui.sharedMessages.loadFromComputerTitle": {
+    "message": "Load from your computer",
+    "description": "Title for uploading a project from your computer"
+  },
+  "gui.gui.defaultProjectTitle": {
+    "message": "OpenBlock Project",
+    "description": "Default title for project"
+  },
+  "gui.desktopMenuBar.about": {
+    "message": "About",
+    "description": "Menu bar item for about"
+  },
+  "gui.desktopMenuBar.license": {
+    "message": "License",
+    "description": "Menu bar item for license"
+  },
+  "gui.menuBar.privacyPolicy": {
+    "message": "Privacy policy",
+    "description": "Menu bar item for privacy policy"
+  },
+  "gui.menuBar.dataSettings": {
+    "message": "Data settings",
+    "description": "Menu bar item for data settings"
+  }
+}

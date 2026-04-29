@@ -555,6 +555,7 @@ class MenuBar extends React.Component {
         );
         // Show the About button only if we have a handler for it (like in the desktop app)
         const aboutButton = this.buildAboutMenu(this.props.onClickAbout);
+        const compactHeader = this.state.isOverflow || this.props.locale === 'pt-br';
         return (
             <Box
                 className={classNames(
@@ -571,7 +572,7 @@ class MenuBar extends React.Component {
                                 [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
                             })}
                             draggable={false}
-                            src={this.state.isOverflow ? this.props.logoSmall : this.props.logo}
+                            src={compactHeader ? this.props.logoSmall : this.props.logo}
                             onClick={this.props.onClickLogo}
                         />
                     </div>
@@ -597,7 +598,7 @@ class MenuBar extends React.Component {
                             })}
                             onMouseUp={this.props.onClickFile}
                         >
-                            {this.state.isOverflow ? (
+                            {compactHeader ? (
                                 <img
                                     className={styles.fileIcon}
                                     src={fileIcon}
@@ -670,7 +671,7 @@ class MenuBar extends React.Component {
                         onMouseUp={this.props.isRealtimeMode ? this.props.onClickEdit : null}
                     >
                         <div className={classNames(styles.editMenu)} >
-                            {this.state.isOverflow ? (
+                            {compactHeader ? (
                                 <img
                                     className={styles.editIcon}
                                     src={editIcon}
@@ -727,15 +728,14 @@ class MenuBar extends React.Component {
                         />
                         {
                             this.props.deviceName ? (
-                                <span>
+                                compactHeader ? null : <span>
                                     {this.props.deviceName}
                                 </span>
-                            ) : (
-                                <FormattedMessage
-                                    defaultMessage="No device selected"
-                                    description="Text for menubar no device select button"
-                                    id="gui.menuBar.noDeviceSelected"
-                                />
+                            ) : (compactHeader ? null : <FormattedMessage
+                                defaultMessage="No device selected"
+                                description="Text for menubar no device select button"
+                                id="gui.menuBar.noDeviceSelected"
+                            />
                             )}
                     </div>
                     <Divider className={classNames(styles.divider)} />
@@ -749,7 +749,7 @@ class MenuBar extends React.Component {
                                     className={styles.connectedIcon}
                                     src={connectedIcon}
                                 />
-                                {this.state.isOverflow ? null : this.props.peripheralName}
+                                {compactHeader ? null : this.props.peripheralName}
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
@@ -757,7 +757,7 @@ class MenuBar extends React.Component {
                                     className={styles.unconnectedIcon}
                                     src={unconnectedIcon}
                                 />
-                                {this.state.isOverflow ? null : <FormattedMessage
+                                {compactHeader ? null : <FormattedMessage
                                     defaultMessage="Unconnected"
                                     description="Text for menubar unconnected button"
                                     id="gui.menuBar.noConnection"
@@ -774,7 +774,7 @@ class MenuBar extends React.Component {
                         />
                     </div>*/}
                 </div>
-                {this.state.isOverflow ? null :
+                {compactHeader ? null :
                     (<div className={styles.fileMenu}>
                         {this.props.canEditTitle ? (
                             <div className={classNames(styles.menuBarItem, styles.growable)}>
@@ -831,7 +831,7 @@ class MenuBar extends React.Component {
                             className={styles.wikiIcon}
                             src={wikiIcon}
                         />
-                        {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.wiki} />}
+                        {compactHeader ? null : <FormattedMessage {...ariaMessages.wiki} />}
                     </div>
                     <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
@@ -842,7 +842,7 @@ class MenuBar extends React.Component {
                             className={styles.helpIcon}
                             src={helpIcon}
                         />
-                        {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.tutorials} />}
+                        {compactHeader ? null : <FormattedMessage {...ariaMessages.tutorials} />}
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div
@@ -869,7 +869,7 @@ class MenuBar extends React.Component {
                             draggable={false}
                             src={uploadFirmwareIcon}
                         />
-                        {this.state.isOverflow ? null : <FormattedMessage
+                        {compactHeader ? null : <FormattedMessage
                             defaultMessage="Upload Firmware"
                             description="Button to upload the realtime firmware"
                             id="gui.menuBar.uploadFirmware"
@@ -877,11 +877,11 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div className={classNames(styles.menuBarItem, styles.programModeGroup)}>
-                        <FormattedMessage
+                        {compactHeader ? null : <FormattedMessage
                             defaultMessage="Program Mode"
                             description="Button to switch to upload mode"
                             id="gui.menu-bar.programMode"
-                        />
+                        />}
                         <Switch
                             className={styles.programModeSwitch}
                             onChange={this.handleProgramModeSwitchOnChange}
