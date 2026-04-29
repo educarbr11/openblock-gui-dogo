@@ -2,7 +2,7 @@ name: Publish Npm Package And Deploy Github Pages
 
 on:
   push:
-    branches: [ develop, main, desktop ]
+    branches: [ develop, main, desktop, dogo ]
     paths-ignore:
       - 'README.md'
       - '.github/*'
@@ -15,6 +15,13 @@ jobs:
         node-version: [12.x, 14.x, 16.x]
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout OpenBlock VM
+        uses: actions/checkout@v4
+        with:
+          repository: educarbr11/openblock-vm
+          ref: dogo-dev
+          path: openblock-vm
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -48,6 +55,7 @@ jobs:
           NODE_ENV: production
           GA_ID: ${{ secrets.GA_ID }}
           NODE_OPTIONS: --max-old-space-size=4000
+          OPENBLOCK_VM_PATH: ${{ github.workspace }}/openblock-vm
         run: npm run build
 
   publish:
@@ -57,6 +65,13 @@ jobs:
       NPM_TAG: latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout OpenBlock VM
+        uses: actions/checkout@v4
+        with:
+          repository: educarbr11/openblock-vm
+          ref: dogo-dev
+          path: openblock-vm
 
       - uses: actions/setup-node@v4
         with:
@@ -112,6 +127,7 @@ jobs:
           NODE_ENV: production
           GA_ID: ${{ secrets.GA_ID }}
           NODE_OPTIONS: --max-old-space-size=4000
+          OPENBLOCK_VM_PATH: ${{ github.workspace }}/openblock-vm
         run: npm run build
 
       - name: Get package main version

@@ -15,6 +15,14 @@ var postcssImport = require('postcss-import');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
+const workspaceRoot = path.resolve(__dirname, '..');
+const localOpenBlockVMPath = process.env.OPENBLOCK_VM_PATH ?
+    path.resolve(process.env.OPENBLOCK_VM_PATH) :
+    path.resolve(__dirname, '..', 'openblock-vm');
+const hasLocalOpenBlockVM = require('fs').existsSync(path.join(localOpenBlockVMPath, 'package.json'));
+const openBlockVMPath = hasLocalOpenBlockVM ?
+    localOpenBlockVMPath :
+    path.resolve(__dirname, 'node_modules', 'openblock-vm');
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -30,7 +38,12 @@ const base = {
         chunkFilename: 'chunks/[name].js'
     },
     resolve: {
-        symlinks: false
+        symlinks: false,
+        alias: {
+            ...(hasLocalOpenBlockVM ? {
+                'openblock-vm': localOpenBlockVMPath
+            } : {})
+        }
     },
     module: {
         rules: [{
@@ -38,6 +51,7 @@ const base = {
             loader: 'babel-loader',
             include: [
                 path.resolve(__dirname, 'src'),
+                ...(hasLocalOpenBlockVM ? [path.join(localOpenBlockVMPath, 'src')] : []),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
@@ -51,7 +65,8 @@ const base = {
                     '@babel/plugin-transform-async-to-generator',
                     '@babel/plugin-proposal-object-rest-spread',
                     ['react-intl', {
-                        messagesDir: './translations/messages/'
+                        messagesDir: './translations/messages/',
+                        workspaceRoot
                     }]],
                 presets: ['@babel/preset-env', '@babel/preset-react']
             }
@@ -187,7 +202,7 @@ module.exports = [
             }]),
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
-                context: 'node_modules/openblock-vm/dist/web'
+                context: path.join(openBlockVMPath, 'dist', 'web')
             }])
         ])
     })
@@ -227,7 +242,7 @@ module.exports = [
                 }]),
                 new CopyWebpackPlugin([{
                     from: 'extension-worker.{js,js.map}',
-                    context: 'node_modules/openblock-vm/dist/web'
+                    context: path.join(openBlockVMPath, 'dist', 'web')
                 }]),
                 // Include library JSON files for scratch-desktop to use for downloading
                 new CopyWebpackPlugin([{
