@@ -18,7 +18,7 @@ import unFullScreenIcon from './icon--unfullscreen.svg';
 
 import signalIcon from './icon--signal.svg';
 
-import openblockLogo from '../menu-bar/openblock-logo.svg';
+import openblockLogo from '../../../static/dogoblock_logo_full.svg';
 import styles from './stage-header.css';
 
 const messages = defineMessages({
@@ -76,7 +76,7 @@ const StageHeaderComponent = function (props) {
                     target="_blank"
                 >
                     <img
-                        alt="OpenBlock"
+                        alt="DoGoBlock"
                         src={openblockLogo}
                     />
                 </a>

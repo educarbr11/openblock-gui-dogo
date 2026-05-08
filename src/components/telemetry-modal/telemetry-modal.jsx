@@ -11,13 +11,13 @@ import styles from './telemetry-modal.css';
 const messages = defineMessages({
     label: {
         id: 'gui.telemetryOptIn.label',
-        defaultMessage: 'Report statistics to improve OpenBlock',
-        description: 'OpenBlock telemetry modal label - for accessibility'
+        defaultMessage: 'Report statistics to improve DoGoBlock',
+        description: 'DoGoBlock telemetry modal label - for accessibility'
     },
     bodyText1: {
-        defaultMessage: 'The OpenBlock Team is always looking to better understand how OpenBlock is used around the ' +
-            'world. To help support this effort, you can allow OpenBlock to automatically send usage information to ' +
-            'the OpenBlock Team.',
+        defaultMessage: 'The DoGoBlock Team is always looking to better understand how DoGoBlock is used around the ' +
+            'world. To help support this effort, you can allow DoGoBlock to automatically send usage information to ' +
+            'the DoGoBlock Team.',
         description: 'First paragraph of body text for telemetry opt-in modal',
         id: 'gui.telemetryOptIn.body1'
     },
@@ -30,7 +30,7 @@ const messages = defineMessages({
     },
     privacyPolicyLink: {
         defaultMessage: 'Privacy Policy',
-        description: 'Link to the OpenBlock privacy policy',
+        description: 'Link to the DoGoBlock privacy policy',
         id: 'gui.telemetryOptIn.privacyPolicyLink'
     },
     optInText: {
