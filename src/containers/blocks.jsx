@@ -61,6 +61,10 @@ const registerScratchMessages = ScratchBlocks => {
     ScratchBlocks.ScratchMsgs.locales['pt-br'] = ptBrScratchMessages;
 };
 
+const defaultScratchExtensions = [
+    'pen'
+];
+
 class Blocks extends React.Component {
     constructor (props) {
         super(props);
@@ -96,6 +100,7 @@ class Blocks extends React.Component {
             'onActivateColorPicker',
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
+            'loadDefaultScratchExtensions',
             'setBlocks',
             'setLocale',
             'workspaceToCode'
@@ -174,6 +179,7 @@ class Blocks extends React.Component {
         if (this.props.isVisible) {
             this.setLocale();
         }
+        this.loadDefaultScratchExtensions();
     }
     shouldComponentUpdate (nextProps, nextState) {
         return (
@@ -611,6 +617,14 @@ class Blocks extends React.Component {
     handleBlocksInfoUpdate (extensionInfo) {
         // @todo Later we should replace this to avoid all the warnings from redefining blocks.
         this.handleScratchExtensionAdded(extensionInfo);
+    }
+    loadDefaultScratchExtensions () {
+        defaultScratchExtensions.forEach(extensionId => {
+            if (!this.props.vm.extensionManager.isExtensionLoaded(extensionId)) {
+                this.props.vm.extensionManager.loadExtensionURL(extensionId)
+                    .catch(err => log.error(err));
+            }
+        });
     }
     handleCategorySelected (categoryId) {
         const extension = extensionData.find(ext => ext.extensionId === categoryId);
