@@ -50,7 +50,7 @@ document.body.appendChild(appTarget);
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(1702).default(appTarget);
+  __webpack_require__(1703).default(appTarget);
 } else {
   _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
   var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
@@ -74,7 +74,7 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 
 /***/ }),
 
-/***/ 1701:
+/***/ 1702:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(22)(false);
@@ -91,7 +91,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 1702:
+/***/ 1703:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -266,7 +266,7 @@ var handleShowMessageBox = function handleShowMessageBox(type, message) {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1701);
+var content = __webpack_require__(1702);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
