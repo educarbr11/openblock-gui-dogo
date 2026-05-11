@@ -18,7 +18,8 @@
     "test:lint": "eslint . --ext .js,.jsx --fix",
     "test:unit": "",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
-    "watch": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --watch"
+    "watch": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --watch",
+    "deploy:web": "npm run build"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
