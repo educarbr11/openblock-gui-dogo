@@ -42,11 +42,19 @@ const ScanningStep = props => (
                                 className={classNames(styles.radarSmall, styles.radarSpin)}
                                 src={radarIcon}
                             />
-                            <FormattedMessage
-                                defaultMessage="Looking for devices"
-                                description="Text shown while scanning for devices"
-                                id="gui.connection.scanning.lookingforperipherals"
-                            />
+                            {props.isChromeOS ? (
+                                <FormattedMessage
+                                    defaultMessage="Use Refresh to select a serial device in Chrome"
+                                    description="Text shown while waiting for Web Serial device selection"
+                                    id="gui.connection.scanning.webSerialSelect"
+                                />
+                            ) : (
+                                <FormattedMessage
+                                    defaultMessage="Looking for devices"
+                                    description="Text shown while scanning for devices"
+                                    id="gui.connection.scanning.lookingforperipherals"
+                                />
+                            )}
                         </div>
                     </div>
                 ) : (
@@ -107,6 +115,7 @@ const ScanningStep = props => (
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    isChromeOS: PropTypes.bool,
     isListAll: PropTypes.bool.isRequired,
     isSerialport: PropTypes.bool,
     onClickListAll: PropTypes.func.isRequired,

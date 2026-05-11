@@ -114,6 +114,9 @@ class ConnectionModal extends React.Component {
         });
     }
     render () {
+        const isChromeOS = typeof navigator !== 'undefined' &&
+            typeof navigator.userAgent === 'string' &&
+            navigator.userAgent.indexOf('CrOS') !== -1;
         return (
             <ConnectionModalComponent
                 connectingMessage={this.state.device && this.state.device.connectingMessage}
@@ -121,6 +124,7 @@ class ConnectionModal extends React.Component {
                 connectionSmallIconURL={this.state.device && this.state.device.connectionSmallIconURL}
                 errorMessage={this.state.errorMessage}
                 isSerialport={this.state.device && this.state.device.serialportRequired}
+                isChromeOS={isChromeOS}
                 isListAll={this.props.isListAll}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
                 deviceId={this.props.deviceId}
