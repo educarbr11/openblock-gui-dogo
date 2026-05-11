@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "GraphicaL User Interface for creating and running OpenBlock projects",
   "main": "./main/scratch-gui.js",
+  "openblockVmRevision": "6a1c7458",
   "scripts": {
     "build": "npm run clean && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --bail",
     "vercel-build": "rm -rf .openblock-vm && git clone --depth=1 --branch dogo-dev https://github.com/educarbr11/openblock-vm.git .openblock-vm && npm --prefix .openblock-vm ci && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" npm --prefix .openblock-vm run build && OPENBLOCK_VM_PATH=$PWD/.openblock-vm npm run build",
