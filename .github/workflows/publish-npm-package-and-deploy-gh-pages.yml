@@ -7,6 +7,11 @@ on:
       - 'README.md'
       - '.github/*'
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -173,3 +178,17 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./build
           destination_dir: ${{ steps.get-deploy-destination.outputs.destination_dir }}
+
+      - name: Configure GitHub Pages
+        if: ${{ steps.get-branch-name.outputs.short_ref == 'dogo' }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        if: ${{ steps.get-branch-name.outputs.short_ref == 'dogo' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./build
+
+      - name: Deploy GitHub Pages
+        if: ${{ steps.get-branch-name.outputs.short_ref == 'dogo' }}
+        uses: actions/deploy-pages@v4
