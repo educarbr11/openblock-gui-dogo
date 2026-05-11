@@ -1,5 +1,4 @@
 import 'openblock-blocks/arduino_compressed';
-import './arduino-pin-input-generator';
 import 'openblock-blocks/python_compressed';
 
 import {DeviceType} from './device';
