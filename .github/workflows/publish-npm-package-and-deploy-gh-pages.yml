@@ -156,11 +156,20 @@ jobs:
 
       - name: Get branch name
         id: get-branch-name
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        run: echo "short_ref=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: Get deploy destination
+        id: get-deploy-destination
+        run: |
+          if [ "${{ steps.get-branch-name.outputs.short_ref }}" = "dogo" ]; then
+            echo "destination_dir=." >> $GITHUB_OUTPUT
+          else
+            echo "destination_dir=${{ steps.get-branch-name.outputs.short_ref }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./build
-          destination_dir: ${{ steps.get-branch-name.outputs.short_ref }}
+          destination_dir: ${{ steps.get-deploy-destination.outputs.destination_dir }}
