@@ -786,7 +786,7 @@ class Blocks extends React.Component {
                         onOk={this.handlePromptCallback}
                     />
                 ) : null}
-                {deviceLibraryVisible ? (
+                {process.env.OPENBLOCK_TAURI_LIGHT !== 'true' && deviceLibraryVisible ? (
                     <DeviceLibrary
                         vm={vm}
                         onDeviceSelected={this.handleDeviceSelected}

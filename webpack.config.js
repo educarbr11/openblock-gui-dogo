@@ -13,7 +13,8 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
-const STATIC_PATH = process.env.STATIC_PATH || '/static';
+const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 const workspaceRoot = path.resolve(__dirname, '..');
 const localOpenBlockVMPath = process.env.OPENBLOCK_VM_PATH ?
@@ -173,7 +174,8 @@ module.exports = [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
+                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"',
+                'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],

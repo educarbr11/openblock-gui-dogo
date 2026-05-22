@@ -558,6 +558,7 @@ class MenuBar extends React.Component {
         const compactBranding = this.state.isOverflow;
         const compactSecondaryActions = this.state.isOverflow;
         const showEssentialLabels = true;
+        const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
         return (
             <Box
                 className={classNames(
@@ -719,60 +720,64 @@ class MenuBar extends React.Component {
                             </MenuSection>
                         </MenuBarMenu>
                     </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
-                        onMouseUp={this.handleSelectDeviceMouseUp}
-                    >
-                        <img
-                            className={styles.deviceIcon}
-                            src={deviceIcon}
-                        />
-                        {
-                            this.props.deviceName ? (
-                                showEssentialLabels ? <span className={styles.essentialLabel}>
-                                    {this.props.deviceName}
-                                </span> : null
-                            ) : (showEssentialLabels ? <span className={styles.essentialLabel}>
-                                <FormattedMessage
-                                    defaultMessage="No device selected"
-                                    description="Text for menubar no device select button"
-                                    id="gui.menuBar.noDeviceSelected"
-                                />
-                            </span> : null
-                            )}
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
-                        onMouseUp={this.handleConnectionMouseUp}
-                    >
-                        {this.props.peripheralName ? (
-                            <React.Fragment>
+                    {isTauriLight ? null : (
+                        <React.Fragment>
+                            <Divider className={classNames(styles.divider)} />
+                            <div
+                                className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
+                                onMouseUp={this.handleSelectDeviceMouseUp}
+                            >
                                 <img
-                                    className={styles.connectedIcon}
-                                    src={connectedIcon}
+                                    className={styles.deviceIcon}
+                                    src={deviceIcon}
                                 />
-                                {showEssentialLabels ? <span className={styles.essentialLabel}>
-                                    {this.props.peripheralName}
-                                </span> : null}
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <img
-                                    className={styles.unconnectedIcon}
-                                    src={unconnectedIcon}
-                                />
-                                {showEssentialLabels ? <span className={styles.essentialLabel}>
-                                    <FormattedMessage
-                                        defaultMessage="Unconnected"
-                                        description="Text for menubar unconnected button"
-                                        id="gui.menuBar.noConnection"
-                                    />
-                                </span> : null}
-                            </React.Fragment>
-                        )}
-                    </div>
+                                {
+                                    this.props.deviceName ? (
+                                        showEssentialLabels ? <span className={styles.essentialLabel}>
+                                            {this.props.deviceName}
+                                        </span> : null
+                                    ) : (showEssentialLabels ? <span className={styles.essentialLabel}>
+                                        <FormattedMessage
+                                            defaultMessage="No device selected"
+                                            description="Text for menubar no device select button"
+                                            id="gui.menuBar.noDeviceSelected"
+                                        />
+                                    </span> : null
+                                    )}
+                            </div>
+                            <Divider className={classNames(styles.divider)} />
+                            <div
+                                className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
+                                onMouseUp={this.handleConnectionMouseUp}
+                            >
+                                {this.props.peripheralName ? (
+                                    <React.Fragment>
+                                        <img
+                                            className={styles.connectedIcon}
+                                            src={connectedIcon}
+                                        />
+                                        {showEssentialLabels ? <span className={styles.essentialLabel}>
+                                            {this.props.peripheralName}
+                                        </span> : null}
+                                    </React.Fragment>
+                                ) : (
+                                    <React.Fragment>
+                                        <img
+                                            className={styles.unconnectedIcon}
+                                            src={unconnectedIcon}
+                                        />
+                                        {showEssentialLabels ? <span className={styles.essentialLabel}>
+                                            <FormattedMessage
+                                                defaultMessage="Unconnected"
+                                                description="Text for menubar unconnected button"
+                                                id="gui.menuBar.noConnection"
+                                            />
+                                        </span> : null}
+                                    </React.Fragment>
+                                )}
+                            </div>
+                        </React.Fragment>
+                    )}
                     {/* <div
                         className={classNames(styles.menuBarItem)}
                     >
@@ -863,49 +868,56 @@ class MenuBar extends React.Component {
                             src={screenshotIcon}
                         />
                     </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
-                            this.props.peripheralName ? styles.hoverable : styles.disabled)}
-                        onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
-                            this.handleUploadFirmware : null}
-                    >
-                        <img
-                            alt="UploadFirmware"
-                            className={classNames(styles.uploadFirmwareLogo)}
-                            draggable={false}
-                            src={uploadFirmwareIcon}
-                        />
-                        {compactSecondaryActions ? null : <FormattedMessage
-                            defaultMessage="Upload Firmware"
-                            description="Button to upload the realtime firmware"
-                            id="gui.menuBar.uploadFirmware"
-                        />}
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div className={classNames(styles.menuBarItem, styles.programModeGroup, styles.essentialMenuItem)}>
-                        {showEssentialLabels ? <span className={styles.programModeLabel}>
-                            <FormattedMessage
-                                defaultMessage="Program Mode"
-                                description="Button to switch to upload mode"
-                                id="gui.menu-bar.programMode"
-                            />
-                        </span> : null}
-                        <Switch
-                            className={styles.programModeSwitch}
-                            onChange={this.handleProgramModeSwitchOnChange}
-                            checked={!this.props.isRealtimeMode}
-                            disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
-                            height={25}
-                            width={45}
-                            onColor={this.props.isToolboxUpdating ||
-                                !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
-                            offColor={this.props.isToolboxUpdating ||
-                                !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                        />
-                    </div>
+                    {isTauriLight ? null : (
+                        <React.Fragment>
+                            <Divider className={classNames(styles.divider)} />
+                            <div
+                                className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
+                                    this.props.peripheralName ? styles.hoverable : styles.disabled)}
+                                onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
+                                    this.handleUploadFirmware : null}
+                            >
+                                <img
+                                    alt="UploadFirmware"
+                                    className={classNames(styles.uploadFirmwareLogo)}
+                                    draggable={false}
+                                    src={uploadFirmwareIcon}
+                                />
+                                {compactSecondaryActions ? null : <FormattedMessage
+                                    defaultMessage="Upload Firmware"
+                                    description="Button to upload the realtime firmware"
+                                    id="gui.menuBar.uploadFirmware"
+                                />}
+                            </div>
+                            <Divider className={classNames(styles.divider)} />
+                            <div
+                                className={classNames(styles.menuBarItem, styles.programModeGroup,
+                                    styles.essentialMenuItem)}
+                            >
+                                {showEssentialLabels ? <span className={styles.programModeLabel}>
+                                    <FormattedMessage
+                                        defaultMessage="Program Mode"
+                                        description="Button to switch to upload mode"
+                                        id="gui.menu-bar.programMode"
+                                    />
+                                </span> : null}
+                                <Switch
+                                    className={styles.programModeSwitch}
+                                    onChange={this.handleProgramModeSwitchOnChange}
+                                    checked={!this.props.isRealtimeMode}
+                                    disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
+                                    height={25}
+                                    width={45}
+                                    onColor={this.props.isToolboxUpdating ||
+                                        !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
+                                    offColor={this.props.isToolboxUpdating ||
+                                        !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
+                                    uncheckedIcon={false}
+                                    checkedIcon={false}
+                                />
+                            </div>
+                        </React.Fragment>
+                    )}
                     {isScratchDesktop() ? (
                         <div
                             className={classNames(styles.menuBarItem, styles.hoverable, {

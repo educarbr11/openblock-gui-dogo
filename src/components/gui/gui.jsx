@@ -147,6 +147,8 @@ const GUIComponent = props => {
         return <Box {...componentProps}>{children}</Box>;
     }
 
+    const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+
     const tabClassNames = {
         tabs: styles.tabs,
         tab: classNames(tabStyles.reactTabsTab, styles.tab),
@@ -217,12 +219,12 @@ const GUIComponent = props => {
                         className={styles.alertsContainer}
                     />
                 ) : null}
-                {connectionModalVisible ? (
+                {!isTauriLight && connectionModalVisible ? (
                     <ConnectionModal
                         vm={vm}
                     />
                 ) : null}
-                {uploadProgressVisible ? (
+                {!isTauriLight && uploadProgressVisible ? (
                     <UploadProgress
                         vm={vm}
                     />
@@ -420,7 +422,7 @@ const GUIComponent = props => {
                                 />
                             </Box>
                         </Box>
-                        {((isRealtimeMode === false) && (stageSizeMode !== STAGE_SIZE_MODES.hide)) ? (
+                        {!isTauriLight && ((isRealtimeMode === false) && (stageSizeMode !== STAGE_SIZE_MODES.hide)) ? (
                             <Hardware
                                 vm={vm}
                                 stageSize={stageSize}
@@ -428,7 +430,7 @@ const GUIComponent = props => {
                         }
                     </Box>
                     <DragLayer />
-                    {(isRealtimeMode === false) ? (
+                    {!isTauriLight && (isRealtimeMode === false) ? (
                         <HardwareHeader
                             vm={vm}
                             stageSize={stageSize}

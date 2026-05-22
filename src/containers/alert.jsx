@@ -22,6 +22,10 @@ class Alert extends React.Component {
         this.props.onCloseAlert(this.props.index);
     }
     handleUploadFirmware () {
+        if (process.env.OPENBLOCK_TAURI_LIGHT === 'true') {
+            this.handleOnCloseAlert();
+            return;
+        }
         if (this.props.deviceName) {
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onOpenUploadProgress();
@@ -31,6 +35,10 @@ class Alert extends React.Component {
         this.handleOnCloseAlert();
     }
     handleOnReconnect () {
+        if (process.env.OPENBLOCK_TAURI_LIGHT === 'true') {
+            this.handleOnCloseAlert();
+            return;
+        }
         this.props.onOpenConnectionModal();
         this.handleOnCloseAlert();
     }
@@ -63,8 +71,8 @@ class Alert extends React.Component {
                     level={level}
                     message={message}
                     showDownload={showDownload}
-                    showUploadFirmware={showUploadFirmware}
-                    showReconnect={showReconnect}
+                    showUploadFirmware={process.env.OPENBLOCK_TAURI_LIGHT !== 'true' && showUploadFirmware}
+                    showReconnect={process.env.OPENBLOCK_TAURI_LIGHT !== 'true' && showReconnect}
                     showSaveNow={showSaveNow}
                     onCloseAlert={this.handleOnCloseAlert}
                     onDownload={downloadProject}
