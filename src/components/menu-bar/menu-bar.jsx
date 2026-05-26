@@ -872,9 +872,9 @@ class MenuBar extends React.Component {
                         <React.Fragment>
                             <Divider className={classNames(styles.divider)} />
                             <div
-                                className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
+                                className={classNames(styles.menuBarItem, this.props.deviceId &&
                                     this.props.peripheralName ? styles.hoverable : styles.disabled)}
-                                onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
+                                onMouseUp={this.props.deviceId && this.props.peripheralName ?
                                     this.handleUploadFirmware : null}
                             >
                                 <img

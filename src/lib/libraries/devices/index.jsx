@@ -677,7 +677,8 @@ const deviceData = [
                 id="gui.device.connectingMessage"
             />
         ),
-        programMode: ['upload'],
+        programMode: ['realtime', 'upload'],
+        defaultProgramMode: 'realtime',
         programLanguage: ['block', 'microPython'],
         tags: ['microPython'],
         helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/microbit'
@@ -713,7 +714,8 @@ const deviceData = [
                 id="gui.device.connectingMessage"
             />
         ),
-        programMode: ['upload'],
+        programMode: ['realtime', 'upload'],
+        defaultProgramMode: 'realtime',
         programLanguage: ['block', 'microPython'],
         tags: ['microPython'],
         helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/microbit-v2'
