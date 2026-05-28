@@ -47,10 +47,12 @@ ConnectionModalComponent.propTypes = {
     connectingMessage: PropTypes.node.isRequired,
     connectionSmallIconURL: PropTypes.string,
     connectionTipIconURL: PropTypes.string,
+    firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
     name: PropTypes.node,
     onCancel: PropTypes.func.isRequired,
     onHelp: PropTypes.func.isRequired,
+    onUploadFirmware: PropTypes.func,
     phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired,
     title: PropTypes.string.isRequired,
     useAutoScan: PropTypes.bool.isRequired

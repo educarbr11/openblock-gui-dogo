@@ -1,4 +1,5 @@
 const defaultsDeep = require('lodash.defaultsdeep');
+const crypto = require('crypto');
 var path = require('path');
 var webpack = require('webpack');
 
@@ -12,6 +13,9 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
+
+const createHash = crypto.createHash;
+crypto.createHash = algorithm => createHash(algorithm === 'md4' ? 'sha256' : algorithm);
 
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');

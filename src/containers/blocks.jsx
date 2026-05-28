@@ -33,6 +33,7 @@ import {activateCustomProcedures, deactivateCustomProcedures} from '../reducers/
 import {updateMetrics} from '../reducers/workspace-metrics';
 import {setCodeEditorValue} from '../reducers/code';
 import {setDeviceId, setDeviceName, setDeviceType} from '../reducers/device';
+import {setConnectionModalDeviceId} from '../reducers/connection-modal';
 import {setSupportSwitchMode} from '../reducers/program-mode';
 import {setBaudrate} from '../reducers/hardware-console';
 
@@ -629,7 +630,7 @@ class Blocks extends React.Component {
     handleCategorySelected (categoryId) {
         const extension = extensionData.find(ext => ext.extensionId === categoryId);
         if (extension && extension.launchPeripheralConnectionFlow) {
-            this.handleConnectionModalStart();
+            this.handleConnectionModalStart(categoryId);
         }
 
         this.withToolboxUpdates(() => {
@@ -640,7 +641,7 @@ class Blocks extends React.Component {
         const device = this.props.deviceData.find(ext => ext.deviceId === categoryId);
 
         if (device && device.launchPeripheralConnectionFlow) {
-            this.handleConnectionModalStart();
+            this.handleConnectionModalStart(categoryId);
         }
 
         this.withToolboxUpdates(() => {
@@ -663,7 +664,8 @@ class Blocks extends React.Component {
         p.prompt.showCloudOption = (optVarType === this.ScratchBlocks.SCALAR_VARIABLE_TYPE) && this.props.canUseCloud;
         this.setState(p);
     }
-    handleConnectionModalStart () {
+    handleConnectionModalStart (deviceId) {
+        this.props.onSetConnectionModalDeviceId(deviceId || this.props.deviceId);
         this.props.onOpenConnectionModal();
     }
     handleStatusButtonUpdate () {
@@ -840,6 +842,7 @@ Blocks.propTypes = {
     onCodeEditorIsUnlocked: PropTypes.func,
     onDeviceSelected: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
+    onSetConnectionModalDeviceId: PropTypes.func,
     onOpenSoundRecorder: PropTypes.func,
     onToolboxWillUpdate: PropTypes.func,
     onToolboxDidUpdate: PropTypes.func,
@@ -947,6 +950,7 @@ const mapDispatchToProps = dispatch => ({
     onOpenConnectionModal: () => {
         dispatch(openConnectionModal());
     },
+    onSetConnectionModalDeviceId: deviceId => dispatch(setConnectionModalDeviceId(deviceId)),
     onOpenSoundRecorder: () => {
         dispatch(activateTab(SOUNDS_TAB_INDEX));
         dispatch(openSoundRecorder());

@@ -84,17 +84,37 @@ const ScanningStep = props => (
         </Box>
         <Box className={styles.bottomArea}>
             <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
-                <FormattedMessage
-                    defaultMessage="Select your device in the list above."
-                    description="Prompt for choosing a device to connect to"
-                    id="gui.connection.scanning.instructions"
-                />
+                {props.firmwareUploadRequired ? (
+                    <FormattedMessage
+                        defaultMessage="Send the firmware by USB, then select your micro:bit."
+                        description="Prompt for connecting a micro:bit Bluetooth device"
+                        id="gui.connection.scanning.microbitBleInstructions"
+                    />
+                ) : (
+                    <FormattedMessage
+                        defaultMessage="Select your device in the list above."
+                        description="Prompt for choosing a device to connect to"
+                        id="gui.connection.scanning.instructions"
+                    />
+                )}
             </Box>
             <Dots
                 className={styles.bottomAreaItem}
                 counter={0}
                 total={3}
             />
+            {props.firmwareUploadRequired ? (
+                <button
+                    className={classNames(styles.bottomAreaItem, styles.connectionButton)}
+                    onClick={props.onUploadFirmware}
+                >
+                    <FormattedMessage
+                        defaultMessage="Send firmware"
+                        description="Button for uploading firmware before connecting"
+                        id="gui.connection.sendFirmware"
+                    />
+                </button>
+            ) : null}
             <button
                 className={classNames(styles.bottomAreaItem, styles.connectionButton)}
                 onClick={props.onRefresh}
@@ -115,11 +135,13 @@ const ScanningStep = props => (
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
     isListAll: PropTypes.bool.isRequired,
     isSerialport: PropTypes.bool,
     onClickListAll: PropTypes.func.isRequired,
     onConnecting: PropTypes.func,
+    onUploadFirmware: PropTypes.func,
     onRefresh: PropTypes.func,
     peripheralList: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string,

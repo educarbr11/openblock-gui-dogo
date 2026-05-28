@@ -67,6 +67,7 @@ class ScanningStep extends React.Component {
         return (
             <ScanningStepComponent
                 connectionSmallIconURL={this.props.connectionSmallIconURL}
+                firmwareUploadRequired={this.props.firmwareUploadRequired}
                 isChromeOS={this.props.isChromeOS}
                 isSerialport={this.props.isSerialport}
                 isListAll={this.props.isListAll}
@@ -78,6 +79,7 @@ class ScanningStep extends React.Component {
                 onConnecting={this.props.onConnecting}
                 onClickListAll={this.handleClickListAll}
                 onRefresh={this.handleRefresh}
+                onUploadFirmware={this.props.onUploadFirmware}
             />
         );
     }
@@ -85,6 +87,7 @@ class ScanningStep extends React.Component {
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
     isSerialport: PropTypes.bool.isRequired,
     isListAll: PropTypes.bool.isRequired,
@@ -92,6 +95,7 @@ ScanningStep.propTypes = {
     onConnected: PropTypes.func.isRequired,
     onConnecting: PropTypes.func.isRequired,
     onClickListAll: PropTypes.func.isRequired,
+    onUploadFirmware: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

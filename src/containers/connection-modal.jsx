@@ -5,8 +5,9 @@ import ConnectionModalComponent, {PHASES} from '../components/connection-modal/c
 import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
 import {connect} from 'react-redux';
-import {closeConnectionModal} from '../reducers/modals';
+import {closeConnectionModal, openUploadProgress} from '../reducers/modals';
 import {setConnectionModalPeripheralName, setListAll} from '../reducers/connection-modal';
+import extensionData from '../lib/libraries/extensions/index.jsx';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -18,10 +19,12 @@ class ConnectionModal extends React.Component {
             'handleConnecting',
             'handleDisconnect',
             'handleError',
-            'handleHelp'
+            'handleHelp',
+            'handleUploadFirmware'
         ]);
+        const peripheralData = props.deviceData.concat(extensionData);
         this.state = {
-            device: this.props.deviceData.find(device => device.deviceId === props.deviceId),
+            device: peripheralData.find(device => (device.deviceId || device.extensionId) === props.deviceId),
             phase: props.vm.getPeripheralIsConnected(props.deviceId) ?
                 PHASES.connected : PHASES.scanning,
             peripheralName: null,
@@ -113,6 +116,10 @@ class ConnectionModal extends React.Component {
             label: this.props.deviceId
         });
     }
+    handleUploadFirmware () {
+        this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
+        this.props.onOpenUploadProgress();
+    }
     render () {
         const isChromeOS = typeof navigator !== 'undefined' &&
             typeof navigator.userAgent === 'string' &&
@@ -126,6 +133,7 @@ class ConnectionModal extends React.Component {
                 isSerialport={this.state.device && this.state.device.serialportRequired}
                 isChromeOS={isChromeOS}
                 isListAll={this.props.isListAll}
+                firmwareUploadRequired={this.state.device && this.state.device.firmwareUploadRequired}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
                 deviceId={this.props.deviceId}
                 name={this.state.device && this.state.device.name}
@@ -139,6 +147,7 @@ class ConnectionModal extends React.Component {
                 onClickListAll={this.props.onClickListAll}
                 onDisconnect={this.handleDisconnect}
                 onHelp={this.handleHelp}
+                onUploadFirmware={this.handleUploadFirmware}
                 onScanning={this.handleScanning}
             />
         );
@@ -154,13 +163,14 @@ ConnectionModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onConnected: PropTypes.func.isRequired,
     onClickListAll: PropTypes.func.isRequired,
+    onOpenUploadProgress: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
     baudrate: state.scratchGui.hardwareConsole.baudrate,
     deviceData: state.scratchGui.deviceData.deviceData,
-    deviceId: state.scratchGui.device.deviceId,
+    deviceId: state.scratchGui.connectionModal.deviceId || state.scratchGui.device.deviceId,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
     isListAll: state.scratchGui.connectionModal.isListAll
 });
@@ -174,7 +184,8 @@ const mapDispatchToProps = dispatch => ({
     },
     onClickListAll: state => {
         dispatch(setListAll(state));
-    }
+    },
+    onOpenUploadProgress: () => dispatch(openUploadProgress())
 });
 
 export default connect(
