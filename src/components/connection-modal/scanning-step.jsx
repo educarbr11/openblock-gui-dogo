@@ -14,7 +14,7 @@ import styles from './connection-modal.css';
 
 const ScanningStep = props => (
     <Box className={styles.body}>
-        {props.isSerialport ? (
+        {props.isSerialport || props.firmwareUploadRequired ? (
             <Box className={classNames(styles.bodyHeadArea)}>
                 <div className={styles.listAll}>
                     <FormattedMessage
