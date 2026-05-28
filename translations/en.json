@@ -2433,5 +2433,105 @@
   "gui.menuBar.dataSettings": {
     "message": "Data settings",
     "description": "Menu bar item for data settings"
+  },
+  "microbit.buttonsMenu.any": {
+    "message": "any",
+    "description": "Label for any element in button picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.moved": {
+    "message": "moved",
+    "description": "Label for moved gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.shaken": {
+    "message": "shaken",
+    "description": "Label for shaken gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.jumped": {
+    "message": "jumped",
+    "description": "Label for jumped gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.pinStateMenu.on": {
+    "message": "on",
+    "description": "Label for on element in pin state picker for micro:bit extension"
+  },
+  "microbit.pinStateMenu.off": {
+    "message": "off",
+    "description": "Label for off element in pin state picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.front": {
+    "message": "front",
+    "description": "Label for front element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.back": {
+    "message": "back",
+    "description": "Label for back element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.left": {
+    "message": "left",
+    "description": "Label for left element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.right": {
+    "message": "right",
+    "description": "Label for right element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.any": {
+    "message": "any",
+    "description": "Label for any direction element in tilt direction picker for micro:bit extension"
+  },
+  "microbitBle.uploadBleFirmware": {
+    "message": "send Bluetooth firmware",
+    "description": "Upload Scratch compatible Bluetooth firmware to the micro:bit"
+  },
+  "microbit.whenButtonPressed": {
+    "message": "when [BTN] button pressed",
+    "description": "When the selected button on the micro:bit is pressed"
+  },
+  "microbit.isButtonPressed": {
+    "message": "[BTN] button pressed?",
+    "description": "Is the selected button on the micro:bit pressed?"
+  },
+  "microbit.whenGesture": {
+    "message": "when [GESTURE]",
+    "description": "When the micro:bit detects the selected gesture"
+  },
+  "microbit.displaySymbol": {
+    "message": "display [MATRIX]",
+    "description": "Display a custom image on the micro:bit display"
+  },
+  "microbit.displayText": {
+    "message": "display text [TEXT]",
+    "description": "Display text on the micro:bit display"
+  },
+  "microbit.defaultTextToDisplay": {
+    "message": "Hello!",
+    "description": "Default text to display on the micro:bit"
+  },
+  "microbit.clearDisplay": {
+    "message": "clear display",
+    "description": "Display nothing on the micro:bit display"
+  },
+  "microbit.whenTilted": {
+    "message": "when tilted [DIRECTION]",
+    "description": "When the micro:bit is tilted in a direction"
+  },
+  "microbit.isTilted": {
+    "message": "tilted [DIRECTION]?",
+    "description": "Is the micro:bit tilted in a direction?"
+  },
+  "microbit.tiltAngle": {
+    "message": "tilt angle [DIRECTION]",
+    "description": "How much the micro:bit is tilted in a direction"
+  },
+  "microbit.whenPinConnected": {
+    "message": "when pin [PIN] connected",
+    "description": "When the pin detects a connection to Earth/Ground"
+  },
+  "microbit.isPinConnected": {
+    "message": "pin [PIN] connected?",
+    "description": "Whether the selected micro:bit pin is connected to Earth/Ground"
+  },
+  "microbit.pinValue": {
+    "message": "pin [PIN] value",
+    "description": "The latest touch connection value for the selected micro:bit pin"
   }
 }
