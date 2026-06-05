@@ -4,11 +4,13 @@ const SET_REALTIME_PROTOCAL_CONNECTION = 'scratch-gui/connection-modal/setRealti
 const SET_LIST_ALL = 'scratch-gui/connection-modal/setListAll';
 const SET_DEVICE_ID = 'scratch-gui/connection-modal/setDeviceId';
 const CLEAR_DEVICE_ID = 'scratch-gui/connection-modal/clearDeviceId';
+const SET_CONNECTION_TYPE = 'scratch-gui/connection-modal/setConnectionType';
 
 const initialState = {
     peripheralName: null,
     realtimeConnection: false,
     isListAll: false,
+    connectionType: 'link',
     deviceId: null
 };
 
@@ -34,6 +36,10 @@ const reducer = function (state, action) {
     case SET_DEVICE_ID:
         return Object.assign({}, state, {
             deviceId: action.deviceId
+        });
+    case SET_CONNECTION_TYPE:
+        return Object.assign({}, state, {
+            connectionType: action.connectionType
         });
     case CLEAR_DEVICE_ID:
         return Object.assign({}, state, {
@@ -78,6 +84,13 @@ const setConnectionModalDeviceId = function (deviceId) {
     };
 };
 
+const setConnectionType = function (connectionType) {
+    return {
+        type: SET_CONNECTION_TYPE,
+        connectionType: connectionType
+    };
+};
+
 const clearConnectionModalDeviceId = function () {
     return {
         type: CLEAR_DEVICE_ID
@@ -91,6 +104,7 @@ export {
     clearConnectionModalPeripheralName,
     setRealtimeConnection,
     setListAll,
+    setConnectionType,
     setConnectionModalDeviceId,
     clearConnectionModalDeviceId
 };

@@ -14,6 +14,52 @@ import styles from './connection-modal.css';
 
 const ScanningStep = props => (
     <Box className={styles.body}>
+        {props.webBluetoothConnectionVisible ? (
+            <Box className={styles.connectionTypeArea}>
+                <span className={styles.connectionTypeLabel}>
+                    <FormattedMessage
+                        defaultMessage="Connection"
+                        description="Label for choosing hardware connection type"
+                        id="gui.connection.type.label"
+                    />
+                </span>
+                <select
+                    className={styles.connectionTypeSelect}
+                    value={props.connectionType}
+                    onChange={props.onConnectionTypeChange}
+                >
+                    <option value="link">
+                        {'OpenBlock Link'}
+                    </option>
+                    <option
+                        disabled={!props.webBluetoothConnectionSupported}
+                        value="webBluetooth"
+                    >
+                        {'Web Bluetooth'}
+                    </option>
+                </select>
+                {props.webBluetoothConnectionSupported ? null : (
+                    <div
+                        className={styles.connectionTypeWarning}
+                        title={props.webBluetoothDebugInfo}
+                    >
+                        {props.webBluetoothStatus === 'notSecure' ? (
+                            <FormattedMessage
+                                defaultMessage="Web Bluetooth requires HTTPS or localhost."
+                                description="Warning when Web Bluetooth is unavailable because the page is not secure"
+                                id="gui.connection.webBluetooth.notSecure"
+                            />
+                        ) : (
+                            <FormattedMessage
+                                defaultMessage="Web Bluetooth is unavailable. Use Chrome/Edge with HTTPS/localhost."
+                                description="Warning when Web Bluetooth API is missing"
+                                id="gui.connection.webBluetooth.missingApi"
+                            />
+                        )}
+                    </div>
+                )}
+            </Box>
+        ) : null}
         {props.isSerialport || props.firmwareUploadRequired ? (
             <Box className={classNames(styles.bodyHeadArea)}>
                 <div className={styles.listAll}>
@@ -47,6 +93,12 @@ const ScanningStep = props => (
                                     defaultMessage="Use Refresh to select a serial device in Chrome"
                                     description="Text shown while waiting for Web Serial device selection"
                                     id="gui.connection.scanning.webSerialSelect"
+                                />
+                            ) : props.connectionType === 'webBluetooth' ? (
+                                <FormattedMessage
+                                    defaultMessage="Use Refresh to select your micro:bit with Web Bluetooth"
+                                    description="Text shown while waiting for Web Bluetooth device selection"
+                                    id="gui.connection.scanning.webBluetoothSelect"
                                 />
                             ) : (
                                 <FormattedMessage
@@ -85,11 +137,19 @@ const ScanningStep = props => (
         <Box className={styles.bottomArea}>
             <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
                 {props.firmwareUploadRequired ? (
-                    <FormattedMessage
-                        defaultMessage="Send the firmware by USB, then select your micro:bit."
-                        description="Prompt for connecting a micro:bit Bluetooth device"
-                        id="gui.connection.scanning.microbitBleInstructions"
-                    />
+                    props.connectionType === 'webBluetooth' ? (
+                        <FormattedMessage
+                            defaultMessage="Web Bluetooth needs BLE firmware. Use OpenBlock Link to send firmware."
+                            description="Prompt for Web Bluetooth micro:bit BLE firmware limitation"
+                            id="gui.connection.scanning.microbitBleWebBluetoothInstructions"
+                        />
+                    ) : (
+                        <FormattedMessage
+                            defaultMessage="Send the firmware by USB, then select your micro:bit."
+                            description="Prompt for connecting a micro:bit Bluetooth device"
+                            id="gui.connection.scanning.microbitBleInstructions"
+                        />
+                    )
                 ) : (
                     <FormattedMessage
                         defaultMessage="Select your device in the list above."
@@ -134,12 +194,14 @@ const ScanningStep = props => (
 );
 
 ScanningStep.propTypes = {
+    connectionType: PropTypes.string,
     connectionSmallIconURL: PropTypes.string,
     firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
     isListAll: PropTypes.bool.isRequired,
     isSerialport: PropTypes.bool,
     onClickListAll: PropTypes.func.isRequired,
+    onConnectionTypeChange: PropTypes.func,
     onConnecting: PropTypes.func,
     onUploadFirmware: PropTypes.func,
     onRefresh: PropTypes.func,
@@ -148,12 +210,20 @@ ScanningStep.propTypes = {
         rssi: PropTypes.number,
         peripheralId: PropTypes.string
     })),
-    scanning: PropTypes.bool.isRequired
+    scanning: PropTypes.bool.isRequired,
+    webBluetoothConnectionSupported: PropTypes.bool,
+    webBluetoothConnectionVisible: PropTypes.bool,
+    webBluetoothDebugInfo: PropTypes.string,
+    webBluetoothStatus: PropTypes.string
 };
 
 ScanningStep.defaultProps = {
+    connectionType: 'link',
     peripheralList: [],
-    scanning: true
+    scanning: true,
+    webBluetoothConnectionSupported: false,
+    webBluetoothConnectionVisible: false,
+    webBluetoothStatus: 'notMicrobitBle'
 };
 
 export default ScanningStep;

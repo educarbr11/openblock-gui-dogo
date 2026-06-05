@@ -25,6 +25,41 @@
     align-items: center;
 }
 
+.connection-type-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding: 0.75rem 0.75rem 0;
+    gap: 0.5rem;
+}
+
+.connection-type-label {
+    color: $text-primary;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.connection-type-select {
+    height: 2rem;
+    padding: 0 0.5rem;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    background: $ui-white;
+    color: $text-primary;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.connection-type-warning {
+    flex-basis: 100%;
+    color: $text-primary;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    text-align: right;
+    opacity: 0.8;
+}
+
 .peripheral-tile-pane {
     overflow-y: auto;
     width: 100%;

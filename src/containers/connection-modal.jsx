@@ -6,7 +6,7 @@ import VM from 'openblock-vm';
 import analytics from '../lib/analytics';
 import {connect} from 'react-redux';
 import {closeConnectionModal, openUploadProgress} from '../reducers/modals';
-import {setConnectionModalPeripheralName, setListAll} from '../reducers/connection-modal';
+import {setConnectionModalPeripheralName, setListAll, setConnectionType} from '../reducers/connection-modal';
 import extensionData from '../lib/libraries/extensions/index.jsx';
 
 class ConnectionModal extends React.Component {
@@ -16,6 +16,7 @@ class ConnectionModal extends React.Component {
             'handleScanning',
             'handleCancel',
             'handleConnected',
+            'handleConnectionTypeChange',
             'handleConnecting',
             'handleDisconnect',
             'handleError',
@@ -45,10 +46,16 @@ class ConnectionModal extends React.Component {
         });
     }
     handleConnecting (peripheralId, peripheralName) {
+        const connectionType = this.getEffectiveConnectionType();
         if (this.props.isRealtimeMode) {
-            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId);
+            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId, null, connectionType);
         } else {
-            this.props.vm.connectPeripheral(this.props.deviceId, peripheralId, parseInt(this.props.baudrate, 10));
+            this.props.vm.connectPeripheral(
+                this.props.deviceId,
+                peripheralId,
+                parseInt(this.props.baudrate, 10),
+                connectionType
+            );
         }
         this.setState({
             phase: PHASES.connecting,
@@ -116,6 +123,48 @@ class ConnectionModal extends React.Component {
             label: this.props.deviceId
         });
     }
+    isMicrobitBleConnection () {
+        return this.props.deviceId === 'microbitBle' ||
+            (this.state.device && this.state.device.extensionId === 'microbitBle');
+    }
+    getWebBluetoothStatus () {
+        if (!this.isMicrobitBleConnection()) {
+            return 'notMicrobitBle';
+        }
+        if (typeof window !== 'undefined' && window.isSecureContext === false) {
+            return 'notSecure';
+        }
+        if (typeof navigator !== 'undefined' && Boolean(navigator.bluetooth)) {
+            return 'supported';
+        }
+        return 'missingApi';
+    }
+    getWebBluetoothDebugInfo () {
+        const bluetoothAvailable = typeof navigator !== 'undefined' && Boolean(navigator.bluetooth);
+        const secureContext = typeof window === 'undefined' ? 'unknown' : String(window.isSecureContext);
+        const origin = typeof window === 'undefined' || !window.location ? 'unknown' : window.location.origin;
+        return `navigator.bluetooth=${bluetoothAvailable}; isSecureContext=${secureContext}; origin=${origin}`;
+    }
+    getEffectiveConnectionType (connectionType = this.props.connectionType) {
+        const webBluetoothStatus = this.getWebBluetoothStatus();
+        if (connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
+            return 'link';
+        }
+        if (webBluetoothStatus === 'notMicrobitBle') {
+            return 'link';
+        }
+        return connectionType;
+    }
+    getDisplayConnectionType () {
+        const webBluetoothStatus = this.getWebBluetoothStatus();
+        if (this.props.connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
+            return 'link';
+        }
+        return this.getEffectiveConnectionType();
+    }
+    handleConnectionTypeChange (connectionType) {
+        this.props.onSetConnectionType(this.getEffectiveConnectionType(connectionType));
+    }
     handleUploadFirmware () {
         this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
         this.props.onOpenUploadProgress();
@@ -124,8 +173,13 @@ class ConnectionModal extends React.Component {
         const isChromeOS = typeof navigator !== 'undefined' &&
             typeof navigator.userAgent === 'string' &&
             navigator.userAgent.indexOf('CrOS') !== -1;
+        const webBluetoothStatus = this.getWebBluetoothStatus();
+        const webBluetoothConnectionVisible = this.isMicrobitBleConnection();
+        const webBluetoothConnectionSupported = webBluetoothStatus === 'supported';
+        const connectionType = this.getDisplayConnectionType();
         return (
             <ConnectionModalComponent
+                connectionType={connectionType}
                 connectingMessage={this.state.device && this.state.device.connectingMessage}
                 connectionIconURL={this.state.device && this.state.device.connectionIconURL}
                 connectionSmallIconURL={this.state.device && this.state.device.connectionSmallIconURL}
@@ -133,6 +187,10 @@ class ConnectionModal extends React.Component {
                 isSerialport={this.state.device && this.state.device.serialportRequired}
                 isChromeOS={isChromeOS}
                 isListAll={this.props.isListAll}
+                webBluetoothConnectionSupported={webBluetoothConnectionSupported}
+                webBluetoothConnectionVisible={webBluetoothConnectionVisible}
+                webBluetoothDebugInfo={this.getWebBluetoothDebugInfo()}
+                webBluetoothStatus={webBluetoothStatus}
                 firmwareUploadRequired={this.state.device && this.state.device.firmwareUploadRequired}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
                 deviceId={this.props.deviceId}
@@ -143,6 +201,7 @@ class ConnectionModal extends React.Component {
                 vm={this.props.vm}
                 onCancel={this.handleCancel}
                 onConnected={this.handleConnected}
+                onConnectionTypeChange={this.handleConnectionTypeChange}
                 onConnecting={this.handleConnecting}
                 onClickListAll={this.props.onClickListAll}
                 onDisconnect={this.handleDisconnect}
@@ -156,6 +215,7 @@ class ConnectionModal extends React.Component {
 
 ConnectionModal.propTypes = {
     baudrate: PropTypes.string.isRequired,
+    connectionType: PropTypes.string.isRequired,
     deviceId: PropTypes.string.isRequired,
     deviceData: PropTypes.instanceOf(Array).isRequired,
     isRealtimeMode: PropTypes.bool,
@@ -164,6 +224,7 @@ ConnectionModal.propTypes = {
     onConnected: PropTypes.func.isRequired,
     onClickListAll: PropTypes.func.isRequired,
     onOpenUploadProgress: PropTypes.func.isRequired,
+    onSetConnectionType: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -172,7 +233,8 @@ const mapStateToProps = state => ({
     deviceData: state.scratchGui.deviceData.deviceData,
     deviceId: state.scratchGui.connectionModal.deviceId || state.scratchGui.device.deviceId,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
-    isListAll: state.scratchGui.connectionModal.isListAll
+    isListAll: state.scratchGui.connectionModal.isListAll,
+    connectionType: state.scratchGui.connectionModal.connectionType
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -184,6 +246,9 @@ const mapDispatchToProps = dispatch => ({
     },
     onClickListAll: state => {
         dispatch(setListAll(state));
+    },
+    onSetConnectionType: connectionType => {
+        dispatch(setConnectionType(connectionType));
     },
     onOpenUploadProgress: () => dispatch(openUploadProgress())
 });
