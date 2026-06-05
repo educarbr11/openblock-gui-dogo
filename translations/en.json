@@ -326,6 +326,10 @@
     "message": "Sounds",
     "description": "Button to get to the sounds panel"
   },
+  "gui.gui.stageTab": {
+    "message": "Stage",
+    "description": "Button to get to the stage panel"
+  },
   "gui.hardwareConsole.send": {
     "message": "Send",
     "description": "Button in bottom to send data to serialport"
@@ -2533,5 +2537,9 @@
   "microbit.pinValue": {
     "message": "pin [PIN] value",
     "description": "The latest touch connection value for the selected micro:bit pin"
+  },
+  "microbit.setPinValue": {
+    "message": "set pin [PIN] value to [VALUE]",
+    "description": "Set the selected micro:bit pin digital value to 0 or 1"
   }
 }

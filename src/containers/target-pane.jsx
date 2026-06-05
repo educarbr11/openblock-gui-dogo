@@ -8,7 +8,7 @@ import {
     openSpriteLibrary,
     closeSpriteLibrary
 } from '../reducers/modals';
-import {activateTab, COSTUMES_TAB_INDEX, BLOCKS_TAB_INDEX} from '../reducers/editor-tab';
+import {activateTab, COSTUMES_TAB_INDEX, BLOCKS_TAB_INDEX, STAGE_TAB_INDEX} from '../reducers/editor-tab';
 import {setReceivedBlocks} from '../reducers/hovered-target';
 import {showStandardAlert, closeAlertWithId} from '../reducers/alerts';
 import {setRestore} from '../reducers/restore-deletion';
@@ -123,11 +123,17 @@ class TargetPane extends React.Component {
         );
         this.props.vm.addSprite(JSON.stringify(emptyItem)).then(() => {
             setTimeout(() => { // Wait for targets update to propagate before tab switching
+                if (this.props.activeTabIndex === STAGE_TAB_INDEX) {
+                    return;
+                }
                 this.props.onActivateTab(COSTUMES_TAB_INDEX);
             });
         });
     }
     handleActivateBlocksTab () {
+        if (this.props.activeTabIndex === STAGE_TAB_INDEX) {
+            return;
+        }
         this.props.onActivateTab(BLOCKS_TAB_INDEX);
     }
     handleNewSprite (spriteJSONString) {
@@ -280,6 +286,7 @@ const {
 } = TargetPaneComponent.propTypes;
 
 TargetPane.propTypes = {
+    activeTabIndex: PropTypes.number,
     intl: intlShape.isRequired,
     onCloseImporting: PropTypes.func,
     onShowImporting: PropTypes.func,
@@ -287,6 +294,7 @@ TargetPane.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
     editingTarget: state.scratchGui.targets.editingTarget,
     hoveredTarget: state.scratchGui.hoveredTarget,
     isRtl: state.locales.isRtl,

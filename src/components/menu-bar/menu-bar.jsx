@@ -563,7 +563,8 @@ class MenuBar extends React.Component {
             <Box
                 className={classNames(
                     this.props.className,
-                    styles.menuBar
+                    styles.menuBar,
+                    this.props.mobileLandscape ? styles.mobileLandscape : null
                 )}
                 componentRef={this.containerRef}
             >
@@ -1005,6 +1006,7 @@ MenuBar.propTypes = {
     loginMenuOpen: PropTypes.bool,
     logo: PropTypes.string,
     logoSmall: PropTypes.string,
+    mobileLandscape: PropTypes.bool,
     onClickAbout: PropTypes.oneOfType([
         PropTypes.func, // button mode: call this callback when the About button is clicked
         PropTypes.arrayOf( // menu mode: list of items in the About menu

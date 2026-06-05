@@ -219,6 +219,63 @@
     height: 1rem;
 }
 
+.mobile-landscape {
+    height: 2.25rem;
+    font-size: 0.68rem;
+    overflow: hidden;
+}
+
+.mobile-landscape .menu-bar-item {
+    height: 2.25rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.mobile-landscape .main-menu .menu-bar-item,
+.mobile-landscape .tail-menu .menu-bar-item {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+}
+
+.mobile-landscape .file-menu {
+    flex-basis: 12rem;
+    min-width: 6rem;
+}
+
+.mobile-landscape .title-menu-item {
+    min-width: 5rem;
+}
+
+.mobile-landscape .title-field-growable {
+    min-width: 5rem;
+}
+
+.mobile-landscape .openblock-logo {
+    height: 1.25rem;
+}
+
+.mobile-landscape .screen-shot-logo {
+    height: 1.35rem;
+}
+
+.mobile-landscape .language-icon {
+    height: 1.2rem;
+}
+
+.mobile-landscape .upload-firmware-logo {
+    height: 1rem;
+}
+
+.mobile-landscape .divider {
+    height: 1.55rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+}
+
+.mobile-landscape .menu-bar-button {
+    height: 1.65rem;
+}
+
 .help-icon {
     height: 20px;
 }

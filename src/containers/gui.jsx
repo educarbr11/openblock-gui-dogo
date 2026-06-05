@@ -15,7 +15,8 @@ import {
     activateTab,
     BLOCKS_TAB_INDEX,
     COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
+    SOUNDS_TAB_INDEX,
+    STAGE_TAB_INDEX
 } from '../reducers/editor-tab';
 
 import {
@@ -61,7 +62,7 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
-        if (this.props.isRealtimeMode !== true) {
+        if (this.props.isRealtimeMode !== true && this.props.activeTabIndex !== STAGE_TAB_INDEX) {
             this.props.onActivateBlocksTab();
         }
     }
@@ -109,6 +110,7 @@ class GUI extends React.Component {
 }
 
 GUI.propTypes = {
+    activeTabIndex: PropTypes.number,
     assetHost: PropTypes.string,
     children: PropTypes.node,
     cloudHost: PropTypes.string,
@@ -172,6 +174,7 @@ const mapStateToProps = state => {
         machineLearningTrainerVisible: state.scratchGui.modals.machineLearningTrainer,
         projectId: state.scratchGui.projectState.projectId,
         soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+        stageTabVisible: state.scratchGui.editorTab.activeTabIndex === STAGE_TAB_INDEX,
         targetIsStage: (
             state.scratchGui.targets.stage &&
             state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget

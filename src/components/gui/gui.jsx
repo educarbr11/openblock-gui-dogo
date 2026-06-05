@@ -47,6 +47,7 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
+import stageIcon from '../stage-header/icon--small-stage.svg';
 
 const messages = defineMessages({
     addExtension: {
@@ -74,7 +75,6 @@ const GUIComponent = props => {
         backpackHost,
         // eslint-disable-next-line no-unused-vars
         backpackVisible,
-        blocksTabVisible,
         cardsVisible,
         canChangeLanguage,
         canCreateNew,
@@ -89,7 +89,6 @@ const GUIComponent = props => {
         connectionModalVisible,
         uploadProgressVisible,
         costumeLibraryVisible,
-        costumesTabVisible,
         updateModalVisible,
         enableCommunity,
         intl,
@@ -134,7 +133,7 @@ const GUIComponent = props => {
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
         showComingSoon,
-        soundsTabVisible,
+        stageTabVisible,
         stageSizeMode,
         targetIsStage,
         telemetryModalVisible,
@@ -162,284 +161,335 @@ const GUIComponent = props => {
         isRendererSupported = Renderer.isSupported();
     }
 
-    return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
-        const stageSize = resolveStageSize(stageSizeMode, isFullSize);
+    return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => (
+        <MediaQuery query="(orientation: landscape) and (max-height: 520px) and (max-width: 960px)">
+            {isMobileLandscape => {
+                const stageSize = resolveStageSize(stageSizeMode, isFullSize, isMobileLandscape);
+                const effectiveActiveTabIndex = (!isMobileLandscape && activeTabIndex === 3) ? 0 : activeTabIndex;
+                const blocksPanelVisible = effectiveActiveTabIndex === 0;
+                const costumesPanelVisible = effectiveActiveTabIndex === 1;
+                const soundsPanelVisible = effectiveActiveTabIndex === 2;
+                const stagePanelVisible = isMobileLandscape && stageTabVisible && effectiveActiveTabIndex === 3;
 
-        return isPlayerOnly ? (
-            <StageWrapper
-                isFullScreen={isFullScreen}
-                isRendererSupported={isRendererSupported}
-                isRtl={isRtl}
-                loading={loading}
-                stageSize={STAGE_SIZE_MODES.large}
-                vm={vm}
-            >
-                {alertsVisible ? (
-                    <Alerts
-                        vm={vm}
-                        className={styles.alertsContainer}
-                    />
-                ) : null}
-            </StageWrapper>
-        ) : (
-            <Box
-                className={styles.pageWrapper}
-                dir={isRtl ? 'rtl' : 'ltr'}
-                {...componentProps}
-            >
-                {telemetryModalVisible ? (
-                    <TelemetryModal
+                return isPlayerOnly ? (
+                    <StageWrapper
+                        isFullScreen={isFullScreen}
+                        isRendererSupported={isRendererSupported}
                         isRtl={isRtl}
-                        isTelemetryEnabled={isTelemetryEnabled}
-                        onCancel={onTelemetryModalCancel}
-                        onOptIn={onTelemetryModalOptIn}
-                        onOptOut={onTelemetryModalOptOut}
-                        onRequestClose={onRequestCloseTelemetryModal}
-                        onShowPrivacyPolicy={onShowPrivacyPolicy}
-                    />
-                ) : null}
-                {loading ? (
-                    <Loader />
-                ) : null}
-                {isCreating ? (
-                    <Loader messageId="gui.loader.creating" />
-                ) : null}
-                {isRendererSupported ? null : (
-                    <WebGlModal isRtl={isRtl} />
-                )}
-                {tipsLibraryVisible ? (
-                    <TipsLibrary />
-                ) : null}
-                {cardsVisible ? (
-                    <Cards />
-                ) : null}
-                {alertsVisible ? (
-                    <Alerts
+                        loading={loading}
+                        stageSize={STAGE_SIZE_MODES.large}
                         vm={vm}
-                        className={styles.alertsContainer}
-                    />
-                ) : null}
-                {!isTauriLight && connectionModalVisible ? (
-                    <ConnectionModal
-                        vm={vm}
-                    />
-                ) : null}
-                {!isTauriLight && uploadProgressVisible ? (
-                    <UploadProgress
-                        vm={vm}
-                    />
-                ) : null}
-                {costumeLibraryVisible ? (
-                    <CostumeLibrary
-                        vm={vm}
-                        onRequestClose={onRequestCloseCostumeLibrary}
-                    />
-                ) : null}
-                {backdropLibraryVisible ? (
-                    <BackdropLibrary
-                        vm={vm}
-                        onRequestClose={onRequestCloseBackdropLibrary}
-                    />
-                ) : null}
-                {updateModalVisible ? (
-                    <UpdateModal
-                        vm={vm}
-                        onAbortUpdate={onAbortUpdate}
-                        onClickUpdate={onClickUpdate}
-                        onShowMessageBox={onShowMessageBox}
-                    />
-                ) : null}
-                {machineLearningTrainerVisible ? (
-                    <MachineLearningModal vm={vm} />
-                ) : null}
-                {machineLearningResultVisible ? (
-                    <MachineLearningResult vm={vm} />
-                ) : null}
-                {handPoseDetectionResultVisible ? (
-                    <HandPoseDetectionResult vm={vm} />
-                ) : null}
-                <MenuBar
-                    accountNavOpen={accountNavOpen}
-                    authorId={authorId}
-                    authorThumbnailUrl={authorThumbnailUrl}
-                    authorUsername={authorUsername}
-                    canChangeLanguage={canChangeLanguage}
-                    canCreateCopy={canCreateCopy}
-                    canCreateNew={canCreateNew}
-                    canEditTitle={canEditTitle}
-                    canManageFiles={canManageFiles}
-                    canRemix={canRemix}
-                    canSave={canSave}
-                    canShare={canShare}
-                    className={styles.menuBarPosition}
-                    enableCommunity={enableCommunity}
-                    isShared={isShared}
-                    logo={logo}
-                    renderLogin={renderLogin}
-                    showComingSoon={showComingSoon}
-                    onClickAbout={onClickAbout}
-                    onClickAccountNav={onClickAccountNav}
-                    onClickLogo={onClickLogo}
-                    onCloseAccountNav={onCloseAccountNav}
-                    onLogOut={onLogOut}
-                    onOpenRegistration={onOpenRegistration}
-                    onProjectTelemetryEvent={onProjectTelemetryEvent}
-                    onSeeCommunity={onSeeCommunity}
-                    onShare={onShare}
-                    onStartSelectingFileUpload={onStartSelectingFileUpload}
-                    onShowMessageBox={onShowMessageBox}
-                    onToggleLoginOpen={onToggleLoginOpen}
-                    onClickCheckUpdate={onClickCheckUpdate}
-                    onClickClearCache={onClickClearCache}
-                    onClickInstallDriver={onClickInstallDriver}
-                />
-                <Box className={styles.bodyWrapper}>
-                    <Box className={styles.flexWrapper}>
-                        <Box className={styles.editorWrapper}>
-                            <Tabs
-                                forceRenderTabPanel
-                                className={tabClassNames.tabs}
-                                selectedIndex={activeTabIndex}
-                                selectedTabClassName={tabClassNames.tabSelected}
-                                selectedTabPanelClassName={tabClassNames.tabPanelSelected}
-                                onSelect={onActivateTab}
-                            >
-                                <TabList className={tabClassNames.tabList}>
-                                    <Tab className={tabClassNames.tab}>
-                                        <img
-                                            draggable={false}
-                                            src={codeIcon}
-                                        />
-                                        <FormattedMessage
-                                            defaultMessage="Code"
-                                            description="Button to get to the code panel"
-                                            id="gui.gui.codeTab"
-                                        />
-                                    </Tab>
-                                    <Tab
-                                        className={classNames(tabClassNames.tab,
-                                            isRealtimeMode ? styles.hideCustomAndSoundTab :
-                                                styles.showCustomAndSoundTab)}
-                                        onClick={onActivateCostumesTab}
+                    >
+                        {alertsVisible ? (
+                            <Alerts
+                                vm={vm}
+                                className={styles.alertsContainer}
+                            />
+                        ) : null}
+                    </StageWrapper>
+                ) : (
+                    <Box
+                        className={classNames(styles.pageWrapper, {
+                            [styles.mobileLandscape]: isMobileLandscape
+                        })}
+                        dir={isRtl ? 'rtl' : 'ltr'}
+                        {...componentProps}
+                    >
+                        {telemetryModalVisible ? (
+                            <TelemetryModal
+                                isRtl={isRtl}
+                                isTelemetryEnabled={isTelemetryEnabled}
+                                onCancel={onTelemetryModalCancel}
+                                onOptIn={onTelemetryModalOptIn}
+                                onOptOut={onTelemetryModalOptOut}
+                                onRequestClose={onRequestCloseTelemetryModal}
+                                onShowPrivacyPolicy={onShowPrivacyPolicy}
+                            />
+                        ) : null}
+                        {loading ? (
+                            <Loader />
+                        ) : null}
+                        {isCreating ? (
+                            <Loader messageId="gui.loader.creating" />
+                        ) : null}
+                        {isRendererSupported ? null : (
+                            <WebGlModal isRtl={isRtl} />
+                        )}
+                        {tipsLibraryVisible ? (
+                            <TipsLibrary />
+                        ) : null}
+                        {cardsVisible ? (
+                            <Cards />
+                        ) : null}
+                        {alertsVisible ? (
+                            <Alerts
+                                vm={vm}
+                                className={styles.alertsContainer}
+                            />
+                        ) : null}
+                        {!isTauriLight && connectionModalVisible ? (
+                            <ConnectionModal
+                                vm={vm}
+                            />
+                        ) : null}
+                        {!isTauriLight && uploadProgressVisible ? (
+                            <UploadProgress
+                                vm={vm}
+                            />
+                        ) : null}
+                        {costumeLibraryVisible ? (
+                            <CostumeLibrary
+                                vm={vm}
+                                onRequestClose={onRequestCloseCostumeLibrary}
+                            />
+                        ) : null}
+                        {backdropLibraryVisible ? (
+                            <BackdropLibrary
+                                vm={vm}
+                                onRequestClose={onRequestCloseBackdropLibrary}
+                            />
+                        ) : null}
+                        {updateModalVisible ? (
+                            <UpdateModal
+                                vm={vm}
+                                onAbortUpdate={onAbortUpdate}
+                                onClickUpdate={onClickUpdate}
+                                onShowMessageBox={onShowMessageBox}
+                            />
+                        ) : null}
+                        {machineLearningTrainerVisible ? (
+                            <MachineLearningModal vm={vm} />
+                        ) : null}
+                        {machineLearningResultVisible ? (
+                            <MachineLearningResult vm={vm} />
+                        ) : null}
+                        {handPoseDetectionResultVisible ? (
+                            <HandPoseDetectionResult vm={vm} />
+                        ) : null}
+                        <MenuBar
+                            accountNavOpen={accountNavOpen}
+                            authorId={authorId}
+                            authorThumbnailUrl={authorThumbnailUrl}
+                            authorUsername={authorUsername}
+                            canChangeLanguage={canChangeLanguage}
+                            canCreateCopy={canCreateCopy}
+                            canCreateNew={canCreateNew}
+                            canEditTitle={canEditTitle}
+                            canManageFiles={canManageFiles}
+                            canRemix={canRemix}
+                            canSave={canSave}
+                            canShare={canShare}
+                            className={styles.menuBarPosition}
+                            enableCommunity={enableCommunity}
+                            isShared={isShared}
+                            mobileLandscape={isMobileLandscape}
+                            logo={logo}
+                            renderLogin={renderLogin}
+                            showComingSoon={showComingSoon}
+                            onClickAbout={onClickAbout}
+                            onClickAccountNav={onClickAccountNav}
+                            onClickLogo={onClickLogo}
+                            onCloseAccountNav={onCloseAccountNav}
+                            onLogOut={onLogOut}
+                            onOpenRegistration={onOpenRegistration}
+                            onProjectTelemetryEvent={onProjectTelemetryEvent}
+                            onSeeCommunity={onSeeCommunity}
+                            onShare={onShare}
+                            onStartSelectingFileUpload={onStartSelectingFileUpload}
+                            onShowMessageBox={onShowMessageBox}
+                            onToggleLoginOpen={onToggleLoginOpen}
+                            onClickCheckUpdate={onClickCheckUpdate}
+                            onClickClearCache={onClickClearCache}
+                            onClickInstallDriver={onClickInstallDriver}
+                        />
+                        <Box className={styles.bodyWrapper}>
+                            <Box className={styles.flexWrapper}>
+                                <Box className={styles.editorWrapper}>
+                                    <Tabs
+                                        forceRenderTabPanel
+                                        className={tabClassNames.tabs}
+                                        selectedIndex={effectiveActiveTabIndex}
+                                        selectedTabClassName={tabClassNames.tabSelected}
+                                        selectedTabPanelClassName={tabClassNames.tabPanelSelected}
+                                        onSelect={onActivateTab}
                                     >
-                                        <img
-                                            draggable={false}
-                                            src={costumesIcon}
-                                        />
-                                        {targetIsStage ? (
-                                            <FormattedMessage
-                                                defaultMessage="Backdrops"
-                                                description="Button to get to the backdrops panel"
-                                                id="gui.gui.backdropsTab"
-                                            />
-                                        ) : (
-                                            <FormattedMessage
-                                                defaultMessage="Costumes"
-                                                description="Button to get to the costumes panel"
-                                                id="gui.gui.costumesTab"
-                                            />
-                                        )}
-                                    </Tab>
-                                    <Tab
-                                        className={classNames(tabClassNames.tab,
-                                            isRealtimeMode ? styles.hideCustomAndSoundTab :
-                                                styles.showCustomAndSoundTab)}
-                                        onClick={onActivateSoundsTab}
-                                    >
-                                        <img
-                                            draggable={false}
-                                            src={soundsIcon}
-                                        />
-                                        <FormattedMessage
-                                            defaultMessage="Sounds"
-                                            description="Button to get to the sounds panel"
-                                            id="gui.gui.soundsTab"
-                                        />
-                                    </Tab>
-                                </TabList>
-                                <TabPanel className={tabClassNames.tabPanel}>
-                                    <Box className={styles.blocksWrapper}>
-                                        <Blocks
-                                            canUseCloud={canUseCloud}
-                                            grow={1}
-                                            isVisible={blocksTabVisible}
-                                            options={{
-                                                media: `${basePath}static/blocks-media/`
-                                            }}
-                                            stageSize={stageSize}
-                                            vm={vm}
-                                            onShowMessageBox={onShowMessageBox}
-                                        />
-                                    </Box>
-                                    <Box className={styles.extensionButtonContainer}>
-                                        <button
-                                            className={styles.extensionButton}
-                                            title={intl.formatMessage(messages.addExtension)}
-                                            onClick={onExtensionButtonClick}
-                                        >
-                                            <img
-                                                className={styles.extensionButtonIcon}
-                                                draggable={false}
-                                                src={addExtensionIcon}
-                                            />
-                                        </button>
-                                    </Box>
-                                    <Box className={styles.watermark}>
-                                        <Watermark />
-                                    </Box>
-                                </TabPanel>
-                                <TabPanel className={tabClassNames.tabPanel}>
-                                    {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
-                                </TabPanel>
-                                <TabPanel className={tabClassNames.tabPanel}>
-                                    {soundsTabVisible ? <SoundTab
-                                        vm={vm}
-                                        onShowMessageBox={onShowMessageBox}
-                                    /> : null}
-                                </TabPanel>
-                            </Tabs>
-                            {/*
+                                        <TabList className={tabClassNames.tabList}>
+                                            <Tab className={tabClassNames.tab}>
+                                                <img
+                                                    draggable={false}
+                                                    src={codeIcon}
+                                                />
+                                                <FormattedMessage
+                                                    defaultMessage="Code"
+                                                    description="Button to get to the code panel"
+                                                    id="gui.gui.codeTab"
+                                                />
+                                            </Tab>
+                                            <Tab
+                                                className={classNames(tabClassNames.tab,
+                                                    isRealtimeMode ? styles.hideCustomAndSoundTab :
+                                                        styles.showCustomAndSoundTab)}
+                                                onClick={onActivateCostumesTab}
+                                            >
+                                                <img
+                                                    draggable={false}
+                                                    src={costumesIcon}
+                                                />
+                                                {targetIsStage ? (
+                                                    <FormattedMessage
+                                                        defaultMessage="Backdrops"
+                                                        description="Button to get to the backdrops panel"
+                                                        id="gui.gui.backdropsTab"
+                                                    />
+                                                ) : (
+                                                    <FormattedMessage
+                                                        defaultMessage="Costumes"
+                                                        description="Button to get to the costumes panel"
+                                                        id="gui.gui.costumesTab"
+                                                    />
+                                                )}
+                                            </Tab>
+                                            <Tab
+                                                className={classNames(tabClassNames.tab,
+                                                    isRealtimeMode ? styles.hideCustomAndSoundTab :
+                                                        styles.showCustomAndSoundTab)}
+                                                onClick={onActivateSoundsTab}
+                                            >
+                                                <img
+                                                    draggable={false}
+                                                    src={soundsIcon}
+                                                />
+                                                <FormattedMessage
+                                                    defaultMessage="Sounds"
+                                                    description="Button to get to the sounds panel"
+                                                    id="gui.gui.soundsTab"
+                                                />
+                                            </Tab>
+                                            {isMobileLandscape ? (
+                                                <Tab className={tabClassNames.tab}>
+                                                    <img
+                                                        draggable={false}
+                                                        src={stageIcon}
+                                                    />
+                                                    <FormattedMessage
+                                                        defaultMessage="Stage"
+                                                        description="Button to get to the stage panel"
+                                                        id="gui.gui.stageTab"
+                                                    />
+                                                </Tab>
+                                            ) : null}
+                                        </TabList>
+                                        <TabPanel className={tabClassNames.tabPanel}>
+                                            <Box className={styles.blocksWrapper}>
+                                                <Blocks
+                                                    canUseCloud={canUseCloud}
+                                                    grow={1}
+                                                    isVisible={blocksPanelVisible}
+                                                    options={{
+                                                        media: `${basePath}static/blocks-media/`
+                                                    }}
+                                                    stageSize={stageSize}
+                                                    vm={vm}
+                                                    onShowMessageBox={onShowMessageBox}
+                                                />
+                                            </Box>
+                                            <Box className={styles.extensionButtonContainer}>
+                                                <button
+                                                    className={styles.extensionButton}
+                                                    title={intl.formatMessage(messages.addExtension)}
+                                                    onClick={onExtensionButtonClick}
+                                                >
+                                                    <img
+                                                        className={styles.extensionButtonIcon}
+                                                        draggable={false}
+                                                        src={addExtensionIcon}
+                                                    />
+                                                </button>
+                                            </Box>
+                                            <Box className={styles.watermark}>
+                                                <Watermark />
+                                            </Box>
+                                        </TabPanel>
+                                        <TabPanel className={tabClassNames.tabPanel}>
+                                            {costumesPanelVisible ? <CostumeTab vm={vm} /> : null}
+                                        </TabPanel>
+                                        <TabPanel className={tabClassNames.tabPanel}>
+                                            {soundsPanelVisible ? <SoundTab
+                                                vm={vm}
+                                                onShowMessageBox={onShowMessageBox}
+                                            /> : null}
+                                        </TabPanel>
+                                        {isMobileLandscape ? (
+                                            <TabPanel className={tabClassNames.tabPanel}>
+                                                {stagePanelVisible ? (
+                                                    <Box className={styles.mobileStageTabWrapper}>
+                                                        <Box className={styles.mobileStageWrapper}>
+                                                            <StageWrapper
+                                                                isFullScreen={isFullScreen}
+                                                                isRendererSupported={isRendererSupported}
+                                                                isRtl={isRtl}
+                                                                stageSize={stageSize}
+                                                                vm={vm}
+                                                            />
+                                                        </Box>
+                                                        <Box className={styles.mobileTargetWrapper}>
+                                                            <TargetPane
+                                                                stageSize={stageSize}
+                                                                vm={vm}
+                                                            />
+                                                        </Box>
+                                                    </Box>
+                                                ) : null}
+                                            </TabPanel>
+                                        ) : null}
+                                    </Tabs>
+                                    {/*
                                     backpackVisible ? (
                                         <Backpack host={backpackHost} />
                                     ) : null
                                 */}
-                        </Box>
-                        <Box
-                            className={classNames(styles.stageAndTargetWrapper, styles[stageSize],
-                                isRealtimeMode ? styles.showStage : styles.hideStage)}
-                        >
-                            <StageWrapper
-                                isFullScreen={isFullScreen}
-                                isRendererSupported={isRendererSupported}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                vm={vm}
-                            />
-                            <Box className={styles.targetWrapper}>
-                                <TargetPane
-                                    stageSize={stageSize}
-                                    vm={vm}
-                                />
+                                </Box>
+                                {isMobileLandscape ? null : (
+                                    <Box
+                                        className={classNames(styles.stageAndTargetWrapper, styles[stageSize],
+                                            isRealtimeMode ? styles.showStage : styles.hideStage)}
+                                    >
+                                        <StageWrapper
+                                            isFullScreen={isFullScreen}
+                                            isRendererSupported={isRendererSupported}
+                                            isRtl={isRtl}
+                                            stageSize={stageSize}
+                                            vm={vm}
+                                        />
+                                        <Box className={styles.targetWrapper}>
+                                            <TargetPane
+                                                stageSize={stageSize}
+                                                vm={vm}
+                                            />
+                                        </Box>
+                                    </Box>
+                                )}
+                                {!isTauriLight &&
+                                    ((isRealtimeMode === false) && (stageSizeMode !== STAGE_SIZE_MODES.hide)) ? (
+                                        <Hardware
+                                            vm={vm}
+                                            stageSize={stageSize}
+                                        />) : null
+                                }
                             </Box>
+                            <DragLayer />
+                            {!isTauriLight && (isRealtimeMode === false) ? (
+                                <HardwareHeader
+                                    vm={vm}
+                                    stageSize={stageSize}
+                                />) : null
+                            }
                         </Box>
-                        {!isTauriLight && ((isRealtimeMode === false) && (stageSizeMode !== STAGE_SIZE_MODES.hide)) ? (
-                            <Hardware
-                                vm={vm}
-                                stageSize={stageSize}
-                            />) : null
-                        }
                     </Box>
-                    <DragLayer />
-                    {!isTauriLight && (isRealtimeMode === false) ? (
-                        <HardwareHeader
-                            vm={vm}
-                            stageSize={stageSize}
-                        />) : null
-                    }
-                </Box>
-            </Box>
-        );
-    }}</MediaQuery>);
+                );
+            }}
+        </MediaQuery>
+    )}</MediaQuery>);
 };
 
 GUIComponent.propTypes = {
@@ -508,6 +558,7 @@ GUIComponent.propTypes = {
     renderLogin: PropTypes.func,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
+    stageTabVisible: PropTypes.bool,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,

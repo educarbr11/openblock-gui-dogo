@@ -137,3 +137,43 @@
 .sprite-input {
     width: 8rem;
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .sprite-info {
+        padding: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        font-size: 0.625rem;
+    }
+
+    .row-primary {
+        margin-bottom: 0.15rem;
+    }
+
+    .row {
+        align-items: center;
+    }
+
+    .column span,
+    .label {
+        display: none;
+    }
+
+    .icon-wrapper {
+        width: 1.35rem;
+        height: 1.35rem;
+        padding: 0.25rem;
+    }
+
+    .rotation-select {
+        height: 1.35rem;
+    }
+
+    .larger-input input {
+        width: 2.5rem;
+    }
+
+    .sprite-input {
+        width: 4.5rem;
+    }
+}
