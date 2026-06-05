@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {closeConnectionModal, openUploadProgress} from '../reducers/modals';
 import {setConnectionModalPeripheralName, setListAll, setConnectionType} from '../reducers/connection-modal';
 import extensionData from '../lib/libraries/extensions/index.jsx';
+import {isScratchDesktop} from '../lib/isScratchDesktop';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -147,6 +148,12 @@ class ConnectionModal extends React.Component {
     }
     getEffectiveConnectionType (connectionType = this.props.connectionType) {
         const webBluetoothStatus = this.getWebBluetoothStatus();
+        if (connectionType === 'auto') {
+            if (!isScratchDesktop() && webBluetoothStatus === 'supported') {
+                return 'webBluetooth';
+            }
+            return 'link';
+        }
         if (connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
             return 'link';
         }
@@ -157,6 +164,9 @@ class ConnectionModal extends React.Component {
     }
     getDisplayConnectionType () {
         const webBluetoothStatus = this.getWebBluetoothStatus();
+        if (this.props.connectionType === 'auto') {
+            return this.getEffectiveConnectionType('auto');
+        }
         if (this.props.connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
             return 'link';
         }

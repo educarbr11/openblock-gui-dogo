@@ -10,7 +10,7 @@ const initialState = {
     peripheralName: null,
     realtimeConnection: false,
     isListAll: false,
-    connectionType: 'link',
+    connectionType: 'auto',
     deviceId: null
 };
 
