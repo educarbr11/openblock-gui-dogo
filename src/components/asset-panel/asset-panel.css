@@ -34,3 +34,150 @@
 [dir="rtl"] .detail-area {
     border-right: 1px solid $ui-black-transparent;
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .wrapper {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: 0;
+        font-size: 0.7rem;
+    }
+
+    [dir="ltr"] .wrapper,
+    [dir="rtl"] .wrapper {
+        border-radius: 0;
+    }
+
+    .detail-area {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .detail-area [class*="paint-editor_editor-container"] {
+        min-width: 0;
+        min-height: 0;
+        padding: 0.25rem;
+        overflow: hidden;
+    }
+
+    .detail-area [class*="paint-editor_editor-container-top"] {
+        flex-shrink: 0;
+        padding-bottom: 0.2rem;
+    }
+
+    .detail-area [class*="paint-editor_top-align-row"] {
+        min-width: 0;
+        min-height: 0;
+        padding-top: 0.25rem;
+        overflow: hidden;
+    }
+
+    .detail-area [class*="paint-editor_row"] {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+
+    .detail-area [class*="paint-editor_row"] + [class*="paint-editor_row"] {
+        margin-top: 0.2rem;
+    }
+
+    .detail-area [class*="paint-editor_controls-container"] {
+        min-width: 0;
+        min-height: 0;
+        margin-right: 0.25rem;
+        margin-left: 0.25rem;
+        overflow: hidden;
+    }
+
+    .detail-area [class*="paint-editor_canvas-container"] {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: 0.2rem;
+    }
+
+    .detail-area [class*="paint-editor_canvas-controls"] {
+        height: 1.55rem;
+        min-height: 1.55rem;
+        margin-top: 0.2rem;
+    }
+
+    .detail-area [class*="paint-editor_mode-selector"] {
+        max-width: 5.25rem;
+    }
+
+    .detail-area [class*="paint-editor_mod-mode-tools"] {
+        margin-left: 0.25rem;
+    }
+
+    .detail-area [class*="paint-editor_mod-margin-after"] {
+        margin-right: 0.25rem;
+    }
+
+    .detail-area [class*="paint-editor_mod-labeled-icon-height"],
+    .detail-area [class*="mode-tools_mod-labeled-icon-height"] {
+        height: 1.75rem;
+    }
+
+    .detail-area [class*="paint-editor_button-group-button"],
+    .detail-area [class*="fixed-tools_button-group-button"] {
+        padding: 0.15rem;
+    }
+
+    .detail-area [class*="paint-editor_button-group-button-icon"],
+    .detail-area [class*="fixed-tools_button-group-button-icon"] {
+        width: 0.95rem;
+        height: 0.95rem;
+    }
+
+    .detail-area [class*="fixed-tools_costume-input"] {
+        width: 5.75rem;
+        height: 1.55rem;
+        font-size: 0.65rem;
+    }
+
+    .detail-area [class*="input-group_input-group"] + [class*="input-group_input-group"] {
+        margin-left: 0.2rem;
+    }
+
+    .detail-area [class*="label_input-label"],
+    .detail-area [class*="label_input-label-secondary"] {
+        font-size: 0.55rem;
+        margin-bottom: 0.05rem;
+    }
+
+    .detail-area [class*="mode-tools_mode-tools"] {
+        min-height: 1.8rem;
+    }
+
+    .detail-area [class*="mode-tools_mode-tools-icon"],
+    .detail-area [class*="tool-select-base_tool-select-icon"] {
+        width: 1.35rem;
+        height: 1.35rem;
+    }
+
+    .detail-area [class*="tool-select-base_mod-tool-select"] {
+        margin: 0;
+        padding: 0.15rem;
+    }
+
+    .detail-area [class*="color-button_color-button"] {
+        width: 2.2rem;
+        height: 1.45rem;
+    }
+
+    .detail-area [class*="color-button_color-button-swatch"] {
+        flex-basis: 1.45rem;
+    }
+
+    .detail-area [class*="color-button_color-button-arrow"] {
+        flex-basis: 0.75rem;
+        font-size: 0.6rem;
+    }
+
+    .detail-area [class*="color-button_swatch-icon"] {
+        width: 1.15rem;
+    }
+}
