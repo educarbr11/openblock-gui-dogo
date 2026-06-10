@@ -98,7 +98,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // don't try to create or save immediately after trying to create
             if (prevProps.isCreatingNew) return;
             // if we're newly able to create this project, create it!
-            if (this.isShowingCreatable(this.props) && !this.isShowingCreatable(prevProps)) {
+            if (this.props.pendingCreateNewProject &&
+                this.isShowingCreatable(this.props) &&
+                !this.isShowingCreatable(prevProps)) {
                 this.props.onCreateProject();
             }
 
@@ -154,7 +156,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
         }
         updateProjectToStorage () {
             this.props.onShowSavingAlert();
-            return this.storeProject(this.props.reduxProjectId)
+            return this.storeProject(this.props.reduxProjectId, {
+                title: this.props.reduxProjectTitle
+            })
                 .then(() => {
                     // there's an http response object available here, but we don't need to examine
                     // it, because there are no values contained in it that we care about
@@ -169,9 +173,13 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 });
         }
         createNewProjectToStorage () {
-            return this.storeProject(null)
+            this.props.onShowCreatingAlert();
+            return this.storeProject(null, {
+                title: this.props.reduxProjectTitle
+            })
                 .then(response => {
                     this.props.onCreatedProject(response.id.toString(), this.props.loadingState);
+                    this.props.onShowCreateSuccessAlert();
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');
@@ -382,6 +390,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onSetProjectThumbnailer: PropTypes.func.isRequired,
         onSetProjectUnchanged: PropTypes.func.isRequired,
         onShowAlert: PropTypes.func,
+        onShowCreateSuccessAlert: PropTypes.func,
+        onShowCreatingAlert: PropTypes.func,
         onShowCopySuccessAlert: PropTypes.func,
         onShowCreatingCopyAlert: PropTypes.func,
         onShowCreatingRemixAlert: PropTypes.func,
@@ -391,6 +401,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onUpdateProjectData: PropTypes.func.isRequired,
         onUpdateProjectThumbnail: PropTypes.func,
         onUpdatedProject: PropTypes.func,
+        pendingCreateNewProject: PropTypes.bool,
         projectChanged: PropTypes.bool,
         reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         reduxProjectTitle: PropTypes.string,
@@ -420,6 +431,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
             isUpdating: getIsUpdating(loadingState),
             isManualUpdating: getIsManualUpdating(loadingState),
             loadingState: loadingState,
+            pendingCreateNewProject: state.scratchGui.projectState.pendingCreateNewProject,
             locale: state.locales.locale,
             projectChanged: state.scratchGui.projectChanged,
             reduxProjectId: state.scratchGui.projectState.projectId,
@@ -434,6 +446,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onProjectError: error => dispatch(projectError(error)),
         onSetProjectUnchanged: () => dispatch(setProjectUnchanged()),
         onShowAlert: alertType => dispatch(showStandardAlert(alertType)),
+        onShowCreateSuccessAlert: () => showAlertWithTimeout(dispatch, 'createSuccess'),
+        onShowCreatingAlert: () => showAlertWithTimeout(dispatch, 'creating'),
         onShowCopySuccessAlert: () => showAlertWithTimeout(dispatch, 'createCopySuccess'),
         onShowRemixSuccessAlert: () => showAlertWithTimeout(dispatch, 'createRemixSuccess'),
         onShowCreatingCopyAlert: () => showAlertWithTimeout(dispatch, 'creatingCopy'),

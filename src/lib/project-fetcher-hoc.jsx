@@ -13,7 +13,8 @@ import {
     getIsShowingProject,
     onFetchedProjectData,
     projectError,
-    setProjectId
+    setProjectId,
+    defaultProjectId
 } from '../reducers/project-state';
 import {
     activateTab,
@@ -22,6 +23,56 @@ import {
 
 import log from './log';
 import storage from './storage';
+import defaultProjectData from './default-project/project-data';
+
+const normalizeProjectId = projectId => {
+    if (projectId === '' || projectId === null || typeof projectId === 'undefined') {
+        return defaultProjectId;
+    }
+    return projectId.toString();
+};
+
+const normalizeTarget = target => {
+    const normalized = Object.assign({}, target, {
+        variables: target.variables || {},
+        lists: target.lists || {},
+        broadcasts: target.broadcasts || {},
+        blocks: target.blocks || {},
+        comments: target.comments || {},
+        costumes: Array.isArray(target.costumes) ? target.costumes : [],
+        sounds: Array.isArray(target.sounds) ? target.sounds : [],
+        currentCostume: typeof target.currentCostume === 'number' ? target.currentCostume : 0,
+        volume: typeof target.volume === 'number' ? target.volume : 100
+    });
+    if (!normalized.isStage) {
+        Object.assign(normalized, {
+            visible: typeof normalized.visible === 'boolean' ? normalized.visible : true,
+            x: typeof normalized.x === 'number' ? normalized.x : 0,
+            y: typeof normalized.y === 'number' ? normalized.y : 0,
+            size: typeof normalized.size === 'number' ? normalized.size : 100,
+            direction: typeof normalized.direction === 'number' ? normalized.direction : 90,
+            draggable: typeof normalized.draggable === 'boolean' ? normalized.draggable : false,
+            rotationStyle: normalized.rotationStyle || 'all around'
+        });
+    }
+    return normalized;
+};
+
+const normalizeProjectData = (projectData, translateFunction) => {
+    const data = typeof projectData === 'string' ? JSON.parse(projectData) : projectData;
+    if (!data || !Array.isArray(data.targets) || data.targets.length === 0 ||
+        !data.targets.some(target => target && target.isStage)) {
+        return defaultProjectData(translateFunction);
+    }
+    return Object.assign({}, data, {
+        targets: data.targets
+            .filter(Boolean)
+            .map(normalizeTarget),
+        monitors: Array.isArray(data.monitors) ? data.monitors : [],
+        extensions: Array.isArray(data.extensions) ? data.extensions : [],
+        meta: data.meta || {}
+    });
+};
 
 /* Higher Order Component to provide behavior for loading projects by id. If
  * there's no id, the default project is loaded.
@@ -42,13 +93,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             // or it may be set by an even higher HOC, and passed to us.
             // Either way, we now know what the initial projectId should be, so
             // set it in the redux store.
-            if (
-                props.projectId !== '' &&
-                props.projectId !== null &&
-                typeof props.projectId !== 'undefined'
-            ) {
-                this.props.setProjectId(props.projectId.toString());
-            }
+            this.props.setProjectId(normalizeProjectId(props.projectId));
         }
         componentDidUpdate (prevProps) {
             if (prevProps.projectHost !== this.props.projectHost) {
@@ -57,7 +102,14 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             if (prevProps.assetHost !== this.props.assetHost) {
                 storage.setAssetHost(this.props.assetHost);
             }
-            if (this.props.isFetchingWithId && !prevProps.isFetchingWithId) {
+            const nextProjectId = normalizeProjectId(this.props.projectId);
+            if (nextProjectId !== normalizeProjectId(prevProps.projectId)) {
+                this.props.setProjectId(nextProjectId);
+            }
+            if (this.props.isFetchingWithId && (
+                !prevProps.isFetchingWithId ||
+                this.props.reduxProjectId !== prevProps.reduxProjectId
+            )) {
                 this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
             }
             if (this.props.isShowingProject && !prevProps.isShowingProject) {
@@ -68,11 +120,17 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
         }
         fetchProject (projectId, loadingState) {
-            return storage
-                .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
+            const loader = projectId === defaultProjectId ?
+                storage.builtinHelper.load(storage.AssetType.Project, projectId, storage.DataFormat.JSON) :
+                storage.load(storage.AssetType.Project, projectId, storage.DataFormat.JSON);
+
+            return Promise.resolve(loader)
                 .then(projectAsset => {
                     if (projectAsset) {
-                        this.props.onFetchedProjectData(projectAsset.data, loadingState);
+                        this.props.onFetchedProjectData(
+                            normalizeProjectData(projectAsset.data, this.props.intl.formatMessage),
+                            loadingState
+                        );
                     } else {
                         // Treat failure to load as an error
                         // Throw to be caught by catch later on

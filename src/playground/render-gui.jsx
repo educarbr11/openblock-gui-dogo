@@ -4,14 +4,11 @@ import {compose} from 'redux';
 import {FormattedMessage} from 'react-intl';
 
 import AppStateHOC from '../lib/app-state-hoc.jsx';
+import DogoblockWebApp from './dogoblock-web-app.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
 import log from '../lib/log.js';
 import MessageBoxType from '../lib/message-box.js';
-
-const onClickLogo = () => {
-    window.location = 'https://www.openblock.cc/';
-};
 
 const onClickCheckUpdate = () => {
     log('User click check update');
@@ -103,10 +100,7 @@ export default appTarget => {
         AppStateHOC,
         HashParserHOC
     )(GUI);
-
-    // TODO a hack for testing the backpack, allow backpack host to be set by url param
-    const backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
-    const backpackHost = backpackHostMatches ? backpackHostMatches[1] : null;
+    const WrappedDogoblockWebApp = AppStateHOC(DogoblockWebApp);
 
     const scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
     let simulateScratchDesktop;
@@ -145,14 +139,6 @@ export default appTarget => {
                 onClickInstallDriver={onClickInstallDriver}
                 onShowMessageBox={handleShowMessageBox}
             /> :
-            <WrappedGui
-                canEditTitle
-                backpackVisible
-                showComingSoon
-                backpackHost={backpackHost}
-                canSave={false}
-                onClickLogo={onClickLogo}
-                onShowMessageBox={handleShowMessageBox}
-            />,
+            <WrappedDogoblockWebApp />,
         appTarget);
 };

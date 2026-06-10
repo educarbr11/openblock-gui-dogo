@@ -1,6 +1,7 @@
 import ScratchStorage from 'scratch-storage';
 
 import defaultProject from './default-project';
+import {getAuthHeaders} from './auth-session';
 
 const normalizeHost = host => {
     if (!host) return host;
@@ -42,17 +43,22 @@ class Storage extends ScratchStorage {
         this.projectHost = normalizeHost(projectHost);
     }
     getProjectGetConfig (projectAsset) {
-        return `${this.projectHost}/${projectAsset.assetId}`;
+        return {
+            url: `${this.projectHost}/${projectAsset.assetId}`,
+            headers: getAuthHeaders()
+        };
     }
     getProjectCreateConfig () {
         return {
             url: `${this.projectHost}/`,
+            headers: getAuthHeaders(),
             withCredentials: true
         };
     }
     getProjectUpdateConfig (projectAsset) {
         return {
             url: `${this.projectHost}/${projectAsset.assetId}`,
+            headers: getAuthHeaders(),
             withCredentials: true
         };
     }
@@ -72,7 +78,7 @@ class Storage extends ScratchStorage {
         if (this.assetHost && this.assetHost.includes('assets.scratch.mit.edu')) {
             return `https://cdn.assets.scratch.mit.edu/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
         }
-        return `${this.assetHost}/assets/${asset.assetId}.${asset.dataFormat}`;
+        return `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`;
     }
     getAssetCreateConfig (asset) {
         return {
@@ -82,6 +88,7 @@ class Storage extends ScratchStorage {
             // Then when storage finds this config to use for the "update", still POSTs
             method: 'post',
             url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
+            headers: getAuthHeaders(),
             withCredentials: true
         };
     }

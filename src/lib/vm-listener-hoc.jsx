@@ -67,6 +67,9 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.addEventListener('keyup', this.handleKeyUp);
             }
             this.props.vm.postIOData('userData', {username: this.props.username});
+            if (this.props.shouldUpdateTargets) {
+                this.props.vm.emitTargetsUpdate(false /* Emit the event, but do not trigger project change */);
+            }
             if (!isTauriLight) {
                 // Update device list
                 this.props.vm.extensionManager.getDeviceList().then(data => {
@@ -89,6 +92,17 @@ const vmListenerHOC = function (WrappedComponent) {
             }
         }
         componentWillUnmount () {
+            this.props.vm.removeListener('targetsUpdate', this.handleTargetsUpdate);
+            this.props.vm.removeListener('MONITORS_UPDATE', this.props.onMonitorsUpdate);
+            this.props.vm.removeListener('BLOCK_DRAG_UPDATE', this.props.onBlockDragUpdate);
+            this.props.vm.removeListener('TURBO_MODE_ON', this.props.onTurboModeOn);
+            this.props.vm.removeListener('TURBO_MODE_OFF', this.props.onTurboModeOff);
+            this.props.vm.removeListener('PROJECT_RUN_START', this.props.onProjectRunStart);
+            this.props.vm.removeListener('PROJECT_RUN_STOP', this.props.onProjectRunStop);
+            this.props.vm.removeListener('PROJECT_CHANGED', this.handleProjectChanged);
+            this.props.vm.removeListener('RUNTIME_STARTED', this.props.onRuntimeStarted);
+            this.props.vm.removeListener('PROJECT_START', this.props.onGreenFlag);
+            this.props.vm.removeListener('MIC_LISTENING', this.props.onMicListeningUpdate);
             if (!isTauriLight) {
                 this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
                 this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',

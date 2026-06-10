@@ -1,6 +1,7 @@
 import queryString from 'query-string';
 import xhr from 'xhr';
 import storage from '../lib/storage';
+import {getAuthHeaders} from './auth-session';
 
 /**
  * Save a project JSON to the project server.
@@ -18,9 +19,9 @@ export default function (projectId, vmState, params) {
     const opts = {
         body: vmState,
         // If we set json:true then the body is double-stringified, so don't
-        headers: {
+        headers: Object.assign({
             'Content-Type': 'application/json'
-        },
+        }, getAuthHeaders()),
         withCredentials: true
     };
     const creatingProject = projectId === null || typeof projectId === 'undefined';
@@ -45,7 +46,7 @@ export default function (projectId, vmState, params) {
     return new Promise((resolve, reject) => {
         xhr(opts, (err, response) => {
             if (err) return reject(err);
-            if (response.statusCode !== 200) return reject(response.statusCode);
+            if (response.statusCode < 200 || response.statusCode >= 300) return reject(response.statusCode);
             let body;
             try {
                 // Since we didn't set json: true, we have to parse manually
@@ -53,8 +54,8 @@ export default function (projectId, vmState, params) {
             } catch (e) {
                 return reject(e);
             }
-            body.id = projectId;
-            if (creatingProject) {
+            if (!body.id) body.id = projectId;
+            if (creatingProject && !body.id) {
                 body.id = body['content-name'];
             }
             resolve(body);

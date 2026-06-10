@@ -1,0 +1,146 @@
+.app-shell {
+    min-height: 100vh;
+    background: #f4f7fb;
+    color: #24364b;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.topbar {
+    height: 3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background: #0f8ec7;
+    color: white;
+}
+
+.brand {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-button,
+.primary-button,
+.secondary-button,
+.danger-button {
+    min-height: 2.25rem;
+    border: 0;
+    border-radius: 0.35rem;
+    padding: 0 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav-button {
+    color: white;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.primary-button {
+    color: white;
+    background: #0f8ec7;
+}
+
+.secondary-button {
+    color: #24364b;
+    background: #e6edf5;
+}
+
+.danger-button {
+    color: white;
+    background: #d64545;
+}
+
+.page {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.narrow-page {
+    max-width: 420px;
+}
+
+.panel,
+.project-card {
+    background: white;
+    border: 1px solid #dbe5ef;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(16, 32, 48, 0.05);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.field input {
+    min-height: 2.5rem;
+    border: 1px solid #c8d4e0;
+    border-radius: 0.35rem;
+    padding: 0 0.65rem;
+    font-size: 1rem;
+}
+
+.error {
+    margin-bottom: 0.75rem;
+    color: #9b1c1c;
+    font-weight: 700;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.project-title {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.muted {
+    color: #66758a;
+    font-size: 0.85rem;
+}
+
+.editor-shell {
+    height: 100vh;
+}
+
+.hidden-input {
+    display: none;
+}
