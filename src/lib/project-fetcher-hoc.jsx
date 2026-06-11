@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
 import {
+    LoadingState,
     LoadingStates,
     getIsCreatingNew,
     getIsFetchingWithId,
@@ -31,6 +32,8 @@ const normalizeProjectId = projectId => {
     }
     return projectId.toString();
 };
+
+const getRouteProjectId = props => normalizeProjectId(props.routeProjectId || props.projectId);
 
 const normalizeTarget = target => {
     const normalized = Object.assign({}, target, {
@@ -58,11 +61,30 @@ const normalizeTarget = target => {
     return normalized;
 };
 
-const normalizeProjectData = (projectData, translateFunction) => {
-    const data = typeof projectData === 'string' ? JSON.parse(projectData) : projectData;
+const parseProjectData = projectData => {
+    if (typeof projectData === 'string') {
+        return JSON.parse(projectData);
+    }
+    if (typeof ArrayBuffer !== 'undefined' && projectData instanceof ArrayBuffer) {
+        return JSON.parse(new TextDecoder().decode(projectData));
+    }
+    if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView(projectData)) {
+        return JSON.parse(new TextDecoder().decode(projectData));
+    }
+    return projectData;
+};
+
+const normalizeProjectData = (projectData, translateFunction, allowDefaultFallback) => {
+    const data = parseProjectData(projectData);
+    if (data && data.message) {
+        throw new Error(Array.isArray(data.message) ? data.message.join(', ') : data.message);
+    }
     if (!data || !Array.isArray(data.targets) || data.targets.length === 0 ||
         !data.targets.some(target => target && target.isStage)) {
-        return defaultProjectData(translateFunction);
+        if (allowDefaultFallback) {
+            return defaultProjectData(translateFunction);
+        }
+        throw new Error('Invalid OpenBlock project data received from server');
     }
     return Object.assign({}, data, {
         targets: data.targets
@@ -93,7 +115,15 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             // or it may be set by an even higher HOC, and passed to us.
             // Either way, we now know what the initial projectId should be, so
             // set it in the redux store.
-            this.props.setProjectId(normalizeProjectId(props.projectId));
+            this.props.setProjectId(getRouteProjectId(props));
+        }
+        componentDidMount () {
+            const initialProjectId = getRouteProjectId(this.props);
+            if (initialProjectId !== defaultProjectId) {
+                this.fetchProject(initialProjectId, LoadingState.FETCHING_WITH_ID);
+            } else if (this.props.isFetchingWithId) {
+                this.fetchProject(this.props.reduxProjectId, this.props.loadingState);
+            }
         }
         componentDidUpdate (prevProps) {
             if (prevProps.projectHost !== this.props.projectHost) {
@@ -102,8 +132,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             if (prevProps.assetHost !== this.props.assetHost) {
                 storage.setAssetHost(this.props.assetHost);
             }
-            const nextProjectId = normalizeProjectId(this.props.projectId);
-            if (nextProjectId !== normalizeProjectId(prevProps.projectId)) {
+            const nextProjectId = getRouteProjectId(this.props);
+            if (nextProjectId !== getRouteProjectId(prevProps)) {
                 this.props.setProjectId(nextProjectId);
             }
             if (this.props.isFetchingWithId && (
@@ -126,10 +156,19 @@ const ProjectFetcherHOC = function (WrappedComponent) {
 
             return Promise.resolve(loader)
                 .then(projectAsset => {
+                    if (getRouteProjectId(this.props) !== normalizeProjectId(projectId)) {
+                        return;
+                    }
                     if (projectAsset) {
+                        const normalizedProjectId = normalizeProjectId(projectId);
                         this.props.onFetchedProjectData(
-                            normalizeProjectData(projectAsset.data, this.props.intl.formatMessage),
-                            loadingState
+                            normalizeProjectData(
+                                projectAsset.data,
+                                this.props.intl.formatMessage,
+                                normalizedProjectId === defaultProjectId
+                            ),
+                            loadingState,
+                            normalizedProjectId
                         );
                     } else {
                         // Treat failure to load as an error
@@ -138,6 +177,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                     }
                 })
                 .catch(err => {
+                    if (getRouteProjectId(this.props) !== normalizeProjectId(projectId)) {
+                        return;
+                    }
                     this.props.onError(err);
                     log.error(err);
                 });
@@ -156,6 +198,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 projectHost,
                 projectId,
                 reduxProjectId,
+                routeProjectId,
                 setProjectId: setProjectIdProp,
                 /* eslint-enable no-unused-vars */
                 isFetchingWithId: isFetchingWithIdProp,
@@ -164,6 +207,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             return (
                 <WrappedComponent
                     fetchingProject={isFetchingWithIdProp}
+                    routeProjectId={getRouteProjectId({routeProjectId, projectId})}
                     {...componentProps}
                 />
             );
@@ -185,6 +229,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         projectHost: PropTypes.string,
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        routeProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         setProjectId: PropTypes.func
     };
     ProjectFetcherComponent.defaultProps = {
@@ -203,8 +248,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
     const mapDispatchToProps = dispatch => ({
         onActivateTab: tab => dispatch(activateTab(tab)),
         onError: error => dispatch(projectError(error)),
-        onFetchedProjectData: (projectData, loadingState) =>
-            dispatch(onFetchedProjectData(projectData, loadingState)),
+        onFetchedProjectData: (projectData, loadingState, projectId) =>
+            dispatch(onFetchedProjectData(projectData, loadingState, projectId)),
         setProjectId: projectId => dispatch(setProjectId(projectId)),
         onProjectUnchanged: () => dispatch(setProjectUnchanged())
     });

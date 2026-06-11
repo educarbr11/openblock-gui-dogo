@@ -17,6 +17,7 @@ import {
 import {setAutoSaveTimeoutId} from '../reducers/timeout';
 import {setProjectUnchanged} from '../reducers/project-changed';
 import {
+    LoadingState,
     LoadingStates,
     autoUpdateProject,
     createProject,
@@ -31,8 +32,32 @@ import {
     getIsShowingWithId,
     getIsShowingWithoutId,
     getIsUpdating,
-    projectError
+    projectError,
+    defaultProjectId
 } from '../reducers/project-state';
+
+const getRealProjectId = projectId => {
+    if (projectId === null || typeof projectId === 'undefined' || projectId === '') {
+        return null;
+    }
+    const stringProjectId = projectId.toString();
+    return stringProjectId === defaultProjectId ? null : stringProjectId;
+};
+
+const getUploadableAssets = assets => {
+    const seen = {};
+    return assets.filter(asset => {
+        if (!asset || asset.clean || !asset.assetId || !asset.data || !asset.assetType || !asset.dataFormat) {
+            return false;
+        }
+        const key = `${asset.assetId}.${asset.dataFormat}`;
+        if (seen[key]) {
+            return false;
+        }
+        seen[key] = true;
+        return true;
+    });
+};
 
 /**
  * Higher Order Component to provide behavior for saving projects.
@@ -155,8 +180,11 @@ const ProjectSaverHOC = function (WrappedComponent) {
             return props.canCreateNew && props.isShowingWithoutId;
         }
         updateProjectToStorage () {
+            if (!this.props.effectiveProjectId) {
+                return this.createNewProjectToStorage(LoadingState.CREATING_NEW);
+            }
             this.props.onShowSavingAlert();
-            return this.storeProject(this.props.reduxProjectId, {
+            return this.storeProject(this.props.effectiveProjectId, {
                 title: this.props.reduxProjectTitle
             })
                 .then(() => {
@@ -172,13 +200,16 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     this.props.onProjectError(err);
                 });
         }
-        createNewProjectToStorage () {
+        createNewProjectToStorage (loadingStateOverride) {
             this.props.onShowCreatingAlert();
             return this.storeProject(null, {
                 title: this.props.reduxProjectTitle
             })
                 .then(response => {
-                    this.props.onCreatedProject(response.id.toString(), this.props.loadingState);
+                    this.props.onCreatedProject(
+                        response.id.toString(),
+                        loadingStateOverride || this.props.loadingState
+                    );
                     this.props.onShowCreateSuccessAlert();
                 })
                 .catch(err => {
@@ -234,8 +265,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // serialized project refers to a newer asset than what
             // we just finished saving).
             const savedVMState = this.props.vm.toJSON();
-            return Promise.all(this.props.vm.assets
-                .filter(asset => !asset.clean)
+            return Promise.all(getUploadableAssets(this.props.vm.assets)
                 .map(
                     asset => storage.store(
                         asset.assetType,
@@ -367,6 +397,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         autoSaveTimeoutId: PropTypes.number,
         canCreateNew: PropTypes.bool,
         canSave: PropTypes.bool,
+        effectiveProjectId: PropTypes.string,
         isAnyCreatingNewState: PropTypes.bool,
         isCreatingCopy: PropTypes.bool,
         isCreatingNew: PropTypes.bool,
@@ -403,6 +434,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onUpdatedProject: PropTypes.func,
         pendingCreateNewProject: PropTypes.bool,
         projectChanged: PropTypes.bool,
+        projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        routeProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         reduxProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         reduxProjectTitle: PropTypes.string,
         setAutoSaveTimeoutId: PropTypes.func.isRequired,
@@ -418,6 +451,10 @@ const ProjectSaverHOC = function (WrappedComponent) {
     const mapStateToProps = (state, ownProps) => {
         const loadingState = state.scratchGui.projectState.loadingState;
         const isShowingWithId = getIsShowingWithId(loadingState);
+        const reduxProjectId = state.scratchGui.projectState.projectId;
+        const effectiveProjectId = getRealProjectId(ownProps.routeProjectId) ||
+            getRealProjectId(ownProps.projectId) ||
+            getRealProjectId(reduxProjectId);
         return {
             autoSaveTimeoutId: state.scratchGui.timeout.autoSaveTimeoutId,
             isAnyCreatingNewState: getIsAnyCreatingNewState(loadingState),
@@ -425,7 +462,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
             isCreatingCopy: getIsCreatingCopy(loadingState),
             isCreatingNew: getIsCreatingNew(loadingState),
             isRemixing: getIsRemixing(loadingState),
-            isShowingSaveable: ownProps.canSave && isShowingWithId,
+            effectiveProjectId: effectiveProjectId,
+            isShowingSaveable: ownProps.canSave && isShowingWithId && Boolean(effectiveProjectId),
             isShowingWithId: isShowingWithId,
             isShowingWithoutId: getIsShowingWithoutId(loadingState),
             isUpdating: getIsUpdating(loadingState),
@@ -434,7 +472,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
             pendingCreateNewProject: state.scratchGui.projectState.pendingCreateNewProject,
             locale: state.locales.locale,
             projectChanged: state.scratchGui.projectChanged,
-            reduxProjectId: state.scratchGui.projectState.projectId,
+            reduxProjectId: reduxProjectId,
             reduxProjectTitle: state.scratchGui.projectTitle,
             vm: state.scratchGui.vm
         };

@@ -108,6 +108,7 @@ const initialState = {
     error: null,
     projectData: null,
     projectId: null,
+    requestedProjectId: null,
     pendingCreateNewProject: false,
     loadingState: LoadingState.NOT_LOADED
 };
@@ -119,7 +120,8 @@ const reducer = function (state, action) {
     case DONE_CREATING_NEW:
         // We need to set project id since we just created new project on the server.
         // No need to load, we should have data already in vm.
-        if (state.loadingState === LoadingState.CREATING_NEW) {
+        if (state.loadingState === LoadingState.CREATING_NEW ||
+            state.loadingState === LoadingState.MANUAL_UPDATING) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
                 projectId: action.projectId,
@@ -128,10 +130,13 @@ const reducer = function (state, action) {
         }
         return state;
     case DONE_FETCHING_WITH_ID:
-        if (state.loadingState === LoadingState.FETCHING_WITH_ID) {
+        if (state.loadingState === LoadingState.FETCHING_WITH_ID &&
+            state.projectId === action.projectId &&
+            state.requestedProjectId === action.projectId) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.LOADING_VM_WITH_ID,
-                projectData: action.projectData
+                projectData: action.projectData,
+                requestedProjectId: null
             });
         }
         return state;
@@ -233,12 +238,16 @@ const reducer = function (state, action) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_NEW_DEFAULT,
                     projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
                     pendingCreateNewProject: false
                 });
             }
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_WITH_ID,
                 projectId: action.projectId,
+                requestedProjectId: action.projectId,
+                projectData: null,
                 pendingCreateNewProject: false
             });
         } else if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
@@ -247,6 +256,8 @@ const reducer = function (state, action) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_WITH_ID,
                     projectId: action.projectId,
+                    requestedProjectId: action.projectId,
+                    projectData: null,
                     pendingCreateNewProject: false
                 });
             }
@@ -256,12 +267,16 @@ const reducer = function (state, action) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_NEW_DEFAULT,
                     projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
                     pendingCreateNewProject: false
                 });
             }
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_WITH_ID,
                 projectId: action.projectId,
+                requestedProjectId: action.projectId,
+                projectData: null,
                 pendingCreateNewProject: false
             });
         }
@@ -312,7 +327,7 @@ const reducer = function (state, action) {
         }
         if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
             return Object.assign({}, state, {
-                loadingState: LoadingState.CREATING_NEW,
+                loadingState: LoadingState.MANUAL_UPDATING,
                 pendingCreateNewProject: false
             });
         }
@@ -414,11 +429,12 @@ const doneCreatingProject = (id, loadingState) => {
     }
 };
 
-const onFetchedProjectData = (projectData, loadingState) => {
+const onFetchedProjectData = (projectData, loadingState, projectId) => {
     switch (loadingState) {
     case LoadingState.FETCHING_WITH_ID:
         return {
             type: DONE_FETCHING_WITH_ID,
+            projectId: projectId,
             projectData: projectData
         };
     case LoadingState.FETCHING_NEW_DEFAULT:

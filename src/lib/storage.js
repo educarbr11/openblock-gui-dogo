@@ -9,6 +9,21 @@ const normalizeHost = host => {
     return hostWithProtocol.replace(/\/+$/, '');
 };
 
+const contentTypeForFormat = dataFormat => {
+    const format = dataFormat && dataFormat.toLowerCase ? dataFormat.toLowerCase() : dataFormat;
+    const contentTypes = {
+        svg: 'image/svg+xml',
+        png: 'image/png',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        gif: 'image/gif',
+        wav: 'audio/wav',
+        mp3: 'audio/mpeg',
+        json: 'application/json'
+    };
+    return contentTypes[format] || 'application/octet-stream';
+};
+
 /**
  * Wrapper for ScratchStorage which adds default web sources.
  * @todo make this more configurable
@@ -17,6 +32,12 @@ class Storage extends ScratchStorage {
     constructor () {
         super();
         this.cacheDefaultProject();
+    }
+    load (assetType, assetId, dataFormat) {
+        if (assetType === this.AssetType.Project && assetId && assetId.toString() !== '0') {
+            return this.webHelper.load(assetType, assetId, dataFormat || assetType.runtimeFormat);
+        }
+        return super.load(assetType, assetId, dataFormat);
     }
     addOfficialScratchWebStores () {
         this.addWebStore(
@@ -88,7 +109,9 @@ class Storage extends ScratchStorage {
             // Then when storage finds this config to use for the "update", still POSTs
             method: 'post',
             url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
-            headers: getAuthHeaders(),
+            headers: Object.assign({
+                'Content-Type': contentTypeForFormat(asset.dataFormat)
+            }, getAuthHeaders()),
             withCredentials: true
         };
     }
