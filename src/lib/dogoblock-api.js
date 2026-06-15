@@ -113,6 +113,26 @@ const postComment = (projectId, content, parentId) => request(`/projects/${proje
 const deleteComment = (projectId, commentId) =>
     request(`/projects/${projectId}/comments/${commentId}`, {method: 'DELETE'});
 
+// ─── Notifications ───────────────────────────────────────────────────────────
+
+const listNotifications = (page = 1, limit = 10) =>
+    request(`/notifications?page=${page}&limit=${limit}`);
+
+const getUnreadCount = () => request('/notifications/unread-count');
+
+const markNotificationRead = notificationId =>
+    request(`/notifications/${notificationId}/read`, {method: 'PATCH'});
+
+const markAllNotificationsRead = () =>
+    request('/notifications/read-all', {method: 'PATCH'});
+
+const createNotificationsStream = token => {
+    if (!token || typeof window === 'undefined' || typeof EventSource === 'undefined') {
+        return null;
+    }
+    return new EventSource(`${getApiHost()}/notifications/stream?token=${encodeURIComponent(token)}`);
+};
+
 export {
     deleteProject,
     getProjectDetails,
@@ -136,5 +156,10 @@ export {
     recordProjectView,
     getComments,
     postComment,
-    deleteComment
+    deleteComment,
+    listNotifications,
+    getUnreadCount,
+    markNotificationRead,
+    markAllNotificationsRead,
+    createNotificationsStream
 };

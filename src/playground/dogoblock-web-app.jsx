@@ -18,18 +18,24 @@ import {
 } from 'lucide-react';
 
 import GUI from '../containers/gui.jsx';
+import NotificationsBell from '../components/notifications/notifications-bell.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
 import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
+    createNotificationsStream,
     deleteProject,
+    getUnreadCount,
     getMyProfile,
     getProjectDetails,
     listFavoriteProjects,
+    listNotifications,
     listProjects,
     listPublicProjects,
     login,
     logout as apiLogout,
+    markAllNotificationsRead,
+    markNotificationRead,
     register,
     updateMyProfile,
     updateProjectVisibility
@@ -184,7 +190,10 @@ class DogoblockWebApp extends React.Component {
             projectDetails: null,
             profile: null,
             favoriteProjects: [],
-            profileTab: 'overview'
+            profileTab: 'overview',
+            notifications: [],
+            notificationsLoading: false,
+            unreadCount: 0
         };
         this.handleHashChange = this.handleHashChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -208,6 +217,9 @@ class DogoblockWebApp extends React.Component {
         this.handleNavigateProfile = this.handleNavigateProfile.bind(this);
         this.handleNavigateProjects = this.handleNavigateProjects.bind(this);
         this.handleNavigateRegister = this.handleNavigateRegister.bind(this);
+        this.handleLoadNotifications = this.handleLoadNotifications.bind(this);
+        this.handleMarkAllNotificationsRead = this.handleMarkAllNotificationsRead.bind(this);
+        this.handleOpenNotification = this.handleOpenNotification.bind(this);
         this.handleProfileSubmit = this.handleProfileSubmit.bind(this);
         this.handleProfileTab = this.handleProfileTab.bind(this);
         this.renderHome = this.renderHome.bind(this);
@@ -222,12 +234,22 @@ class DogoblockWebApp extends React.Component {
     componentDidMount () {
         window.addEventListener('hashchange', this.handleHashChange);
         this.loadRouteData(this.state.route);
+        this.setupNotifications();
     }
 
     componentWillUnmount () {
         window.removeEventListener('hashchange', this.handleHashChange);
         if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
+        this.closeNotificationsStream();
         this.props.onSetPlayerOnly(false);
+    }
+
+    componentDidUpdate (prevProps) {
+        const previousUserId = prevProps.user && prevProps.user.id;
+        const currentUserId = this.props.user && this.props.user.id;
+        if (previousUserId !== currentUserId) {
+            this.setupNotifications();
+        }
     }
 
     handleHashChange () {
@@ -331,9 +353,114 @@ class DogoblockWebApp extends React.Component {
     }
 
     handleLogout () {
+        this.closeNotificationsStream();
         apiLogout();
         this.props.onLogout();
+        this.setState({
+            notifications: [],
+            unreadCount: 0,
+            notificationsLoading: false
+        });
         navigate('/projects');
+    }
+
+    setupNotifications () {
+        this.closeNotificationsStream();
+        if (!this.props.user) {
+            this.setState({
+                notifications: [],
+                unreadCount: 0,
+                notificationsLoading: false
+            });
+            return;
+        }
+        getUnreadCount()
+            .then(result => this.setState({unreadCount: result.unreadCount || 0}))
+            .catch(() => {});
+
+        const session = readAuthSession();
+        const stream = createNotificationsStream(session && session.accessToken);
+        if (!stream) return;
+
+        stream.addEventListener('notification', event => {
+            try {
+                const notification = JSON.parse(event.data);
+                this.setState(prevState => ({
+                    notifications: [
+                        notification,
+                        ...prevState.notifications.filter(item => item.id !== notification.id)
+                    ].slice(0, 10)
+                }));
+            } catch {
+                // Ignore malformed stream payloads.
+            }
+        });
+        stream.addEventListener('unread-count', event => {
+            try {
+                const data = JSON.parse(event.data);
+                this.setState({unreadCount: data.unreadCount || 0});
+            } catch {
+                // Ignore malformed stream payloads.
+            }
+        });
+        stream.onerror = () => {};
+        this.notificationsStream = stream;
+    }
+
+    closeNotificationsStream () {
+        if (!this.notificationsStream) return;
+        this.notificationsStream.close();
+        this.notificationsStream = null;
+    }
+
+    handleLoadNotifications () {
+        if (!this.props.user) return;
+        this.setState({notificationsLoading: true});
+        listNotifications(1, 10)
+            .then(result => this.setState({
+                notifications: result.notifications || [],
+                unreadCount: result.unreadCount || 0,
+                notificationsLoading: false
+            }))
+            .catch(error => this.setState({
+                error: error.message,
+                notificationsLoading: false
+            }));
+    }
+
+    handleOpenNotification (notification) {
+        const navigateToProject = () => {
+            if (notification.projectId) {
+                navigate(`/projects/${notification.projectId}`);
+            }
+        };
+        if (!notification.readAt) {
+            markNotificationRead(notification.id)
+                .then(updated => {
+                    this.setState(prevState => ({
+                        notifications: prevState.notifications.map(item => (
+                            item.id === notification.id ? Object.assign({}, item, updated) : item
+                        )),
+                        unreadCount: Math.max(0, prevState.unreadCount - 1)
+                    }));
+                    navigateToProject();
+                })
+                .catch(() => navigateToProject());
+            return;
+        }
+        navigateToProject();
+    }
+
+    handleMarkAllNotificationsRead () {
+        if (!this.props.user || this.state.unreadCount === 0) return;
+        markAllNotificationsRead()
+            .then(result => this.setState(prevState => ({
+                unreadCount: 0,
+                notifications: prevState.notifications.map(item => Object.assign({}, item, {
+                    readAt: item.readAt || result.readAt || new Date().toISOString()
+                }))
+            })))
+            .catch(error => this.setState({error: error.message}));
     }
 
     handleImportProject () {
@@ -561,6 +688,14 @@ class DogoblockWebApp extends React.Component {
                                 />
                                 {'Explorar Projetos'}
                             </button>
+                            <NotificationsBell
+                                loading={this.state.notificationsLoading}
+                                notifications={this.state.notifications}
+                                unreadCount={this.state.unreadCount}
+                                onMarkAllRead={this.handleMarkAllNotificationsRead}
+                                onOpen={this.handleLoadNotifications}
+                                onOpenNotification={this.handleOpenNotification}
+                            />
                             <button
                                 className={`${styles.navButton} ${styles.userBadgeButton}`}
                                 onClick={this.handleNavigateProfile}
