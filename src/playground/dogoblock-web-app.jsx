@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import GUI from '../containers/gui.jsx';
+import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
 import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
@@ -672,131 +673,30 @@ class DogoblockWebApp extends React.Component {
     }
 
     renderProjectDetails () {
-        const project = this.state.projectDetails;
-        const playerProjectId = this.state.route.projectId;
-        const userOwnsProject = Boolean(project && this.props.user && project.ownerId === this.props.user.id);
-        const likes = project ? getProjectMetric(project, ['likes', 'loveCount', 'likeCount']) : 0;
-        const favorites = project ? getProjectMetric(project, ['favorites', 'favoriteCount']) : 0;
-        const remixes = project ? getProjectMetric(project, ['remixes', 'remixCount']) : 0;
-        const views = project ? getProjectMetric(project, ['views', 'viewCount']) : 0;
+        const projectId = this.state.route.projectId;
         return (
             <div className={`${styles.page} ${styles.projectDetailsPage}`}>
                 {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
                 {this.state.loading ? <p>{'Carregando...'}</p> : null}
-                {project ? (
-                    <React.Fragment>
-                        <div className={styles.detailsHeader}>
-                            <div className={styles.detailsTitleArea}>
-                                <div className={styles.detailsAvatar}>
-                                    {renderProjectThumbnail(project)}
-                                </div>
-                                <div>
-                                    <h1>{project.title}</h1>
-                                    <p>
-                                        {'por '}
-                                        <strong>{getProjectAuthor(project)}</strong>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className={styles.actions}>
-                                <button
-                                    className={styles.secondaryButton}
-                                    onClick={this.handleNavigateProjects}
-                                >
-                                    {'Voltar'}
-                                </button>
-                                <button
-                                    className={styles.primaryButton}
-                                    onClick={this.handleOpenCurrentProject}
-                                >
-                                    {'Ver por dentro'}
-                                </button>
-                                {userOwnsProject ? (
-                                    <button
-                                        className={styles.secondaryButton}
-                                        onClick={this.handleToggleVisibility}
-                                    >
-                                        {project.visibility === 'PUBLIC' ? 'Despublicar' : 'Publicar'}
-                                    </button>
-                                ) : null}
-                                {userOwnsProject ? (
-                                    <button
-                                        className={styles.dangerButton}
-                                        onClick={this.handleDeleteProject}
-                                    >
-                                        {'Excluir'}
-                                    </button>
-                                ) : null}
-                            </div>
-                        </div>
-                        <div className={styles.detailsMainGrid}>
-                            <section className={styles.detailsPlayerColumn}>
-                                    <GUI
-                                        key={`project-player-${playerProjectId}`}
-                                        canCreateNew={false}
-                                        canEditTitle={false}
-                                        canSave={false}
-                                        assetHost={getAssetHost()}
-                                        projectHost={getProjectHost()}
-                                        projectId={playerProjectId}
-                                        routeProjectId={playerProjectId}
-                                        onProjectLoaded={noop}
-                                        onShowMessageBox={this.handleShowMessageBox}
-                                    />
-                                {/* <div className={styles.detailStagePlayer}>
-                                </div> */}
-                                <div className={styles.detailStats}>
-                                    <span>{`♡ ${likes}`}</span>
-                                    <span>{`☆ ${favorites}`}</span>
-                                    <span>{`◎ ${remixes}`}</span>
-                                    <span>{`◉ ${views}`}</span>
-                                </div>
-                            </section>
-                            <aside className={styles.detailsInfoColumn}>
-                                <section className={styles.detailTextSection}>
-                                    <h2>{'Instruções'}</h2>
-                                    <div className={styles.detailTextBox}>{getProjectInstructions(project)}</div>
-                                </section>
-                                <section className={styles.detailTextSection}>
-                                    <h2>{'Notas e Créditos'}</h2>
-                                    <div className={styles.detailTextBox}>{getProjectCredits(project)}</div>
-                                </section>
-                                <div className={styles.detailMetaBar}>
-                                    <span>{`Atualizado em ${formatDate(project.updatedAt || project.createdAt)}`}</span>
-                                    <button
-                                        className={styles.primaryButton}
-                                        onClick={this.handleCopyProjectLink}
-                                    >
-                                        {this.state.copyLinkFeedback ? 'Copiado!' : 'Copiar Ligação'}
-                                    </button>
-                                </div>
-                            </aside>
-                        </div>
-                        <div className={styles.detailsLowerBand}>
-                            <section className={styles.commentsSection}>
-                                <h2>{'Comentários'}</h2>
-                                <div className={styles.commentComposer}>
-                                    <div className={styles.commentAvatar}>{'D'}</div>
-                                    <input
-                                        disabled
-                                        value="Comentários em breve"
-                                    />
-                                </div>
-                                <div className={styles.emptyComment}>
-                                    {'Ainda nao existem comentarios para mostrar.'}
-                                </div>
-                            </section>
-                            <section className={styles.remixSection}>
-                                <div className={styles.sectionTitleRow}>
-                                    <h2>{'Remisturas'}</h2>
-                                    <span>{'Ver tudo'}</span>
-                                </div>
-                                <div className={styles.remixPlaceholder}>
-                                    {renderProjectThumbnail(project)}
-                                </div>
-                            </section>
-                        </div>
-                    </React.Fragment>
+                {projectId ? (
+                    <ProjectPageContainer
+                        projectId={projectId}
+                        onClose={this.handleNavigateProjects}
+                        renderPlayer={() => (
+                            <GUI
+                                key={`project-page-player-${projectId}`}
+                                canCreateNew={false}
+                                canEditTitle={false}
+                                canSave={false}
+                                assetHost={getAssetHost()}
+                                projectHost={getProjectHost()}
+                                projectId={projectId}
+                                routeProjectId={projectId}
+                                onProjectLoaded={noop}
+                                onShowMessageBox={this.handleShowMessageBox}
+                            />
+                        )}
+                    />
                 ) : null}
             </div>
         );
@@ -818,6 +718,7 @@ class DogoblockWebApp extends React.Component {
                 projectHost={getProjectHost()}
                 projectId={projectId}
                 routeProjectId={projectId}
+                onClickLogo={this.handleNavigateHome}
                 onProjectLoaded={noop}
                 onShowMessageBox={this.handleShowMessageBox}
                 onUpdateProjectId={this.handleProjectCreated}

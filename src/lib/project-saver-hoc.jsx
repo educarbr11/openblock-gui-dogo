@@ -359,6 +359,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 isShowingWithoutId,
                 isUpdating,
                 loadingState,
+                effectiveProjectId,
                 onAutoUpdateProject,
                 onCreatedProject,
                 onCreateProject,
@@ -379,6 +380,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 onUpdateProjectThumbnail,
                 reduxProjectId,
                 reduxProjectTitle,
+                pendingCreateNewProject,
                 setAutoSaveTimeoutId: setAutoSaveTimeoutIdProp,
                 /* eslint-enable no-unused-vars */
                 ...componentProps

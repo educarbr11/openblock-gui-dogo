@@ -50,6 +50,8 @@ const logout = () => {
 
 const me = () => request('/auth/me');
 
+// ─── Projects ────────────────────────────────────────────────────────────────
+
 const listProjects = () => request('/projects');
 const listPublicProjects = () => request('/projects/public', {skipAuth: true});
 const getProjectDetails = projectId => request(`/projects/${projectId}/details`);
@@ -60,7 +62,35 @@ const updateProjectVisibility = (projectId, visibility) => request(`/projects/${
     body: JSON.stringify({visibility})
 });
 
+const updateProjectDetails = (projectId, details) => request(`/projects/${projectId}/details`, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(details)
+});
+
 const projectHost = getProjectHost();
+
+// ─── Interactions ─────────────────────────────────────────────────────────────
+
+const likeProject = projectId => request(`/projects/${projectId}/like`, {method: 'POST'});
+const unlikeProject = projectId => request(`/projects/${projectId}/like`, {method: 'DELETE'});
+const favoriteProject = projectId => request(`/projects/${projectId}/favorite`, {method: 'POST'});
+const unfavoriteProject = projectId => request(`/projects/${projectId}/favorite`, {method: 'DELETE'});
+const recordProjectView = projectId => request(`/projects/${projectId}/view`, {method: 'POST'});
+
+// ─── Comments ─────────────────────────────────────────────────────────────────
+
+const getComments = (projectId, page = 1, limit = 20) =>
+    request(`/projects/${projectId}/comments?page=${page}&limit=${limit}`, {skipAuth: true});
+
+const postComment = (projectId, content) => request(`/projects/${projectId}/comments`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({content})
+});
+
+const deleteComment = (projectId, commentId) =>
+    request(`/projects/${projectId}/comments/${commentId}`, {method: 'DELETE'});
 
 export {
     deleteProject,
@@ -72,5 +102,14 @@ export {
     me,
     projectHost,
     register,
-    updateProjectVisibility
+    updateProjectVisibility,
+    updateProjectDetails,
+    likeProject,
+    unlikeProject,
+    favoriteProject,
+    unfavoriteProject,
+    recordProjectView,
+    getComments,
+    postComment,
+    deleteComment
 };

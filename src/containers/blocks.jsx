@@ -120,6 +120,7 @@ class Blocks extends React.Component {
         this.toolboxUpdateQueue = [];
     }
     componentDidMount () {
+        this._isMounted = true;
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         registerScratchMessages(this.ScratchBlocks);
@@ -246,8 +247,12 @@ class Blocks extends React.Component {
         }
     }
     componentWillUnmount () {
+        this._isMounted = false;
         this.detachVM();
-        this.workspace.dispose();
+        if (this.workspace) {
+            this.workspace.dispose();
+        }
+        this.workspace = null;
         clearTimeout(this.toolboxUpdateTimeout);
         clearTimeout(this.getXMLAndUpdateToolboxTimeout);
     }
@@ -262,13 +267,19 @@ class Blocks extends React.Component {
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
         this.props.vm.setLocale(this.props.locale, this.props.messages)
             .then(() => {
-                this.workspace.getFlyout().setRecyclingEnabled(false);
+                if (!this._isMounted) return;
+                const flyout = this.workspace && this.workspace.getFlyout && this.workspace.getFlyout();
+                if (!flyout) return;
+                flyout.setRecyclingEnabled(false);
                 if (refreshWorkspace) {
                     this.props.vm.refreshWorkspace();
                 }
                 this.requestToolboxUpdate();
                 this.withToolboxUpdates(() => {
-                    this.workspace.getFlyout().setRecyclingEnabled(true);
+                    const updatedFlyout = this.workspace && this.workspace.getFlyout && this.workspace.getFlyout();
+                    if (updatedFlyout) {
+                        updatedFlyout.setRecyclingEnabled(true);
+                    }
                 });
             });
     }
@@ -286,6 +297,10 @@ class Blocks extends React.Component {
     }
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
+
+        if (!this._isMounted || !this.workspace || !this.workspace.toolbox_) {
+            return;
+        }
 
         this.props.onToolboxWillUpdate();
 
@@ -426,12 +441,16 @@ class Blocks extends React.Component {
         // Because they would get caught by this try/catch
         try {
             let {editingTarget: target, runtime} = this.props.vm;
+            if (!runtime || !runtime.getTargetForStage) return null;
             const stage = runtime.getTargetForStage();
+            if (!stage || !stage.getCostumes) return null;
             if (!target) target = stage; // If no editingTarget, use the stage
+            if (!target || !target.getCostumes || !target.getSounds) return null;
 
             const stageCostumes = stage.getCostumes();
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
+            if (!stageCostumes.length || !targetCostumes.length) return null;
             const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
 
             const device = this.props.deviceData.find(item => item.deviceId === this.props.deviceId);
@@ -574,6 +593,7 @@ class Blocks extends React.Component {
 
         // Update the toolbox with new blocks if possible, use timeout to let props update first
         setTimeout(() => {
+            if (!this._isMounted) return;
             const toolboxXML = this.getToolboxXML();
             if (toolboxXML) {
                 this.props.updateToolboxState(this.deviceFakeToolboxHead + toolboxXML);

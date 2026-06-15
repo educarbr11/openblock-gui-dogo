@@ -229,7 +229,8 @@ class MenuBar extends React.Component {
             'handleProgramModeUpdate',
             'handleScreenshot',
             'handleCheckUpdate',
-            'handleClearCache'
+            'handleClearCache',
+            'handleOpenProjectPage'
         ]);
         this.state = {
             isOverflow: false
@@ -459,6 +460,11 @@ class MenuBar extends React.Component {
             this.props.onClickClearCache();
         }
     }
+    handleOpenProjectPage () {
+        if (this.props.projectId && this.props.projectId !== '0') {
+            window.location.hash = `/projects/${this.props.projectId}`;
+        }
+    }
     buildAboutMenu (onClickAbout) {
         if (!onClickAbout) {
             // hide the button
@@ -560,6 +566,7 @@ class MenuBar extends React.Component {
         const showEssentialLabels = true;
         const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
         return (
+            <React.Fragment>
             <Box
                 className={classNames(
                     this.props.className,
@@ -858,6 +865,16 @@ class MenuBar extends React.Component {
                         {compactSecondaryActions ? null : <FormattedMessage {...ariaMessages.tutorials} />}
                     </div> */}
                     <Divider className={classNames(styles.divider)} />
+                    {this.props.projectId && this.props.projectId !== '0' && (
+                        <div
+                            className={classNames(styles.menuBarItem, styles.hoverable)}
+                            title="Página do Projeto"
+                            onMouseUp={this.handleOpenProjectPage}
+                            style={{ padding: '0 12px', fontWeight: 'bold' }}
+                        >
+                            <span>ℹ️ Página do Projeto</span>
+                        </div>
+                    )}
                     <div
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onMouseUp={this.handleScreenshot}
@@ -967,6 +984,7 @@ class MenuBar extends React.Component {
                 </div>
                 { (typeof this.props.onClickAbout === 'function') ? aboutButton : null}
             </Box>
+        </React.Fragment>
         );
     }
 }
@@ -1004,6 +1022,7 @@ MenuBar.propTypes = {
     languageMenuOpen: PropTypes.bool,
     locale: PropTypes.string.isRequired,
     loginMenuOpen: PropTypes.bool,
+    projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     logo: PropTypes.string,
     logoSmall: PropTypes.string,
     mobileLandscape: PropTypes.bool,
@@ -1084,6 +1103,7 @@ const mapStateToProps = (state, ownProps) => {
     const loadingState = state.scratchGui.projectState.loadingState;
     const user = state.session && state.session.session && state.session.session.user;
     return {
+        projectId: state.scratchGui.projectState.projectId,
         aboutMenuOpen: aboutMenuOpen(state),
         accountMenuOpen: accountMenuOpen(state),
         fileMenuOpen: fileMenuOpen(state),
