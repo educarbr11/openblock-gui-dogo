@@ -8,7 +8,12 @@ import {
     LogIn,
     LogOut,
     Plus,
+    Save,
+    Settings,
+    Star,
+    Trash2,
     Upload,
+    UserCircle,
     UserPlus
 } from 'lucide-react';
 
@@ -18,14 +23,18 @@ import MessageBoxType from '../lib/message-box.js';
 import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
     deleteProject,
+    getMyProfile,
     getProjectDetails,
+    listFavoriteProjects,
     listProjects,
     listPublicProjects,
     login,
     logout as apiLogout,
     register,
+    updateMyProfile,
     updateProjectVisibility
 } from '../lib/dogoblock-api';
+import {readAuthSession, writeAuthSession} from '../lib/auth-session';
 import {defaultProjectId} from '../reducers/project-state';
 import {loginSuccess, logout as logoutAction} from '../reducers/session';
 import {setPlayer} from '../reducers/mode';
@@ -45,6 +54,7 @@ const parseRoute = () => {
     if (!parts.length) return {name: 'home'};
     if (parts[0] === 'login') return {name: 'login', next: queryParams.get('next')};
     if (parts[0] === 'register') return {name: 'register', next: queryParams.get('next')};
+    if (parts[0] === 'profile') return {name: 'profile'};
     if (parts[0] === 'explore') return {name: 'explore'};
     if (parts[0] === 'editor') {
         return {
@@ -122,6 +132,15 @@ const getProjectPublicUrl = project => {
     return url.toString();
 };
 
+const getInitials = user => (
+    ((user && (user.name || user.username)) || '?')
+        .split(' ')
+        .map(part => part[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+);
+
 const renderProjectThumbnail = project => {
     const thumbnail = getProjectThumbnail(project);
     if (thumbnail) {
@@ -162,7 +181,10 @@ class DogoblockWebApp extends React.Component {
             loading: false,
             copyLinkFeedback: false,
             projects: [],
-            projectDetails: null
+            projectDetails: null,
+            profile: null,
+            favoriteProjects: [],
+            profileTab: 'overview'
         };
         this.handleHashChange = this.handleHashChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -175,6 +197,7 @@ class DogoblockWebApp extends React.Component {
         this.handleCopyProjectLink = this.handleCopyProjectLink.bind(this);
         this.handleOpenCurrentProject = this.handleOpenCurrentProject.bind(this);
         this.handleOpenProjectDetails = this.handleOpenProjectDetails.bind(this);
+        this.handleDeleteProjectFromCard = this.handleDeleteProjectFromCard.bind(this);
         this.handleShowMessageBox = this.handleShowMessageBox.bind(this);
         this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
         this.handleUpdateVisibility = this.handleUpdateVisibility.bind(this);
@@ -182,12 +205,16 @@ class DogoblockWebApp extends React.Component {
         this.handleNavigateExplore = this.handleNavigateExplore.bind(this);
         this.handleNavigateHome = this.handleNavigateHome.bind(this);
         this.handleNavigateLogin = this.handleNavigateLogin.bind(this);
+        this.handleNavigateProfile = this.handleNavigateProfile.bind(this);
         this.handleNavigateProjects = this.handleNavigateProjects.bind(this);
         this.handleNavigateRegister = this.handleNavigateRegister.bind(this);
+        this.handleProfileSubmit = this.handleProfileSubmit.bind(this);
+        this.handleProfileTab = this.handleProfileTab.bind(this);
         this.renderHome = this.renderHome.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
         this.renderRegister = this.renderRegister.bind(this);
         this.renderProjects = this.renderProjects.bind(this);
+        this.renderProfile = this.renderProfile.bind(this);
         this.renderProjectDetails = this.renderProjectDetails.bind(this);
         this.renderEditor = this.renderEditor.bind(this);
     }
@@ -216,6 +243,28 @@ class DogoblockWebApp extends React.Component {
         if (this.props.user && (route.name === 'login' || route.name === 'register')) {
             navigate(route.next || '/projects');
             return;
+        }
+        if (route.name === 'profile') {
+            if (!this.props.user) {
+                navigate(loginRouteFor('/profile'));
+                return;
+            }
+            this.setState({loading: true, error: null});
+            Promise.all([
+                getMyProfile(),
+                listProjects(),
+                listFavoriteProjects()
+            ])
+                .then(([profile, projects, favoriteProjects]) => {
+                    this.setState({
+                        profile,
+                        projects,
+                        favoriteProjects,
+                        loading: false,
+                        error: null
+                    });
+                })
+                .catch(error => this.setState({error: error.message, loading: false}));
         }
         if (route.name === 'projects' || route.name === 'explore') {
             this.setState({loading: true});
@@ -347,6 +396,27 @@ class DogoblockWebApp extends React.Component {
             .catch(error => this.setState({error: error.message, loading: false}));
     }
 
+    handleDeleteProjectFromCard (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.props.user) {
+            navigate(loginRouteFor());
+            return;
+        }
+        const id = event.currentTarget.dataset.projectId;
+        if (!id) return;
+        if (!window.confirm('Excluir este projeto? Esta ação não pode ser desfeita.')) return; // eslint-disable-line no-alert
+        this.setState({loading: true, error: null});
+        deleteProject(id)
+            .then(() => this.setState(prevState => ({
+                projects: prevState.projects.filter(project => project.id !== id),
+                favoriteProjects: prevState.favoriteProjects.filter(project => project.id !== id),
+                loading: false,
+                error: null
+            })))
+            .catch(error => this.setState({error: error.message, loading: false}));
+    }
+
     handleProjectCreated (projectId) {
         if (projectId && projectId !== defaultProjectId) navigate(`/editor/${projectId}`);
     }
@@ -407,8 +477,42 @@ class DogoblockWebApp extends React.Component {
         navigate('/login');
     }
 
+    handleNavigateProfile () {
+        navigate('/profile');
+    }
+
     handleNavigateRegister () {
         navigate('/register');
+    }
+
+    handleProfileTab (event) {
+        this.setState({profileTab: event.currentTarget.dataset.tab});
+    }
+
+    handleProfileSubmit (event) {
+        event.preventDefault();
+        const form = new FormData(event.currentTarget);
+        this.setState({loading: true, error: null});
+        updateMyProfile({
+            name: form.get('name'),
+            username: form.get('username'),
+            email: form.get('email'),
+            bio: form.get('bio'),
+            workingOn: form.get('workingOn')
+        })
+            .then(profile => {
+                const session = readAuthSession();
+                if (session && session.accessToken) {
+                    const nextSession = {
+                        accessToken: session.accessToken,
+                        user: Object.assign({}, session.user, profile)
+                    };
+                    writeAuthSession(nextSession);
+                    this.props.onLoginSuccess(nextSession);
+                }
+                this.setState({profile, loading: false, error: null});
+            })
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
     renderHeader () {
@@ -457,7 +561,16 @@ class DogoblockWebApp extends React.Component {
                                 />
                                 {'Explorar Projetos'}
                             </button>
-                            <span className={styles.userBadge}>{this.props.user.username}</span>
+                            <button
+                                className={`${styles.navButton} ${styles.userBadgeButton}`}
+                                onClick={this.handleNavigateProfile}
+                            >
+                                <UserCircle
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
+                                {this.props.user.username}
+                            </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleLogout}
@@ -714,12 +827,29 @@ class DogoblockWebApp extends React.Component {
                 </div>
                 {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
                 {this.state.loading ? <p>{'Carregando...'}</p> : null}
-                <div className={styles.projectGrid}>
-                    {this.state.projects.map(project => (
+                {this.renderProjectCards(this.state.projects, !publicList)}
+                {!this.state.loading && !this.state.projects.length ? (
+                    <div className={styles.emptyState}>
+                        {publicList ?
+                            'Nenhum projeto publico encontrado.' :
+                            'Voce ainda nao criou projetos.'}
+                    </div>
+                ) : null}
+            </div>
+        );
+    }
+
+    renderProjectCards (projects, canDeleteProjects) {
+        return (
+            <div className={styles.projectGrid}>
+                {projects.map(project => (
+                    <div
+                        className={styles.projectCardWrap}
+                        key={project.id}
+                    >
                         <button
                             className={styles.projectCard}
                             data-project-id={project.id}
-                            key={project.id}
                             onClick={this.handleOpenProjectDetails}
                         >
                             <span className={styles.projectThumbnail}>
@@ -729,13 +859,221 @@ class DogoblockWebApp extends React.Component {
                             <span className={styles.projectMeta}>{getVisibilityLabel(project.visibility)}</span>
                             <span className={styles.projectMeta}>{formatDate(project.updatedAt)}</span>
                         </button>
-                    ))}
+                        {canDeleteProjects ? (
+                            <button
+                                className={styles.projectDeleteButton}
+                                data-project-id={project.id}
+                                title="Excluir projeto"
+                                aria-label={`Excluir projeto ${project.title}`}
+                                onClick={this.handleDeleteProjectFromCard}
+                            >
+                                <Trash2
+                                    aria-hidden="true"
+                                    size={15}
+                                />
+                            </button>
+                        ) : null}
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    renderProfile () {
+        const profile = this.state.profile || this.props.user || {};
+        const tab = this.state.profileTab;
+        const tabButton = (id, label, IconComponent) => (
+            <button
+                className={`${styles.profileTab} ${tab === id ? styles.profileTabActive : ''}`}
+                data-tab={id}
+                onClick={this.handleProfileTab}
+            >
+                <IconComponent
+                    aria-hidden="true"
+                    className={styles.navIcon}
+                />
+                {label}
+            </button>
+        );
+
+        return (
+            <div className={`${styles.page} ${styles.profilePage}`}>
+                {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
+                <section className={styles.profileHero}>
+                    <div className={styles.profileAvatar}>
+                        {profile.avatarUrl ? (
+                            <img
+                                alt={profile.username}
+                                src={profile.avatarUrl}
+                            />
+                        ) : getInitials(profile)}
+                    </div>
+                    <div className={styles.profileSummary}>
+                        <p className={styles.kicker}>{'PERFIL'}</p>
+                        <h1>{profile.name || profile.username || 'Meu perfil'}</h1>
+                        <p>{`@${profile.username || 'usuario'}`}</p>
+                        <p className={styles.profileBio}>
+                            {profile.bio || 'Adicione uma descrição para contar um pouco sobre você.'}
+                        </p>
+                    </div>
+                    <div className={styles.profileStats}>
+                        <strong>{profile.projectCount || this.state.projects.length || 0}</strong>
+                        <span>{'Projetos'}</span>
+                        <strong>{profile.favoriteCount || this.state.favoriteProjects.length || 0}</strong>
+                        <span>{'Favoritos'}</span>
+                    </div>
+                </section>
+
+                <div className={styles.profileTabs}>
+                    {tabButton('overview', 'Visão Geral', UserCircle)}
+                    {tabButton('edit', 'Dados', Save)}
+                    {tabButton('projects', 'Projetos', FolderOpen)}
+                    {tabButton('favorites', 'Favoritos', Star)}
+                    {tabButton('settings', 'Configurações', Settings)}
                 </div>
-                {!this.state.loading && !this.state.projects.length ? (
-                    <div className={styles.emptyState}>
-                        {publicList ?
-                            'Nenhum projeto publico encontrado.' :
-                            'Voce ainda nao criou projetos.'}
+
+                {this.state.loading ? <p>{'Carregando...'}</p> : null}
+
+                {tab === 'overview' ? (
+                    <div className={styles.profileGrid}>
+                        <section className={styles.profilePanel}>
+                            <h2>{'Descrição'}</h2>
+                            <p>{profile.bio || 'Nenhuma descrição adicionada.'}</p>
+                        </section>
+                        <section className={styles.profilePanel}>
+                            <h2>{'Em que estou trabalhando'}</h2>
+                            <p>{profile.workingOn || 'Nenhum foco atual informado.'}</p>
+                        </section>
+                        <section className={styles.profilePanel}>
+                            <h2>{'Atalhos'}</h2>
+                            <div className={styles.profileActions}>
+                                <button
+                                    className={styles.primaryButton}
+                                    onClick={this.handleNewProject}
+                                >
+                                    <Icon><Plus size={16} /></Icon>
+                                    {'Criar Projeto'}
+                                </button>
+                                <button
+                                    className={styles.secondaryButton}
+                                    onClick={this.handleNavigateExplore}
+                                >
+                                    <Icon><Compass size={16} /></Icon>
+                                    {'Explorar'}
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                ) : null}
+
+                {tab === 'edit' ? (
+                    <form
+                        className={`${styles.panel} ${styles.profileForm}`}
+                        onSubmit={this.handleProfileSubmit}
+                    >
+                        <h1>{'Editar Perfil'}</h1>
+                        <label className={styles.field}>
+                            {'Nome'}
+                            <input
+                                defaultValue={profile.name || ''}
+                                maxLength="80"
+                                name="name"
+                                type="text"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Usuário'}
+                            <input
+                                defaultValue={profile.username || ''}
+                                maxLength="30"
+                                minLength="3"
+                                name="username"
+                                type="text"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Email'}
+                            <input
+                                defaultValue={profile.email || ''}
+                                maxLength="120"
+                                name="email"
+                                type="email"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Descrição'}
+                            <textarea
+                                defaultValue={profile.bio || ''}
+                                maxLength="500"
+                                name="bio"
+                                rows="4"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Em que está trabalhando'}
+                            <textarea
+                                defaultValue={profile.workingOn || ''}
+                                maxLength="280"
+                                name="workingOn"
+                                rows="3"
+                            />
+                        </label>
+                        <button className={styles.primaryButton}>
+                            <Icon><Save size={16} /></Icon>
+                            {this.state.loading ? 'Salvando...' : 'Salvar Perfil'}
+                        </button>
+                    </form>
+                ) : null}
+
+                {tab === 'projects' ? (
+                    <React.Fragment>
+                        <div className={styles.pageHeader}>
+                            <h1>{'Meus Projetos'}</h1>
+                            <div className={styles.actions}>
+                                <button
+                                    className={styles.dangerButton}
+                                    onClick={this.handleNewProject}
+                                >
+                                    <Icon><Plus size={16} /></Icon>
+                                    {'Criar Projeto'}
+                                </button>
+                            </div>
+                        </div>
+                        {this.renderProjectCards(this.state.projects, true)}
+                        {!this.state.projects.length ? (
+                            <div className={styles.emptyState}>{'Você ainda não criou projetos.'}</div>
+                        ) : null}
+                    </React.Fragment>
+                ) : null}
+
+                {tab === 'favorites' ? (
+                    <React.Fragment>
+                        <div className={styles.pageHeader}>
+                            <h1>{'Favoritos'}</h1>
+                        </div>
+                        {this.renderProjectCards(this.state.favoriteProjects, false)}
+                        {!this.state.favoriteProjects.length ? (
+                            <div className={styles.emptyState}>{'Nenhum projeto favorito ainda.'}</div>
+                        ) : null}
+                    </React.Fragment>
+                ) : null}
+
+                {tab === 'settings' ? (
+                    <div className={styles.profileGrid}>
+                        <section className={styles.profilePanel}>
+                            <h2>{'Configurações da conta'}</h2>
+                            <p>{'Mais opções de segurança, senha e notificações serão adicionadas aqui.'}</p>
+                        </section>
+                        <section className={styles.profilePanel}>
+                            <h2>{'Sessão'}</h2>
+                            <button
+                                className={styles.dangerButton}
+                                onClick={this.handleLogout}
+                            >
+                                <Icon><LogOut size={16} /></Icon>
+                                {'Sair da conta'}
+                            </button>
+                        </section>
                     </div>
                 ) : null}
             </div>
@@ -751,6 +1089,7 @@ class DogoblockWebApp extends React.Component {
                 {projectId ? (
                     <ProjectPageContainer
                         projectId={projectId}
+                        onDeleteProject={this.handleDeleteProject}
                         onClose={this.handleNavigateProjects}
                         renderPlayer={() => (
                             <GUI
@@ -806,6 +1145,7 @@ class DogoblockWebApp extends React.Component {
                 {route.name === 'login' ? this.renderLogin() : null}
                 {route.name === 'register' ? this.renderRegister() : null}
                 {route.name === 'projects' || route.name === 'explore' ? this.renderProjects() : null}
+                {route.name === 'profile' ? this.renderProfile() : null}
                 {route.name === 'projectDetails' ? this.renderProjectDetails() : null}
                 {editor ? this.renderEditor() : null}
             </div>
@@ -819,6 +1159,8 @@ DogoblockWebApp.propTypes = {
     onSetPlayerOnly: PropTypes.func.isRequired,
     user: PropTypes.shape({
         id: PropTypes.string,
+        name: PropTypes.string,
+        email: PropTypes.string,
         username: PropTypes.string
     })
 };

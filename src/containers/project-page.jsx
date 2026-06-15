@@ -110,14 +110,14 @@ class ProjectPageContainer extends React.Component {
         }
     }
 
-    handlePostComment (content) {
-        return postComment(this.props.projectId, content)
+    handlePostComment (content, parentId) {
+        return postComment(this.props.projectId, content, parentId)
             .then(comment => this.props.onAddComment(comment));
     }
 
     handleDeleteComment (commentId) {
         deleteComment(this.props.projectId, commentId)
-            .then(() => this.props.onRemoveComment(commentId))
+            .then(res => this.props.onRemoveComment(commentId, res && res.deletedCount))
             .catch(console.error);
     }
 
@@ -177,6 +177,7 @@ class ProjectPageContainer extends React.Component {
                 onUpdateVisibility={this.handleUpdateVisibility}
                 onUpdateDetails={this.handleUpdateDetails}
                 onUpdateCover={this.handleUpdateCover}
+                onDeleteProject={this.props.onDeleteProject}
             />
         );
     }
@@ -207,6 +208,7 @@ ProjectPageContainer.propTypes = {
     commentsTotal: PropTypes.number,
     commentsPage: PropTypes.number,
     onClose: PropTypes.func,
+    onDeleteProject: PropTypes.func,
     onRemix: PropTypes.func,
     renderPlayer: PropTypes.func,
     onSetLoading: PropTypes.func,
@@ -260,7 +262,7 @@ const mapDispatchToProps = dispatch => ({
     onSetFavorite: (isFavorited, favoriteCount) => dispatch(setFavorite(isFavorited, favoriteCount)),
     onSetComments: (comments, total, page) => dispatch(setComments(comments, total, page)),
     onAddComment: comment => dispatch(addComment(comment)),
-    onRemoveComment: commentId => dispatch(removeComment(commentId))
+    onRemoveComment: (commentId, deletedCount) => dispatch(removeComment(commentId, deletedCount))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectPageContainer);

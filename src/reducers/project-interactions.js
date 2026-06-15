@@ -30,6 +30,62 @@ const initialState = {
     commentsLoading: false
 };
 
+const normalizeComment = comment => Object.assign({}, comment, {
+    replies: (comment.replies || []).map(reply => Object.assign({}, reply, {replies: []}))
+});
+
+const mergeComments = (currentComments, nextComments) => {
+    const seen = {};
+    const merged = currentComments.map(normalizeComment);
+    merged.forEach(comment => {
+        seen[comment.id] = true;
+    });
+    nextComments.map(normalizeComment).forEach(comment => {
+        if (!seen[comment.id]) {
+            merged.push(comment);
+        }
+    });
+    return merged;
+};
+
+const addCommentToTree = (comments, comment) => {
+    const normalizedComment = normalizeComment(comment);
+    if (!comment.parentId) {
+        return [normalizedComment, ...comments];
+    }
+    return comments.map(parent => {
+        if (parent.id !== comment.parentId) return parent;
+        return Object.assign({}, parent, {
+            replies: [...(parent.replies || []), normalizedComment]
+        });
+    });
+};
+
+const removeCommentFromTree = (comments, commentId) => {
+    let removedCount = 0;
+    let removedTopLevel = false;
+    const nextComments = comments
+        .map(comment => {
+            if (comment.id === commentId) {
+                removedCount = 1 + (comment.replies || []).length;
+                removedTopLevel = true;
+                return null;
+            }
+            const replies = comment.replies || [];
+            const nextReplies = replies.filter(reply => {
+                if (reply.id === commentId) {
+                    removedCount = 1;
+                    return false;
+                }
+                return true;
+            });
+            if (nextReplies.length === replies.length) return comment;
+            return Object.assign({}, comment, {replies: nextReplies});
+        })
+        .filter(Boolean);
+    return {comments: nextComments, removedCount, removedTopLevel};
+};
+
 const reducer = (state, action) => {
     if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
@@ -77,7 +133,9 @@ const reducer = (state, action) => {
 
     case SET_COMMENTS:
         return Object.assign({}, state, {
-            comments: action.comments,
+            comments: action.page > 1 ?
+                mergeComments(state.comments, action.comments) :
+                action.comments.map(normalizeComment),
             commentsTotal: action.total,
             commentsPage: action.page,
             commentsLoading: false
@@ -85,17 +143,22 @@ const reducer = (state, action) => {
 
     case ADD_COMMENT:
         return Object.assign({}, state, {
-            comments: [action.comment, ...state.comments],
+            comments: addCommentToTree(state.comments, action.comment),
             commentCount: state.commentCount + 1,
-            commentsTotal: state.commentsTotal + 1
+            commentsTotal: action.comment.parentId ? state.commentsTotal : state.commentsTotal + 1
         });
 
-    case REMOVE_COMMENT:
+    case REMOVE_COMMENT: {
+        const removed = removeCommentFromTree(state.comments, action.commentId);
+        const removedCount = action.deletedCount || removed.removedCount || 1;
         return Object.assign({}, state, {
-            comments: state.comments.filter(c => c.id !== action.commentId),
-            commentCount: Math.max(0, state.commentCount - 1),
-            commentsTotal: Math.max(0, state.commentsTotal - 1)
+            comments: removed.comments,
+            commentCount: Math.max(0, state.commentCount - removedCount),
+            commentsTotal: removed.removedTopLevel ?
+                Math.max(0, state.commentsTotal - 1) :
+                state.commentsTotal
         });
+    }
 
     default:
         return state;
@@ -118,7 +181,7 @@ const setComments = (comments, total, page) => ({type: SET_COMMENTS, comments, t
 
 const addComment = comment => ({type: ADD_COMMENT, comment});
 
-const removeComment = commentId => ({type: REMOVE_COMMENT, commentId});
+const removeComment = (commentId, deletedCount) => ({type: REMOVE_COMMENT, commentId, deletedCount});
 
 export {
     reducer as default,

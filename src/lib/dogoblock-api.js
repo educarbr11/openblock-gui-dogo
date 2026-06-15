@@ -50,6 +50,18 @@ const logout = () => {
 
 const me = () => request('/auth/me');
 
+// ─── User Profile ────────────────────────────────────────────────────────────
+
+const getMyProfile = () => request('/users/me');
+
+const updateMyProfile = profile => request('/users/me', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(profile)
+});
+
+const listFavoriteProjects = () => request('/users/me/favorites');
+
 // ─── Projects ────────────────────────────────────────────────────────────────
 
 const listProjects = () => request('/projects');
@@ -92,10 +104,10 @@ const recordProjectView = projectId => request(`/projects/${projectId}/view`, {m
 const getComments = (projectId, page = 1, limit = 20) =>
     request(`/projects/${projectId}/comments?page=${page}&limit=${limit}`);
 
-const postComment = (projectId, content) => request(`/projects/${projectId}/comments`, {
+const postComment = (projectId, content, parentId) => request(`/projects/${projectId}/comments`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({content})
+    body: JSON.stringify(parentId ? {content, parentId} : {content})
 });
 
 const deleteComment = (projectId, commentId) =>
@@ -105,15 +117,18 @@ export {
     deleteProject,
     getProjectDetails,
     listProjects,
+    listFavoriteProjects,
     listPublicProjects,
     login,
     logout,
     me,
     projectHost,
     register,
+    getMyProfile,
     updateProjectVisibility,
     updateProjectDetails,
     uploadProjectCover,
+    updateMyProfile,
     likeProject,
     unlikeProject,
     favoriteProject,

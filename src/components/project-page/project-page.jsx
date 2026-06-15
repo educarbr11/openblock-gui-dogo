@@ -8,6 +8,7 @@ import {
     Lock,
     MessageCircle,
     MoreHorizontal,
+    Reply,
     Send,
     Share2,
     Star,
@@ -22,6 +23,69 @@ const formatDate = iso => {
     if (!iso) return '';
     const d = new Date(iso);
     return d.toLocaleDateString(undefined, {year: 'numeric', month: 'short', day: 'numeric'});
+};
+
+const ALLOWED_COMMENT_LINK_HOSTS = [
+    'dogoblock.vercel.app',
+    'dogoblock.com',
+    'dogoblock.dogomaker.com'
+];
+
+const COMMENT_LINK_PATTERN = /(?:https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s<>"']*)?/gi;
+
+const splitTrailingPunctuation = value => {
+    const match = value.match(/^(.+?)([.,!?;:)]*)$/);
+    return match ? [match[1], match[2]] : [value, ''];
+};
+
+const getAllowedCommentLink = value => {
+    const [candidate] = splitTrailingPunctuation(value);
+    const normalized = /^https?:\/\//i.test(candidate) ? candidate : `https://${candidate}`;
+    try {
+        const url = new URL(normalized);
+        if (url.protocol !== 'https:') return null;
+        if (!ALLOWED_COMMENT_LINK_HOSTS.includes(url.hostname.toLowerCase())) return null;
+        return url.href;
+    } catch (e) {
+        return null;
+    }
+};
+
+const renderCommentContent = content => {
+    if (!content) return null;
+    const parts = [];
+    let lastIndex = 0;
+    let match = COMMENT_LINK_PATTERN.exec(content);
+    while (match) {
+        if (match.index > lastIndex) {
+            parts.push(content.slice(lastIndex, match.index));
+        }
+        const rawLink = match[0];
+        const [candidate, punctuation] = splitTrailingPunctuation(rawLink);
+        const href = getAllowedCommentLink(rawLink);
+        if (href) {
+            parts.push(
+                <a
+                    key={`comment-link-${match.index}`}
+                    className={styles.commentLink}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {candidate}
+                </a>
+            );
+            if (punctuation) parts.push(punctuation);
+        } else {
+            parts.push(rawLink);
+        }
+        lastIndex = match.index + rawLink.length;
+        match = COMMENT_LINK_PATTERN.exec(content);
+    }
+    if (lastIndex < content.length) {
+        parts.push(content.slice(lastIndex));
+    }
+    return parts;
 };
 
 const VisibilityBadge = ({visibility}) => {
@@ -44,7 +108,22 @@ const VisibilityBadge = ({visibility}) => {
 };
 VisibilityBadge.propTypes = {visibility: PropTypes.string};
 
-const CommentItem = ({comment, canDelete, onDelete}) => {
+const CommentItem = ({
+    comment,
+    canDelete,
+    onDelete,
+    canReply,
+    isReply,
+    onReplyStart,
+    onReplyCancel,
+    onReplySubmit,
+    onReplyTextChange,
+    replyText,
+    replying,
+    submittingReply,
+    currentUserId,
+    ownerId
+}) => {
     const initials = (comment.user?.name || comment.user?.username || '?')
         .split(' ')
         .map(w => w[0])
@@ -53,7 +132,7 @@ const CommentItem = ({comment, canDelete, onDelete}) => {
         .toUpperCase();
 
     return (
-        <div className={styles.comment}>
+        <div className={isReply ? `${styles.comment} ${styles.commentReply}` : styles.comment}>
             <div className={styles.commentAvatar}>
                 {comment.user?.avatarUrl
                     ? <img src={comment.user.avatarUrl} alt={comment.user.username} />
@@ -79,7 +158,75 @@ const CommentItem = ({comment, canDelete, onDelete}) => {
                         </button>
                     )}
                 </div>
-                <div className={styles.commentContent}>{comment.content}</div>
+                <div className={styles.commentContent}>{renderCommentContent(comment.content)}</div>
+                {!isReply && (
+                    <div className={styles.commentActions}>
+                        {canReply && (
+                            <button
+                                className={styles.commentReplyBtn}
+                                onClick={() => onReplyStart(comment.id)}
+                                type="button"
+                            >
+                                <Reply
+                                    aria-hidden="true"
+                                    size={14}
+                                />
+                                Responder
+                            </button>
+                        )}
+                    </div>
+                )}
+                {replying && (
+                    <div className={styles.replyInput}>
+                        <textarea
+                            className={styles.replyInputField}
+                            placeholder="Escreva uma resposta…"
+                            value={replyText}
+                            rows={2}
+                            maxLength={500}
+                            onChange={e => onReplyTextChange(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    onReplySubmit(comment.id);
+                                }
+                            }}
+                            autoFocus
+                        />
+                        <div className={styles.replyActions}>
+                            <button
+                                className={styles.replyCancelBtn}
+                                onClick={onReplyCancel}
+                                type="button"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className={styles.replySubmitBtn}
+                                disabled={!replyText.trim() || submittingReply}
+                                onClick={() => onReplySubmit(comment.id)}
+                                type="button"
+                            >
+                                {submittingReply ? 'Enviando…' : 'Responder'}
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {!isReply && comment.replies && comment.replies.length > 0 && (
+                    <div className={styles.replyList}>
+                        {comment.replies.map(reply => (
+                            <CommentItem
+                                key={reply.id}
+                                comment={reply}
+                                canDelete={!!currentUserId && (
+                                    reply.user?.id === currentUserId || ownerId === currentUserId
+                                )}
+                                isReply
+                                onDelete={onDelete}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -87,7 +234,32 @@ const CommentItem = ({comment, canDelete, onDelete}) => {
 CommentItem.propTypes = {
     comment: PropTypes.object.isRequired,
     canDelete: PropTypes.bool,
-    onDelete: PropTypes.func
+    onDelete: PropTypes.func,
+    canReply: PropTypes.bool,
+    isReply: PropTypes.bool,
+    onReplyStart: PropTypes.func,
+    onReplyCancel: PropTypes.func,
+    onReplySubmit: PropTypes.func,
+    onReplyTextChange: PropTypes.func,
+    replyText: PropTypes.string,
+    replying: PropTypes.bool,
+    submittingReply: PropTypes.bool,
+    currentUserId: PropTypes.string,
+    ownerId: PropTypes.string
+};
+
+CommentItem.defaultProps = {
+    canDelete: false,
+    canReply: false,
+    isReply: false,
+    onDelete: () => {},
+    onReplyStart: () => {},
+    onReplyCancel: () => {},
+    onReplySubmit: () => {},
+    onReplyTextChange: () => {},
+    replyText: '',
+    replying: false,
+    submittingReply: false
 };
 
 class ProjectPage extends React.Component {
@@ -99,6 +271,9 @@ class ProjectPage extends React.Component {
             editValue: '',
             commentText: '',
             submittingComment: false,
+            replyParentId: null,
+            replyText: '',
+            submittingReply: false,
             savingDetails: false,
             editingTitle: false,
             titleValue: props.title || '',
@@ -112,12 +287,16 @@ class ProjectPage extends React.Component {
         this.handleRemix = this.handleRemix.bind(this);
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
         this.handleCommentDelete = this.handleCommentDelete.bind(this);
+        this.handleReplyStart = this.handleReplyStart.bind(this);
+        this.handleReplyCancel = this.handleReplyCancel.bind(this);
+        this.handleReplySubmit = this.handleReplySubmit.bind(this);
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.handleEditStart = this.handleEditStart.bind(this);
         this.handleEditSave = this.handleEditSave.bind(this);
         this.handleTitleSave = this.handleTitleSave.bind(this);
         this.handleCoverClick = this.handleCoverClick.bind(this);
         this.handleCoverSelected = this.handleCoverSelected.bind(this);
+        this.handleDeleteProject = this.handleDeleteProject.bind(this);
     }
 
     componentDidUpdate (prevProps) {
@@ -175,6 +354,37 @@ class ProjectPage extends React.Component {
     handleCommentDelete (commentId) {
         if (!window.confirm('Apagar este comentário?')) return;
         this.props.onDeleteComment(commentId);
+    }
+
+    handleReplyStart (commentId) {
+        this.setState({
+            replyParentId: commentId,
+            replyText: ''
+        });
+    }
+
+    handleReplyCancel () {
+        this.setState({
+            replyParentId: null,
+            replyText: '',
+            submittingReply: false
+        });
+    }
+
+    handleReplySubmit (parentId) {
+        const content = this.state.replyText.trim();
+        if (!content || this.state.submittingReply) return;
+        this.setState({submittingReply: true});
+        this.props.onPostComment(content, parentId)
+            .then(() => {
+                this.setState({
+                    replyParentId: null,
+                    replyText: ''
+                });
+            })
+            .finally(() => {
+                this.setState({submittingReply: false});
+            });
     }
 
     handleVisibilityChange (e) {
@@ -242,6 +452,12 @@ class ProjectPage extends React.Component {
                 window.alert('Não foi possível enviar a capa. Tente novamente.');
             })
             .finally(() => this.setState({uploadingCover: false}));
+    }
+
+    handleDeleteProject () {
+        if (this.props.onDeleteProject) {
+            this.props.onDeleteProject();
+        }
     }
 
     renderEditableSection (section, label, placeholder) {
@@ -344,7 +560,7 @@ class ProjectPage extends React.Component {
             currentUserId, ownerId
         } = this.props;
 
-        const {commentText, submittingComment} = this.state;
+        const {commentText, submittingComment, replyParentId, replyText, submittingReply} = this.state;
 
         return (
             <>
@@ -402,6 +618,16 @@ class ProjectPage extends React.Component {
                                     isLoggedIn && (c.user?.id === currentUserId || ownerId === currentUserId)
                                 }
                                 onDelete={this.handleCommentDelete}
+                                canReply={isLoggedIn}
+                                onReplyStart={this.handleReplyStart}
+                                onReplyCancel={this.handleReplyCancel}
+                                onReplySubmit={this.handleReplySubmit}
+                                onReplyTextChange={value => this.setState({replyText: value})}
+                                replyText={replyText}
+                                replying={replyParentId === c.id}
+                                submittingReply={submittingReply}
+                                currentUserId={currentUserId}
+                                ownerId={ownerId}
                             />
                         ))}
                     </div>
@@ -651,6 +877,19 @@ class ProjectPage extends React.Component {
                                         Remixar
                                     </button>
                                 )}
+
+                                {isOwner && this.props.onDeleteProject && (
+                                    <button
+                                        className={`${styles.statBtn} ${styles.deleteProjectBtn}`}
+                                        onClick={this.handleDeleteProject}
+                                    >
+                                        <Trash2
+                                            aria-hidden="true"
+                                            className={styles.buttonIcon}
+                                        />
+                                        Excluir projeto
+                                    </button>
+                                )}
                             </div>
 
                             <div className={styles.mainGrid}>
@@ -742,6 +981,7 @@ ProjectPage.propTypes = {
     onRemix: PropTypes.func,
     onPostComment: PropTypes.func,
     onDeleteComment: PropTypes.func,
+    onDeleteProject: PropTypes.func,
     onLoadComments: PropTypes.func,
     onUpdateVisibility: PropTypes.func,
     onUpdateDetails: PropTypes.func,
@@ -770,6 +1010,7 @@ ProjectPage.defaultProps = {
     onRemix: null,
     onPostComment: () => Promise.resolve(),
     onDeleteComment: () => {},
+    onDeleteProject: null,
     onLoadComments: () => {},
     onUpdateVisibility: () => {},
     onUpdateDetails: () => Promise.resolve(),
