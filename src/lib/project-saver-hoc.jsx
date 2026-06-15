@@ -9,6 +9,7 @@ import log from '../lib/log';
 import storage from '../lib/storage';
 import dataURItoBlob from '../lib/data-uri-to-blob';
 import saveProjectToServer from '../lib/save-project-to-server';
+import {uploadProjectCover} from '../lib/dogoblock-api';
 
 import {
     showAlertWithTimeout,
@@ -16,6 +17,7 @@ import {
 } from '../reducers/alerts';
 import {setAutoSaveTimeoutId} from '../reducers/timeout';
 import {setProjectUnchanged} from '../reducers/project-changed';
+import {clearPendingProjectCover} from '../reducers/project-cover';
 import {
     LoadingState,
     LoadingStates,
@@ -284,6 +286,17 @@ const ProjectSaverHOC = function (WrappedComponent) {
             )
                 .then(() => this.props.onUpdateProjectData(projectId, savedVMState, requestParams))
                 .then(response => {
+                    const id = response.id.toString();
+                    if (this.props.pendingProjectCoverFile && id) {
+                        return uploadProjectCover(id, this.props.pendingProjectCoverFile)
+                            .then(() => {
+                                this.props.onClearPendingProjectCover();
+                                return response;
+                            });
+                    }
+                    return response;
+                })
+                .then(response => {
                     this.props.onSetProjectUnchanged();
                     const id = response.id.toString();
                     if (id && this.props.onUpdateProjectThumbnail) {
@@ -365,6 +378,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 onCreateProject,
                 onProjectError,
                 onRemixing,
+                onClearPendingProjectCover,
                 onSetProjectUnchanged,
                 onSetProjectThumbnailer,
                 onSetProjectSaver,
@@ -381,6 +395,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 reduxProjectId,
                 reduxProjectTitle,
                 pendingCreateNewProject,
+                pendingProjectCoverFile,
                 setAutoSaveTimeoutId: setAutoSaveTimeoutIdProp,
                 /* eslint-enable no-unused-vars */
                 ...componentProps
@@ -417,6 +432,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onCreateProject: PropTypes.func,
         onCreatedProject: PropTypes.func,
         onProjectError: PropTypes.func,
+        onClearPendingProjectCover: PropTypes.func,
         onProjectTelemetryEvent: PropTypes.func,
         onRemixing: PropTypes.func,
         onSetProjectSaver: PropTypes.func.isRequired,
@@ -435,6 +451,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onUpdateProjectThumbnail: PropTypes.func,
         onUpdatedProject: PropTypes.func,
         pendingCreateNewProject: PropTypes.bool,
+        pendingProjectCoverFile: PropTypes.object,
         projectChanged: PropTypes.bool,
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         routeProjectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -472,6 +489,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
             isManualUpdating: getIsManualUpdating(loadingState),
             loadingState: loadingState,
             pendingCreateNewProject: state.scratchGui.projectState.pendingCreateNewProject,
+            pendingProjectCoverFile: state.scratchGui.projectCover.file,
             locale: state.locales.locale,
             projectChanged: state.scratchGui.projectChanged,
             reduxProjectId: reduxProjectId,
@@ -484,6 +502,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         onCreatedProject: (projectId, loadingState) => dispatch(doneCreatingProject(projectId, loadingState)),
         onCreateProject: () => dispatch(createProject()),
         onProjectError: error => dispatch(projectError(error)),
+        onClearPendingProjectCover: () => dispatch(clearPendingProjectCover()),
         onSetProjectUnchanged: () => dispatch(setProjectUnchanged()),
         onShowAlert: alertType => dispatch(showStandardAlert(alertType)),
         onShowCreateSuccessAlert: () => showAlertWithTimeout(dispatch, 'createSuccess'),

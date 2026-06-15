@@ -111,6 +111,8 @@ import settingIcon from './icon--setting.svg';
 import uploadFirmwareIcon from './icon--upload-firmware.svg';
 import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
+import {setProjectChanged} from '../../reducers/project-changed';
+import {setPendingProjectCover} from '../../reducers/project-cover';
 
 const ariaMessages = defineMessages({
     language: {
@@ -230,11 +232,14 @@ class MenuBar extends React.Component {
             'handleScreenshot',
             'handleCheckUpdate',
             'handleClearCache',
-            'handleOpenProjectPage'
+            'handleOpenProjectPage',
+            'handleClickProjectCover',
+            'handleProjectCoverSelected'
         ]);
         this.state = {
             isOverflow: false
         };
+        this.projectCoverInput = React.createRef();
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -299,6 +304,26 @@ class MenuBar extends React.Component {
     handleClickSaveAsCopy () {
         this.props.onClickSaveAsCopy();
         this.props.onRequestCloseFile();
+    }
+    handleClickProjectCover () {
+        if (this.projectCoverInput.current) {
+            this.projectCoverInput.current.click();
+        }
+    }
+    handleProjectCoverSelected (event) {
+        const file = event.target.files && event.target.files[0];
+        event.target.value = '';
+        if (!file) return;
+        if (!file.type || !/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) {
+            window.alert('Selecione uma imagem PNG, JPG, WEBP ou GIF para a capa.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            window.alert('A capa deve ter no máximo 5MB.');
+            return;
+        }
+        this.props.onSetPendingProjectCover(file, URL.createObjectURL(file));
+        this.props.onProjectChanged();
     }
     handleClickSeeCommunity (waitForUpdate) {
         if (this.props.shouldSaveBeforeTransition()) {
@@ -865,6 +890,31 @@ class MenuBar extends React.Component {
                         {compactSecondaryActions ? null : <FormattedMessage {...ariaMessages.tutorials} />}
                     </div> */}
                     <Divider className={classNames(styles.divider)} />
+                    {this.props.canSave && (
+                        <React.Fragment>
+                            <input
+                                ref={this.projectCoverInput}
+                                accept="image/png,image/jpeg,image/webp,image/gif"
+                                className={styles.coverInput}
+                                type="file"
+                                onChange={this.handleProjectCoverSelected}
+                            />
+                            <div
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable,
+                                    styles.projectCoverMenuItem,
+                                    this.props.pendingProjectCoverPreview ? styles.projectCoverPending : null
+                                )}
+                                title={this.props.pendingProjectCoverPreview ?
+                                    'Capa selecionada. Salve o projeto para enviar.' :
+                                    'Alterar capa do projeto'}
+                                onMouseUp={this.handleClickProjectCover}
+                            >
+                                <span>{this.props.pendingProjectCoverPreview ? '✓ Capa' : 'Capa'}</span>
+                            </div>
+                        </React.Fragment>
+                    )}
                     {this.props.projectId && this.props.projectId !== '0' && (
                         <div
                             className={classNames(styles.menuBarItem, styles.hoverable)}
@@ -1087,9 +1137,12 @@ MenuBar.propTypes = {
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
     onWorkspaceIsNotEmpty: PropTypes.func.isRequired,
     onOpenDeviceLibrary: PropTypes.func,
+    onProjectChanged: PropTypes.func,
+    onSetPendingProjectCover: PropTypes.func,
     onSetStageLarge: PropTypes.func.isRequired,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,
+    pendingProjectCoverPreview: PropTypes.string,
     onDeviceIsEmpty: PropTypes.func
 };
 
@@ -1128,7 +1181,8 @@ const mapStateToProps = (state, ownProps) => {
         vm: state.scratchGui.vm,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
         deviceId: state.scratchGui.device.deviceId,
-        deviceName: state.scratchGui.device.deviceName
+        deviceName: state.scratchGui.device.deviceName,
+        pendingProjectCoverPreview: state.scratchGui.projectCover.previewUrl
     };
 };
 
@@ -1153,6 +1207,8 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
+    onProjectChanged: () => dispatch(setProjectChanged()),
+    onSetPendingProjectCover: (file, previewUrl) => dispatch(setPendingProjectCover(file, previewUrl)),
     onSeeCommunity: () => dispatch(setPlayer(true)),
     onSetUploadMode: () => {
         dispatch(setUploadMode());

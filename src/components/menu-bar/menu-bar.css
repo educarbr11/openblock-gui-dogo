@@ -168,6 +168,20 @@
     justify-content: center;
 }
 
+.cover-input {
+    display: none;
+}
+
+.project-cover-menu-item {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    font-size: 0.78rem;
+}
+
+.project-cover-pending {
+    background-color: $ui-black-transparent;
+}
+
 .menu-bar-item.language-menu {
     padding: 0 0.5rem;
 }

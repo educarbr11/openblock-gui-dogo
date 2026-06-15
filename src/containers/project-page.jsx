@@ -25,7 +25,8 @@ import {
     postComment,
     deleteComment,
     updateProjectVisibility,
-    updateProjectDetails
+    updateProjectDetails,
+    uploadProjectCover
 } from '../lib/dogoblock-api';
 import ProjectPage from '../components/project-page/project-page.jsx';
 
@@ -42,6 +43,7 @@ class ProjectPageContainer extends React.Component {
         this.handleLoadComments = this.handleLoadComments.bind(this);
         this.handleUpdateVisibility = this.handleUpdateVisibility.bind(this);
         this.handleUpdateDetails = this.handleUpdateDetails.bind(this);
+        this.handleUpdateCover = this.handleUpdateCover.bind(this);
     }
 
     componentDidMount () {
@@ -61,15 +63,20 @@ class ProjectPageContainer extends React.Component {
 
     loadDetails (projectId) {
         this.props.onSetLoading(true);
+        this.props.onSetComments([], 0, 1);
         getProjectDetails(projectId)
             .then(details => {
+                if (this.props.projectId !== projectId) return;
                 this.props.onSetDetails(details);
+                this.handleLoadComments(1);
             })
             .catch(err => {
                 console.error('Failed to load project details', err);
             })
             .finally(() => {
-                this.props.onSetLoading(false);
+                if (this.props.projectId === projectId) {
+                    this.props.onSetLoading(false);
+                }
             });
     }
 
@@ -115,8 +122,12 @@ class ProjectPageContainer extends React.Component {
     }
 
     handleLoadComments (page) {
-        getComments(this.props.projectId, page)
-            .then(res => this.props.onSetComments(res.comments, res.total, res.page))
+        const {projectId} = this.props;
+        getComments(projectId, page)
+            .then(res => {
+                if (this.props.projectId !== projectId) return;
+                this.props.onSetComments(res.comments, res.total, res.page);
+            })
             .catch(console.error);
     }
 
@@ -139,6 +150,16 @@ class ProjectPageContainer extends React.Component {
             });
     }
 
+    handleUpdateCover (coverFile) {
+        return uploadProjectCover(this.props.projectId, coverFile)
+            .then(res => {
+                this.props.onSetDetails(
+                    Object.assign({}, this.props, res)
+                );
+                return res;
+            });
+    }
+
     render () {
         if (!this.props.projectId) return null;
 
@@ -155,6 +176,7 @@ class ProjectPageContainer extends React.Component {
                 onLoadComments={this.handleLoadComments}
                 onUpdateVisibility={this.handleUpdateVisibility}
                 onUpdateDetails={this.handleUpdateDetails}
+                onUpdateCover={this.handleUpdateCover}
             />
         );
     }

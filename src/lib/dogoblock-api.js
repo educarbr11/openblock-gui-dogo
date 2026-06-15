@@ -68,6 +68,15 @@ const updateProjectDetails = (projectId, details) => request(`/projects/${projec
     body: JSON.stringify(details)
 });
 
+const uploadProjectCover = (projectId, coverFile) => {
+    const body = new FormData();
+    body.append('cover', coverFile);
+    return request(`/projects/${projectId}/cover`, {
+        method: 'POST',
+        body
+    });
+};
+
 const projectHost = getProjectHost();
 
 // ─── Interactions ─────────────────────────────────────────────────────────────
@@ -81,7 +90,7 @@ const recordProjectView = projectId => request(`/projects/${projectId}/view`, {m
 // ─── Comments ─────────────────────────────────────────────────────────────────
 
 const getComments = (projectId, page = 1, limit = 20) =>
-    request(`/projects/${projectId}/comments?page=${page}&limit=${limit}`, {skipAuth: true});
+    request(`/projects/${projectId}/comments?page=${page}&limit=${limit}`);
 
 const postComment = (projectId, content) => request(`/projects/${projectId}/comments`, {
     method: 'POST',
@@ -104,6 +113,7 @@ export {
     register,
     updateProjectVisibility,
     updateProjectDetails,
+    uploadProjectCover,
     likeProject,
     unlikeProject,
     favoriteProject,

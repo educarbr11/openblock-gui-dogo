@@ -1,5 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+    Code2,
+    Edit3,
+    Eye,
+    Heart,
+    Lock,
+    MessageCircle,
+    MoreHorizontal,
+    Send,
+    Share2,
+    Star,
+    Trash2,
+    Unlock,
+    Upload,
+    Users
+} from 'lucide-react';
 import styles from './project-page.css';
 
 const formatDate = iso => {
@@ -10,12 +26,21 @@ const formatDate = iso => {
 
 const VisibilityBadge = ({visibility}) => {
     const map = {
-        PUBLIC:   {label: '🌐 Público',    cls: styles.badgePublic},
-        UNLISTED: {label: '🔗 Não-listado', cls: styles.badgeUnlisted},
-        PRIVATE:  {label: '🔒 Privado',    cls: styles.badgePrivate}
+        PUBLIC:   {label: 'Público',     cls: styles.badgePublic, IconComponent: Unlock},
+        UNLISTED: {label: 'Não-listado', cls: styles.badgeUnlisted, IconComponent: Share2},
+        PRIVATE:  {label: 'Privado',     cls: styles.badgePrivate, IconComponent: Lock}
     };
     const v = map[visibility] || map.PRIVATE;
-    return <span className={`${styles.visibilityBadge} ${v.cls}`}>{v.label}</span>;
+    const BadgeIcon = v.IconComponent;
+    return (
+        <span className={`${styles.visibilityBadge} ${v.cls}`}>
+            <BadgeIcon
+                aria-hidden="true"
+                className={styles.badgeIcon}
+            />
+            {v.label}
+        </span>
+    );
 };
 VisibilityBadge.propTypes = {visibility: PropTypes.string};
 
@@ -45,8 +70,12 @@ const CommentItem = ({comment, canDelete, onDelete}) => {
                             className={styles.commentDeleteBtn}
                             onClick={() => onDelete(comment.id)}
                             title="Apagar comentário"
+                            aria-label="Apagar comentário"
                         >
-                            ✕
+                            <Trash2
+                                aria-hidden="true"
+                                size={14}
+                            />
                         </button>
                     )}
                 </div>
@@ -70,8 +99,13 @@ class ProjectPage extends React.Component {
             editValue: '',
             commentText: '',
             submittingComment: false,
-            savingDetails: false
+            savingDetails: false,
+            editingTitle: false,
+            titleValue: props.title || '',
+            coverPreview: null,
+            uploadingCover: false
         };
+        this.coverInput = React.createRef();
         this.handleTabChange = this.handleTabChange.bind(this);
         this.handleLike = this.handleLike.bind(this);
         this.handleFavorite = this.handleFavorite.bind(this);
@@ -81,6 +115,18 @@ class ProjectPage extends React.Component {
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.handleEditStart = this.handleEditStart.bind(this);
         this.handleEditSave = this.handleEditSave.bind(this);
+        this.handleTitleSave = this.handleTitleSave.bind(this);
+        this.handleCoverClick = this.handleCoverClick.bind(this);
+        this.handleCoverSelected = this.handleCoverSelected.bind(this);
+    }
+
+    componentDidUpdate (prevProps) {
+        if (prevProps.title !== this.props.title && !this.state.editingTitle) {
+            this.setState({titleValue: this.props.title || ''});
+        }
+        if (prevProps.thumbnailUrl !== this.props.thumbnailUrl && this.state.coverPreview) {
+            this.setState({coverPreview: null});
+        }
     }
 
     handleTabChange (tab) {
@@ -152,6 +198,52 @@ class ProjectPage extends React.Component {
             });
     }
 
+    handleTitleSave () {
+        const title = this.state.titleValue.trim();
+        if (!title || this.state.savingDetails) return;
+        this.setState({savingDetails: true});
+        this.props.onUpdateDetails({title})
+            .then(() => this.setState({editingTitle: false}))
+            .catch(err => {
+                // eslint-disable-next-line no-console
+                console.error(err);
+                window.alert('Não foi possível salvar o título. Tente novamente.');
+            })
+            .finally(() => this.setState({savingDetails: false}));
+    }
+
+    handleCoverClick () {
+        if (this.coverInput.current) {
+            this.coverInput.current.click();
+        }
+    }
+
+    handleCoverSelected (event) {
+        const file = event.target.files && event.target.files[0];
+        event.target.value = '';
+        if (!file) return;
+        if (!file.type || !/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) {
+            window.alert('Selecione uma imagem PNG, JPG, WEBP ou GIF para a capa.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            window.alert('A capa deve ter no máximo 5MB.');
+            return;
+        }
+        this.setState({
+            coverPreview: URL.createObjectURL(file),
+            uploadingCover: true
+        });
+        this.props.onUpdateCover(file)
+            .catch(err => {
+                // Keep the preview visible so the user can retry without losing context.
+                // eslint-disable-next-line no-console
+                console.error(err);
+                window.alert('Não foi possível enviar a capa. Tente novamente.');
+            })
+            .finally(() => this.setState({uploadingCover: false}));
+    }
+
     renderEditableSection (section, label, placeholder) {
         const isEditing = this.state.editingSection === section;
         const value = this.props[section];
@@ -196,7 +288,11 @@ class ProjectPage extends React.Component {
                                 className={styles.editBtn}
                                 onClick={() => this.handleEditStart(section)}
                             >
-                                ✏️ Editar {label.toLowerCase()}
+                                <Edit3
+                                    aria-hidden="true"
+                                    className={styles.buttonIcon}
+                                />
+                                Editar {label.toLowerCase()}
                             </button>
                         )}
                     </>
@@ -217,20 +313,24 @@ class ProjectPage extends React.Component {
                             value={visibility}
                             onChange={this.handleVisibilityChange}
                         >
-                            <option value="PRIVATE">🔒 Privado</option>
-                            <option value="UNLISTED">🔗 Não-listado</option>
-                            <option value="PUBLIC">🌐 Público</option>
+                            <option value="PRIVATE">Privado</option>
+                            <option value="UNLISTED">Não-listado</option>
+                            <option value="PUBLIC">Público</option>
                         </select>
                     </div>
                 )}
-                {this.renderEditableSection('description', 'Descrição', 'Descreva seu projeto…')}
+                {/* {this.renderEditableSection('description', 'Descrição', 'Descreva seu projeto…')} */}
                 {this.renderEditableSection('instructions', 'Instruções', 'Como usar este projeto…')}
                 {this.renderEditableSection('credits', 'Créditos', 'Créditos e agradecimentos…')}
                 {remixedFromId && (
                     <div className={styles.section}>
                         <h3 className={styles.sectionTitle}>Remix</h3>
                         <a className={styles.remixBadge} href={`#${remixedFromId}`}>
-                            🔀 Baseado no projeto {remixedFromId}
+                            <Share2
+                                aria-hidden="true"
+                                className={styles.buttonIcon}
+                            />
+                            Baseado no projeto {remixedFromId}
                         </a>
                     </div>
                 )}
@@ -269,7 +369,17 @@ class ProjectPage extends React.Component {
                             disabled={!commentText.trim() || submittingComment}
                             onClick={this.handleCommentSubmit}
                         >
-                            {submittingComment ? '…' : '→'}
+                            {submittingComment ? (
+                                <MoreHorizontal
+                                    aria-hidden="true"
+                                    size={16}
+                                />
+                            ) : (
+                                <Send
+                                    aria-hidden="true"
+                                    size={16}
+                                />
+                            )}
                         </button>
                     </div>
                 ) : (
@@ -329,7 +439,7 @@ class ProjectPage extends React.Component {
                 )}
                 {this.renderEditableSection('instructions', 'Instruções', 'Como usar este projeto…')}
                 {this.renderEditableSection('credits', 'Notas e Créditos', 'Créditos e agradecimentos…')}
-                {this.renderEditableSection('description', 'Descrição', 'Descreva seu projeto…')}
+                {/* {this.renderEditableSection('description', 'Descrição', 'Descreva seu projeto…')} */}
                 {remixedFromId && (
                     <div className={styles.section}>
                         <h3 className={styles.sectionTitle}>Remix</h3>
@@ -349,6 +459,7 @@ class ProjectPage extends React.Component {
             isLiked, isFavorited, isLoggedIn, isOwner, createdAt,
             projectId, renderPlayer
         } = this.props;
+        const currentThumbnail = this.state.coverPreview || thumbnailUrl;
 
         if (!projectId) return null;
 
@@ -364,12 +475,97 @@ class ProjectPage extends React.Component {
                         <>
                             {/* Header */}
                             <div className={styles.header}>
-                                {thumbnailUrl
-                                    ? <img className={styles.thumbnail} src={thumbnailUrl} alt={title} />
-                                    : <div className={styles.thumbnailPlaceholder}>🧩</div>}
+                                <div className={styles.thumbnailWrap}>
+                                    {currentThumbnail
+                                        ? <img className={styles.thumbnail} src={currentThumbnail} alt={title} />
+                                        : (
+                                            <div className={styles.thumbnailPlaceholder}>
+                                                <Code2
+                                                    aria-hidden="true"
+                                                    size={28}
+                                                />
+                                            </div>
+                                        )}
+                                    {isOwner && (
+                                        <React.Fragment>
+                                            <input
+                                                ref={this.coverInput}
+                                                accept="image/png,image/jpeg,image/webp,image/gif"
+                                                className={styles.coverInput}
+                                                type="file"
+                                                onChange={this.handleCoverSelected}
+                                            />
+                                            <button
+                                                className={styles.coverButton}
+                                                disabled={this.state.uploadingCover}
+                                                onClick={this.handleCoverClick}
+                                            >
+                                                <Upload
+                                                    aria-hidden="true"
+                                                    className={styles.buttonIcon}
+                                                />
+                                                {this.state.uploadingCover ? 'Enviando…' : 'Alterar capa'}
+                                            </button>
+                                        </React.Fragment>
+                                    )}
+                                </div>
 
                                 <div className={styles.meta}>
-                                    <h1 className={styles.title}>{title || 'Sem título'}</h1>
+                                    {this.state.editingTitle ? (
+                                        <div className={styles.titleEditRow}>
+                                            <input
+                                                className={styles.titleInput}
+                                                value={this.state.titleValue}
+                                                maxLength={120}
+                                                onChange={e => this.setState({titleValue: e.target.value})}
+                                                onKeyDown={e => {
+                                                    if (e.key === 'Enter') this.handleTitleSave();
+                                                    if (e.key === 'Escape') {
+                                                        this.setState({
+                                                            editingTitle: false,
+                                                            titleValue: title || ''
+                                                        });
+                                                    }
+                                                }}
+                                                autoFocus
+                                            />
+                                            <button
+                                                className={styles.saveBtn}
+                                                disabled={!this.state.titleValue.trim() || this.state.savingDetails}
+                                                onClick={this.handleTitleSave}
+                                            >
+                                                Salvar
+                                            </button>
+                                            <button
+                                                className={styles.cancelBtn}
+                                                onClick={() => this.setState({
+                                                    editingTitle: false,
+                                                    titleValue: title || ''
+                                                })}
+                                            >
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className={styles.titleRow}>
+                                            <h1 className={styles.title}>{title || 'Sem título'}</h1>
+                                            {isOwner && (
+                                                <button
+                                                    className={styles.titleEditButton}
+                                                    onClick={() => this.setState({
+                                                        editingTitle: true,
+                                                        titleValue: title || ''
+                                                    })}
+                                                >
+                                                    <Edit3
+                                                        aria-hidden="true"
+                                                        className={styles.buttonIcon}
+                                                    />
+                                                    Editar título
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
                                     <div className={styles.authorRow}>
                                         <div className={styles.avatar}>
                                             {owner?.avatarUrl
@@ -393,6 +589,10 @@ class ProjectPage extends React.Component {
                                     className={`${styles.statBtn} ${styles.editorLink}`}
                                     href={`#/editor/${projectId}`}
                                 >
+                                    <Code2
+                                        aria-hidden="true"
+                                        className={styles.buttonIcon}
+                                    />
                                     Ver por dentro
                                 </a>
 
@@ -402,7 +602,12 @@ class ProjectPage extends React.Component {
                                     disabled={!isLoggedIn}
                                     title={isLoggedIn ? (isLiked ? 'Descurtir' : 'Curtir') : 'Faça login para curtir'}
                                 >
-                                    {isLiked ? '❤️' : '🤍'} {likeCount}
+                                    <Heart
+                                        aria-hidden="true"
+                                        className={styles.buttonIcon}
+                                        fill={isLiked ? 'currentColor' : 'none'}
+                                    />
+                                    {likeCount}
                                 </button>
 
                                 <button
@@ -411,18 +616,39 @@ class ProjectPage extends React.Component {
                                     disabled={!isLoggedIn}
                                     title={isLoggedIn ? (isFavorited ? 'Desfavoritar' : 'Favoritar') : 'Faça login para favoritar'}
                                 >
-                                    {isFavorited ? '⭐' : '☆'} {favoriteCount}
+                                    <Star
+                                        aria-hidden="true"
+                                        className={styles.buttonIcon}
+                                        fill={isFavorited ? 'currentColor' : 'none'}
+                                    />
+                                    {favoriteCount}
                                 </button>
 
-                                <span className={styles.viewStat}>👁 {viewCount}</span>
-                                <span className={styles.viewStat}>💬 {commentCount}</span>
+                                <span className={styles.viewStat}>
+                                    <Eye
+                                        aria-hidden="true"
+                                        className={styles.metricIcon}
+                                    />
+                                    {viewCount}
+                                </span>
+                                <span className={styles.viewStat}>
+                                    <MessageCircle
+                                        aria-hidden="true"
+                                        className={styles.metricIcon}
+                                    />
+                                    {commentCount}
+                                </span>
 
                                 {isLoggedIn && !isOwner && this.props.onRemix && (
                                     <button
                                         className={`${styles.statBtn} ${styles.remixBtn}`}
                                         onClick={this.handleRemix}
                                     >
-                                        🔀 Remixar
+                                        <Share2
+                                            aria-hidden="true"
+                                            className={styles.buttonIcon}
+                                        />
+                                        Remixar
                                     </button>
                                 )}
                             </div>
@@ -446,21 +672,33 @@ class ProjectPage extends React.Component {
                                 <section>
                                     <div className={styles.lowerHeader}>
                                         <h2>Comentários</h2>
-                                        <span>{commentCount}</span>
+                                        <span>
+                                            <MessageCircle
+                                                aria-hidden="true"
+                                                className={styles.lowerHeaderIcon}
+                                            />
+                                            {commentCount}
+                                        </span>
                                     </div>
                                     {this.renderCommentsTab()}
                                 </section>
-                                <section>
+                                {/* <section>
                                     <div className={styles.lowerHeader}>
                                         <h2>Remisturas</h2>
-                                        <span>Em breve</span>
+                                        <span>
+                                            <Users
+                                                aria-hidden="true"
+                                                className={styles.lowerHeaderIcon}
+                                            />
+                                            Em breve
+                                        </span>
                                     </div>
                                     <div className={styles.remixPlaceholder}>
                                         {thumbnailUrl
                                             ? <img src={thumbnailUrl} alt={title} />
                                             : <div>DOGOBLOCK</div>}
                                     </div>
-                                </section>
+                                </section> */}
                             </div>
                         </>
                     )}
@@ -507,6 +745,7 @@ ProjectPage.propTypes = {
     onLoadComments: PropTypes.func,
     onUpdateVisibility: PropTypes.func,
     onUpdateDetails: PropTypes.func,
+    onUpdateCover: PropTypes.func,
     renderPlayer: PropTypes.func
 };
 
@@ -533,7 +772,8 @@ ProjectPage.defaultProps = {
     onDeleteComment: () => {},
     onLoadComments: () => {},
     onUpdateVisibility: () => {},
-    onUpdateDetails: () => Promise.resolve()
+    onUpdateDetails: () => Promise.resolve(),
+    onUpdateCover: () => Promise.resolve()
 };
 
 export default ProjectPage;

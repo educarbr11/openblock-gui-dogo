@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {
+    Code2,
+    Compass,
+    FolderOpen,
+    LogIn,
+    LogOut,
+    Plus,
+    Upload,
+    UserPlus
+} from 'lucide-react';
 
 import GUI from '../containers/gui.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
@@ -128,6 +138,19 @@ const renderProjectThumbnail = project => {
             <span>{'DOGOBLOCK'}</span>
         </div>
     );
+};
+
+const Icon = ({children}) => (
+    <span
+        aria-hidden="true"
+        className={styles.iconWrap}
+    >
+        {children}
+    </span>
+);
+
+Icon.propTypes = {
+    children: PropTypes.node
 };
 
 class DogoblockWebApp extends React.Component {
@@ -408,18 +431,30 @@ class DogoblockWebApp extends React.Component {
                                 className={styles.navButton}
                                 onClick={this.handleNavigateProjects}
                             >
+                                <FolderOpen
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Meus Projetos'}
                             </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleNavigateEditor}
                             >
+                                <Code2
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Editor'}
                             </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleNavigateExplore}
                             >
+                                <Compass
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Explorar Projetos'}
                             </button>
                             <span className={styles.userBadge}>{this.props.user.username}</span>
@@ -427,6 +462,10 @@ class DogoblockWebApp extends React.Component {
                                 className={styles.navButton}
                                 onClick={this.handleLogout}
                             >
+                                <LogOut
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Sair'}
                             </button>
                         </React.Fragment>
@@ -436,24 +475,40 @@ class DogoblockWebApp extends React.Component {
                                 className={styles.navButton}
                                 onClick={this.handleNavigateProjects}
                             >
+                                <FolderOpen
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Meus Projetos'}
                             </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleNavigateEditor}
                             >
+                                <Code2
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Editor'}
                             </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleNavigateExplore}
                             >
+                                <Compass
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Explorar Projetos'}
                             </button>
                             <button
                                 className={styles.navButton}
                                 onClick={this.handleNavigateLogin}
                             >
+                                <LogIn
+                                    aria-hidden="true"
+                                    className={styles.navIcon}
+                                />
                                 {'Entrar/Cadastrar'}
                             </button>
                         </React.Fragment>
@@ -479,12 +534,14 @@ class DogoblockWebApp extends React.Component {
                                 className={styles.primaryButton}
                                 onClick={this.handleNewProject}
                             >
+                                <Icon><Plus size={16} /></Icon>
                                 {'Criar Projeto'}
                             </button>
                             <button
                                 className={styles.secondaryButton}
                                 onClick={this.handleNavigateExplore}
                             >
+                                <Icon><Compass size={16} /></Icon>
                                 {'Explorar Projetos'}
                             </button>
                             {this.props.user ? null : (
@@ -492,6 +549,7 @@ class DogoblockWebApp extends React.Component {
                                     className={styles.lightButton}
                                     onClick={this.handleNavigateLogin}
                                 >
+                                    <Icon><LogIn size={16} /></Icon>
                                     {'Entrar/Cadastrar'}
                                 </button>
                             )}
@@ -541,6 +599,7 @@ class DogoblockWebApp extends React.Component {
                         />
                     </label>
                     <button className={styles.primaryButton}>
+                        <Icon><LogIn size={16} /></Icon>
                         {this.state.loading ? 'Entrando...' : 'Entrar'}
                     </button>
                     <p className={styles.formHint}>
@@ -550,6 +609,10 @@ class DogoblockWebApp extends React.Component {
                             type="button"
                             onClick={this.handleNavigateRegister}
                         >
+                            <UserPlus
+                                aria-hidden="true"
+                                className={styles.inlineIcon}
+                            />
                             {'Cadastrar'}
                         </button>
                     </p>
@@ -602,6 +665,7 @@ class DogoblockWebApp extends React.Component {
                         />
                     </label>
                     <button className={styles.primaryButton}>
+                        <Icon><UserPlus size={16} /></Icon>
                         {this.state.loading ? 'Cadastrando...' : 'Cadastrar'}
                     </button>
                     <p className={styles.formHint}>
@@ -611,6 +675,10 @@ class DogoblockWebApp extends React.Component {
                             type="button"
                             onClick={this.handleNavigateLogin}
                         >
+                            <LogIn
+                                aria-hidden="true"
+                                className={styles.inlineIcon}
+                            />
                             {'Entrar'}
                         </button>
                     </p>
@@ -631,12 +699,14 @@ class DogoblockWebApp extends React.Component {
                                 className={styles.secondaryButton}
                                 onClick={this.handleImportProject}
                             >
+                                <Icon><Upload size={16} /></Icon>
                                 {'Importar Projeto'}
                             </button>
                             <button
                                 className={styles.dangerButton}
                                 onClick={this.handleNewProject}
                             >
+                                <Icon><Plus size={16} /></Icon>
                                 {'Criar Projeto'}
                             </button>
                         </div>
