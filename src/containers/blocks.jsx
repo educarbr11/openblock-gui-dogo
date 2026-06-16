@@ -63,7 +63,8 @@ const registerScratchMessages = ScratchBlocks => {
 };
 
 const defaultScratchExtensions = [
-    'pen'
+    'pen',
+    'music'
 ];
 
 class Blocks extends React.Component {
