@@ -7,37 +7,60 @@ const patches = [
     {
         label: 'scratch-paint rotation center',
         packageDir: path.join(root, 'node_modules', 'scratch-paint'),
-        patchFile: path.join(root, 'patches', 'scratch-paint-rotation-center.patch')
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-rotation-center.patch'),
+        markerFile: path.join(root, 'node_modules', 'scratch-paint', 'src', 'containers', 'paint-editor.jsx'),
+        markerText: 'startRotationCenterPick'
     },
     {
         label: 'openblock-l10n Arduino begin translation',
         packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
-        patchFile: path.join(root, 'patches', 'openblock-l10n-arduino-begin-pt.patch')
+        applyDirectory: 'node_modules/openblock-l10n',
+        patchFile: path.join(root, 'patches', 'openblock-l10n-arduino-begin-pt.patch'),
+        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
+        markerText: '"EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar"'
+    },
+    {
+        label: 'openblock-l10n paint rotation center translation',
+        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        applyDirectory: 'node_modules/openblock-l10n',
+        patchFile: path.join(root, 'patches', 'openblock-l10n-paint-rotation-center-pt.patch'),
+        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
+        markerText: '"paint.paintEditor.rotationCenter": "Centro"'
     }
 ];
 
-const gitApply = (packageDir, args) => spawnSync('git', ['apply'].concat(args), {
-    cwd: packageDir,
+const gitApply = (patch, args) => spawnSync('git', ['apply'].concat(args), {
+    cwd: root,
     encoding: 'utf8'
 });
+
+const patchArgs = patch => patch.applyDirectory ?
+    [`--directory=${patch.applyDirectory}`, patch.patchFile] :
+    [patch.patchFile];
 
 for (const patch of patches) {
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
         continue;
     }
 
-    if (gitApply(patch.packageDir, ['--reverse', '--check', patch.patchFile]).status === 0) {
+    if (
+        patch.markerFile &&
+        patch.markerText &&
+        fs.existsSync(patch.markerFile) &&
+        fs.readFileSync(patch.markerFile, 'utf8').includes(patch.markerText)
+    ) {
         console.log(`${patch.label} patch already applied.`);
         continue;
     }
 
-    const check = gitApply(patch.packageDir, ['--check', patch.patchFile]);
+    const check = gitApply(patch, ['--check'].concat(patchArgs(patch)));
     if (check.status !== 0) {
         console.error(check.stderr || check.stdout);
         process.exit(check.status || 1);
     }
 
-    const apply = gitApply(patch.packageDir, [patch.patchFile]);
+    const apply = gitApply(patch, patchArgs(patch));
     if (apply.status !== 0) {
         console.error(apply.stderr || apply.stdout);
         process.exit(apply.status || 1);
