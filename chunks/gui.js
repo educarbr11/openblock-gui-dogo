@@ -5,7 +5,7 @@ var GUI =
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2056);
+var content = __webpack_require__(2057);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -27,18 +27,18 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1225:
+/***/ 1226:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1226);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1227);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1228);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1229);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1240);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1241);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1257);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1258);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(230);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(410);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(411);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(968);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(969);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 // Polyfills
 
@@ -76,7 +76,7 @@ document.body.appendChild(appTarget);
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(2072).default(appTarget);
+  __webpack_require__(2073).default(appTarget);
 } else {
   _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
   var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
@@ -93,14 +93,14 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 
 /***/ }),
 
-/***/ 1259:
+/***/ 1260:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1667:
+/***/ 1668:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -117,7 +117,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2056:
+/***/ 2057:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -166,7 +166,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2057:
+/***/ 2058:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -268,7 +268,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2058:
+/***/ 2059:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -430,7 +430,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2072:
+/***/ 2073:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -462,64 +462,64 @@ var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 var react_redux_es = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/folder-open.js
-var folder_open = __webpack_require__(2105);
+var folder_open = __webpack_require__(2106);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/code-xml.js
-var code_xml = __webpack_require__(2102);
+var code_xml = __webpack_require__(2103);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/compass.js
-var compass = __webpack_require__(2106);
+var compass = __webpack_require__(2107);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/circle-user.js
-var circle_user = __webpack_require__(2107);
+var circle_user = __webpack_require__(2108);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-out.js
-var log_out = __webpack_require__(2108);
+var log_out = __webpack_require__(2109);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-in.js
-var log_in = __webpack_require__(2109);
+var log_in = __webpack_require__(2110);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/plus.js
-var plus = __webpack_require__(2110);
+var plus = __webpack_require__(2111);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user-plus.js
-var user_plus = __webpack_require__(2111);
+var user_plus = __webpack_require__(2112);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/upload.js
-var upload = __webpack_require__(2103);
+var upload = __webpack_require__(2104);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/trash-2.js
-var trash_2 = __webpack_require__(2098);
+var trash_2 = __webpack_require__(2099);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/save.js
-var save = __webpack_require__(2112);
+var save = __webpack_require__(2113);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/star.js
-var star = __webpack_require__(2091);
+var star = __webpack_require__(2092);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/settings.js
-var settings = __webpack_require__(2113);
+var settings = __webpack_require__(2114);
 
 // EXTERNAL MODULE: ./src/containers/gui.jsx + 299 modules
 var gui = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/message-circle.js
-var message_circle = __webpack_require__(2088);
+var message_circle = __webpack_require__(2089);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
-var icons_reply = __webpack_require__(2089);
+var icons_reply = __webpack_require__(2090);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/heart.js
-var heart = __webpack_require__(2090);
+var heart = __webpack_require__(2091);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/repeat-2.js
-var repeat_2 = __webpack_require__(2092);
+var repeat_2 = __webpack_require__(2093);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/bell.js
-var bell = __webpack_require__(2093);
+var bell = __webpack_require__(2094);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/check-check.js
-var check_check = __webpack_require__(2094);
+var check_check = __webpack_require__(2095);
 
 // EXTERNAL MODULE: ./src/components/notifications/notifications-bell.css
 var notifications_bell = __webpack_require__(118);
@@ -801,25 +801,25 @@ var project_interactions = __webpack_require__(235);
 var dogoblock_api = __webpack_require__(96);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
-var lock_open = __webpack_require__(2095);
+var lock_open = __webpack_require__(2096);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/share-2.js
-var share_2 = __webpack_require__(2096);
+var share_2 = __webpack_require__(2097);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock.js
-var lock = __webpack_require__(2097);
+var lock = __webpack_require__(2098);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/pen-line.js
-var pen_line = __webpack_require__(2099);
+var pen_line = __webpack_require__(2100);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/ellipsis.js
-var ellipsis = __webpack_require__(2100);
+var ellipsis = __webpack_require__(2101);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/send.js
-var send = __webpack_require__(2101);
+var send = __webpack_require__(2102);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/eye.js
-var eye = __webpack_require__(2104);
+var eye = __webpack_require__(2105);
 
 // EXTERNAL MODULE: ./src/components/project-page/project-page.css
 var project_page = __webpack_require__(34);
@@ -3734,7 +3734,7 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2058);
+var content = __webpack_require__(2059);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3760,7 +3760,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2057);
+var content = __webpack_require__(2058);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3782,11 +3782,11 @@ if(false) {}
 
 /***/ }),
 
-/***/ 968:
+/***/ 969:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1667);
+var content = __webpack_require__(1668);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3808,5 +3808,5 @@ if(false) {}
 
 /***/ })
 
-},[[1225,0]]]);
+},[[1226,0]]]);
 //# sourceMappingURL=gui.js.map
