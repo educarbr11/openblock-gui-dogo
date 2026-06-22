@@ -106,6 +106,7 @@ class ConnectionModal extends React.Component {
         }
     }
     handleConnected () {
+        this.props.onSetConnectionType(this.getEffectiveConnectionType());
         this.setState({
             phase: PHASES.connected
         });
@@ -128,6 +129,9 @@ class ConnectionModal extends React.Component {
         return this.props.deviceId === 'microbitBle' ||
             (this.state.device && this.state.device.extensionId === 'microbitBle');
     }
+    isArduinoWebSerialConnection () {
+        return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo'].indexOf(this.props.deviceId) !== -1;
+    }
     getWebBluetoothStatus () {
         if (!this.isMicrobitBleConnection()) {
             return 'notMicrobitBle';
@@ -140,15 +144,37 @@ class ConnectionModal extends React.Component {
         }
         return 'missingApi';
     }
+    getWebSerialStatus () {
+        if (!this.isArduinoWebSerialConnection()) {
+            return 'notArduino';
+        }
+        if (typeof window !== 'undefined' && window.isSecureContext === false) {
+            return 'notSecure';
+        }
+        if (typeof navigator !== 'undefined' && Boolean(navigator.serial)) {
+            return 'supported';
+        }
+        return 'missingApi';
+    }
     getWebBluetoothDebugInfo () {
         const bluetoothAvailable = typeof navigator !== 'undefined' && Boolean(navigator.bluetooth);
+        const serialAvailable = typeof navigator !== 'undefined' && Boolean(navigator.serial);
         const secureContext = typeof window === 'undefined' ? 'unknown' : String(window.isSecureContext);
         const origin = typeof window === 'undefined' || !window.location ? 'unknown' : window.location.origin;
-        return `navigator.bluetooth=${bluetoothAvailable}; isSecureContext=${secureContext}; origin=${origin}`;
+        return [
+            `navigator.bluetooth=${bluetoothAvailable}`,
+            `navigator.serial=${serialAvailable}`,
+            `isSecureContext=${secureContext}`,
+            `origin=${origin}`
+        ].join('; ');
     }
     getEffectiveConnectionType (connectionType = this.props.connectionType) {
         const webBluetoothStatus = this.getWebBluetoothStatus();
+        const webSerialStatus = this.getWebSerialStatus();
         if (connectionType === 'auto') {
+            if (!isScratchDesktop() && webSerialStatus === 'supported') {
+                return 'webSerial';
+            }
             if (!isScratchDesktop() && webBluetoothStatus === 'supported') {
                 return 'webBluetooth';
             }
@@ -157,17 +183,23 @@ class ConnectionModal extends React.Component {
         if (connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
             return 'link';
         }
-        if (webBluetoothStatus === 'notMicrobitBle') {
+        if (connectionType === 'webSerial' && webSerialStatus !== 'supported') {
             return 'link';
         }
+        if (connectionType === 'webBluetooth' && webBluetoothStatus === 'notMicrobitBle') return 'link';
+        if (connectionType === 'webSerial' && webSerialStatus === 'notArduino') return 'link';
         return connectionType;
     }
     getDisplayConnectionType () {
         const webBluetoothStatus = this.getWebBluetoothStatus();
+        const webSerialStatus = this.getWebSerialStatus();
         if (this.props.connectionType === 'auto') {
             return this.getEffectiveConnectionType('auto');
         }
         if (this.props.connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
+            return 'link';
+        }
+        if (this.props.connectionType === 'webSerial' && webSerialStatus !== 'supported') {
             return 'link';
         }
         return this.getEffectiveConnectionType();
@@ -184,8 +216,11 @@ class ConnectionModal extends React.Component {
             typeof navigator.userAgent === 'string' &&
             navigator.userAgent.indexOf('CrOS') !== -1;
         const webBluetoothStatus = this.getWebBluetoothStatus();
+        const webSerialStatus = this.getWebSerialStatus();
         const webBluetoothConnectionVisible = this.isMicrobitBleConnection();
         const webBluetoothConnectionSupported = webBluetoothStatus === 'supported';
+        const webSerialConnectionVisible = this.isArduinoWebSerialConnection();
+        const webSerialConnectionSupported = webSerialStatus === 'supported';
         const connectionType = this.getDisplayConnectionType();
         return (
             <ConnectionModalComponent
@@ -201,6 +236,9 @@ class ConnectionModal extends React.Component {
                 webBluetoothConnectionVisible={webBluetoothConnectionVisible}
                 webBluetoothDebugInfo={this.getWebBluetoothDebugInfo()}
                 webBluetoothStatus={webBluetoothStatus}
+                webSerialConnectionSupported={webSerialConnectionSupported}
+                webSerialConnectionVisible={webSerialConnectionVisible}
+                webSerialStatus={webSerialStatus}
                 firmwareUploadRequired={this.state.device && this.state.device.firmwareUploadRequired}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
                 deviceId={this.props.deviceId}

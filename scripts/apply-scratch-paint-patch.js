@@ -27,6 +27,14 @@ const patches = [
         patchFile: path.join(root, 'patches', 'openblock-l10n-paint-rotation-center-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
         markerText: '"paint.paintEditor.rotationCenter": "Centro"'
+    },
+    {
+        label: 'openblock-l10n Web Serial connection translation',
+        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        applyDirectory: 'node_modules/openblock-l10n',
+        patchFile: path.join(root, 'patches', 'openblock-l10n-web-serial-pt.patch'),
+        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+        markerText: '"gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB"'
     }
 ];
 

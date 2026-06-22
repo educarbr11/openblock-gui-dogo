@@ -61,7 +61,10 @@ ConnectionModalComponent.propTypes = {
     webBluetoothConnectionSupported: PropTypes.bool,
     webBluetoothConnectionVisible: PropTypes.bool,
     webBluetoothDebugInfo: PropTypes.string,
-    webBluetoothStatus: PropTypes.string
+    webBluetoothStatus: PropTypes.string,
+    webSerialConnectionSupported: PropTypes.bool,
+    webSerialConnectionVisible: PropTypes.bool,
+    webSerialStatus: PropTypes.string
 };
 
 ConnectionModalComponent.defaultProps = {

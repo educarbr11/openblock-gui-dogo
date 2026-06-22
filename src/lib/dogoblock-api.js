@@ -24,6 +24,24 @@ const request = (path, options = {}) => {
         });
 };
 
+const requestRaw = (path, options = {}) => {
+    const headers = Object.assign(
+        {},
+        options.skipAuth ? {} : getAuthHeaders(),
+        options.headers || {}
+    );
+    return fetch(`${getApiHost()}${path}`, Object.assign({}, options, {headers}))
+        .then(response => {
+            if (response.ok) return response;
+            return parseJson(response)
+                .catch(() => null)
+                .then(body => {
+                    const message = body && body.message ? body.message : `HTTP ${response.status}`;
+                    throw new Error(Array.isArray(message) ? message.join(', ') : message);
+                });
+        });
+};
+
 const login = credentials => request('/auth/login', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -133,6 +151,23 @@ const createNotificationsStream = token => {
     return new EventSource(`${getApiHost()}/notifications/stream?token=${encodeURIComponent(token)}`);
 };
 
+// ─── Arduino Compiler ────────────────────────────────────────────────────────
+
+const createArduinoCompileJob = (board, code, libraries = []) => request('/compiler/arduino/jobs', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({board, code, libraries}),
+    skipAuth: true
+});
+
+const getArduinoCompileJob = jobId => request(`/compiler/arduino/jobs/${jobId}`, {
+    skipAuth: true
+});
+
+const downloadArduinoCompileArtifact = jobId => requestRaw(`/compiler/arduino/jobs/${jobId}/artifact`, {
+    skipAuth: true
+}).then(response => response.text());
+
 export {
     deleteProject,
     getProjectDetails,
@@ -161,5 +196,8 @@ export {
     getUnreadCount,
     markNotificationRead,
     markAllNotificationsRead,
-    createNotificationsStream
+    createNotificationsStream,
+    createArduinoCompileJob,
+    getArduinoCompileJob,
+    downloadArduinoCompileArtifact
 };
