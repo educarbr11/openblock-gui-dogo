@@ -446,7 +446,7 @@ var react_dom = __webpack_require__(119);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // EXTERNAL MODULE: ./node_modules/redux/es/index.js + 6 modules
-var es = __webpack_require__(81);
+var es = __webpack_require__(82);
 
 // EXTERNAL MODULE: ./node_modules/react-intl/lib/index.es.js + 1 modules
 var index_es = __webpack_require__(4);
@@ -798,7 +798,7 @@ var project_state = __webpack_require__(38);
 var project_interactions = __webpack_require__(235);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(96);
+var dogoblock_api = __webpack_require__(79);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
 var lock_open = __webpack_require__(2096);
@@ -1933,7 +1933,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       if (projectId) {
         this.loadDetails(projectId); // Record a view (fire and forget)
 
-        Object(dogoblock_api["s" /* recordProjectView */])(projectId).catch(function () {});
+        Object(dogoblock_api["v" /* recordProjectView */])(projectId).catch(function () {});
       }
     }
   }, {
@@ -1950,7 +1950,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
 
       this.props.onSetLoading(true);
       this.props.onSetComments([], 0, 1);
-      Object(dogoblock_api["g" /* getProjectDetails */])(projectId).then(function (details) {
+      Object(dogoblock_api["j" /* getProjectDetails */])(projectId).then(function (details) {
         if (_this2.props.projectId !== projectId) return;
 
         _this2.props.onSetDetails(details);
@@ -1969,7 +1969,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleLike() {
       var _this3 = this;
 
-      Object(dogoblock_api["i" /* likeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["l" /* likeProject */])(this.props.projectId).then(function (res) {
         return _this3.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -1978,7 +1978,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnlike() {
       var _this4 = this;
 
-      Object(dogoblock_api["v" /* unlikeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["y" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -1987,7 +1987,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleFavorite() {
       var _this5 = this;
 
-      Object(dogoblock_api["d" /* favoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["f" /* favoriteProject */])(this.props.projectId).then(function (res) {
         return _this5.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -1996,7 +1996,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnfavorite() {
       var _this6 = this;
 
-      Object(dogoblock_api["u" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["x" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2012,7 +2012,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handlePostComment(content, parentId) {
       var _this7 = this;
 
-      return Object(dogoblock_api["r" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
+      return Object(dogoblock_api["u" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
         return _this7.props.onAddComment(comment);
       });
     }
@@ -2021,7 +2021,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleDeleteComment(commentId) {
       var _this8 = this;
 
-      Object(dogoblock_api["b" /* deleteComment */])(this.props.projectId, commentId).then(function (res) {
+      Object(dogoblock_api["c" /* deleteComment */])(this.props.projectId, commentId).then(function (res) {
         return _this8.props.onRemoveComment(commentId, res && res.deletedCount);
       }).catch(console.error);
     }
@@ -2031,7 +2031,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       var projectId = this.props.projectId;
-      Object(dogoblock_api["e" /* getComments */])(projectId, page).then(function (res) {
+      Object(dogoblock_api["h" /* getComments */])(projectId, page).then(function (res) {
         if (_this9.props.projectId !== projectId) return;
 
         _this9.props.onSetComments(res.comments, res.total, res.page);
@@ -2042,7 +2042,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateVisibility(visibility) {
       var _this10 = this;
 
-      Object(dogoblock_api["y" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
+      Object(dogoblock_api["B" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
         _this10.props.onSetDetails(Object.assign({}, _this10.props, {
           visibility: res.visibility
         }));
@@ -2053,7 +2053,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateDetails(patch) {
       var _this11 = this;
 
-      return Object(dogoblock_api["x" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
+      return Object(dogoblock_api["A" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
         _this11.props.onSetDetails(Object.assign({}, _this11.props, res));
       });
     }
@@ -2062,7 +2062,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateCover(coverFile) {
       var _this12 = this;
 
-      return Object(dogoblock_api["z" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
+      return Object(dogoblock_api["C" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
         _this12.props.onSetDetails(Object.assign({}, _this12.props, res));
 
         return res;
@@ -2194,10 +2194,10 @@ var project_page_mapDispatchToProps = function mapDispatchToProps(dispatch) {
 var message_box = __webpack_require__(154);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api-config.js
-var dogoblock_api_config = __webpack_require__(268);
+var dogoblock_api_config = __webpack_require__(249);
 
 // EXTERNAL MODULE: ./src/lib/auth-session.js
-var auth_session = __webpack_require__(149);
+var auth_session = __webpack_require__(143);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
 var reducers_session = __webpack_require__(371);
@@ -2540,7 +2540,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           loading: true,
           error: null
         });
-        Promise.all([Object(dogoblock_api["f" /* getMyProfile */])(), Object(dogoblock_api["l" /* listProjects */])(), Object(dogoblock_api["j" /* listFavoriteProjects */])()]).then(function (_ref2) {
+        Promise.all([Object(dogoblock_api["i" /* getMyProfile */])(), Object(dogoblock_api["o" /* listProjects */])(), Object(dogoblock_api["m" /* listFavoriteProjects */])()]).then(function (_ref2) {
           var _ref3 = dogoblock_web_app_slicedToArray(_ref2, 3),
               profile = _ref3[0],
               projects = _ref3[1],
@@ -2565,7 +2565,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         this.setState({
           loading: true
         });
-        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["l" /* listProjects */] : dogoblock_api["m" /* listPublicProjects */];
+        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["o" /* listProjects */] : dogoblock_api["p" /* listPublicProjects */];
         loader().then(function (projects) {
           return _this3.setState({
             projects: projects,
@@ -2585,7 +2585,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           loading: true,
           projectDetails: null
         });
-        Object(dogoblock_api["g" /* getProjectDetails */])(requestedProjectId).then(function (projectDetails) {
+        Object(dogoblock_api["j" /* getProjectDetails */])(requestedProjectId).then(function (projectDetails) {
           if (_this3.state.route.name !== 'projectDetails' || _this3.state.route.projectId !== requestedProjectId) {
             return;
           }
@@ -2617,7 +2617,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["n" /* login */])({
+      Object(dogoblock_api["q" /* login */])({
         email: form.get('email'),
         password: form.get('password')
       }).then(function (session) {
@@ -2642,7 +2642,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["t" /* register */])({
+      Object(dogoblock_api["w" /* register */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -2662,7 +2662,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleLogout",
     value: function handleLogout() {
       this.closeNotificationsStream();
-      Object(dogoblock_api["o" /* logout */])();
+      Object(dogoblock_api["r" /* logout */])();
       this.props.onLogout();
       this.setState({
         notifications: [],
@@ -2687,13 +2687,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return;
       }
 
-      Object(dogoblock_api["h" /* getUnreadCount */])().then(function (result) {
+      Object(dogoblock_api["k" /* getUnreadCount */])().then(function (result) {
         return _this6.setState({
           unreadCount: result.unreadCount || 0
         });
       }).catch(function () {});
       var session = Object(auth_session["c" /* readAuthSession */])();
-      var stream = Object(dogoblock_api["a" /* createNotificationsStream */])(session && session.accessToken);
+      var stream = Object(dogoblock_api["b" /* createNotificationsStream */])(session && session.accessToken);
       if (!stream) return;
       stream.addEventListener('notification', function (event) {
         try {
@@ -2740,7 +2740,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         notificationsLoading: true
       });
-      Object(dogoblock_api["k" /* listNotifications */])(1, 10).then(function (result) {
+      Object(dogoblock_api["n" /* listNotifications */])(1, 10).then(function (result) {
         return _this7.setState({
           notifications: result.notifications || [],
           unreadCount: result.unreadCount || 0,
@@ -2765,7 +2765,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       };
 
       if (!notification.readAt) {
-        Object(dogoblock_api["q" /* markNotificationRead */])(notification.id).then(function (updated) {
+        Object(dogoblock_api["t" /* markNotificationRead */])(notification.id).then(function (updated) {
           _this8.setState(function (prevState) {
             return {
               notifications: prevState.notifications.map(function (item) {
@@ -2790,7 +2790,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       if (!this.props.user || this.state.unreadCount === 0) return;
-      Object(dogoblock_api["p" /* markAllNotificationsRead */])().then(function (result) {
+      Object(dogoblock_api["s" /* markAllNotificationsRead */])().then(function (result) {
         return _this9.setState(function (prevState) {
           return {
             unreadCount: 0,
@@ -2886,7 +2886,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["c" /* deleteProject */])(id).then(function () {
+      Object(dogoblock_api["d" /* deleteProject */])(id).then(function () {
         return dogoblock_web_app_navigate('/projects');
       }).catch(function (error) {
         return _this11.setState({
@@ -2916,7 +2916,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["c" /* deleteProject */])(id).then(function () {
+      Object(dogoblock_api["d" /* deleteProject */])(id).then(function () {
         return _this12.setState(function (prevState) {
           return {
             projects: prevState.projects.filter(function (project) {
@@ -2985,8 +2985,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["y" /* updateProjectVisibility */])(project.id, visibility).then(function () {
-        return Object(dogoblock_api["g" /* getProjectDetails */])(project.id);
+      Object(dogoblock_api["B" /* updateProjectVisibility */])(project.id, visibility).then(function () {
+        return Object(dogoblock_api["j" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         return _this13.setState({
           projectDetails: projectDetails,
@@ -3053,7 +3053,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["w" /* updateMyProfile */])({
+      Object(dogoblock_api["z" /* updateMyProfile */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
