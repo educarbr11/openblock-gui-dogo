@@ -18,7 +18,21 @@ const patches = [
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-arduino-begin-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
-        markerText: '"EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar"'
+        markerText: '"EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar"',
+        jsonUpdates: [
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
+                values: {
+                    EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar'
+                }
+            },
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt.json'),
+                values: {
+                    EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar'
+                }
+            }
+        ]
     },
     {
         label: 'openblock-l10n paint rotation center translation',
@@ -26,7 +40,21 @@ const patches = [
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-paint-rotation-center-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
-        markerText: '"paint.paintEditor.rotationCenter": "Centro"'
+        markerText: '"paint.paintEditor.rotationCenter": "Centro"',
+        jsonUpdates: [
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
+                values: {
+                    'paint.paintEditor.rotationCenter': 'Centro'
+                }
+            },
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt.json'),
+                values: {
+                    'paint.paintEditor.rotationCenter': 'Centro'
+                }
+            }
+        ]
     },
     {
         label: 'openblock-l10n Web Serial connection translation',
@@ -34,7 +62,27 @@ const patches = [
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-web-serial-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
-        markerText: '"gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB"'
+        markerText: '"gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB"',
+        jsonUpdates: [
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+                values: {
+                    'gui.connection.type.label': 'Tipo de conexão',
+                    'gui.connection.webSerial.notSecure': 'Web Serial exige HTTPS ou localhost.',
+                    'gui.connection.webSerial.missingApi': 'Web Serial não está disponível. Use Chrome/Edge com HTTPS/localhost.',
+                    'gui.connection.scanning.arduinoWebSerialSelect': 'Use Atualizar para selecionar seu Arduino USB'
+                }
+            },
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt.json'),
+                values: {
+                    'gui.connection.type.label': 'Tipo de ligação',
+                    'gui.connection.webSerial.notSecure': 'Web Serial requer HTTPS ou localhost.',
+                    'gui.connection.webSerial.missingApi': 'Web Serial não está disponível. Use Chrome/Edge com HTTPS/localhost.',
+                    'gui.connection.scanning.arduinoWebSerialSelect': 'Use Refrescar para seleccionar o seu Arduino USB'
+                }
+            }
+        ]
     },
     {
         label: 'openblock-l10n default project title translation',
@@ -42,7 +90,15 @@ const patches = [
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-default-project-title-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
-        markerText: '"gui.gui.defaultProjectTitle": "Projeto DoGo Block"'
+        markerText: '"gui.gui.defaultProjectTitle": "Projeto DoGo Block"',
+        jsonUpdates: [
+            {
+                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+                values: {
+                    'gui.gui.defaultProjectTitle': 'Projeto DoGo Block'
+                }
+            }
+        ]
     }
 ];
 
@@ -54,6 +110,21 @@ const gitApply = (patch, args) => spawnSync('git', ['apply'].concat(args), {
 const patchArgs = patch => patch.applyDirectory ?
     [`--directory=${patch.applyDirectory}`, patch.patchFile] :
     [patch.patchFile];
+
+const applyJsonUpdates = patch => {
+    if (!patch.jsonUpdates) return false;
+
+    patch.jsonUpdates.forEach(update => {
+        if (!fs.existsSync(update.file)) return;
+        const data = JSON.parse(fs.readFileSync(update.file, 'utf8'));
+        Object.keys(update.values).forEach(key => {
+            data[key] = update.values[key];
+        });
+        fs.writeFileSync(update.file, `${JSON.stringify(data, null, 4)}\n`);
+    });
+
+    return true;
+};
 
 for (const patch of patches) {
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
@@ -67,6 +138,11 @@ for (const patch of patches) {
         fs.readFileSync(patch.markerFile, 'utf8').includes(patch.markerText)
     ) {
         console.log(`${patch.label} patch already applied.`);
+        continue;
+    }
+
+    if (applyJsonUpdates(patch)) {
+        console.log(`Applied ${patch.label} JSON updates.`);
         continue;
     }
 
