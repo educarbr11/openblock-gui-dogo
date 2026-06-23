@@ -126,6 +126,206 @@ const applyJsonUpdates = patch => {
     return true;
 };
 
+const replaceAll = (source, replacements) => {
+    let result = source;
+    replacements.forEach(([from, to]) => {
+        result = result.split(from).join(to);
+    });
+    return result;
+};
+
+const patchOpenBlockBlocksArduinoPins = () => {
+    const packageDir = path.join(root, 'node_modules', 'openblock-blocks');
+    if (!fs.existsSync(packageDir)) return;
+
+    const buzzerUltrasonicGenerators = `
+
+Blockly.Arduino['arduino_pin_menu_note'] = function(block) {
+  var code = block.getFieldValue('note') || '262';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_beatTime'] = function(block) {
+  var code = block.getFieldValue('beatTime') || '0.5';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_distanceUnit'] = function(block) {
+  var unit = block.getFieldValue('distanceUnit') || 'CM';
+  var code = unit === 'INC' ? '1' : '0';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_playToneForSeconds'] = function(block) {
+  var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '9');
+  var note = Blockly.Arduino.valueToCode(block, 'NOTE', Blockly.Arduino.ORDER_ATOMIC) || '262';
+  var seconds = Blockly.Arduino.valueToCode(block, 'SECONDS', Blockly.Arduino.ORDER_ATOMIC) || '0.5';
+  var code = 'tone(' + pin + ', ' + note + ');\\n';
+  code += 'delay((unsigned long)((' + seconds + ') * 1000));\\n';
+  code += 'noTone(' + pin + ');\\n';
+  return code;
+};
+
+Blockly.Arduino['arduino_pin_playToneForBeat'] = function(block) {
+  var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '9');
+  var note = Blockly.Arduino.valueToCode(block, 'NOTE', Blockly.Arduino.ORDER_ATOMIC) || '262';
+  var beat = Blockly.Arduino.valueToCode(block, 'BEAT', Blockly.Arduino.ORDER_ATOMIC) || '0.5';
+  var code = 'tone(' + pin + ', ' + note + ');\\n';
+  code += 'delay((unsigned long)((' + beat + ') * 500));\\n';
+  code += 'noTone(' + pin + ');\\n';
+  return code;
+};
+
+Blockly.Arduino['arduino_pin_stopTone'] = function(block) {
+  var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '9');
+  return 'noTone(' + pin + ');\\n';
+};
+
+Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
+  var trig = Blockly.Arduino.pinToCode_(block, 'TRIG', '9');
+  var echo = Blockly.Arduino.pinToCode_(block, 'ECHO', '10');
+  var unit = Blockly.Arduino.valueToCode(block, 'UNIT', Blockly.Arduino.ORDER_ATOMIC);
+  if (!unit) {
+    unit = (block.getFieldValue('UNIT') || 'CM') === 'INC' ? '1' : '0';
+  }
+
+  Blockly.Arduino.definitions_['dogoblock_read_ultrasonic'] =
+    'float dogoblockReadUltrasonic(long trigPin, long echoPin, int unit) {\\n' +
+    '  pinMode(trigPin, OUTPUT);\\n' +
+    '  digitalWrite(trigPin, LOW);\\n' +
+    '  delayMicroseconds(2);\\n' +
+    '  digitalWrite(trigPin, HIGH);\\n' +
+    '  delayMicroseconds(10);\\n' +
+    '  digitalWrite(trigPin, LOW);\\n' +
+    '  pinMode(echoPin, INPUT);\\n' +
+    '  unsigned long duration = pulseIn(echoPin, HIGH, 30000UL);\\n' +
+    '  float cm = duration / 58.0;\\n' +
+    '  if (unit == 1) {\\n' +
+    '    return cm / 2.54;\\n' +
+    '  }\\n' +
+    '  return cm;\\n' +
+    '}\\n';
+
+  var code = 'dogoblockReadUltrasonic(' + trig + ', ' + echo + ', ' + unit + ')';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+`;
+
+    const sourceReplacements = [
+        [
+            "goog.require('Blockly.Arduino');\n\n\nBlockly.Arduino['arduino_pin_setPinMode']",
+            "goog.require('Blockly.Arduino');\n\n\nBlockly.Arduino.pinToCode_ = function(block, name, fallback) {\n  return Blockly.Arduino.valueToCode(block, name, Blockly.Arduino.ORDER_ATOMIC) ||\n      block.getFieldValue(name) ||\n      fallback;\n};\n\nBlockly.Arduino['arduino_pin_setPinMode']"
+        ],
+        ["var arg0 = block.getFieldValue('PIN') || '0';", "var arg0 = Blockly.Arduino.pinToCode_(block, 'PIN', '0');"],
+        ["var arg0 = block.getFieldValue('PIN') || 'A1';", "var arg0 = Blockly.Arduino.pinToCode_(block, 'PIN', 'A1');"],
+        ["var arg0 = block.getFieldValue('PIN') || '2';", "var arg0 = Blockly.Arduino.pinToCode_(block, 'PIN', '2');"]
+    ];
+
+    const sourceFiles = [
+        path.join(packageDir, 'generators', 'arduino', 'arduino.js'),
+        path.join(packageDir, 'generators', 'arduino', 'esp32.js'),
+        path.join(packageDir, 'generators', 'arduino', 'esp8266.js'),
+        path.join(packageDir, 'generators', 'arduino', 'k210.js')
+    ];
+
+    sourceFiles.forEach(file => {
+        if (!fs.existsSync(file)) return;
+        const before = fs.readFileSync(file, 'utf8');
+        let after = replaceAll(before, sourceReplacements);
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes("arduino_pin_playToneForSeconds")
+        ) {
+            after += buzzerUltrasonicGenerators;
+        }
+        if (after !== before) {
+            fs.writeFileSync(file, after);
+        }
+    });
+
+    const compressedFile = path.join(packageDir, 'arduino_compressed.js');
+    if (!fs.existsSync(compressedFile)) return;
+
+    const compressedReplacements = [
+        [
+            'Blockly.Arduino.arduino={};Blockly.Arduino.arduino_pin_setPinMode=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino={};Blockly.Arduino.pinToCode_=function(a,b,c){return Blockly.Arduino.valueToCode(a,b,Blockly.Arduino.ORDER_ATOMIC)||a.getFieldValue(b)||c};Blockly.Arduino.arduino_pin_setPinMode=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_setDigitalOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_setDigitalOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_setPwmOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_setPwmOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_readDigitalPin=function(a){return["digitalRead("+(a.getFieldValue("PIN")||"0")+")",Blockly.Arduino.ORDER_ATOMIC]};',
+            'Blockly.Arduino.arduino_pin_readDigitalPin=function(a){return["digitalRead("+Blockly.Arduino.pinToCode_(a,"PIN","0")+")",Blockly.Arduino.ORDER_ATOMIC]};'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_readAnalogPin=function(a){return["analogRead("+(a.getFieldValue("PIN")||"A1")+")",Blockly.Arduino.ORDER_ATOMIC]};',
+            'Blockly.Arduino.arduino_pin_readAnalogPin=function(a){return["analogRead("+Blockly.Arduino.pinToCode_(a,"PIN","A1")+")",Blockly.Arduino.ORDER_ATOMIC]};'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_setServoOutput=function(a){var b=a.getFieldValue("PIN")||"A1";',
+            'Blockly.Arduino.arduino_pin_setServoOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","A1");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_attachInterrupt=function(a){var b=a.getFieldValue("PIN")||"2";',
+            'Blockly.Arduino.arduino_pin_attachInterrupt=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","2");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_detachInterrupt=function(a){var b=a.getFieldValue("PIN")||"2";',
+            'Blockly.Arduino.arduino_pin_detachInterrupt=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","2");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32SetPwmOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_esp32SetPwmOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32SetDACOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_esp32SetDACOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32ReadTouchPin=function(a){return["touchRead("+(a.getFieldValue("PIN")||"0")+")",Blockly.Arduino.ORDER_ATOMIC]};',
+            'Blockly.Arduino.arduino_pin_esp32ReadTouchPin=function(a){return["touchRead("+Blockly.Arduino.pinToCode_(a,"PIN","0")+")",Blockly.Arduino.ORDER_ATOMIC]};'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32SetServoOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_esp32SetServoOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32AttachInterrupt=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_esp32AttachInterrupt=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp32DetachInterrupt=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_esp32DetachInterrupt=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_esp8266AttachInterrupt=function(a){var b=a.getFieldValue("PIN")||"2";',
+            'Blockly.Arduino.arduino_pin_esp8266AttachInterrupt=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","2");'
+        ],
+        [
+            'Blockly.Arduino.arduino_pin_k210SetPwmOutput=function(a){var b=a.getFieldValue("PIN")||"0";',
+            'Blockly.Arduino.arduino_pin_k210SetPwmOutput=function(a){var b=Blockly.Arduino.pinToCode_(a,"PIN","0");'
+        ]
+    ];
+
+    const before = fs.readFileSync(compressedFile, 'utf8');
+    let after = replaceAll(before, compressedReplacements);
+    if (!after.includes("arduino_pin_playToneForSeconds")) {
+        after += buzzerUltrasonicGenerators;
+    }
+    if (after !== before) {
+        fs.writeFileSync(compressedFile, after);
+        console.log('Applied openblock-blocks Arduino pin reporter patch.');
+    } else if (after.includes('pinToCode_')) {
+        console.log('openblock-blocks Arduino pin reporter patch already applied.');
+    }
+};
+
 for (const patch of patches) {
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
         continue;
@@ -160,3 +360,5 @@ for (const patch of patches) {
 
     console.log(`Applied ${patch.label} patch.`);
 }
+
+patchOpenBlockBlocksArduinoPins();
