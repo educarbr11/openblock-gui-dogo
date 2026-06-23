@@ -168,6 +168,10 @@ const downloadArduinoCompileArtifact = jobId => requestRaw(`/compiler/arduino/jo
     skipAuth: true
 }).then(response => response.text());
 
+const downloadArduinoRealtimeFirmware = board => requestRaw(`/firmwares/arduino/realtime/${board}`, {
+    skipAuth: true
+}).then(response => response.text());
+
 export {
     deleteProject,
     getProjectDetails,
@@ -199,5 +203,6 @@ export {
     createNotificationsStream,
     createArduinoCompileJob,
     getArduinoCompileJob,
-    downloadArduinoCompileArtifact
+    downloadArduinoCompileArtifact,
+    downloadArduinoRealtimeFirmware
 };

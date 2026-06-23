@@ -9,6 +9,7 @@ import {closeConnectionModal, openUploadProgress} from '../reducers/modals';
 import {setConnectionModalPeripheralName, setListAll, setConnectionType} from '../reducers/connection-modal';
 import extensionData from '../lib/libraries/extensions/index.jsx';
 import {isScratchDesktop} from '../lib/isScratchDesktop';
+import uploadArduinoRealtimeFirmware from '../lib/upload-arduino-realtime-firmware';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -208,6 +209,14 @@ class ConnectionModal extends React.Component {
         this.props.onSetConnectionType(this.getEffectiveConnectionType(connectionType));
     }
     handleUploadFirmware () {
+        if (uploadArduinoRealtimeFirmware({
+            vm: this.props.vm,
+            deviceId: this.props.deviceId,
+            connectionType: this.getDisplayConnectionType(),
+            onOpenUploadProgress: this.props.onOpenUploadProgress
+        })) {
+            return;
+        }
         this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
         this.props.onOpenUploadProgress();
     }

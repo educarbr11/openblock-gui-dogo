@@ -29,6 +29,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
+import uploadArduinoRealtimeFirmware from '../../lib/upload-arduino-realtime-firmware';
 import {UPDATE_MODAL_STATE} from '../../lib/update-state.js';
 
 import {
@@ -447,6 +448,15 @@ class MenuBar extends React.Component {
     }
     handleUploadFirmware () {
         if (this.props.deviceId) {
+            if (uploadArduinoRealtimeFirmware({
+                vm: this.props.vm,
+                deviceId: this.props.deviceId,
+                connectionType: this.props.connectionType,
+                onOpenUploadProgress: this.props.onOpenUploadProgress,
+                onSetRealtimeConnection: this.props.onSetRealtimeConnection
+            })) {
+                return;
+            }
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onSetRealtimeConnection(false);
             this.props.onOpenUploadProgress();
@@ -1142,6 +1152,7 @@ MenuBar.propTypes = {
     onSetStageLarge: PropTypes.func.isRequired,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,
+    connectionType: PropTypes.string,
     pendingProjectCoverPreview: PropTypes.string,
     onDeviceIsEmpty: PropTypes.func
 };
@@ -1180,6 +1191,7 @@ const mapStateToProps = (state, ownProps) => {
         stageSizeMode: state.scratchGui.stageSize.stageSize,
         vm: state.scratchGui.vm,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
+        connectionType: state.scratchGui.connectionModal.connectionType,
         deviceId: state.scratchGui.device.deviceId,
         deviceName: state.scratchGui.device.deviceName,
         pendingProjectCoverPreview: state.scratchGui.projectCover.previewUrl
