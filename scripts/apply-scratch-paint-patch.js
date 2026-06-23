@@ -35,6 +35,14 @@ const patches = [
         patchFile: path.join(root, 'patches', 'openblock-l10n-web-serial-pt.patch'),
         markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
         markerText: '"gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB"'
+    },
+    {
+        label: 'openblock-l10n default project title translation',
+        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        applyDirectory: 'node_modules/openblock-l10n',
+        patchFile: path.join(root, 'patches', 'openblock-l10n-default-project-title-pt.patch'),
+        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+        markerText: '"gui.gui.defaultProjectTitle": "Projeto DoGo Block"'
     }
 ];
 
