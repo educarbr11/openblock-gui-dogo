@@ -175,6 +175,25 @@ Blockly.Arduino['arduino_pin_menu_level'] = Blockly.Arduino['arduino_pin_menu_le
 };
 `;
 
+    const digitalOutputGenerator = `
+
+Blockly.Arduino['arduino_pin_setDigitalOutput'] = function(block) {
+  var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '0');
+  var level = Blockly.Arduino.valueToCode(block, 'LEVEL', Blockly.Arduino.ORDER_UNARY_POSTFIX) || 'LOW';
+  var pinIsReporter = Boolean(block.getInputTargetBlock && block.getInputTargetBlock('PIN'));
+  if (pinIsReporter) {
+    Blockly.Arduino.customFunctions_['dogoblock_digital_write'] =
+      'void dogoblockDigitalWrite(int pin, int value) {\\n' +
+      '  pinMode(pin, OUTPUT);\\n' +
+      '  digitalWrite(pin, value);\\n' +
+      '}\\n';
+    return 'dogoblockDigitalWrite(' + pin + ', ' + level + ');\\n';
+  }
+  Blockly.Arduino.setups_['setups_pin_mode_output_' + pin] = 'pinMode(' + pin + ', OUTPUT);';
+  return 'digitalWrite(' + pin + ', ' + level + ');\\n';
+};
+`;
+
     const buzzerUltrasonicGenerators = `
 
 Blockly.Arduino['arduino_pin_menu_note'] = function(block) {
@@ -277,6 +296,12 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
         }
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes("dogoblockDigitalWrite")
+        ) {
+            after += digitalOutputGenerator;
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
             !after.includes("arduino_pin_playToneForSeconds")
         ) {
             after += buzzerUltrasonicGenerators;
@@ -360,6 +385,9 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
     let after = replaceAll(before, compressedReplacements);
     if (!after.includes("arduino_pin_menu_pins")) {
         after += pinMenuGenerators;
+    }
+    if (!after.includes("dogoblockDigitalWrite")) {
+        after += digitalOutputGenerator;
     }
     if (!after.includes("arduino_pin_playToneForSeconds")) {
         after += buzzerUltrasonicGenerators;
