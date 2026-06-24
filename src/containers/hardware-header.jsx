@@ -31,6 +31,36 @@ class HardwareHeader extends React.Component {
         this.compileLogLength = 0;
     }
 
+    waitForUploadCompletion () {
+        let timeoutId = null;
+        let handleSuccess = null;
+        let handleError = null;
+        const cleanup = () => {
+            if (timeoutId) window.clearTimeout(timeoutId);
+            this.props.vm.removeListener('PERIPHERAL_UPLOAD_SUCCESS', handleSuccess);
+            this.props.vm.removeListener('PERIPHERAL_UPLOAD_ERROR', handleError);
+        };
+        const promise = new Promise((resolve, reject) => {
+            handleSuccess = () => {
+                cleanup();
+                resolve();
+            };
+            handleError = error => {
+                cleanup();
+                reject(new Error(error && error.message ? error.message : String(error)));
+            };
+            timeoutId = window.setTimeout(() => {
+                cleanup();
+                reject(new Error(
+                    'Tempo limite ao enviar para o Arduino. Verifique se a placa esta conectada e tente novamente.'
+                ));
+            }, 120000);
+            this.props.vm.once('PERIPHERAL_UPLOAD_SUCCESS', handleSuccess);
+            this.props.vm.once('PERIPHERAL_UPLOAD_ERROR', handleError);
+        });
+        return {promise, cancel: cleanup};
+    }
+
     handleUpload () {
         if (this.props.peripheralName) {
             const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
@@ -126,10 +156,17 @@ class HardwareHeader extends React.Component {
             })
             .then(hex => {
                 this.emitUploadStdout('Enviando para Arduino via Web Serial USB...\n');
-                this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
+                const uploadCompletion = this.waitForUploadCompletion();
+                const uploadResult = this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
                     firmware: false,
                     resumeRealtime: false
                 });
+                if (uploadResult === false) {
+                    uploadCompletion.cancel();
+                    throw new Error('Nao foi possivel iniciar o envio. Reconecte o Arduino e tente novamente.');
+                }
+                this.emitUploadStdout('Upload iniciado. Aguardando bootloader do Arduino...\n');
+                return uploadCompletion.promise;
             })
             .catch(error => {
                 this.emitUploadError(error && error.message ? error.message : String(error));
