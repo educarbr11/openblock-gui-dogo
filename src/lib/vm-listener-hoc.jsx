@@ -163,16 +163,16 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         handleDeviceRealtimeAlert (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onShowDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(false);
             }
         }
         handleDeviceRealtimeSuccess (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onClearDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(true);
             }

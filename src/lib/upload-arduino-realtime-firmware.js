@@ -55,7 +55,10 @@ const uploadArduinoRealtimeFirmware = ({
         downloadArduinoRealtimeFirmware(board)
             .then(hex => {
                 emitUploadStdout(vm, 'Firmware recebido. Iniciando gravacao Web Serial USB...\n');
-                vm.uploadArtifactToPeripheral(deviceId, hex);
+                vm.uploadArtifactToPeripheral(deviceId, hex, null, {
+                    firmware: true,
+                    resumeRealtime: true
+                });
             })
             .catch(error => {
                 emitUploadError(vm, error && error.message ? error.message : String(error));

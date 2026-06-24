@@ -133,7 +133,9 @@ class UploadProgress extends React.Component {
             clearTimeout(this.uploadTimeout);
         }
     }
-    handleUploadSuccess (aborted) {
+    handleUploadSuccess (uploadResult) {
+        const aborted = uploadResult && typeof uploadResult === 'object' ?
+            uploadResult.aborted : uploadResult;
         // if be aborted, don't show success alert.
         if (aborted) {
             this.setState({

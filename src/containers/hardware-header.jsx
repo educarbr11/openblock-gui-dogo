@@ -83,6 +83,21 @@ class HardwareHeader extends React.Component {
         this.props.vm.emit('PERIPHERAL_UPLOAD_ERROR', {message});
     }
 
+    getUploadCode () {
+        const code = this.props.codeEditorValue || '';
+        if (/^Cannot read properties of undefined/.test(code) ||
+                /^TypeError:/.test(code) ||
+                /^Error:/.test(code)) {
+            throw new Error(
+                'Nao foi possivel gerar o codigo Arduino. Verifique se todos os blocos usados possuem suporte no modo programacao.'
+            );
+        }
+        if (!/\bvoid\s+setup\s*\(/.test(code) && !/\bvoid\s+loop\s*\(/.test(code)) {
+            throw new Error('Codigo Arduino invalido ou vazio. Altere os blocos e tente enviar novamente.');
+        }
+        return code;
+    }
+
     handleWebSerialUpload () {
         const board = this.getRealDeviceId();
         this.compileLogLength = 0;
@@ -92,8 +107,15 @@ class HardwareHeader extends React.Component {
             );
             return;
         }
+        let code;
+        try {
+            code = this.getUploadCode();
+        } catch (error) {
+            this.emitUploadError(error.message);
+            return;
+        }
         this.emitUploadStdout('Compilando no Dogoblock API...\n');
-        createArduinoCompileJob(board, this.props.codeEditorValue, [])
+        createArduinoCompileJob(board, code, [])
             .then(job => this.pollCompileJob(job.id))
             .then(job => {
                 if (!job.artifact) {
@@ -104,7 +126,10 @@ class HardwareHeader extends React.Component {
             })
             .then(hex => {
                 this.emitUploadStdout('Enviando para Arduino via Web Serial USB...\n');
-                this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex);
+                this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
+                    firmware: false,
+                    resumeRealtime: false
+                });
             })
             .catch(error => {
                 this.emitUploadError(error && error.message ? error.message : String(error));
