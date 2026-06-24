@@ -137,6 +137,44 @@ const replaceAll = (source, replacements) => {
 const patchOpenBlockBlocksArduinoPinsPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
+    const pinMenuGenerators = `
+
+Blockly.Arduino.fieldValueFromNames_ = Blockly.Arduino.fieldValueFromNames_ || function(block, names, fallback) {
+  for (var i = 0; i < names.length; i++) {
+    var value = block.getFieldValue(names[i]);
+    if (value !== null && value !== undefined) {
+      return value;
+    }
+  }
+  return fallback;
+};
+
+Blockly.Arduino['arduino_pin_menu_pins'] = function(block) {
+  var code = Blockly.Arduino.fieldValueFromNames_(block, ['pins', 'PIN'], '0');
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_analogPins'] = function(block) {
+  var code = Blockly.Arduino.fieldValueFromNames_(block, ['analogPins', 'PIN'], 'A0');
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_pwmPins'] = function(block) {
+  var code = Blockly.Arduino.fieldValueFromNames_(block, ['pwmPins', 'PIN'], '3');
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_interruptPins'] = function(block) {
+  var code = Blockly.Arduino.fieldValueFromNames_(block, ['interruptPins', 'PIN'], '2');
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_pin_menu_level'] = Blockly.Arduino['arduino_pin_menu_level'] || function(block) {
+  var code = block.getFieldValue('level') || 'LOW';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+`;
+
     const buzzerUltrasonicGenerators = `
 
 Blockly.Arduino['arduino_pin_menu_note'] = function(block) {
@@ -233,6 +271,12 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
         let after = replaceAll(before, sourceReplacements);
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes("arduino_pin_menu_pins")
+        ) {
+            after += pinMenuGenerators;
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
             !after.includes("arduino_pin_playToneForSeconds")
         ) {
             after += buzzerUltrasonicGenerators;
@@ -314,6 +358,9 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
 
     const before = fs.readFileSync(compressedFile, 'utf8');
     let after = replaceAll(before, compressedReplacements);
+    if (!after.includes("arduino_pin_menu_pins")) {
+        after += pinMenuGenerators;
+    }
     if (!after.includes("arduino_pin_playToneForSeconds")) {
         after += buzzerUltrasonicGenerators;
     }
