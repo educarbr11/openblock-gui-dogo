@@ -217,6 +217,7 @@ class DogoblockWebApp extends React.Component {
         this.handleNavigateProfile = this.handleNavigateProfile.bind(this);
         this.handleNavigateProjects = this.handleNavigateProjects.bind(this);
         this.handleNavigateRegister = this.handleNavigateRegister.bind(this);
+        this.handleRequestLoginToSave = this.handleRequestLoginToSave.bind(this);
         this.handleLoadNotifications = this.handleLoadNotifications.bind(this);
         this.handleMarkAllNotificationsRead = this.handleMarkAllNotificationsRead.bind(this);
         this.handleOpenNotification = this.handleOpenNotification.bind(this);
@@ -610,6 +611,10 @@ class DogoblockWebApp extends React.Component {
 
     handleNavigateRegister () {
         navigate('/register');
+    }
+
+    handleRequestLoginToSave () {
+        navigate(loginRouteFor(currentRouteHash()));
     }
 
     handleProfileTab (event) {
@@ -1255,6 +1260,7 @@ class DogoblockWebApp extends React.Component {
                 key={`project-editor-${projectId}`}
                 canCreateNew={canPersist}
                 canEditTitle
+                canPromptLoginToSave={!canPersist}
                 canSave={canPersist}
                 saveUploadedProjectAsNew
                 assetHost={getAssetHost()}
@@ -1264,6 +1270,7 @@ class DogoblockWebApp extends React.Component {
                 routeProjectId={projectId}
                 onClickLogo={this.handleNavigateHome}
                 onProjectLoaded={noop}
+                onRequestLoginToSave={this.handleRequestLoginToSave}
                 onShowMessageBox={this.handleShowMessageBox}
                 onUpdateProjectId={this.handleProjectCreated}
             />

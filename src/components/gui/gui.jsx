@@ -80,6 +80,7 @@ const GUIComponent = props => {
         canCreateNew,
         canEditTitle,
         canManageFiles,
+        canPromptLoginToSave,
         canRemix,
         canSave,
         canCreateCopy,
@@ -109,6 +110,7 @@ const GUIComponent = props => {
         onCloseAccountNav,
         onLogOut,
         onOpenRegistration,
+        onRequestLoginToSave,
         onToggleLoginOpen,
         onAbortUpdate,
         onActivateCostumesTab,
@@ -276,6 +278,7 @@ const GUIComponent = props => {
                             canCreateNew={canCreateNew}
                             canEditTitle={canEditTitle}
                             canManageFiles={canManageFiles}
+                            canPromptLoginToSave={canPromptLoginToSave}
                             canRemix={canRemix}
                             canSave={canSave}
                             canShare={canShare}
@@ -293,6 +296,7 @@ const GUIComponent = props => {
                             onLogOut={onLogOut}
                             onOpenRegistration={onOpenRegistration}
                             onProjectTelemetryEvent={onProjectTelemetryEvent}
+                            onRequestLoginToSave={onRequestLoginToSave}
                             onSeeCommunity={onSeeCommunity}
                             onShare={onShare}
                             onStartSelectingFileUpload={onStartSelectingFileUpload}
@@ -508,6 +512,7 @@ GUIComponent.propTypes = {
     canCreateNew: PropTypes.bool,
     canEditTitle: PropTypes.bool,
     canManageFiles: PropTypes.bool,
+    canPromptLoginToSave: PropTypes.bool,
     canRemix: PropTypes.bool,
     canSave: PropTypes.bool,
     canShare: PropTypes.bool,
@@ -574,6 +579,7 @@ GUIComponent.defaultProps = {
     canCreateNew: false,
     canEditTitle: false,
     canManageFiles: true,
+    canPromptLoginToSave: false,
     canRemix: false,
     canSave: false,
     canCreateCopy: false,
