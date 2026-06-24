@@ -5,7 +5,7 @@ var GUI =
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2057);
+var content = __webpack_require__(2058);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -27,18 +27,18 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1226:
+/***/ 1227:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1227);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1228);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1229);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1230);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1241);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1242);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1258);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1259);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
@@ -76,7 +76,7 @@ document.body.appendChild(appTarget);
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(2073).default(appTarget);
+  __webpack_require__(2074).default(appTarget);
 } else {
   _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
   var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
@@ -93,14 +93,14 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 
 /***/ }),
 
-/***/ 1260:
+/***/ 1261:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1668:
+/***/ 1669:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -117,7 +117,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2057:
+/***/ 2058:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -166,7 +166,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2058:
+/***/ 2059:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -268,7 +268,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2059:
+/***/ 2060:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -430,7 +430,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2073:
+/***/ 2074:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -462,64 +462,64 @@ var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 var react_redux_es = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/folder-open.js
-var folder_open = __webpack_require__(2106);
+var folder_open = __webpack_require__(2107);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/code-xml.js
-var code_xml = __webpack_require__(2103);
+var code_xml = __webpack_require__(2104);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/compass.js
-var compass = __webpack_require__(2107);
+var compass = __webpack_require__(2108);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/circle-user.js
-var circle_user = __webpack_require__(2108);
+var circle_user = __webpack_require__(2109);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-out.js
-var log_out = __webpack_require__(2109);
+var log_out = __webpack_require__(2110);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-in.js
-var log_in = __webpack_require__(2110);
+var log_in = __webpack_require__(2111);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/plus.js
-var plus = __webpack_require__(2111);
+var plus = __webpack_require__(2112);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user-plus.js
-var user_plus = __webpack_require__(2112);
+var user_plus = __webpack_require__(2113);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/upload.js
-var upload = __webpack_require__(2104);
+var upload = __webpack_require__(2105);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/trash-2.js
-var trash_2 = __webpack_require__(2099);
+var trash_2 = __webpack_require__(2100);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/save.js
-var save = __webpack_require__(2113);
+var save = __webpack_require__(2114);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/star.js
-var star = __webpack_require__(2092);
+var star = __webpack_require__(2093);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/settings.js
-var settings = __webpack_require__(2114);
+var settings = __webpack_require__(2115);
 
-// EXTERNAL MODULE: ./src/containers/gui.jsx + 299 modules
+// EXTERNAL MODULE: ./src/containers/gui.jsx + 300 modules
 var gui = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/message-circle.js
-var message_circle = __webpack_require__(2089);
+var message_circle = __webpack_require__(2090);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
-var icons_reply = __webpack_require__(2090);
+var icons_reply = __webpack_require__(2091);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/heart.js
-var heart = __webpack_require__(2091);
+var heart = __webpack_require__(2092);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/repeat-2.js
-var repeat_2 = __webpack_require__(2093);
+var repeat_2 = __webpack_require__(2094);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/bell.js
-var bell = __webpack_require__(2094);
+var bell = __webpack_require__(2095);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/check-check.js
-var check_check = __webpack_require__(2095);
+var check_check = __webpack_require__(2096);
 
 // EXTERNAL MODULE: ./src/components/notifications/notifications-bell.css
 var notifications_bell = __webpack_require__(118);
@@ -798,28 +798,28 @@ var project_state = __webpack_require__(38);
 var project_interactions = __webpack_require__(235);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(79);
+var dogoblock_api = __webpack_require__(74);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
-var lock_open = __webpack_require__(2096);
+var lock_open = __webpack_require__(2097);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/share-2.js
-var share_2 = __webpack_require__(2097);
+var share_2 = __webpack_require__(2098);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock.js
-var lock = __webpack_require__(2098);
+var lock = __webpack_require__(2099);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/pen-line.js
-var pen_line = __webpack_require__(2100);
+var pen_line = __webpack_require__(2101);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/ellipsis.js
-var ellipsis = __webpack_require__(2101);
+var ellipsis = __webpack_require__(2102);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/send.js
-var send = __webpack_require__(2102);
+var send = __webpack_require__(2103);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/eye.js
-var eye = __webpack_require__(2105);
+var eye = __webpack_require__(2106);
 
 // EXTERNAL MODULE: ./src/components/project-page/project-page.css
 var project_page = __webpack_require__(34);
@@ -1933,7 +1933,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       if (projectId) {
         this.loadDetails(projectId); // Record a view (fire and forget)
 
-        Object(dogoblock_api["v" /* recordProjectView */])(projectId).catch(function () {});
+        Object(dogoblock_api["w" /* recordProjectView */])(projectId).catch(function () {});
       }
     }
   }, {
@@ -1950,7 +1950,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
 
       this.props.onSetLoading(true);
       this.props.onSetComments([], 0, 1);
-      Object(dogoblock_api["j" /* getProjectDetails */])(projectId).then(function (details) {
+      Object(dogoblock_api["k" /* getProjectDetails */])(projectId).then(function (details) {
         if (_this2.props.projectId !== projectId) return;
 
         _this2.props.onSetDetails(details);
@@ -1969,7 +1969,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleLike() {
       var _this3 = this;
 
-      Object(dogoblock_api["l" /* likeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["m" /* likeProject */])(this.props.projectId).then(function (res) {
         return _this3.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -1978,7 +1978,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnlike() {
       var _this4 = this;
 
-      Object(dogoblock_api["y" /* unlikeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["z" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -1987,7 +1987,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleFavorite() {
       var _this5 = this;
 
-      Object(dogoblock_api["f" /* favoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["g" /* favoriteProject */])(this.props.projectId).then(function (res) {
         return _this5.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -1996,7 +1996,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnfavorite() {
       var _this6 = this;
 
-      Object(dogoblock_api["x" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["y" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2012,7 +2012,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handlePostComment(content, parentId) {
       var _this7 = this;
 
-      return Object(dogoblock_api["u" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
+      return Object(dogoblock_api["v" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
         return _this7.props.onAddComment(comment);
       });
     }
@@ -2031,7 +2031,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       var projectId = this.props.projectId;
-      Object(dogoblock_api["h" /* getComments */])(projectId, page).then(function (res) {
+      Object(dogoblock_api["i" /* getComments */])(projectId, page).then(function (res) {
         if (_this9.props.projectId !== projectId) return;
 
         _this9.props.onSetComments(res.comments, res.total, res.page);
@@ -2042,7 +2042,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateVisibility(visibility) {
       var _this10 = this;
 
-      Object(dogoblock_api["B" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
+      Object(dogoblock_api["C" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
         _this10.props.onSetDetails(Object.assign({}, _this10.props, {
           visibility: res.visibility
         }));
@@ -2053,7 +2053,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateDetails(patch) {
       var _this11 = this;
 
-      return Object(dogoblock_api["A" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
+      return Object(dogoblock_api["B" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
         _this11.props.onSetDetails(Object.assign({}, _this11.props, res));
       });
     }
@@ -2062,7 +2062,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateCover(coverFile) {
       var _this12 = this;
 
-      return Object(dogoblock_api["C" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
+      return Object(dogoblock_api["D" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
         _this12.props.onSetDetails(Object.assign({}, _this12.props, res));
 
         return res;
@@ -2465,6 +2465,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     _this.handleNavigateProfile = _this.handleNavigateProfile.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleNavigateProjects = _this.handleNavigateProjects.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleNavigateRegister = _this.handleNavigateRegister.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handleRequestLoginToSave = _this.handleRequestLoginToSave.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleLoadNotifications = _this.handleLoadNotifications.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleMarkAllNotificationsRead = _this.handleMarkAllNotificationsRead.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleOpenNotification = _this.handleOpenNotification.bind(dogoblock_web_app_assertThisInitialized(_this));
@@ -2540,7 +2541,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           loading: true,
           error: null
         });
-        Promise.all([Object(dogoblock_api["i" /* getMyProfile */])(), Object(dogoblock_api["o" /* listProjects */])(), Object(dogoblock_api["m" /* listFavoriteProjects */])()]).then(function (_ref2) {
+        Promise.all([Object(dogoblock_api["j" /* getMyProfile */])(), Object(dogoblock_api["p" /* listProjects */])(), Object(dogoblock_api["n" /* listFavoriteProjects */])()]).then(function (_ref2) {
           var _ref3 = dogoblock_web_app_slicedToArray(_ref2, 3),
               profile = _ref3[0],
               projects = _ref3[1],
@@ -2565,7 +2566,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         this.setState({
           loading: true
         });
-        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["o" /* listProjects */] : dogoblock_api["p" /* listPublicProjects */];
+        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["p" /* listProjects */] : dogoblock_api["q" /* listPublicProjects */];
         loader().then(function (projects) {
           return _this3.setState({
             projects: projects,
@@ -2585,7 +2586,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           loading: true,
           projectDetails: null
         });
-        Object(dogoblock_api["j" /* getProjectDetails */])(requestedProjectId).then(function (projectDetails) {
+        Object(dogoblock_api["k" /* getProjectDetails */])(requestedProjectId).then(function (projectDetails) {
           if (_this3.state.route.name !== 'projectDetails' || _this3.state.route.projectId !== requestedProjectId) {
             return;
           }
@@ -2617,7 +2618,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["q" /* login */])({
+      Object(dogoblock_api["r" /* login */])({
         email: form.get('email'),
         password: form.get('password')
       }).then(function (session) {
@@ -2642,7 +2643,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["w" /* register */])({
+      Object(dogoblock_api["x" /* register */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -2662,7 +2663,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleLogout",
     value: function handleLogout() {
       this.closeNotificationsStream();
-      Object(dogoblock_api["r" /* logout */])();
+      Object(dogoblock_api["s" /* logout */])();
       this.props.onLogout();
       this.setState({
         notifications: [],
@@ -2687,7 +2688,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return;
       }
 
-      Object(dogoblock_api["k" /* getUnreadCount */])().then(function (result) {
+      Object(dogoblock_api["l" /* getUnreadCount */])().then(function (result) {
         return _this6.setState({
           unreadCount: result.unreadCount || 0
         });
@@ -2740,7 +2741,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         notificationsLoading: true
       });
-      Object(dogoblock_api["n" /* listNotifications */])(1, 10).then(function (result) {
+      Object(dogoblock_api["o" /* listNotifications */])(1, 10).then(function (result) {
         return _this7.setState({
           notifications: result.notifications || [],
           unreadCount: result.unreadCount || 0,
@@ -2765,7 +2766,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       };
 
       if (!notification.readAt) {
-        Object(dogoblock_api["t" /* markNotificationRead */])(notification.id).then(function (updated) {
+        Object(dogoblock_api["u" /* markNotificationRead */])(notification.id).then(function (updated) {
           _this8.setState(function (prevState) {
             return {
               notifications: prevState.notifications.map(function (item) {
@@ -2790,7 +2791,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       if (!this.props.user || this.state.unreadCount === 0) return;
-      Object(dogoblock_api["s" /* markAllNotificationsRead */])().then(function (result) {
+      Object(dogoblock_api["t" /* markAllNotificationsRead */])().then(function (result) {
         return _this9.setState(function (prevState) {
           return {
             unreadCount: 0,
@@ -2985,8 +2986,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["B" /* updateProjectVisibility */])(project.id, visibility).then(function () {
-        return Object(dogoblock_api["j" /* getProjectDetails */])(project.id);
+      Object(dogoblock_api["C" /* updateProjectVisibility */])(project.id, visibility).then(function () {
+        return Object(dogoblock_api["k" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         return _this13.setState({
           projectDetails: projectDetails,
@@ -3036,6 +3037,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       dogoblock_web_app_navigate('/register');
     }
   }, {
+    key: "handleRequestLoginToSave",
+    value: function handleRequestLoginToSave() {
+      dogoblock_web_app_navigate(loginRouteFor(currentRouteHash()));
+    }
+  }, {
     key: "handleProfileTab",
     value: function handleProfileTab(event) {
       this.setState({
@@ -3053,7 +3059,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["z" /* updateMyProfile */])({
+      Object(dogoblock_api["A" /* updateMyProfile */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -3521,6 +3527,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         key: "project-editor-".concat(projectId),
         canCreateNew: canPersist,
         canEditTitle: true,
+        canPromptLoginToSave: !canPersist,
         canSave: canPersist,
         saveUploadedProjectAsNew: true,
         assetHost: Object(dogoblock_api_config["b" /* getAssetHost */])(),
@@ -3530,6 +3537,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         routeProjectId: projectId,
         onClickLogo: this.handleNavigateHome,
         onProjectLoaded: noop,
+        onRequestLoginToSave: this.handleRequestLoginToSave,
         onShowMessageBox: this.handleShowMessageBox,
         onUpdateProjectId: this.handleProjectCreated
       });
@@ -3585,7 +3593,7 @@ var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch)
 var hash_parser_hoc = __webpack_require__(291);
 
 // EXTERNAL MODULE: ./src/lib/log.js
-var log = __webpack_require__(61);
+var log = __webpack_require__(58);
 
 // CONCATENATED MODULE: ./src/playground/render-gui.jsx
 function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { render_gui_typeof = function _typeof(obj) { return typeof obj; }; } else { render_gui_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return render_gui_typeof(obj); }
@@ -3734,7 +3742,7 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2059);
+var content = __webpack_require__(2060);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3760,7 +3768,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2058);
+var content = __webpack_require__(2059);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3786,7 +3794,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1668);
+var content = __webpack_require__(1669);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3808,5 +3816,5 @@ if(false) {}
 
 /***/ })
 
-},[[1226,0]]]);
+},[[1227,0]]]);
 //# sourceMappingURL=gui.js.map
