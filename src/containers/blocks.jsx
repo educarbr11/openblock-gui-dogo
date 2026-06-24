@@ -704,12 +704,29 @@ class Blocks extends React.Component {
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
+    getMissingGeneratorBlockTypes (generatorName) {
+        const generator = this.ScratchBlocks[generatorName];
+        if (!generator || !this.workspace || !this.workspace.getAllBlocks) return [];
+
+        const missing = new Set();
+        this.workspace.getAllBlocks(false).forEach(block => {
+            if (block && block.type && typeof generator[block.type] !== 'function') {
+                missing.add(block.type);
+            }
+        });
+        return Array.from(missing);
+    }
     workspaceToCode () {
         let code;
+        let generatorName;
         try {
-            const generatorName = getGeneratorNameFromDeviceType(this.props.deviceType);
+            generatorName = getGeneratorNameFromDeviceType(this.props.deviceType);
             code = this.ScratchBlocks[generatorName].workspaceToCode(this.workspace);
         } catch (e) {
+            const missingGenerators = this.getMissingGeneratorBlockTypes(generatorName);
+            if (missingGenerators.length > 0) {
+                log.error(`Missing ${generatorName} generators: ${missingGenerators.join(', ')}`);
+            }
             log.error(e);
             code = this.props.codeEditorValue;
         }

@@ -134,8 +134,7 @@ const replaceAll = (source, replacements) => {
     return result;
 };
 
-const patchOpenBlockBlocksArduinoPins = () => {
-    const packageDir = path.join(root, 'node_modules', 'openblock-blocks');
+const patchOpenBlockBlocksArduinoPinsPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
     const buzzerUltrasonicGenerators = `
@@ -320,10 +319,17 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);
-        console.log('Applied openblock-blocks Arduino pin reporter patch.');
+        console.log(`Applied openblock-blocks Arduino pin reporter patch: ${packageDir}`);
     } else if (after.includes('pinToCode_')) {
-        console.log('openblock-blocks Arduino pin reporter patch already applied.');
+        console.log(`openblock-blocks Arduino pin reporter patch already applied: ${packageDir}`);
     }
+};
+
+const patchOpenBlockBlocksArduinoPins = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
+    ].forEach(patchOpenBlockBlocksArduinoPinsPackage);
 };
 
 for (const patch of patches) {

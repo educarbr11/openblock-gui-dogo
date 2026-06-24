@@ -6,7 +6,7 @@
   "openblockVmRevision": "2272c785",
   "scripts": {
     "build": "npm run clean && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --bail",
-    "vercel-build": "rm -rf .openblock-vm && git clone --depth=1 --branch dogo-dev https://github.com/educarbr11/openblock-vm.git .openblock-vm && npm --prefix .openblock-vm ci && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" npm --prefix .openblock-vm run build && OPENBLOCK_VM_PATH=$PWD/.openblock-vm npm run build",
+    "vercel-build": "rm -rf .openblock-vm && git clone --depth=1 --branch dogo-dev https://github.com/educarbr11/openblock-vm.git .openblock-vm && npm --prefix .openblock-vm ci && node scripts/apply-scratch-paint-patch.js && NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" npm --prefix .openblock-vm run build && OPENBLOCK_VM_PATH=$PWD/.openblock-vm npm run build",
     "clean": "rimraf ./build && mkdirp build",
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1) [skip ci]\"",
     "prune": "./prune-gh-pages.sh",
