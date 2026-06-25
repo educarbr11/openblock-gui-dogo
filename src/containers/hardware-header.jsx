@@ -61,6 +61,23 @@ class HardwareHeader extends React.Component {
         return {promise, cancel: cleanup};
     }
 
+    waitForUploadResult (uploadResult, uploadCompletion) {
+        if (!uploadResult || typeof uploadResult.then !== 'function') {
+            return uploadCompletion.promise;
+        }
+        const uploadResultPromise = uploadResult.then(() =>
+            new Promise((resolve, reject) => {
+                window.setTimeout(() => reject(new Error(
+                    'O envio terminou sem confirmacao do Arduino. Reconecte a placa e tente novamente.'
+                )), 0);
+            })
+        );
+        return Promise.race([
+            uploadCompletion.promise,
+            uploadResultPromise
+        ]);
+    }
+
     handleUpload () {
         if (this.props.peripheralName) {
             const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
@@ -166,7 +183,7 @@ class HardwareHeader extends React.Component {
                     throw new Error('Nao foi possivel iniciar o envio. Reconecte o Arduino e tente novamente.');
                 }
                 this.emitUploadStdout('Upload iniciado. Aguardando bootloader do Arduino...\n');
-                return uploadCompletion.promise;
+                return this.waitForUploadResult(uploadResult, uploadCompletion);
             })
             .catch(error => {
                 this.emitUploadError(error && error.message ? error.message : String(error));
