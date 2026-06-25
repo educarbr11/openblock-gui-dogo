@@ -641,6 +641,40 @@ const patchOpenBlockVmKeyReleased = () => {
     ].forEach(patchOpenBlockVmKeyReleasedPackage);
 };
 
+const patchOpenBlockVmArduinoNanoUploadPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const nanoFile = path.join(packageDir, 'src', 'devices', 'arduinoUno', 'arduinoNano.js');
+    if (!fs.existsSync(nanoFile)) return;
+
+    const before = fs.readFileSync(nanoFile, 'utf8');
+    let after = before;
+
+    after = after.replace(
+        "fqbn: 'arduino:avr:nano:cpu=atmega328old',\n    uploadFallbackFqbns: ['arduino:avr:nano'],",
+        "fqbn: 'arduino:avr:nano',\n    uploadFallbackFqbns: ['arduino:avr:nano:cpu=atmega328old'],"
+    );
+
+    after = after.replace(
+        "fqbn: 'arduino:avr:nano:cpu=atmega328old',\n    firmware: 'arduinoUnoUltra.hex'",
+        "fqbn: 'arduino:avr:nano',\n    uploadFallbackFqbns: ['arduino:avr:nano:cpu=atmega328old'],\n    firmware: 'arduinoUnoUltra.hex'"
+    );
+
+    if (after !== before) {
+        fs.writeFileSync(nanoFile, after);
+        console.log(`Applied openblock-vm Arduino Nano upload fallback patch: ${packageDir}`);
+    } else if (after.includes("fqbn: 'arduino:avr:nano'")) {
+        console.log(`openblock-vm Arduino Nano upload fallback patch already applied: ${packageDir}`);
+    }
+};
+
+const patchOpenBlockVmArduinoNanoUpload = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmArduinoNanoUploadPackage);
+};
+
 const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -727,4 +761,5 @@ for (const patch of patches) {
 patchOpenBlockBlocksArduinoPins();
 patchOpenBlockBlocksKeyReleased();
 patchOpenBlockVmKeyReleased();
+patchOpenBlockVmArduinoNanoUpload();
 patchOpenBlockL10nKeyReleased();
