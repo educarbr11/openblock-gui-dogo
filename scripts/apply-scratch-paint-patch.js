@@ -407,6 +407,288 @@ const patchOpenBlockBlocksArduinoPins = () => {
     ].forEach(patchOpenBlockBlocksArduinoPinsPackage);
 };
 
+const keyReleasedBlockSource = `Blockly.Blocks['event_whenkeyreleased'] = {
+  /**
+   * Block to trigger when a keyboard key is released.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "id": "event_whenkeyreleased",
+      "message0": Blockly.Msg.EVENT_WHENKEYRELEASED,
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "KEY_OPTION",
+          "options": [
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_SPACE, 'space'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_UP, 'up arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_DOWN, 'down arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_RIGHT, 'right arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_LEFT, 'left arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_ANY, 'any'],
+            ['a', 'a'],
+            ['b', 'b'],
+            ['c', 'c'],
+            ['d', 'd'],
+            ['e', 'e'],
+            ['f', 'f'],
+            ['g', 'g'],
+            ['h', 'h'],
+            ['i', 'i'],
+            ['j', 'j'],
+            ['k', 'k'],
+            ['l', 'l'],
+            ['m', 'm'],
+            ['n', 'n'],
+            ['o', 'o'],
+            ['p', 'p'],
+            ['q', 'q'],
+            ['r', 'r'],
+            ['s', 's'],
+            ['t', 't'],
+            ['u', 'u'],
+            ['v', 'v'],
+            ['w', 'w'],
+            ['x', 'x'],
+            ['y', 'y'],
+            ['z', 'z'],
+            ['0', '0'],
+            ['1', '1'],
+            ['2', '2'],
+            ['3', '3'],
+            ['4', '4'],
+            ['5', '5'],
+            ['6', '6'],
+            ['7', '7'],
+            ['8', '8'],
+            ['9', '9']
+          ]
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+`;
+
+const keyReleasedBlockCompressed = 'Blockly.Blocks.event_whenkeyreleased={init:function(){this.jsonInit({id:"event_whenkeyreleased",message0:Blockly.Msg.EVENT_WHENKEYRELEASED,args0:[{type:"field_dropdown",name:"KEY_OPTION",options:[[Blockly.Msg.EVENT_WHENKEYPRESSED_SPACE,"space"],[Blockly.Msg.EVENT_WHENKEYPRESSED_UP,"up arrow"],[Blockly.Msg.EVENT_WHENKEYPRESSED_DOWN,"down arrow"],[Blockly.Msg.EVENT_WHENKEYPRESSED_RIGHT,"right arrow"],[Blockly.Msg.EVENT_WHENKEYPRESSED_LEFT,"left arrow"],[Blockly.Msg.EVENT_WHENKEYPRESSED_ANY,"any"],["a","a"],["b","b"],["c","c"],["d","d"],["e","e"],["f","f"],["g","g"],["h","h"],["i","i"],["j","j"],["k","k"],["l","l"],["m","m"],["n","n"],["o","o"],["p","p"],["q","q"],["r","r"],["s","s"],["t","t"],["u","u"],["v","v"],["w","w"],["x","x"],["y","y"],["z","z"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"]]}],category:Blockly.Categories.event,extensions:["colours_event","shape_hat"]})}};';
+
+const patchOpenBlockBlocksKeyReleasedPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const eventFile = path.join(packageDir, 'blocks_vertical', 'event.js');
+    if (fs.existsSync(eventFile)) {
+        const before = fs.readFileSync(eventFile, 'utf8');
+        if (!before.includes("event_whenkeyreleased")) {
+            fs.writeFileSync(eventFile, before.replace(
+                "Blockly.Blocks['event_whengreaterthan']",
+                `${keyReleasedBlockSource}\nBlockly.Blocks['event_whengreaterthan']`
+            ));
+        }
+    }
+
+    const defaultToolboxFile = path.join(packageDir, 'blocks_vertical', 'default_toolbox.js');
+    if (fs.existsSync(defaultToolboxFile)) {
+        const before = fs.readFileSync(defaultToolboxFile, 'utf8');
+        if (!before.includes('event_whenkeyreleased')) {
+            fs.writeFileSync(defaultToolboxFile, before.replace(
+                "'<block type=\"event_whenkeypressed\" id=\"event_whenkeypressed\">' +\n" +
+                "    '</block>' +",
+                "'<block type=\"event_whenkeypressed\" id=\"event_whenkeypressed\">' +\n" +
+                "    '</block>' +\n" +
+                "    '<block type=\"event_whenkeyreleased\" id=\"event_whenkeyreleased\">' +\n" +
+                "    '</block>' +"
+            ));
+        }
+    }
+
+    const messageFiles = [
+        [path.join(packageDir, 'msg', 'messages.js'),
+            "Blockly.Msg.EVENT_WHENKEYPRESSED = 'when %1 key pressed';",
+            "Blockly.Msg.EVENT_WHENKEYPRESSED = 'when %1 key pressed';\nBlockly.Msg.EVENT_WHENKEYRELEASED = 'when %1 key released';"],
+        [path.join(packageDir, 'msg', 'js', 'en.js'),
+            'Blockly.Msg["EVENT_WHENKEYPRESSED"] = "when %1 key pressed";',
+            'Blockly.Msg["EVENT_WHENKEYPRESSED"] = "when %1 key pressed";\nBlockly.Msg["EVENT_WHENKEYRELEASED"] = "when %1 key released";']
+    ];
+    messageFiles.forEach(([file, from, to]) => {
+        if (!fs.existsSync(file)) return;
+        const before = fs.readFileSync(file, 'utf8');
+        if (!before.includes('EVENT_WHENKEYRELEASED')) {
+            fs.writeFileSync(file, before.replace(from, to));
+        }
+    });
+
+    const jsonFile = path.join(packageDir, 'msg', 'json', 'en.json');
+    if (fs.existsSync(jsonFile)) {
+        const data = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+        data.EVENT_WHENKEYRELEASED = 'when %1 key released';
+        fs.writeFileSync(jsonFile, `${JSON.stringify(data, null, 4)}\n`);
+    }
+
+    const scratchMsgsFile = path.join(packageDir, 'msg', 'scratch_msgs.js');
+    if (fs.existsSync(scratchMsgsFile)) {
+        let text = fs.readFileSync(scratchMsgsFile, 'utf8');
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "when %1 key released"')) {
+            text = text.replace(
+                '"EVENT_WHENKEYPRESSED": "when %1 key pressed",',
+                '"EVENT_WHENKEYPRESSED": "when %1 key pressed",\n    "EVENT_WHENKEYRELEASED": "when %1 key released",'
+            );
+        }
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta"')) {
+            text = text.replace(
+                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",',
+                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",\n    "EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta",'
+            );
+        }
+        fs.writeFileSync(scratchMsgsFile, text);
+    }
+
+    const compressedFile = path.join(packageDir, 'blocks_compressed_vertical.js');
+    if (fs.existsSync(compressedFile)) {
+        let text = fs.readFileSync(compressedFile, 'utf8');
+        if (!text.includes('event_whenkeyreleased')) {
+            text = text.replace('Blockly.Blocks.event_whengreaterthan=', `${keyReleasedBlockCompressed}Blockly.Blocks.event_whengreaterthan=`);
+        }
+        text = text.replace(
+            '<block type="event_whenkeypressed" id="event_whenkeypressed"></block><block type="event_whenthisspriteclicked"',
+            '<block type="event_whenkeypressed" id="event_whenkeypressed"></block><block type="event_whenkeyreleased" id="event_whenkeyreleased"></block><block type="event_whenthisspriteclicked"'
+        );
+        fs.writeFileSync(compressedFile, text);
+    }
+
+    const distFile = path.join(packageDir, 'dist', 'vertical.js');
+    if (fs.existsSync(distFile)) {
+        let text = fs.readFileSync(distFile, 'utf8');
+        if (!text.includes('event_whenkeyreleased')) {
+            text = text.replace('Blockly.Blocks.event_whengreaterthan=', `${keyReleasedBlockCompressed}Blockly.Blocks.event_whengreaterthan=`);
+        }
+        text = text.replace(
+            '<block type="event_whenkeypressed" id="event_whenkeypressed"></block><block type="event_whenthisspriteclicked"',
+            '<block type="event_whenkeypressed" id="event_whenkeypressed"></block><block type="event_whenkeyreleased" id="event_whenkeyreleased"></block><block type="event_whenthisspriteclicked"'
+        );
+        if (!text.includes('Blockly.Msg.EVENT_WHENKEYRELEASED')) {
+            text = text.replace(
+                "Blockly.Msg.EVENT_WHENKEYPRESSED = 'when %1 key pressed';",
+                "Blockly.Msg.EVENT_WHENKEYPRESSED = 'when %1 key pressed';\\nBlockly.Msg.EVENT_WHENKEYRELEASED = 'when %1 key released';"
+            );
+        }
+        if (!text.includes('\\"EVENT_WHENKEYRELEASED\\": \\"when %1 key released\\"')) {
+            text = text.replace(
+                '\\"EVENT_WHENKEYPRESSED\\": \\"when %1 key pressed\\",',
+                '\\"EVENT_WHENKEYPRESSED\\": \\"when %1 key pressed\\",\\n    \\"EVENT_WHENKEYRELEASED\\": \\"when %1 key released\\",'
+            );
+        }
+        if (!text.includes('\\"EVENT_WHENKEYRELEASED\\": \\"quando a tecla %1 for solta\\"')) {
+            text = text.replace(
+                '\\"EVENT_WHENKEYPRESSED\\": \\"quando a tecla %1 for pressionada\\",',
+                '\\"EVENT_WHENKEYPRESSED\\": \\"quando a tecla %1 for pressionada\\",\\n    \\"EVENT_WHENKEYRELEASED\\": \\"quando a tecla %1 for solta\\",'
+            );
+        }
+        fs.writeFileSync(distFile, text);
+    }
+
+    console.log(`Applied openblock-blocks key released event patch: ${packageDir}`);
+};
+
+const patchOpenBlockBlocksKeyReleased = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
+    ].forEach(patchOpenBlockBlocksKeyReleasedPackage);
+};
+
+const patchOpenBlockVmKeyReleasedPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const keyboardFile = path.join(packageDir, 'src', 'io', 'keyboard.js');
+    if (fs.existsSync(keyboardFile)) {
+        const before = fs.readFileSync(keyboardFile, 'utf8');
+        if (!before.includes("KEY_RELEASED")) {
+            fs.writeFileSync(keyboardFile, before.replace(
+                'this._keysPressed.splice(index, 1);',
+                "this._keysPressed.splice(index, 1);\n            this.runtime.emit('KEY_RELEASED', scratchKey);"
+            ));
+        }
+    }
+
+    const eventFile = path.join(packageDir, 'src', 'blocks', 'scratch3_event.js');
+    if (fs.existsSync(eventFile)) {
+        let text = fs.readFileSync(eventFile, 'utf8');
+        if (!text.includes("KEY_RELEASED")) {
+            text = text.replace(
+                "        });\n    }\n\n    /**\n",
+                "        });\n\n        this.runtime.on('KEY_RELEASED', key => {\n            this.runtime.startHats('event_whenkeyreleased', {\n                KEY_OPTION: key\n            });\n            this.runtime.startHats('event_whenkeyreleased', {\n                KEY_OPTION: 'any'\n            });\n        });\n    }\n\n    /**\n"
+            );
+        }
+        if (!text.includes("event_whenkeyreleased:")) {
+            text = text.replace(
+                "            event_whenkeypressed: {\n                restartExistingThreads: false\n            },",
+                "            event_whenkeypressed: {\n                restartExistingThreads: false\n            },\n            event_whenkeyreleased: {\n                restartExistingThreads: false\n            },"
+            );
+        }
+        fs.writeFileSync(eventFile, text);
+    }
+
+    console.log(`Applied openblock-vm key released event patch: ${packageDir}`);
+};
+
+const patchOpenBlockVmKeyReleased = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmKeyReleasedPackage);
+};
+
+const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    [
+        ['pt-br.json', 'quando a tecla %1 for solta'],
+        ['pt.json', 'Quando alguém soltar a tecla %1']
+    ].forEach(([fileName, value]) => {
+        const file = path.join(packageDir, 'editor', 'blocks', fileName);
+        if (!fs.existsSync(file)) return;
+        const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+        data.EVENT_WHENKEYRELEASED = value;
+        fs.writeFileSync(file, `${JSON.stringify(data, null, 4)}\n`);
+    });
+
+    const blocksMsgsFile = path.join(packageDir, 'locales', 'blocks-msgs.js');
+    if (fs.existsSync(blocksMsgsFile)) {
+        let text = fs.readFileSync(blocksMsgsFile, 'utf8');
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "when %1 key released"')) {
+            text = text.replace(
+                '"EVENT_WHENKEYPRESSED": "when %1 key pressed",',
+                '"EVENT_WHENKEYPRESSED": "when %1 key pressed",\n    "EVENT_WHENKEYRELEASED": "when %1 key released",'
+            );
+        }
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta"')) {
+            text = text.replace(
+                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",',
+                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",\n    "EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta",'
+            );
+        }
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "Quando alguém soltar a tecla %1"')) {
+            text = text.replace(
+                '"EVENT_WHENKEYPRESSED": "Quando alguém pressionar a tecla %1",',
+                '"EVENT_WHENKEYPRESSED": "Quando alguém pressionar a tecla %1",\n    "EVENT_WHENKEYRELEASED": "Quando alguém soltar a tecla %1",'
+            );
+        }
+        fs.writeFileSync(blocksMsgsFile, text);
+    }
+
+    console.log(`Applied openblock-l10n key released event patch: ${packageDir}`);
+};
+
+const patchOpenBlockL10nKeyReleased = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-l10n'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
+    ].forEach(patchOpenBlockL10nKeyReleasedPackage);
+};
+
 for (const patch of patches) {
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
         continue;
@@ -443,3 +725,6 @@ for (const patch of patches) {
 }
 
 patchOpenBlockBlocksArduinoPins();
+patchOpenBlockBlocksKeyReleased();
+patchOpenBlockVmKeyReleased();
+patchOpenBlockL10nKeyReleased();

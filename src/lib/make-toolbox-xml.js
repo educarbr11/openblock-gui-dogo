@@ -351,6 +351,8 @@ const events = function (isInitialSetup, isStage) {
         <block type="event_whenflagclicked"/>
         <block type="event_whenkeypressed">
         </block>
+        <block type="event_whenkeyreleased">
+        </block>
         ${isStage ? `
             <block type="event_whenstageclicked"/>
         ` : `
