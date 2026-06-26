@@ -267,6 +267,28 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
 };
 `;
 
+    const serialAutoBeginGenerator = `
+
+Blockly.Arduino['arduino_serial_serialBegin'] = function(block) {
+  var arg0 = block.getFieldValue('VALUE') || '9600';
+  Blockly.Arduino.setups_['setup_serial_begin'] = 'Serial.begin(' + arg0 + ');';
+  return '';
+};
+
+Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
+  var arg0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_UNARY_POSTFIX) || '';
+  var eol = block.getFieldValue('EOL') || 'warp';
+  Blockly.Arduino.setups_['setup_serial_begin'] = Blockly.Arduino.setups_['setup_serial_begin'] || 'Serial.begin(9600);';
+  var code = '';
+  if (eol === 'warp') {
+    code = 'Serial.println(' + arg0 + ');\\n';
+  } else {
+    code = 'Serial.print(' + arg0 + ');\\n';
+  }
+  return code;
+};
+`;
+
     const sourceReplacements = [
         [
             "goog.require('Blockly.Arduino');\n\n\nBlockly.Arduino['arduino_pin_setPinMode']",
@@ -305,6 +327,16 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
             !after.includes("arduino_pin_playToneForSeconds")
         ) {
             after += buzzerUltrasonicGenerators;
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes("setup_serial_begin")
+        ) {
+            const serialStart = after.indexOf("Blockly.Arduino['arduino_serial_serialBegin'] = function(block) {");
+            const serialEnd = after.indexOf("Blockly.Arduino['arduino_serial_serialAvailable']", serialStart);
+            if (serialStart !== -1 && serialEnd !== -1) {
+                after = after.slice(0, serialStart) + serialAutoBeginGenerator + '\n' + after.slice(serialEnd);
+            }
         }
         if (after !== before) {
             fs.writeFileSync(file, after);
@@ -391,6 +423,17 @@ Blockly.Arduino['arduino_pin_readUltrasonicDistance'] = function(block) {
     }
     if (!after.includes("arduino_pin_playToneForSeconds")) {
         after += buzzerUltrasonicGenerators;
+    }
+    if (!after.includes("setup_serial_begin")) {
+        after = after
+            .replace(
+                'Blockly.Arduino.arduino_serial_serialBegin=function(a){return"Serial.begin("+(a.getFieldValue("VALUE")||"9600")+");\\n"};',
+                'Blockly.Arduino.arduino_serial_serialBegin=function(a){a=a.getFieldValue("VALUE")||"9600";Blockly.Arduino.setups_.setup_serial_begin="Serial.begin("+a+");";return""};'
+            )
+            .replace(
+                'Blockly.Arduino.arduino_serial_serialPrint=function(a){var b=Blockly.Arduino.valueToCode(a,"VALUE",Blockly.Arduino.ORDER_UNARY_POSTFIX)||"";return"warp"===(a.getFieldValue("EOL")||"warp")?"Serial.println("+b+");\\n":"Serial.print("+b+");\\n"};',
+                'Blockly.Arduino.arduino_serial_serialPrint=function(a){var b=Blockly.Arduino.valueToCode(a,"VALUE",Blockly.Arduino.ORDER_UNARY_POSTFIX)||"";Blockly.Arduino.setups_.setup_serial_begin=Blockly.Arduino.setups_.setup_serial_begin||"Serial.begin(9600);";return"warp"===(a.getFieldValue("EOL")||"warp")?"Serial.println("+b+");\\n":"Serial.print("+b+");\\n"};'
+            );
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);
