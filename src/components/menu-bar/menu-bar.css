@@ -168,6 +168,30 @@
     justify-content: center;
 }
 
+.save-project-button {
+    flex: 0 auto;
+    height: 2rem;
+    margin-left: 0.35rem;
+    padding: 0 .6rem !important;
+    border-radius: 0.5rem;
+    background: #075ed0;
+    color: $ui-white;
+    font-weight: 700;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.save-project-button:hover {
+    background: #e91f1f;
+}
+
+.save-project-button-icon {
+    width: 1rem;
+    height: 1rem;
+    filter: brightness(0) invert(1);
+}
+
 .cover-input {
     display: none;
 }

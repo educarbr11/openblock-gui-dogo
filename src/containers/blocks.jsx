@@ -209,6 +209,7 @@ class Blocks extends React.Component {
             // Clear possible errors witch print in to code editor.
             this.props.onSetCodeEditorValue('');
             this.onProgramModeUpdate();
+            this.scheduleCodeUpdate();
         }
 
         // Only rerender the toolbox when the blocks are visible and the xml is
@@ -294,6 +295,15 @@ class Blocks extends React.Component {
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
+        }
+    }
+    scheduleCodeUpdate () {
+        if (this.props.isRealtimeMode === false && this.props.isCodeEditorLocked) {
+            window.setTimeout(() => {
+                if (this._isMounted && this.props.isRealtimeMode === false) {
+                    this.onCodeNeedUpdate();
+                }
+            }, 0);
         }
     }
     updateToolbox () {
@@ -512,6 +522,7 @@ class Blocks extends React.Component {
         // fresh workspace and we don't want any changes made to another sprites
         // workspace to be 'undone' here.
         this.workspace.clearUndo();
+        this.scheduleCodeUpdate();
     }
     handleScratchExtensionAdded (extensionInfo) {
         const {deviceId, categoryInfoArray} = extensionInfo;
@@ -599,6 +610,7 @@ class Blocks extends React.Component {
             if (toolboxXML) {
                 this.props.updateToolboxState(this.deviceFakeToolboxHead + toolboxXML);
             }
+            this.scheduleCodeUpdate();
         }, 0);
     }
     handleScratchExtensionRemoved (extensionInfo) {
@@ -692,13 +704,31 @@ class Blocks extends React.Component {
     handleStatusButtonUpdate () {
         this.ScratchBlocks.refreshStatusButtons(this.workspace);
     }
+    getMissingGeneratorBlockTypes (generatorName) {
+        const generator = this.ScratchBlocks[generatorName];
+        if (!generator || !this.workspace || !this.workspace.getAllBlocks) return [];
+
+        const missing = new Set();
+        this.workspace.getAllBlocks(false).forEach(block => {
+            if (block && block.type && typeof generator[block.type] !== 'function') {
+                missing.add(block.type);
+            }
+        });
+        return Array.from(missing);
+    }
     workspaceToCode () {
         let code;
+        let generatorName;
         try {
-            const generatorName = getGeneratorNameFromDeviceType(this.props.deviceType);
+            generatorName = getGeneratorNameFromDeviceType(this.props.deviceType);
             code = this.ScratchBlocks[generatorName].workspaceToCode(this.workspace);
         } catch (e) {
-            code = e.message;
+            const missingGenerators = this.getMissingGeneratorBlockTypes(generatorName);
+            if (missingGenerators.length > 0) {
+                log.error(`Missing ${generatorName} generators: ${missingGenerators.join(', ')}`);
+            }
+            log.error(e);
+            code = this.props.codeEditorValue;
         }
         return code;
     }
@@ -843,6 +873,7 @@ Blocks.propTypes = {
     deviceData: PropTypes.instanceOf(Array).isRequired,
     deviceId: PropTypes.string,
     deviceType: PropTypes.string,
+    codeEditorValue: PropTypes.string,
     peripheralName: PropTypes.string,
     deviceLibraryVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
@@ -951,6 +982,7 @@ const mapStateToProps = state => ({
     deviceLibraryVisible: state.scratchGui.modals.deviceLibrary,
     extensionLibraryVisible: state.scratchGui.modals.extensionLibrary,
     isCodeEditorLocked: state.scratchGui.code.isCodeEditorLocked,
+    codeEditorValue: state.scratchGui.code.codeEditorValue,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode,
     isRtl: state.locales.isRtl,
     locale: state.locales.locale,

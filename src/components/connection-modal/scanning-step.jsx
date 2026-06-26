@@ -14,7 +14,7 @@ import styles from './connection-modal.css';
 
 const ScanningStep = props => (
     <Box className={styles.body}>
-        {props.webBluetoothConnectionVisible ? (
+        {props.webBluetoothConnectionVisible || props.webSerialConnectionVisible ? (
             <Box className={styles.connectionTypeArea}>
                 <span className={styles.connectionTypeLabel}>
                     <FormattedMessage
@@ -31,14 +31,24 @@ const ScanningStep = props => (
                     <option value="link">
                         {'OpenBlock Link'}
                     </option>
-                    <option
-                        disabled={!props.webBluetoothConnectionSupported}
-                        value="webBluetooth"
-                    >
-                        {'Web Bluetooth'}
-                    </option>
+                    {props.webBluetoothConnectionVisible ? (
+                        <option
+                            disabled={!props.webBluetoothConnectionSupported}
+                            value="webBluetooth"
+                        >
+                            {'Web Bluetooth'}
+                        </option>
+                    ) : null}
+                    {props.webSerialConnectionVisible ? (
+                        <option
+                            disabled={!props.webSerialConnectionSupported}
+                            value="webSerial"
+                        >
+                            {'Web Serial USB'}
+                        </option>
+                    ) : null}
                 </select>
-                {props.webBluetoothConnectionSupported ? null : (
+                {props.webBluetoothConnectionVisible && !props.webBluetoothConnectionSupported ? (
                     <div
                         className={styles.connectionTypeWarning}
                         title={props.webBluetoothDebugInfo}
@@ -57,7 +67,27 @@ const ScanningStep = props => (
                             />
                         )}
                     </div>
-                )}
+                ) : null}
+                {props.webSerialConnectionVisible && !props.webSerialConnectionSupported ? (
+                    <div
+                        className={styles.connectionTypeWarning}
+                        title={props.webBluetoothDebugInfo}
+                    >
+                        {props.webSerialStatus === 'notSecure' ? (
+                            <FormattedMessage
+                                defaultMessage="Web Serial requires HTTPS or localhost."
+                                description="Warning when Web Serial is unavailable because the page is not secure"
+                                id="gui.connection.webSerial.notSecure"
+                            />
+                        ) : (
+                            <FormattedMessage
+                                defaultMessage="Web Serial is unavailable. Use Chrome/Edge with HTTPS/localhost."
+                                description="Warning when Web Serial API is missing"
+                                id="gui.connection.webSerial.missingApi"
+                            />
+                        )}
+                    </div>
+                ) : null}
             </Box>
         ) : null}
         {props.isSerialport || props.firmwareUploadRequired ? (
@@ -88,7 +118,13 @@ const ScanningStep = props => (
                                 className={classNames(styles.radarSmall, styles.radarSpin)}
                                 src={radarIcon}
                             />
-                            {props.isChromeOS ? (
+                            {props.connectionType === 'webSerial' ? (
+                                <FormattedMessage
+                                    defaultMessage="Use Refresh to select your Arduino USB device"
+                                    description="Text shown while waiting for Web Serial Arduino device selection"
+                                    id="gui.connection.scanning.arduinoWebSerialSelect"
+                                />
+                            ) : props.isChromeOS ? (
                                 <FormattedMessage
                                     defaultMessage="Use Refresh to select a serial device in Chrome"
                                     description="Text shown while waiting for Web Serial device selection"
@@ -139,13 +175,16 @@ const ScanningStep = props => (
                 {props.firmwareUploadRequired ? (
                     props.connectionType === 'webBluetooth' ? (
                         <FormattedMessage
-                            defaultMessage="Web Bluetooth needs BLE firmware. Use OpenBlock Link to send firmware."
+                            defaultMessage={
+                                'Web Bluetooth is temporarily disabled. Use DoGoBlock Link to send firmware ' +
+                                'and connect your micro:bit.'
+                            }
                             description="Prompt for Web Bluetooth micro:bit BLE firmware limitation"
                             id="gui.connection.scanning.microbitBleWebBluetoothInstructions"
                         />
                     ) : (
                         <FormattedMessage
-                            defaultMessage="Send the firmware by USB, then select your micro:bit."
+                            defaultMessage="Send the firmware with DoGoBlock Link, then select your micro:bit."
                             description="Prompt for connecting a micro:bit Bluetooth device"
                             id="gui.connection.scanning.microbitBleInstructions"
                         />
@@ -214,7 +253,10 @@ ScanningStep.propTypes = {
     webBluetoothConnectionSupported: PropTypes.bool,
     webBluetoothConnectionVisible: PropTypes.bool,
     webBluetoothDebugInfo: PropTypes.string,
-    webBluetoothStatus: PropTypes.string
+    webBluetoothStatus: PropTypes.string,
+    webSerialConnectionSupported: PropTypes.bool,
+    webSerialConnectionVisible: PropTypes.bool,
+    webSerialStatus: PropTypes.string
 };
 
 ScanningStep.defaultProps = {
@@ -223,7 +265,10 @@ ScanningStep.defaultProps = {
     scanning: true,
     webBluetoothConnectionSupported: false,
     webBluetoothConnectionVisible: false,
-    webBluetoothStatus: 'notMicrobitBle'
+    webBluetoothStatus: 'notMicrobitBle',
+    webSerialConnectionSupported: false,
+    webSerialConnectionVisible: false,
+    webSerialStatus: 'notArduino'
 };
 
 export default ScanningStep;

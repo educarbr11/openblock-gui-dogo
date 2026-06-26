@@ -1,5 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 const crypto = require('crypto');
+const fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 
@@ -17,8 +18,36 @@ var postcssImport = require('postcss-import');
 const createHash = crypto.createHash;
 crypto.createHash = algorithm => createHash(algorithm === 'md4' ? 'sha256' : algorithm);
 
+const loadDotEnv = () => {
+    const envPath = path.resolve(__dirname, '.env');
+    if (!fs.existsSync(envPath)) return;
+    fs.readFileSync(envPath, 'utf8')
+        .split(/\r?\n/)
+        .forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) return;
+            const separatorIndex = trimmed.indexOf('=');
+            if (separatorIndex === -1) return;
+            const key = trimmed.slice(0, separatorIndex).trim();
+            const value = trimmed.slice(separatorIndex + 1).trim().replace(/^['"]|['"]$/g, '');
+            if (key && typeof process.env[key] === 'undefined') {
+                process.env[key] = value;
+            }
+        });
+};
+
+loadDotEnv();
+
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
+const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
+const envDefinitions = {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    'process.env.DEBUG': Boolean(process.env.DEBUG),
+    'process.env.GA_ID': JSON.stringify(process.env.GA_ID || 'UA-000000-01'),
+    'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
+    'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
+};
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 const workspaceRoot = path.resolve(__dirname, '..');
 const localOpenBlockVMPath = process.env.OPENBLOCK_VM_PATH ?
@@ -175,12 +204,7 @@ module.exports = [
             }
         },
         plugins: base.plugins.concat([
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
-                'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"',
-                'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
-            }),
+            new webpack.DefinePlugin(envDefinitions),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
@@ -254,6 +278,7 @@ module.exports = [
                 ])
             },
             plugins: base.plugins.concat([
+                new webpack.DefinePlugin(envDefinitions),
                 new CopyWebpackPlugin([{
                     from: 'node_modules/openblock-blocks/media',
                     to: 'static/blocks-media'

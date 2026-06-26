@@ -27,7 +27,7 @@ const messages = defineMessages({
     }
 });
 
-const UPLOAD_TIMEOUT_TIME = 60 * 1000; // 60s
+const UPLOAD_TIMEOUT_TIME = 180 * 1000; // 180s
 const AUTO_CLOSE_TIME = 3 * 1000; // 3s
 
 class UploadProgress extends React.Component {
@@ -133,7 +133,9 @@ class UploadProgress extends React.Component {
             clearTimeout(this.uploadTimeout);
         }
     }
-    handleUploadSuccess (aborted) {
+    handleUploadSuccess (uploadResult) {
+        const aborted = uploadResult && typeof uploadResult === 'object' ?
+            uploadResult.aborted : uploadResult;
         // if be aborted, don't show success alert.
         if (aborted) {
             this.setState({

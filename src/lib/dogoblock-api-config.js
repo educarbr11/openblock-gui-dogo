@@ -1,4 +1,4 @@
-const DEFAULT_API_HOST = 'http://localhost:3000';
+const DEFAULT_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
 
 const trimSlash = value => value.replace(/\/+$/, '');
 

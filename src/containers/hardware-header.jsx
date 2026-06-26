@@ -12,6 +12,12 @@ import {setStageSize} from '../reducers/stage-size';
 import {STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
 import {openUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
+import {isScratchDesktop} from '../lib/isScratchDesktop';
+import {
+    createArduinoCompileJob,
+    getArduinoCompileJob,
+    downloadArduinoCompileArtifact
+} from '../lib/dogoblock-api';
 
 import HardwareHeaderComponent from '../components/hardware-header/hardware-header.jsx';
 
@@ -19,7 +25,56 @@ class HardwareHeader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleUpload'
+            'handleUpload',
+            'handleArduinoCompilerUpload'
+        ]);
+        this.compileLogLength = 0;
+    }
+
+    waitForUploadCompletion () {
+        let timeoutId = null;
+        let handleSuccess = null;
+        let handleError = null;
+        const cleanup = () => {
+            if (timeoutId) window.clearTimeout(timeoutId);
+            this.props.vm.removeListener('PERIPHERAL_UPLOAD_SUCCESS', handleSuccess);
+            this.props.vm.removeListener('PERIPHERAL_UPLOAD_ERROR', handleError);
+        };
+        const promise = new Promise((resolve, reject) => {
+            handleSuccess = () => {
+                cleanup();
+                resolve();
+            };
+            handleError = error => {
+                cleanup();
+                reject(new Error(error && error.message ? error.message : String(error)));
+            };
+            timeoutId = window.setTimeout(() => {
+                cleanup();
+                reject(new Error(
+                    'Tempo limite ao enviar para o Arduino. Verifique se a placa esta conectada e tente novamente.'
+                ));
+            }, 120000);
+            this.props.vm.once('PERIPHERAL_UPLOAD_SUCCESS', handleSuccess);
+            this.props.vm.once('PERIPHERAL_UPLOAD_ERROR', handleError);
+        });
+        return {promise, cancel: cleanup};
+    }
+
+    waitForUploadResult (uploadResult, uploadCompletion) {
+        if (!uploadResult || typeof uploadResult.then !== 'function') {
+            return uploadCompletion.promise;
+        }
+        const uploadResultPromise = uploadResult.then(() =>
+            new Promise((resolve, reject) => {
+                window.setTimeout(() => reject(new Error(
+                    'O envio terminou sem confirmacao do Arduino. Reconecte a placa e tente novamente.'
+                )), 0);
+            })
+        );
+        return Promise.race([
+            uploadCompletion.promise,
+            uploadResultPromise
         ]);
     }
 
@@ -29,12 +84,141 @@ class HardwareHeader extends React.Component {
             if (blocklyBlockCanvas.childNodes.length === 0) {
                 this.props.onWorkspaceIsEmpty();
             } else {
-                this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
                 this.props.onOpenUploadProgress();
+                if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
+                    window.setTimeout(this.handleArduinoCompilerUpload, 0);
+                } else {
+                    this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
+                }
             }
         } else {
             this.props.onNoPeripheralIsConnected();
         }
+    }
+
+    getEffectiveConnectionType () {
+        if (this.props.connectionType === 'webSerial') return 'webSerial';
+        if (this.props.connectionType === 'auto' &&
+            !isScratchDesktop() &&
+            this.isWebSerialArduinoDevice() &&
+            this.isWebSerialSupported()) {
+            return 'webSerial';
+        }
+        return 'link';
+    }
+
+    isWebSerialSupported () {
+        return typeof navigator !== 'undefined' &&
+            Boolean(navigator.serial) &&
+            !(typeof window !== 'undefined' && window.isSecureContext === false);
+    }
+
+    isWebSerialArduinoDevice () {
+        return ['arduinoUno', 'arduinoNano'].indexOf(this.getRealDeviceId()) !== -1;
+    }
+
+    isArduinoCompilerDevice () {
+        return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo'].indexOf(this.getRealDeviceId()) !== -1;
+    }
+
+    getRealDeviceId () {
+        const deviceId = this.props.deviceId || '';
+        return deviceId.indexOf('_') === -1 ? deviceId : deviceId.split('_')[1];
+    }
+
+    emitUploadStdout (message) {
+        this.props.vm.emit('PERIPHERAL_UPLOAD_STDOUT', {message});
+    }
+
+    emitUploadError (message) {
+        this.props.vm.emit('PERIPHERAL_UPLOAD_ERROR', {message});
+    }
+
+    getUploadCode () {
+        const code = this.props.codeEditorValue || '';
+        if (/^Cannot read properties of undefined/.test(code) ||
+                /^TypeError:/.test(code) ||
+                /^Error:/.test(code)) {
+            throw new Error(
+                'Nao foi possivel gerar o codigo Arduino. Verifique se todos os blocos usados possuem suporte no modo programacao.'
+            );
+        }
+        if (!/\bvoid\s+setup\s*\(/.test(code) && !/\bvoid\s+loop\s*\(/.test(code)) {
+            throw new Error('Codigo Arduino invalido ou vazio. Altere os blocos e tente enviar novamente.');
+        }
+        return code;
+    }
+
+    handleArduinoCompilerUpload () {
+        const board = this.getRealDeviceId();
+        const connectionType = this.getEffectiveConnectionType();
+        this.compileLogLength = 0;
+        if (connectionType === 'webSerial' && ['arduinoUno', 'arduinoNano'].indexOf(board) === -1) {
+            this.emitUploadError(
+                'Web Serial USB currently supports only Arduino Uno and Nano. Use OpenBlock Link for this board.'
+            );
+            return;
+        }
+        let code;
+        try {
+            code = this.getUploadCode();
+        } catch (error) {
+            this.emitUploadError(error.message);
+            return;
+        }
+        this.emitUploadStdout('Compilando no Dogoblock API...\n');
+        createArduinoCompileJob(board, code, [])
+            .then(job => this.pollCompileJob(job.id))
+            .then(job => {
+                if (!job.artifact) {
+                    throw new Error('Compiler did not return an artifact.');
+                }
+                this.emitUploadStdout('Baixando arquivo compilado...\n');
+                return downloadArduinoCompileArtifact(job.id);
+            })
+            .then(hex => {
+                this.emitUploadStdout(connectionType === 'webSerial' ?
+                    'Enviando para Arduino via Web Serial USB...\n' :
+                    'Enviando para Arduino via OpenBlock Link...\n');
+                const uploadCompletion = this.waitForUploadCompletion();
+                const uploadResult = this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
+                    artifactType: 'compiledArtifact',
+                    firmware: false,
+                    resumeRealtime: false
+                });
+                if (uploadResult === false) {
+                    uploadCompletion.cancel();
+                    throw new Error('Nao foi possivel iniciar o envio. Reconecte o Arduino e tente novamente.');
+                }
+                this.emitUploadStdout('Upload iniciado. Aguardando bootloader do Arduino...\n');
+                return this.waitForUploadResult(uploadResult, uploadCompletion);
+            })
+            .catch(error => {
+                this.emitUploadError(error && error.message ? error.message : String(error));
+            });
+    }
+
+    pollCompileJob (jobId) {
+        const startedAt = Date.now();
+        const poll = () => getArduinoCompileJob(jobId)
+            .then(job => {
+                if (job.logs) {
+                    const newLogs = job.logs.slice(this.compileLogLength);
+                    if (newLogs) {
+                        this.emitUploadStdout(newLogs);
+                        this.compileLogLength = job.logs.length;
+                    }
+                }
+                if (job.status === 'SUCCEEDED') return job;
+                if (job.status === 'FAILED') {
+                    throw new Error(job.errorSummary || job.logs || 'Arduino compilation failed.');
+                }
+                if (Date.now() - startedAt > 120000) {
+                    throw new Error('Arduino compilation timed out.');
+                }
+                return new Promise(resolve => window.setTimeout(resolve, 1000)).then(poll);
+            });
+        return poll();
     }
 
     render () {
@@ -52,6 +236,7 @@ class HardwareHeader extends React.Component {
 
 HardwareHeader.propTypes = {
     codeEditorValue: PropTypes.string,
+    connectionType: PropTypes.string,
     deviceId: PropTypes.string,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenUploadProgress: PropTypes.func,
@@ -63,6 +248,7 @@ HardwareHeader.propTypes = {
 
 const mapStateToProps = state => ({
     codeEditorValue: state.scratchGui.code.codeEditorValue,
+    connectionType: state.scratchGui.connectionModal.connectionType,
     deviceId: state.scratchGui.device.deviceId,
     peripheralName: state.scratchGui.connectionModal.peripheralName
 });

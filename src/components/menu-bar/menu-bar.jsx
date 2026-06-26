@@ -29,6 +29,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
+import uploadArduinoRealtimeFirmware from '../../lib/upload-arduino-realtime-firmware';
 import {UPDATE_MODAL_STATE} from '../../lib/update-state.js';
 
 import {
@@ -89,6 +90,7 @@ import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
 import saveIcon from './icon--save.svg';
+import downloadIcon from './icon--download.svg';
 // import linkSocketIcon from './icon--link-socket.svg';
 // import communityIcon from './icon--community.svg';
 import wikiIcon from './icon--wiki.svg';
@@ -298,7 +300,11 @@ class MenuBar extends React.Component {
         this.props.onRequestCloseFile();
     }
     handleClickSave () {
-        this.props.onClickSave();
+        if (this.props.canSave) {
+            this.props.onClickSave();
+        } else if (this.props.canPromptLoginToSave) {
+            this.props.onRequestLoginToSave();
+        }
         this.props.onRequestCloseFile();
     }
     handleClickSaveAsCopy () {
@@ -355,7 +361,11 @@ class MenuBar extends React.Component {
     handleKeyPress (event) {
         const modifier = bowser.mac ? event.metaKey : event.ctrlKey;
         if (modifier && event.key === 's') {
-            this.props.onClickSave();
+            if (this.props.canSave) {
+                this.props.onClickSave();
+            } else if (this.props.canPromptLoginToSave) {
+                this.props.onRequestLoginToSave();
+            }
             event.preventDefault();
         }
     }
@@ -447,6 +457,15 @@ class MenuBar extends React.Component {
     }
     handleUploadFirmware () {
         if (this.props.deviceId) {
+            if (uploadArduinoRealtimeFirmware({
+                vm: this.props.vm,
+                deviceId: this.props.deviceId,
+                connectionType: this.props.connectionType,
+                onOpenUploadProgress: this.props.onOpenUploadProgress,
+                onSetRealtimeConnection: this.props.onSetRealtimeConnection
+            })) {
+                return;
+            }
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onSetRealtimeConnection(false);
             this.props.onOpenUploadProgress();
@@ -658,9 +677,10 @@ class MenuBar extends React.Component {
                                         {newProjectMessage}
                                     </MenuItem>
                                 </MenuSection>
-                                {(this.props.canSave || this.props.canCreateCopy || this.props.canRemix) && (
+                                {(this.props.canSave || this.props.canPromptLoginToSave ||
+                                    this.props.canCreateCopy || this.props.canRemix) && (
                                     <MenuSection>
-                                        {this.props.canSave && (
+                                        {(this.props.canSave || this.props.canPromptLoginToSave) && (
                                             <MenuItem onClick={this.handleClickSave}>
                                                 {saveNowMessage}
                                             </MenuItem>
@@ -841,15 +861,37 @@ class MenuBar extends React.Component {
                             username={this.props.authorUsername}
                         />
                     ) : null)}
+                    {(this.props.canSave || this.props.canPromptLoginToSave) && (
+                        <div
+                            className={classNames(
+                                styles.menuBarItem,
+                                styles.hoverable,
+                                styles.saveProjectButton
+                            )}
+                            title={this.props.canSave ?
+                                'Salvar projeto' :
+                                'Entrar ou cadastrar para salvar o projeto'}
+                            onClick={this.handleClickSave}
+                        >
+                            <img
+                                alt=""
+                                className={styles.saveProjectButtonIcon}
+                                draggable={false}
+                                src={saveIcon}
+                            />
+                            <span>Salvar projeto</span>
+                        </div>
+                    )}
                     {(this.props.canManageFiles) && (
                         <SB3Downloader>{(className, downloadProjectCallback) => (
                             <div
                                 className={classNames(styles.menuBarItem, styles.hoverable, styles.saveMenuItem)}
                                 onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
+                                title='Baixar projeto para o computador'
                             >
                                 <img
                                     className={styles.saveIcon}
-                                    src={saveIcon}
+                                    src={downloadIcon}
                                 />
                             </div>
                         )}</SB3Downloader>
@@ -1051,6 +1093,7 @@ MenuBar.propTypes = {
     canCreateNew: PropTypes.bool,
     canEditTitle: PropTypes.bool,
     canManageFiles: PropTypes.bool,
+    canPromptLoginToSave: PropTypes.bool,
     canRemix: PropTypes.bool,
     canSave: PropTypes.bool,
     canShare: PropTypes.bool,
@@ -1112,6 +1155,7 @@ MenuBar.propTypes = {
     onRequestCloseSetting: PropTypes.func,
     onRequestCloseLanguage: PropTypes.func,
     onRequestCloseLogin: PropTypes.func,
+    onRequestLoginToSave: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
@@ -1142,6 +1186,7 @@ MenuBar.propTypes = {
     onSetStageLarge: PropTypes.func.isRequired,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,
+    connectionType: PropTypes.string,
     pendingProjectCoverPreview: PropTypes.string,
     onDeviceIsEmpty: PropTypes.func
 };
@@ -1149,6 +1194,7 @@ MenuBar.propTypes = {
 MenuBar.defaultProps = {
     logo: openblockLogo,
     logoSmall: openblockLogoSmall,
+    onRequestLoginToSave: () => {},
     onShare: () => {}
 };
 
@@ -1180,6 +1226,7 @@ const mapStateToProps = (state, ownProps) => {
         stageSizeMode: state.scratchGui.stageSize.stageSize,
         vm: state.scratchGui.vm,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
+        connectionType: state.scratchGui.connectionModal.connectionType,
         deviceId: state.scratchGui.device.deviceId,
         deviceName: state.scratchGui.device.deviceName,
         pendingProjectCoverPreview: state.scratchGui.projectCover.previewUrl

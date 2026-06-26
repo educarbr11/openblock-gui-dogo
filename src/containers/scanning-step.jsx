@@ -37,6 +37,9 @@ class ScanningStep extends React.Component {
         if (connectionType === 'webBluetooth' && !this.props.webBluetoothConnectionSupported) {
             return 'link';
         }
+        if (connectionType === 'webSerial' && !this.props.webSerialConnectionSupported) {
+            return 'link';
+        }
         return connectionType;
     }
     scanForPeripheral (listAll, connectionType = this.props.connectionType) {
@@ -92,6 +95,9 @@ class ScanningStep extends React.Component {
                 webBluetoothConnectionVisible={this.props.webBluetoothConnectionVisible}
                 webBluetoothDebugInfo={this.props.webBluetoothDebugInfo}
                 webBluetoothStatus={this.props.webBluetoothStatus}
+                webSerialConnectionSupported={this.props.webSerialConnectionSupported}
+                webSerialConnectionVisible={this.props.webSerialConnectionVisible}
+                webSerialStatus={this.props.webSerialStatus}
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
@@ -124,14 +130,20 @@ ScanningStep.propTypes = {
     webBluetoothConnectionSupported: PropTypes.bool,
     webBluetoothConnectionVisible: PropTypes.bool,
     webBluetoothDebugInfo: PropTypes.string,
-    webBluetoothStatus: PropTypes.string
+    webBluetoothStatus: PropTypes.string,
+    webSerialConnectionSupported: PropTypes.bool,
+    webSerialConnectionVisible: PropTypes.bool,
+    webSerialStatus: PropTypes.string
 };
 
 ScanningStep.defaultProps = {
     connectionType: 'link',
     webBluetoothConnectionSupported: false,
     webBluetoothConnectionVisible: false,
-    webBluetoothStatus: 'notMicrobitBle'
+    webBluetoothStatus: 'notMicrobitBle',
+    webSerialConnectionSupported: false,
+    webSerialConnectionVisible: false,
+    webSerialStatus: 'notArduino'
 };
 
 export default ScanningStep;
