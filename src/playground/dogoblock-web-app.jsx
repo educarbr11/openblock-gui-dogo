@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
     Code2,
     Compass,
@@ -21,7 +21,7 @@ import GUI from '../containers/gui.jsx';
 import NotificationsBell from '../components/notifications/notifications-bell.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
-import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
+import { getAssetHost, getProjectHost } from '../lib/dogoblock-api-config';
 import {
     createNotificationsStream,
     deleteProject,
@@ -40,28 +40,29 @@ import {
     updateMyProfile,
     updateProjectVisibility
 } from '../lib/dogoblock-api';
-import {readAuthSession, writeAuthSession} from '../lib/auth-session';
-import {defaultProjectId} from '../reducers/project-state';
-import {loginSuccess, logout as logoutAction} from '../reducers/session';
-import {setPlayer} from '../reducers/mode';
+import { readAuthSession, writeAuthSession } from '../lib/auth-session';
+import { defaultProjectId } from '../reducers/project-state';
+import { loginSuccess, logout as logoutAction } from '../reducers/session';
+import { setPlayer } from '../reducers/mode';
 
 import dogoblockLogo from '../../static/dogoblock_logo_full.svg';
+import heroIllustration from '../../static/hero-illustration.png';
 import styles from './dogoblock-web-app.css';
 
 const parseRoute = () => {
     const rawHash = window.location.hash.replace(/^#/, '');
     const legacyMatch = rawHash.match(/^(\d+)$/);
     if (legacyMatch) {
-        return {name: 'editor', projectId: legacyMatch[1]};
+        return { name: 'editor', projectId: legacyMatch[1] };
     }
     const [path, query = ''] = (rawHash || '/').split('?');
     const parts = path.split('/').filter(Boolean);
     const queryParams = new URLSearchParams(query);
-    if (!parts.length) return {name: 'home'};
-    if (parts[0] === 'login') return {name: 'login', next: queryParams.get('next')};
-    if (parts[0] === 'register') return {name: 'register', next: queryParams.get('next')};
-    if (parts[0] === 'profile') return {name: 'profile'};
-    if (parts[0] === 'explore') return {name: 'explore'};
+    if (!parts.length) return { name: 'home' };
+    if (parts[0] === 'login') return { name: 'login', next: queryParams.get('next') };
+    if (parts[0] === 'register') return { name: 'register', next: queryParams.get('next') };
+    if (parts[0] === 'profile') return { name: 'profile' };
+    if (parts[0] === 'explore') return { name: 'explore' };
     if (parts[0] === 'editor') {
         return {
             name: 'editor',
@@ -70,15 +71,15 @@ const parseRoute = () => {
             importKey: queryParams.get('import')
         };
     }
-    if (parts[0] === 'projects' && parts[1]) return {name: 'projectDetails', projectId: parts[1]};
-    return {name: 'projects'};
+    if (parts[0] === 'projects' && parts[1]) return { name: 'projectDetails', projectId: parts[1] };
+    return { name: 'projects' };
 };
 
 const navigate = hash => {
     window.location.hash = hash;
 };
 
-const noop = () => {};
+const noop = () => { };
 
 const currentRouteHash = () => window.location.hash.replace(/^#/, '') || '/';
 
@@ -165,7 +166,7 @@ const renderProjectThumbnail = project => {
     );
 };
 
-const Icon = ({children}) => (
+const Icon = ({ children }) => (
     <span
         aria-hidden="true"
         className={styles.iconWrap}
@@ -179,7 +180,7 @@ Icon.propTypes = {
 };
 
 class DogoblockWebApp extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             route: parseRoute(),
@@ -231,20 +232,20 @@ class DogoblockWebApp extends React.Component {
         this.renderEditor = this.renderEditor.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         window.addEventListener('hashchange', this.handleHashChange);
         this.loadRouteData(this.state.route);
         this.setupNotifications();
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         window.removeEventListener('hashchange', this.handleHashChange);
         if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
         this.closeNotificationsStream();
         this.props.onSetPlayerOnly(false);
     }
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
         const previousUserId = prevProps.user && prevProps.user.id;
         const currentUserId = this.props.user && this.props.user.id;
         if (previousUserId !== currentUserId) {
@@ -252,7 +253,7 @@ class DogoblockWebApp extends React.Component {
         }
     }
 
-    handleHashChange () {
+    handleHashChange() {
         const route = parseRoute();
         this.setState({
             route,
@@ -260,18 +261,24 @@ class DogoblockWebApp extends React.Component {
         }, () => this.loadRouteData(route));
     }
 
-    loadRouteData (route) {
+    loadRouteData(route) {
         this.props.onSetPlayerOnly(route.name === 'projectDetails');
         if (this.props.user && (route.name === 'login' || route.name === 'register')) {
             navigate(route.next || '/projects');
             return;
+        }
+        if (route.name === 'home') {
+            this.setState({ loading: true });
+            listPublicProjects()
+                .then(projects => this.setState({ projects, loading: false }))
+                .catch(() => this.setState({ loading: false }));
         }
         if (route.name === 'profile') {
             if (!this.props.user) {
                 navigate(loginRouteFor('/profile'));
                 return;
             }
-            this.setState({loading: true, error: null});
+            this.setState({ loading: true, error: null });
             Promise.all([
                 getMyProfile(),
                 listProjects(),
@@ -286,18 +293,18 @@ class DogoblockWebApp extends React.Component {
                         error: null
                     });
                 })
-                .catch(error => this.setState({error: error.message, loading: false}));
+                .catch(error => this.setState({ error: error.message, loading: false }));
         }
         if (route.name === 'projects' || route.name === 'explore') {
-            this.setState({loading: true});
+            this.setState({ loading: true });
             const loader = this.props.user && route.name === 'projects' ? listProjects : listPublicProjects;
             loader()
-                .then(projects => this.setState({projects, loading: false}))
-                .catch(error => this.setState({error: error.message, loading: false}));
+                .then(projects => this.setState({ projects, loading: false }))
+                .catch(error => this.setState({ error: error.message, loading: false }));
         }
         if (route.name === 'projectDetails') {
             const requestedProjectId = route.projectId;
-            this.setState({loading: true, projectDetails: null});
+            this.setState({ loading: true, projectDetails: null });
             getProjectDetails(requestedProjectId)
                 .then(projectDetails => {
                     if (
@@ -306,7 +313,7 @@ class DogoblockWebApp extends React.Component {
                     ) {
                         return;
                     }
-                    this.setState({projectDetails, loading: false});
+                    this.setState({ projectDetails, loading: false });
                 })
                 .catch(error => {
                     if (
@@ -315,15 +322,15 @@ class DogoblockWebApp extends React.Component {
                     ) {
                         return;
                     }
-                    this.setState({error: error.message, loading: false});
+                    this.setState({ error: error.message, loading: false });
                 });
         }
     }
 
-    handleLogin (event) {
+    handleLogin(event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({error: null, loading: true});
+        this.setState({ error: null, loading: true });
         login({
             email: form.get('email'),
             password: form.get('password')
@@ -332,13 +339,13 @@ class DogoblockWebApp extends React.Component {
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    handleRegister (event) {
+    handleRegister(event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({error: null, loading: true});
+        this.setState({ error: null, loading: true });
         register({
             name: form.get('name'),
             username: form.get('username'),
@@ -349,10 +356,10 @@ class DogoblockWebApp extends React.Component {
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    handleLogout () {
+    handleLogout() {
         this.closeNotificationsStream();
         apiLogout();
         this.props.onLogout();
@@ -364,7 +371,7 @@ class DogoblockWebApp extends React.Component {
         navigate('/projects');
     }
 
-    setupNotifications () {
+    setupNotifications() {
         this.closeNotificationsStream();
         if (!this.props.user) {
             this.setState({
@@ -375,8 +382,8 @@ class DogoblockWebApp extends React.Component {
             return;
         }
         getUnreadCount()
-            .then(result => this.setState({unreadCount: result.unreadCount || 0}))
-            .catch(() => {});
+            .then(result => this.setState({ unreadCount: result.unreadCount || 0 }))
+            .catch(() => { });
 
         const session = readAuthSession();
         const stream = createNotificationsStream(session && session.accessToken);
@@ -398,24 +405,24 @@ class DogoblockWebApp extends React.Component {
         stream.addEventListener('unread-count', event => {
             try {
                 const data = JSON.parse(event.data);
-                this.setState({unreadCount: data.unreadCount || 0});
+                this.setState({ unreadCount: data.unreadCount || 0 });
             } catch {
                 // Ignore malformed stream payloads.
             }
         });
-        stream.onerror = () => {};
+        stream.onerror = () => { };
         this.notificationsStream = stream;
     }
 
-    closeNotificationsStream () {
+    closeNotificationsStream() {
         if (!this.notificationsStream) return;
         this.notificationsStream.close();
         this.notificationsStream = null;
     }
 
-    handleLoadNotifications () {
+    handleLoadNotifications() {
         if (!this.props.user) return;
-        this.setState({notificationsLoading: true});
+        this.setState({ notificationsLoading: true });
         listNotifications(1, 10)
             .then(result => this.setState({
                 notifications: result.notifications || [],
@@ -428,7 +435,7 @@ class DogoblockWebApp extends React.Component {
             }));
     }
 
-    handleOpenNotification (notification) {
+    handleOpenNotification(notification) {
         const navigateToProject = () => {
             if (notification.projectId) {
                 navigate(`/projects/${notification.projectId}`);
@@ -451,7 +458,7 @@ class DogoblockWebApp extends React.Component {
         navigateToProject();
     }
 
-    handleMarkAllNotificationsRead () {
+    handleMarkAllNotificationsRead() {
         if (!this.props.user || this.state.unreadCount === 0) return;
         markAllNotificationsRead()
             .then(result => this.setState(prevState => ({
@@ -460,10 +467,10 @@ class DogoblockWebApp extends React.Component {
                     readAt: item.readAt || result.readAt || new Date().toISOString()
                 }))
             })))
-            .catch(error => this.setState({error: error.message}));
+            .catch(error => this.setState({ error: error.message }));
     }
 
-    handleImportProject () {
+    handleImportProject() {
         const importRoute = `/editor?import=${Date.now()}`;
         if (!this.props.user) {
             navigate(loginRouteFor(importRoute));
@@ -472,7 +479,7 @@ class DogoblockWebApp extends React.Component {
         navigate(importRoute);
     }
 
-    handleNewProject () {
+    handleNewProject() {
         if (!this.props.user) {
             navigate(loginRouteFor('/editor'));
             return;
@@ -480,20 +487,20 @@ class DogoblockWebApp extends React.Component {
         navigate('/editor');
     }
 
-    handleCopyProjectLink () {
+    handleCopyProjectLink() {
         const project = this.state.projectDetails;
         if (!project) return;
         const link = getProjectPublicUrl(project);
         const onCopied = () => {
             if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
-            this.setState({copyLinkFeedback: true});
-            this.copyLinkTimer = setTimeout(() => this.setState({copyLinkFeedback: false}), 2200);
+            this.setState({ copyLinkFeedback: true });
+            this.copyLinkTimer = setTimeout(() => this.setState({ copyLinkFeedback: false }), 2200);
         };
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(link)
                 .then(onCopied)
-                .catch(() => {});
+                .catch(() => { });
             return;
         }
 
@@ -509,7 +516,7 @@ class DogoblockWebApp extends React.Component {
         onCopied();
     }
 
-    handleDeleteProject () {
+    handleDeleteProject() {
         if (!this.props.user) {
             navigate(loginRouteFor());
             return;
@@ -517,13 +524,13 @@ class DogoblockWebApp extends React.Component {
         const id = this.state.route.projectId;
         if (!id) return;
         if (!window.confirm('Excluir este projeto? Esta acao nao pode ser desfeita.')) return; // eslint-disable-line no-alert
-        this.setState({loading: true, error: null});
+        this.setState({ loading: true, error: null });
         deleteProject(id)
             .then(() => navigate('/projects'))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    handleDeleteProjectFromCard (event) {
+    handleDeleteProjectFromCard(event) {
         event.preventDefault();
         event.stopPropagation();
         if (!this.props.user) {
@@ -533,7 +540,7 @@ class DogoblockWebApp extends React.Component {
         const id = event.currentTarget.dataset.projectId;
         if (!id) return;
         if (!window.confirm('Excluir este projeto? Esta ação não pode ser desfeita.')) return; // eslint-disable-line no-alert
-        this.setState({loading: true, error: null});
+        this.setState({ loading: true, error: null });
         deleteProject(id)
             .then(() => this.setState(prevState => ({
                 projects: prevState.projects.filter(project => project.id !== id),
@@ -541,85 +548,85 @@ class DogoblockWebApp extends React.Component {
                 loading: false,
                 error: null
             })))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    handleProjectCreated (projectId) {
+    handleProjectCreated(projectId) {
         if (projectId && projectId !== defaultProjectId) navigate(`/editor/${projectId}`);
     }
 
-    handleOpenCurrentProject () {
+    handleOpenCurrentProject() {
         const project = this.state.projectDetails;
         this.props.onSetPlayerOnly(false);
         if (project) navigate(`/editor/${project.id}`);
     }
 
-    handleOpenProjectDetails (event) {
+    handleOpenProjectDetails(event) {
         const projectId = event.currentTarget.dataset.projectId;
         if (projectId) navigate(`/projects/${projectId}`);
     }
 
-    handleShowMessageBox (type, message) {
+    handleShowMessageBox(type, message) {
         if (type === MessageBoxType.confirm) return confirm(message); // eslint-disable-line no-alert
         if (type === MessageBoxType.alert) return alert(message); // eslint-disable-line no-alert
     }
 
-    handleToggleVisibility () {
+    handleToggleVisibility() {
         const project = this.state.projectDetails;
         if (!project) return;
         const nextVisibility = project.visibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
         this.handleUpdateVisibility(nextVisibility);
     }
 
-    handleUpdateVisibility (visibility) {
+    handleUpdateVisibility(visibility) {
         const project = this.state.projectDetails;
         if (!this.props.user || !project) {
             navigate(loginRouteFor());
             return;
         }
-        this.setState({loading: true, error: null});
+        this.setState({ loading: true, error: null });
         updateProjectVisibility(project.id, visibility)
             .then(() => getProjectDetails(project.id))
-            .then(projectDetails => this.setState({projectDetails, loading: false, error: null}))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .then(projectDetails => this.setState({ projectDetails, loading: false, error: null }))
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    handleNavigateHome () {
+    handleNavigateHome() {
         navigate('/');
     }
 
-    handleNavigateProjects () {
+    handleNavigateProjects() {
         navigate('/projects');
     }
 
-    handleNavigateExplore () {
+    handleNavigateExplore() {
         navigate('/explore');
     }
 
-    handleNavigateEditor () {
+    handleNavigateEditor() {
         navigate('/editor');
     }
 
-    handleNavigateLogin () {
+    handleNavigateLogin() {
         navigate('/login');
     }
 
-    handleNavigateProfile () {
+    handleNavigateProfile() {
         navigate('/profile');
     }
 
-    handleNavigateRegister () {
+    handleNavigateRegister() {
         navigate('/register');
     }
 
-    handleProfileTab (event) {
-        this.setState({profileTab: event.currentTarget.dataset.tab});
+    handleProfileTab(event) {
+        this.setState({ profileTab: event.currentTarget.dataset.tab });
     }
 
-    handleProfileSubmit (event) {
+    handleProfileSubmit(event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({loading: true, error: null});
+        this.setState({ loading: true, error: null });
         updateMyProfile({
             name: form.get('name'),
             username: form.get('username'),
@@ -637,190 +644,234 @@ class DogoblockWebApp extends React.Component {
                     writeAuthSession(nextSession);
                     this.props.onLoginSuccess(nextSession);
                 }
-                this.setState({profile, loading: false, error: null});
+                this.setState({ profile, loading: false, error: null });
             })
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => this.setState({ error: error.message, loading: false }));
     }
 
-    renderHeader () {
+    renderHeader() {
+        const { user } = this.props;
         return (
-            <div className={styles.topbar}>
-                <div
-                    className={styles.brand}
-                    onClick={this.handleNavigateHome}
-                >
-                    <img
-                        alt="Dogoblock"
-                        className={styles.logo}
-                        src={dogoblockLogo}
-                    />
+            <header className={styles.topbar}>
+                <div className={styles.topbarInner}>
+                    <div
+                        className={styles.brand}
+                        onClick={this.handleNavigateHome}
+                    >
+                        <img
+                            alt="Dogoblock"
+                            className={styles.logo}
+                            src={dogoblockLogo}
+                        />
+                    </div>
+                    <nav className={styles.nav}>
+                        <button
+                            className={styles.navLink}
+                            onClick={this.handleNavigateExplore}
+                        >{'Explorar'}</button>
+                        <button
+                            className={styles.navLink}
+                            onClick={this.handleNavigateProjects}
+                        >{'Meus Projetos'}</button>
+                        {user ? (
+                            <React.Fragment>
+                                <button
+                                    className={styles.navLink}
+                                    onClick={this.handleNavigateProfile}
+                                >{'Meu Perfil'}</button>
+                                <NotificationsBell
+                                    loading={this.state.notificationsLoading}
+                                    notifications={this.state.notifications}
+                                    unreadCount={this.state.unreadCount}
+                                    onMarkAllRead={this.handleMarkAllNotificationsRead}
+                                    onOpen={this.handleLoadNotifications}
+                                    onOpenNotification={this.handleOpenNotification}
+                                />
+                                <button
+                                    className={styles.navBtnEditor}
+                                    onClick={this.handleNavigateEditor}
+                                >
+                                    {'</> Editor'}
+                                </button>
+                                <button
+                                    className={`${styles.navLink} ${styles.navBtnUser}`}
+                                    onClick={this.handleNavigateProfile}
+                                >
+                                    <UserCircle
+                                        aria-hidden="true"
+                                        className={styles.navIcon}
+                                    />
+                                    {user.username}
+                                </button>
+                                <button
+                                    className={`${styles.navLink} ${styles.navBtnSair}`}
+                                    onClick={this.handleLogout}
+                                >
+                                    {'Sair'}
+                                </button>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <button
+                                    className={styles.navBtnEditor}
+                                    onClick={this.handleNavigateEditor}
+                                >
+                                    {'</> Editor'}
+                                </button>
+                                <button
+                                    className={styles.navBtnCriarConta}
+                                    onClick={this.handleNavigateRegister}
+                                >
+                                    {'Criar Conta'}
+                                </button>
+                            </React.Fragment>
+                        )}
+                    </nav>
                 </div>
-                <div className={styles.nav}>
-                    {this.props.user ? (
-                        <React.Fragment>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateProjects}
-                            >
-                                <FolderOpen
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Meus Projetos'}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateEditor}
-                            >
-                                <Code2
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Editor'}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateExplore}
-                            >
-                                <Compass
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Explorar Projetos'}
-                            </button>
-                            <NotificationsBell
-                                loading={this.state.notificationsLoading}
-                                notifications={this.state.notifications}
-                                unreadCount={this.state.unreadCount}
-                                onMarkAllRead={this.handleMarkAllNotificationsRead}
-                                onOpen={this.handleLoadNotifications}
-                                onOpenNotification={this.handleOpenNotification}
-                            />
-                            <button
-                                className={`${styles.navButton} ${styles.userBadgeButton}`}
-                                onClick={this.handleNavigateProfile}
-                            >
-                                <UserCircle
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {this.props.user.username}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleLogout}
-                            >
-                                <LogOut
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Sair'}
-                            </button>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateProjects}
-                            >
-                                <FolderOpen
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Meus Projetos'}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateEditor}
-                            >
-                                <Code2
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Editor'}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateExplore}
-                            >
-                                <Compass
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Explorar Projetos'}
-                            </button>
-                            <button
-                                className={styles.navButton}
-                                onClick={this.handleNavigateLogin}
-                            >
-                                <LogIn
-                                    aria-hidden="true"
-                                    className={styles.navIcon}
-                                />
-                                {'Entrar/Cadastrar'}
-                            </button>
-                        </React.Fragment>
-                    )}
-                </div>
-            </div>
+            </header>
         );
     }
 
-    renderHome () {
+    renderHome() {
+        const featured = (this.state.projects || []).slice(0, 4);
         return (
-            <div className={`${styles.page} ${styles.homePage}`}>
-                <section className={styles.hero}>
-                    <div className={styles.heroCopy}>
-                        <p className={styles.kicker}>{'DOGOBLOCK'}</p>
-                        <h1>{'Crie, programe e compartilhe seus projetos'}</h1>
-                        <p className={styles.heroText}>
-                            {'Monte jogos, animações e experiências com blocos, Arduino e micro:bit em um ambiente '}
-                            {'simples para aprender fazendo.'}
-                        </p>
-                        <div className={styles.heroActions}>
-                            <button
-                                className={styles.primaryButton}
-                                onClick={this.handleNewProject}
-                            >
-                                <Icon><Plus size={16} /></Icon>
-                                {'Criar Projeto'}
-                            </button>
-                            <button
-                                className={styles.secondaryButton}
-                                onClick={this.handleNavigateExplore}
-                            >
-                                <Icon><Compass size={16} /></Icon>
-                                {'Explorar Projetos'}
-                            </button>
-                            {this.props.user ? null : (
+            <div className={styles.homePage}>
+
+                {/* ── HERO ────────────────────────────────── */}
+                <section className={styles.heroSection}>
+                    <div className={styles.heroInner}>
+                        <div className={styles.heroCopyNew}>
+                            <h1 className={styles.heroTitle}>
+                                {'CRIE HISTÓRIAS, ANIMAÇÕES'}
+                                <br />
+                                {'E JOGOS COM O '}
+                                <span className={styles.heroAccent}>{'DOGOBLOCK.'}</span>
+                            </h1>
+                            <div className={styles.heroActionsNew}>
                                 <button
-                                    className={styles.lightButton}
-                                    onClick={this.handleNavigateLogin}
+                                    className={styles.heroBtnPrimary}
+                                    onClick={this.handleNavigateExplore}
                                 >
-                                    <Icon><LogIn size={16} /></Icon>
-                                    {'Entrar/Cadastrar'}
+                                    {'EXPLORAR PROJETOS'}
                                 </button>
-                            )}
-                        </div>
-                    </div>
-                    <div
-                        aria-hidden="true"
-                        className={styles.heroPreview}
-                    >
-                        <div className={styles.previewCard}>
-                            <div className={styles.previewWindow}>
-                                <span>{'MOON'}</span>
+                                <button
+                                    className={styles.heroBtnOutline}
+                                    onClick={this.handleNewProject}
+                                >
+                                    {'COMEÇAR A CRIAR'}
+                                </button>
                             </div>
-                            <strong>{'Moon Game'}</strong>
-                            <small>{'Projeto em blocos'}</small>
+                        </div>
+                        <div
+                            aria-hidden="true"
+                            className={styles.heroIllustration}
+                        >
+                            <img
+                                alt=""
+                                src={heroIllustration}
+                            />
                         </div>
                     </div>
                 </section>
+
+                {/* ── PROJETOS EM DESTAQUE ─────────────────── */}
+                <section className={styles.featuredSection}>
+                    <h2 className={styles.featuredTitle}>{'PROJETOS EM DESTAQUE'}</h2>
+                    {featured.length === 0 ? (
+                        <p className={styles.featuredEmpty}>
+                            {this.state.loading ? 'Carregando projetos...' : 'Nenhum projeto em destaque ainda.'}
+                        </p>
+                    ) : (
+                        <div className={styles.featuredGrid}>
+                            {featured.map(project => (
+                                <button
+                                    className={styles.featuredCard}
+                                    data-project-id={project.id}
+                                    key={project.id}
+                                    onClick={this.handleOpenProjectDetails}
+                                >
+                                    <div className={styles.featuredThumbnail}>
+                                        {renderProjectThumbnail(project)}
+                                    </div>
+                                    <div className={styles.featuredCardBody}>
+                                        <strong className={styles.featuredCardTitle}>
+                                            {project.title || project.name || 'Projeto'}
+                                        </strong>
+                                        <span className={styles.featuredCardAuthor}>
+                                            {getProjectAuthor(project)}
+                                        </span>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </section>
+
             </div>
         );
     }
 
-    renderLogin () {
+    renderFooter() {
+        return (
+            <footer className={styles.siteFooter}>
+                <div className={styles.footerInner}>
+                    <div className={styles.footerBrand}>
+                        <img
+                            alt="Editora DogoMaker"
+                            className={styles.footerLogo}
+                            src={dogoblockLogo}
+                        />
+                    </div>
+                    <div className={styles.footerLinks}>
+                        <strong>{'LINKS'}</strong>
+                        <a
+                            href="https://editoradogomaker.com/"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >{'Home'}</a>
+                        <a
+                            href="https://editoradogomaker.com/portal-do-professor"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >{'Portal do Professor'}</a>
+                        <a
+                            href="https://editoradogomaker.com/"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >{'Site da Editora'}</a>
+                    </div>
+                    <div className={styles.footerLei}>
+                        <strong>{'LEI'}</strong>
+                        <a
+                            href="https://editoradogomaker.com/termos-de-uso"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >{'Termos de Uso'}</a>
+                        <a
+                            href="https://editoradogomaker.com/politica-de-privacidade"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >{'Política de Privacidade'}</a>
+                    </div>
+                    <div className={styles.footerContact}>
+                        <strong>{'CONTATO E ENDEREÇO'}</strong>
+                        <span>{'contato@editoradogomaker.com'}</span>
+                        <span>{'(31) 99259-9654'}</span>
+                        <span>
+                            {'BR-316, Km7, nº 186 – Qd. 201, Lt. 4776 (Loja)'}
+                            <br />
+                            {'Centro, Ananindeua – PA'}
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.footerBottom}>
+                    {'EDITORA DOGOMAKER - TODOS OS DIREITOS RESERVADOS'}
+                </div>
+            </footer>
+        );
+    }
+
+    renderLogin() {
         return (
             <div className={`${styles.page} ${styles.narrowPage}`}>
                 <form
@@ -869,7 +920,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderRegister () {
+    renderRegister() {
         return (
             <div className={`${styles.page} ${styles.narrowPage}`}>
                 <form
@@ -935,7 +986,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjects () {
+    renderProjects() {
         const publicList = !this.props.user || this.state.route.name === 'explore';
         return (
             <div className={styles.page}>
@@ -974,7 +1025,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjectCards (projects, canDeleteProjects) {
+    renderProjectCards(projects, canDeleteProjects) {
         return (
             <div className={styles.projectGrid}>
                 {projects.map(project => (
@@ -1014,7 +1065,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProfile () {
+    renderProfile() {
         const profile = this.state.profile || this.props.user || {};
         const tab = this.state.profileTab;
         const tabButton = (id, label, IconComponent) => (
@@ -1215,7 +1266,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjectDetails () {
+    renderProjectDetails() {
         const projectId = this.state.route.projectId;
         return (
             <div className={`${styles.page} ${styles.projectDetailsPage}`}>
@@ -1246,7 +1297,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderEditor () {
+    renderEditor() {
         const route = this.state.route;
         const canPersist = Boolean(this.props.user);
         const projectId = route.projectId || defaultProjectId;
@@ -1270,7 +1321,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    render () {
+    render() {
         const route = this.state.route;
         const editor = route.name === 'editor';
         return (
@@ -1283,6 +1334,7 @@ class DogoblockWebApp extends React.Component {
                 {route.name === 'profile' ? this.renderProfile() : null}
                 {route.name === 'projectDetails' ? this.renderProjectDetails() : null}
                 {editor ? this.renderEditor() : null}
+                {editor ? null : this.renderFooter()}
             </div>
         );
     }
