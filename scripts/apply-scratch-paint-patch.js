@@ -892,6 +892,35 @@ const patchOpenBlockVmWebSerialUpload = () => {
     ].forEach(patchOpenBlockVmWebSerialUploadPackage);
 };
 
+const patchOpenBlockVmCompiledArtifactUploadPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const peripheralFile = path.join(packageDir, 'src', 'devices', 'common', 'arduino-peripheral.js');
+    if (!fs.existsSync(peripheralFile)) return;
+    let source = fs.readFileSync(peripheralFile, 'utf8');
+    if (source.includes("Object.assign({artifactType: 'compiledArtifact'}")) {
+        console.log(`openblock-vm compiled artifact upload patch already applied: ${packageDir}`);
+        return;
+    }
+
+    const before = '        return this._serialport.upload(artifact, this.diveceOpt, encoding, options);';
+    const after = "        const uploadOptions = Object.assign({artifactType: 'compiledArtifact'}, options || {});\n" +
+        '        return this._serialport.upload(artifact, this.diveceOpt, encoding, uploadOptions);';
+    if (!source.includes(before)) {
+        throw new Error(`Could not apply openblock-vm compiled artifact upload patch: ${peripheralFile}`);
+    }
+    source = source.replace(before, after);
+    fs.writeFileSync(peripheralFile, source);
+    console.log(`Applied openblock-vm compiled artifact upload patch: ${packageDir}`);
+};
+
+const patchOpenBlockVmCompiledArtifactUpload = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmCompiledArtifactUploadPackage);
+};
+
 const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -980,4 +1009,5 @@ patchOpenBlockBlocksKeyReleased();
 patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
 patchOpenBlockVmWebSerialUpload();
+patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockL10nKeyReleased();

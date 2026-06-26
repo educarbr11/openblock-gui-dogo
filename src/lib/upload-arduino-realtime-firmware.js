@@ -20,6 +20,13 @@ const shouldUseWebSerialFirmware = (deviceId, connectionType) => {
     return connectionType === 'auto' && isWebSerialSupported();
 };
 
+const shouldUseLinkFirmwareArtifact = (deviceId, connectionType) => {
+    const board = getRealDeviceId(deviceId);
+    if (isScratchDesktop()) return false;
+    if (WEB_SERIAL_FIRMWARE_BOARDS.indexOf(board) === -1) return false;
+    return connectionType === 'link' || (connectionType === 'auto' && !isWebSerialSupported());
+};
+
 const emitUploadStdout = (vm, message) => {
     vm.emit('PERIPHERAL_UPLOAD_STDOUT', {message});
 };
@@ -56,6 +63,31 @@ const uploadArduinoRealtimeFirmware = ({
             .then(hex => {
                 emitUploadStdout(vm, 'Firmware recebido. Iniciando gravacao Web Serial USB...\n');
                 vm.uploadArtifactToPeripheral(deviceId, hex, null, {
+                    firmware: true,
+                    resumeRealtime: true
+                });
+            })
+            .catch(error => {
+                emitUploadError(vm, error && error.message ? error.message : String(error));
+            });
+        return true;
+    }
+
+    if (shouldUseLinkFirmwareArtifact(deviceId, connectionType)) {
+        if (!vm.getPeripheralIsConnected(deviceId)) {
+            if (onOpenUploadProgress) onOpenUploadProgress();
+            emitUploadError(vm, 'Conecte a placa via OpenBlock Link antes de enviar o firmware.');
+            return true;
+        }
+
+        if (onOpenUploadProgress) onOpenUploadProgress();
+        if (onSetRealtimeConnection) onSetRealtimeConnection(false);
+        emitUploadStdout(vm, 'Baixando firmware Arduino realtime do Dogoblock API...\n');
+        downloadArduinoRealtimeFirmware(board)
+            .then(hex => {
+                emitUploadStdout(vm, 'Firmware recebido. Iniciando gravacao via OpenBlock Link...\n');
+                vm.uploadArtifactToPeripheral(deviceId, hex, null, {
+                    artifactType: 'compiledArtifact',
                     firmware: true,
                     resumeRealtime: true
                 });

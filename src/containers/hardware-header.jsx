@@ -26,7 +26,7 @@ class HardwareHeader extends React.Component {
         super(props);
         bindAll(this, [
             'handleUpload',
-            'handleWebSerialUpload'
+            'handleArduinoCompilerUpload'
         ]);
         this.compileLogLength = 0;
     }
@@ -85,8 +85,8 @@ class HardwareHeader extends React.Component {
                 this.props.onWorkspaceIsEmpty();
             } else {
                 this.props.onOpenUploadProgress();
-                if (this.getEffectiveConnectionType() === 'webSerial') {
-                    window.setTimeout(this.handleWebSerialUpload, 0);
+                if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
+                    window.setTimeout(this.handleArduinoCompilerUpload, 0);
                 } else {
                     this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
                 }
@@ -117,6 +117,10 @@ class HardwareHeader extends React.Component {
         return ['arduinoUno', 'arduinoNano'].indexOf(this.getRealDeviceId()) !== -1;
     }
 
+    isArduinoCompilerDevice () {
+        return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo'].indexOf(this.getRealDeviceId()) !== -1;
+    }
+
     getRealDeviceId () {
         const deviceId = this.props.deviceId || '';
         return deviceId.indexOf('_') === -1 ? deviceId : deviceId.split('_')[1];
@@ -145,10 +149,11 @@ class HardwareHeader extends React.Component {
         return code;
     }
 
-    handleWebSerialUpload () {
+    handleArduinoCompilerUpload () {
         const board = this.getRealDeviceId();
+        const connectionType = this.getEffectiveConnectionType();
         this.compileLogLength = 0;
-        if (['arduinoUno', 'arduinoNano'].indexOf(board) === -1) {
+        if (connectionType === 'webSerial' && ['arduinoUno', 'arduinoNano'].indexOf(board) === -1) {
             this.emitUploadError(
                 'Web Serial USB currently supports only Arduino Uno and Nano. Use OpenBlock Link for this board.'
             );
@@ -172,9 +177,12 @@ class HardwareHeader extends React.Component {
                 return downloadArduinoCompileArtifact(job.id);
             })
             .then(hex => {
-                this.emitUploadStdout('Enviando para Arduino via Web Serial USB...\n');
+                this.emitUploadStdout(connectionType === 'webSerial' ?
+                    'Enviando para Arduino via Web Serial USB...\n' :
+                    'Enviando para Arduino via OpenBlock Link...\n');
                 const uploadCompletion = this.waitForUploadCompletion();
                 const uploadResult = this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
+                    artifactType: 'compiledArtifact',
                     firmware: false,
                     resumeRealtime: false
                 });
