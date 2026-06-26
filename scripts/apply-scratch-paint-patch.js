@@ -675,6 +675,180 @@ const patchOpenBlockVmArduinoNanoUpload = () => {
     ].forEach(patchOpenBlockVmArduinoNanoUploadPackage);
 };
 
+const webSerialUploadStk500Method = `    _uploadStk500v1 (params) {
+        const hex = this._decodeTextMessage(params.message, params.encoding);
+        const config = params.config || {};
+        const fqbn = config.fqbn || '';
+        if (!/arduino:avr:(uno|nano)/.test(fqbn)) {
+            throw new Error('Web Serial upload currently supports only Arduino Uno and Nano.');
+        }
+        if (!this._port) {
+            throw new Error('Serial port is not connected');
+        }
+
+        const isNano = fqbn.indexOf('nano') !== -1;
+        const isOldNanoBootloader = fqbn.indexOf('atmega328old') !== -1;
+        const uploadBaudRates = isNano && isOldNanoBootloader ? [57600, 115200] :
+            (isNano ? [115200, 57600] : [115200]);
+        const pages = this._hexToPages(hex, 128);
+        const port = this._port;
+        const portId = this._portId;
+        this._sendUploadStdout('Compilado recebido. Iniciando gravação Web Serial...\\\\n');
+
+        return this._disconnectPort()
+            .then(() => this._tryUploadBaudRates(port, portId, pages, uploadBaudRates))
+            .then(() => {
+                this._sendUploadStdout('Gravação concluída.\\\\n');
+                return this._reopenAfterUpload(port, portId);
+            });
+    }
+
+    _tryUploadBaudRates (port, portId, pages, baudRates, index = 0) {
+        const baudRate = baudRates[index];
+        this._sendUploadStdout(\`Tentando bootloader em \${baudRate} bps...\\\\n\`);
+        return this._uploadWithBaudRate(port, portId, pages, baudRate)
+            .catch(error => this._closeUploadPort(port)
+                .then(() => {
+                    if (index + 1 >= baudRates.length) {
+                        throw error;
+                    }
+                    this._sendUploadStdout(
+                        \`Bootloader nao respondeu em \${baudRate} bps. Tentando outro modo...\\\\n\`
+                    );
+                    return this._sleep(450)
+                        .then(() => this._tryUploadBaudRates(port, portId, pages, baudRates, index + 1));
+                })
+            );
+    }
+
+    _uploadWithBaudRate (port, portId, pages, baudRate) {
+        return this._sleep(250)
+            .then(() => port.open({
+                baudRate,
+                dataBits: 8,
+                stopBits: 1
+            }))
+            .then(() => {
+                this._port = port;
+                this._portId = portId || 'webserial:upload';
+                return this._resetAvrBootloader(port);
+            })
+            .then(() => this._createStk500Session(port))
+            .then(session => this._syncStk500(session)
+                .then(() => this._programPages(session, pages))
+                .then(() => this._leaveProgrammingMode(session))
+                .finally(() => session.close())
+            );
+    }
+
+    _closeUploadPort (port) {
+        this._port = null;
+        this._portId = null;
+        if (!port) return Promise.resolve(null);
+        return port.close()
+            .catch(() => null)
+            .then(() => null);
+    }
+
+`;
+
+const patchOpenBlockVmWebSerialUploadPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const webSerialFile = path.join(packageDir, 'src', 'util', 'scratch-link-web-serial.js');
+    if (!fs.existsSync(webSerialFile)) return;
+
+    const before = fs.readFileSync(webSerialFile, 'utf8');
+    let after = before;
+
+    if (!after.includes('_tryUploadBaudRates')) {
+        const start = after.indexOf('    _uploadStk500v1 (params) {');
+        const end = after.indexOf('    _reopenAfterUpload (port, portId) {');
+        if (start !== -1 && end !== -1 && end > start) {
+            after = after.slice(0, start) + webSerialUploadStk500Method + after.slice(end);
+        }
+    }
+
+    after = after.replace(
+        'const uploadBaudRates = isNano ? [57600, 115200] : [115200];',
+        "const isOldNanoBootloader = fqbn.indexOf('atmega328old') !== -1;\n" +
+        '        const uploadBaudRates = isNano && isOldNanoBootloader ? [57600, 115200] :\n' +
+        '            (isNano ? [115200, 57600] : [115200]);'
+    );
+
+    after = after.replace(
+        "return port.setSignals({dataTerminalReady: true, requestToSend: true})\n" +
+        '            .catch(() => null)\n' +
+        '            .then(() => this._sleep(60))\n' +
+        '            .then(() => port.setSignals({dataTerminalReady: false, requestToSend: false}).catch(() => null))\n' +
+        '            .then(() => this._sleep(120))\n' +
+        '            .then(() => port.setSignals({dataTerminalReady: true, requestToSend: true}).catch(() => null))\n' +
+        '            .then(() => this._sleep(650));',
+        "return port.setSignals({dataTerminalReady: true, requestToSend: true})\n" +
+        '            .catch(() => null)\n' +
+        '            .then(() => this._sleep(80))\n' +
+        '            .then(() => port.setSignals({dataTerminalReady: false, requestToSend: false}).catch(() => null))\n' +
+        '            .then(() => this._sleep(250))\n' +
+        '            .then(() => port.setSignals({dataTerminalReady: true, requestToSend: true}).catch(() => null))\n' +
+        '            .then(() => this._sleep(450));'
+    );
+
+    if (!after.includes('const readInsync = (attempts = 24) => readByte(250)')) {
+        after = after.replace(
+            '        const expectOk = () => readByte()\n' +
+            '            .then(insync => {\n' +
+            '                if (insync !== 0x14) {\n' +
+            '                    throw new Error(`Unexpected bootloader response: 0x${insync.toString(16)}`);\n' +
+            '                }\n' +
+            '                return readByte();\n' +
+            '            })\n' +
+            '            .then(ok => {\n' +
+            '                if (ok !== 0x10) {\n' +
+            '                    throw new Error(`Bootloader command failed: 0x${ok.toString(16)}`);\n' +
+            '                }\n' +
+            '                return null;\n' +
+            '            });',
+            '        const readInsync = (attempts = 24) => readByte(250)\n' +
+            '            .then(insync => {\n' +
+            '                if (insync === 0x14) {\n' +
+            '                    return insync;\n' +
+            '                }\n' +
+            '                if (attempts <= 0) {\n' +
+            '                    throw new Error(`Unexpected bootloader response: 0x${insync.toString(16)}`);\n' +
+            '                }\n' +
+            '                return readInsync(attempts - 1);\n' +
+            '            });\n' +
+            '        const expectOk = () => readInsync()\n' +
+            '            .then(ok => {\n' +
+            '                if (ok !== 0x14) {\n' +
+            '                    throw new Error(`Unexpected bootloader response: 0x${ok.toString(16)}`);\n' +
+            '                }\n' +
+            '                return readByte();\n' +
+            '            })\n' +
+            '            .then(ok => {\n' +
+            '                if (ok === 0x10) {\n' +
+            '                    return null;\n' +
+            '                }\n' +
+            '                throw new Error(`Bootloader command failed: 0x${ok.toString(16)}`);\n' +
+            '            });'
+        );
+    }
+
+    if (after !== before) {
+        fs.writeFileSync(webSerialFile, after);
+        console.log(`Applied openblock-vm Web Serial upload patch: ${packageDir}`);
+    } else if (after.includes('const readInsync = (attempts = 24) => readByte(250)')) {
+        console.log(`openblock-vm Web Serial upload patch already applied: ${packageDir}`);
+    }
+};
+
+const patchOpenBlockVmWebSerialUpload = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmWebSerialUploadPackage);
+};
+
 const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -762,4 +936,5 @@ patchOpenBlockBlocksArduinoPins();
 patchOpenBlockBlocksKeyReleased();
 patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
+patchOpenBlockVmWebSerialUpload();
 patchOpenBlockL10nKeyReleased();
