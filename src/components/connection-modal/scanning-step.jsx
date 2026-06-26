@@ -175,13 +175,16 @@ const ScanningStep = props => (
                 {props.firmwareUploadRequired ? (
                     props.connectionType === 'webBluetooth' ? (
                         <FormattedMessage
-                            defaultMessage="Web Bluetooth needs BLE firmware. Use OpenBlock Link to send firmware."
+                            defaultMessage={
+                                'Web Bluetooth is temporarily disabled. Use DoGoBlock Link to send firmware ' +
+                                'and connect your micro:bit.'
+                            }
                             description="Prompt for Web Bluetooth micro:bit BLE firmware limitation"
                             id="gui.connection.scanning.microbitBleWebBluetoothInstructions"
                         />
                     ) : (
                         <FormattedMessage
-                            defaultMessage="Send the firmware by USB, then select your micro:bit."
+                            defaultMessage="Send the firmware with DoGoBlock Link, then select your micro:bit."
                             description="Prompt for connecting a micro:bit Bluetooth device"
                             id="gui.connection.scanning.microbitBleInstructions"
                         />

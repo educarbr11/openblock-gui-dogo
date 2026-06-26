@@ -921,6 +921,134 @@ const patchOpenBlockVmCompiledArtifactUpload = () => {
     ].forEach(patchOpenBlockVmCompiledArtifactUploadPackage);
 };
 
+const microbitBleWatchdogMethod = `    _handleDataTimeout () {
+        if (!this._ble || !this._ble.isConnected()) return;
+
+        this._missedDataTimeouts++;
+        if (this._missedDataTimeouts >= BLEDataTimeoutLimit) {
+            this._ble.handleDisconnectError(BLEDataStoppedError);
+            return;
+        }
+
+        this._timeoutID = window.setTimeout(
+            this._handleDataTimeout,
+            BLETimeout
+        );
+    }
+
+`;
+
+const patchOpenBlockVmMicrobitBleWatchdogPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const microbitBleFile = path.join(packageDir, 'src', 'extensions', 'scratch3_microbit_ble', 'index.js');
+    if (!fs.existsSync(microbitBleFile)) return;
+
+    const before = fs.readFileSync(microbitBleFile, 'utf8');
+    let after = before;
+
+    after = after.replace(
+        'const BLETimeout = 8000;',
+        'const BLETimeout = 15000;\n\n' +
+        '/**\n' +
+        ' * Number of missed sensor packet windows tolerated before treating the\n' +
+        ' * connection as lost. The Link will still report real disconnects immediately.\n' +
+        ' */\n' +
+        'const BLEDataTimeoutLimit = 4;'
+    );
+
+    after = after.replace(
+        '        this._sendQueue = Promise.resolve();\n\n' +
+        '        this.reset = this.reset.bind(this);',
+        '        this._sendQueue = Promise.resolve();\n' +
+        '        this._missedDataTimeouts = 0;\n\n' +
+        '        this.reset = this.reset.bind(this);'
+    );
+
+    if (!after.includes('this._missedDataTimeouts = 0;\n\n        this.reset = this.reset.bind(this);')) {
+        after = after.replace(
+            '        this._busyTimeoutID = null;\n\n' +
+            '        this.reset = this.reset.bind(this);',
+            '        this._busyTimeoutID = null;\n' +
+            '        this._sendQueue = Promise.resolve();\n' +
+            '        this._missedDataTimeouts = 0;\n\n' +
+            '        this.reset = this.reset.bind(this);'
+        );
+    }
+
+    if (!after.includes('this._handleDataTimeout = this._handleDataTimeout.bind(this);')) {
+        after = after.replace(
+            '        this._onMessage = this._onMessage.bind(this);\n',
+            '        this._onMessage = this._onMessage.bind(this);\n' +
+            '        this._handleDataTimeout = this._handleDataTimeout.bind(this);\n'
+        );
+    }
+
+    after = after.replace(
+        '            this._timeoutID = null;\n' +
+        '        }\n' +
+        '    }\n',
+        '            this._timeoutID = null;\n' +
+        '        }\n' +
+        '        this._missedDataTimeouts = 0;\n' +
+        '        this._sendQueue = Promise.resolve();\n' +
+        '    }\n'
+    );
+
+    after = after.replace(
+        '            .then(() => {\n' +
+        '                this._timeoutID = window.setTimeout(\n' +
+        '                    () => this._ble.handleDisconnectError(BLEDataStoppedError),\n' +
+        '                    BLETimeout\n' +
+        '                );\n' +
+        '            })',
+        '            .then(() => {\n' +
+        '                this._missedDataTimeouts = 0;\n' +
+        '                this._timeoutID = window.setTimeout(\n' +
+        '                    this._handleDataTimeout,\n' +
+        '                    BLETimeout\n' +
+        '                );\n' +
+        '            })'
+    );
+
+    after = after.replace(
+        '        // cancel disconnect timeout and start a new one\n' +
+        '        window.clearTimeout(this._timeoutID);\n' +
+        '        this._timeoutID = window.setTimeout(\n' +
+        '            () => this._ble.handleDisconnectError(BLEDataStoppedError),\n' +
+        '            BLETimeout\n' +
+        '        );\n' +
+        '    }\n\n' +
+        '    /**\n' +
+        '     * @param {number} pin - the pin to check touch state.',
+        '        // cancel disconnect timeout and start a new one\n' +
+        '        this._missedDataTimeouts = 0;\n' +
+        '        window.clearTimeout(this._timeoutID);\n' +
+        '        this._timeoutID = window.setTimeout(\n' +
+        '            this._handleDataTimeout,\n' +
+        '            BLETimeout\n' +
+        '        );\n' +
+        '    }\n\n' +
+        microbitBleWatchdogMethod +
+        '    /**\n' +
+        '     * @param {number} pin - the pin to check touch state.'
+    );
+
+    if (after !== before) {
+        fs.writeFileSync(microbitBleFile, after);
+        console.log(`Applied openblock-vm micro:bit BLE watchdog patch: ${packageDir}`);
+    } else if (after.includes('const BLEDataTimeoutLimit = 4') && after.includes('_handleDataTimeout')) {
+        console.log(`openblock-vm micro:bit BLE watchdog patch already applied: ${packageDir}`);
+    }
+};
+
+const patchOpenBlockVmMicrobitBleWatchdog = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmMicrobitBleWatchdogPackage);
+};
+
 const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -1010,4 +1138,5 @@ patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
 patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
+patchOpenBlockVmMicrobitBleWatchdog();
 patchOpenBlockL10nKeyReleased();

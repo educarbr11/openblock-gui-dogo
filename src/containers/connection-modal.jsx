@@ -134,16 +134,13 @@ class ConnectionModal extends React.Component {
         return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo'].indexOf(this.props.deviceId) !== -1;
     }
     getWebBluetoothStatus () {
-        if (!this.isMicrobitBleConnection()) {
-            return 'notMicrobitBle';
+        return 'disabled';
+    }
+    getWebBluetoothDebugInfo () {
+        if (this.isMicrobitBleConnection()) {
+            return 'Web Bluetooth is temporarily disabled for micro:bit Bluetooth.';
         }
-        if (typeof window !== 'undefined' && window.isSecureContext === false) {
-            return 'notSecure';
-        }
-        if (typeof navigator !== 'undefined' && Boolean(navigator.bluetooth)) {
-            return 'supported';
-        }
-        return 'missingApi';
+        return 'Web Bluetooth is not available for this device.';
     }
     getWebSerialStatus () {
         if (!this.isArduinoWebSerialConnection()) {
@@ -157,47 +154,35 @@ class ConnectionModal extends React.Component {
         }
         return 'missingApi';
     }
-    getWebBluetoothDebugInfo () {
-        const bluetoothAvailable = typeof navigator !== 'undefined' && Boolean(navigator.bluetooth);
-        const serialAvailable = typeof navigator !== 'undefined' && Boolean(navigator.serial);
-        const secureContext = typeof window === 'undefined' ? 'unknown' : String(window.isSecureContext);
-        const origin = typeof window === 'undefined' || !window.location ? 'unknown' : window.location.origin;
-        return [
-            `navigator.bluetooth=${bluetoothAvailable}`,
-            `navigator.serial=${serialAvailable}`,
-            `isSecureContext=${secureContext}`,
-            `origin=${origin}`
-        ].join('; ');
-    }
     getEffectiveConnectionType (connectionType = this.props.connectionType) {
-        const webBluetoothStatus = this.getWebBluetoothStatus();
         const webSerialStatus = this.getWebSerialStatus();
+        if (this.isMicrobitBleConnection()) {
+            return 'link';
+        }
         if (connectionType === 'auto') {
             if (!isScratchDesktop() && webSerialStatus === 'supported') {
                 return 'webSerial';
             }
-            if (!isScratchDesktop() && webBluetoothStatus === 'supported') {
-                return 'webBluetooth';
-            }
             return 'link';
         }
-        if (connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
+        if (connectionType === 'webBluetooth') {
             return 'link';
         }
         if (connectionType === 'webSerial' && webSerialStatus !== 'supported') {
             return 'link';
         }
-        if (connectionType === 'webBluetooth' && webBluetoothStatus === 'notMicrobitBle') return 'link';
         if (connectionType === 'webSerial' && webSerialStatus === 'notArduino') return 'link';
         return connectionType;
     }
     getDisplayConnectionType () {
-        const webBluetoothStatus = this.getWebBluetoothStatus();
         const webSerialStatus = this.getWebSerialStatus();
+        if (this.isMicrobitBleConnection()) {
+            return 'link';
+        }
         if (this.props.connectionType === 'auto') {
             return this.getEffectiveConnectionType('auto');
         }
-        if (this.props.connectionType === 'webBluetooth' && webBluetoothStatus !== 'supported') {
+        if (this.props.connectionType === 'webBluetooth') {
             return 'link';
         }
         if (this.props.connectionType === 'webSerial' && webSerialStatus !== 'supported') {
@@ -226,7 +211,7 @@ class ConnectionModal extends React.Component {
             navigator.userAgent.indexOf('CrOS') !== -1;
         const webBluetoothStatus = this.getWebBluetoothStatus();
         const webSerialStatus = this.getWebSerialStatus();
-        const webBluetoothConnectionVisible = this.isMicrobitBleConnection();
+        const webBluetoothConnectionVisible = false;
         const webBluetoothConnectionSupported = webBluetoothStatus === 'supported';
         const webSerialConnectionVisible = this.isArduinoWebSerialConnection();
         const webSerialConnectionSupported = webSerialStatus === 'supported';
