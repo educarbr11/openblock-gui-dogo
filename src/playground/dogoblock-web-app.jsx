@@ -4,15 +4,20 @@ import { connect } from 'react-redux';
 import {
     Code2,
     Compass,
+    Copy,
     FolderOpen,
+    Heart,
     LogIn,
     LogOut,
+    MessageCircle,
     Plus,
     Save,
+    Search,
     Settings,
     Star,
     Trash2,
     Upload,
+    User,
     UserCircle,
     UserPlus
 } from 'lucide-react';
@@ -38,7 +43,16 @@ import {
     markNotificationRead,
     register,
     updateMyProfile,
-    updateProjectVisibility
+    updateProjectVisibility,
+    updateProjectDetails,
+    uploadProjectCover,
+    likeProject,
+    unlikeProject,
+    favoriteProject,
+    unfavoriteProject,
+    postComment,
+    getComments,
+    deleteComment
 } from '../lib/dogoblock-api';
 import { readAuthSession, writeAuthSession } from '../lib/auth-session';
 import { defaultProjectId } from '../reducers/project-state';
@@ -192,9 +206,23 @@ class DogoblockWebApp extends React.Component {
             profile: null,
             favoriteProjects: [],
             profileTab: 'overview',
+            searchQuery: '',
             notifications: [],
             notificationsLoading: false,
-            unreadCount: 0
+            unreadCount: 0,
+            // project details page state
+            pdComments: [],
+            pdCommentsLoading: false,
+            pdCommentText: '',
+            pdInstructions: '',
+            pdCredits: '',
+            pdSavingDetails: false,
+            pdSaveDetailsFeedback: false,
+            pdUploadingCover: false,
+            pdLiked: false,
+            pdFavorited: false,
+            pdLikeCount: 0,
+            pdStarCount: 0
         };
         this.handleHashChange = this.handleHashChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -224,6 +252,17 @@ class DogoblockWebApp extends React.Component {
         this.handleOpenNotification = this.handleOpenNotification.bind(this);
         this.handleProfileSubmit = this.handleProfileSubmit.bind(this);
         this.handleProfileTab = this.handleProfileTab.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.handlePdLike = this.handlePdLike.bind(this);
+        this.handlePdFavorite = this.handlePdFavorite.bind(this);
+        this.handlePdSaveDetails = this.handlePdSaveDetails.bind(this);
+        this.handlePdInstructionsChange = this.handlePdInstructionsChange.bind(this);
+        this.handlePdCreditsChange = this.handlePdCreditsChange.bind(this);
+        this.handlePdCommentChange = this.handlePdCommentChange.bind(this);
+        this.handlePdCommentSubmit = this.handlePdCommentSubmit.bind(this);
+        this.handlePdCommentCancel = this.handlePdCommentCancel.bind(this);
+        this.handlePdDeleteComment = this.handlePdDeleteComment.bind(this);
+        this.handlePdCoverChange = this.handlePdCoverChange.bind(this);
         this.renderHome = this.renderHome.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
         this.renderRegister = this.renderRegister.bind(this);
@@ -305,16 +344,38 @@ class DogoblockWebApp extends React.Component {
         }
         if (route.name === 'projectDetails') {
             const requestedProjectId = route.projectId;
-            this.setState({ loading: true, projectDetails: null });
-            getProjectDetails(requestedProjectId)
-                .then(projectDetails => {
+            this.setState({
+                loading: true,
+                projectDetails: null,
+                pdComments: [],
+                pdCommentText: '',
+                pdLiked: false,
+                pdFavorited: false,
+                pdLikeCount: 0,
+                pdStarCount: 0
+            });
+            Promise.all([
+                getProjectDetails(requestedProjectId),
+                getComments(requestedProjectId).catch(() => ({ comments: [] }))
+            ])
+                .then(([projectDetails, commentsResult]) => {
                     if (
                         this.state.route.name !== 'projectDetails' ||
                         this.state.route.projectId !== requestedProjectId
                     ) {
                         return;
                     }
-                    this.setState({ projectDetails, loading: false });
+                    this.setState({
+                        projectDetails,
+                        loading: false,
+                        pdComments: commentsResult.comments || commentsResult || [],
+                        pdInstructions: projectDetails.instructions || '',
+                        pdCredits: projectDetails.notesAndCredits || projectDetails.credits || projectDetails.notes || '',
+                        pdLiked: Boolean(projectDetails.liked || projectDetails.isLiked),
+                        pdFavorited: Boolean(projectDetails.favorited || projectDetails.isFavorited),
+                        pdLikeCount: getProjectMetric(projectDetails, ['likeCount', 'likes', 'totalLikes']),
+                        pdStarCount: getProjectMetric(projectDetails, ['favoriteCount', 'favorites', 'starCount'])
+                    });
                 })
                 .catch(error => {
                     if (
@@ -624,8 +685,137 @@ class DogoblockWebApp extends React.Component {
         navigate(loginRouteFor(currentRouteHash()));
     }
 
+    handleSearchChange(event) {
+        this.setState({ searchQuery: event.target.value });
+    }
+
     handleProfileTab (event) {
         this.setState({profileTab: event.currentTarget.dataset.tab});
+    }
+
+    // ── Project Details handlers ─────────────────────────────────────────────
+
+    handlePdLike() {
+        const project = this.state.projectDetails;
+        if (!project) return;
+        if (!this.props.user) { navigate(loginRouteFor()); return; }
+        const wasLiked = this.state.pdLiked;
+        this.setState(prevState => ({
+            pdLiked: !wasLiked,
+            pdLikeCount: prevState.pdLikeCount + (wasLiked ? -1 : 1)
+        }));
+        const action = wasLiked ? unlikeProject : likeProject;
+        action(project.id).catch(() => {
+            // rollback on error
+            this.setState(prevState => ({
+                pdLiked: wasLiked,
+                pdLikeCount: prevState.pdLikeCount + (wasLiked ? 1 : -1)
+            }));
+        });
+    }
+
+    handlePdFavorite() {
+        const project = this.state.projectDetails;
+        if (!project) return;
+        if (!this.props.user) { navigate(loginRouteFor()); return; }
+        const wasFavorited = this.state.pdFavorited;
+        this.setState(prevState => ({
+            pdFavorited: !wasFavorited,
+            pdStarCount: prevState.pdStarCount + (wasFavorited ? -1 : 1)
+        }));
+        const action = wasFavorited ? unfavoriteProject : favoriteProject;
+        action(project.id).catch(() => {
+            this.setState(prevState => ({
+                pdFavorited: wasFavorited,
+                pdStarCount: prevState.pdStarCount + (wasFavorited ? 1 : -1)
+            }));
+        });
+    }
+
+    handlePdSaveDetails() {
+        const project = this.state.projectDetails;
+        if (!project || !this.props.user) return;
+        const { pdInstructions, pdCredits } = this.state;
+        this.setState({ pdSavingDetails: true, error: null });
+        updateProjectDetails(project.id, {
+            instructions: pdInstructions,
+            notesAndCredits: pdCredits
+        })
+            .then(updated => {
+                this.setState(prevState => ({
+                    pdSavingDetails: false,
+                    pdSaveDetailsFeedback: true,
+                    projectDetails: Object.assign({}, prevState.projectDetails, updated)
+                }));
+                if (this.pdSaveFeedbackTimer) clearTimeout(this.pdSaveFeedbackTimer);
+                this.pdSaveFeedbackTimer = setTimeout(
+                    () => this.setState({ pdSaveDetailsFeedback: false }), 2500
+                );
+            })
+            .catch(err => this.setState({ pdSavingDetails: false, error: err.message }));
+    }
+
+    handlePdInstructionsChange(event) {
+        this.setState({ pdInstructions: event.target.value });
+    }
+
+    handlePdCreditsChange(event) {
+        this.setState({ pdCredits: event.target.value });
+    }
+
+    handlePdCommentChange(event) {
+        this.setState({ pdCommentText: event.target.value });
+    }
+
+    handlePdCommentSubmit() {
+        const project = this.state.projectDetails;
+        if (!project || !this.props.user) { navigate(loginRouteFor()); return; }
+        const content = this.state.pdCommentText.trim();
+        if (!content) return;
+        this.setState({ pdCommentsLoading: true });
+        postComment(project.id, content)
+            .then(comment => {
+                this.setState(prevState => ({
+                    pdComments: [comment, ...prevState.pdComments],
+                    pdCommentText: '',
+                    pdCommentsLoading: false
+                }));
+            })
+            .catch(err => this.setState({ pdCommentsLoading: false, error: err.message }));
+    }
+
+    handlePdCommentCancel() {
+        this.setState({ pdCommentText: '' });
+    }
+
+    handlePdDeleteComment(event) {
+        const commentId = event.currentTarget.dataset.commentId;
+        const project = this.state.projectDetails;
+        if (!project || !commentId) return;
+        deleteComment(project.id, commentId)
+            .then(() => {
+                this.setState(prevState => ({
+                    pdComments: prevState.pdComments.filter(c => String(c.id) !== String(commentId))
+                }));
+            })
+            .catch(err => this.setState({ error: err.message }));
+    }
+
+    handlePdCoverChange(event) {
+        const file = event.target.files && event.target.files[0];
+        const project = this.state.projectDetails;
+        if (!file || !project) return;
+        this.setState({ pdUploadingCover: true });
+        uploadProjectCover(project.id, file)
+            .then(updated => {
+                this.setState(prevState => ({
+                    pdUploadingCover: false,
+                    projectDetails: Object.assign({}, prevState.projectDetails, updated)
+                }));
+            })
+            .catch(err => this.setState({ pdUploadingCover: false, error: err.message }));
+        // reset input so same file can be selected again
+        event.target.value = '';
     }
 
     handleProfileSubmit(event) {
@@ -669,7 +859,7 @@ class DogoblockWebApp extends React.Component {
                             src={dogoblockLogo}
                         />
                     </div>
-                    <nav className={styles.nav}>
+                    <nav className={styles.navCenter}>
                         <button
                             className={styles.navLink}
                             onClick={this.handleNavigateExplore}
@@ -679,11 +869,22 @@ class DogoblockWebApp extends React.Component {
                             onClick={this.handleNavigateProjects}
                         >{'Meus Projetos'}</button>
                         {user ? (
+                            <button
+                                className={styles.navLink}
+                                onClick={this.handleNavigateProfile}
+                            >{'Meu Perfil'}</button>
+                        ) : null}
+                        <button
+                            className={styles.navBtnEditor}
+                            onClick={this.handleNavigateEditor}
+                        >
+                            {'</> Editor'}
+                        </button>
+                    </nav>
+
+                    <div className={styles.navRight}>
+                        {user ? (
                             <React.Fragment>
-                                <button
-                                    className={styles.navLink}
-                                    onClick={this.handleNavigateProfile}
-                                >{'Meu Perfil'}</button>
                                 <NotificationsBell
                                     loading={this.state.notificationsLoading}
                                     notifications={this.state.notifications}
@@ -693,45 +894,22 @@ class DogoblockWebApp extends React.Component {
                                     onOpenNotification={this.handleOpenNotification}
                                 />
                                 <button
-                                    className={styles.navBtnEditor}
-                                    onClick={this.handleNavigateEditor}
-                                >
-                                    {'</> Editor'}
-                                </button>
-                                <button
-                                    className={`${styles.navLink} ${styles.navBtnUser}`}
-                                    onClick={this.handleNavigateProfile}
-                                >
-                                    <UserCircle
-                                        aria-hidden="true"
-                                        className={styles.navIcon}
-                                    />
-                                    {user.username}
-                                </button>
-                                <button
                                     className={`${styles.navLink} ${styles.navBtnSair}`}
                                     onClick={this.handleLogout}
                                 >
-                                    {'Sair'}
+                                    <LogOut aria-hidden="true" size={13} />
+                                    {'Sair da Conta'}
                                 </button>
                             </React.Fragment>
                         ) : (
-                            <React.Fragment>
-                                <button
-                                    className={styles.navBtnEditor}
-                                    onClick={this.handleNavigateEditor}
-                                >
-                                    {'</> Editor'}
-                                </button>
-                                <button
-                                    className={styles.navBtnCriarConta}
-                                    onClick={this.handleNavigateRegister}
-                                >
-                                    {'Criar Conta'}
-                                </button>
-                            </React.Fragment>
+                            <button
+                                className={styles.navBtnCriarConta}
+                                onClick={this.handleNavigateRegister}
+                            >
+                                {'Criar Conta'}
+                            </button>
                         )}
-                    </nav>
+                    </div>
                 </div>
             </header>
         );
@@ -798,13 +976,18 @@ class DogoblockWebApp extends React.Component {
                                     <div className={styles.featuredThumbnail}>
                                         {renderProjectThumbnail(project)}
                                     </div>
-                                    <div className={styles.featuredCardBody}>
-                                        <strong className={styles.featuredCardTitle}>
-                                            {project.title || project.name || 'Projeto'}
-                                        </strong>
-                                        <span className={styles.featuredCardAuthor}>
-                                            {getProjectAuthor(project)}
-                                        </span>
+                                    <div className={styles.cardBody}>
+                                        <div className={styles.cardAvatarCol}>
+                                            <User fill="currentColor" className={styles.cardAvatarIcon} />
+                                        </div>
+                                        <div className={styles.cardInfoCol}>
+                                            <span className={styles.cardTitle}>
+                                                {project.title || project.name || 'Projeto'}
+                                            </span>
+                                            <span className={styles.cardAuthor}>
+                                                {getProjectAuthor(project)}
+                                            </span>
+                                        </div>
                                     </div>
                                 </button>
                             ))}
@@ -878,125 +1061,149 @@ class DogoblockWebApp extends React.Component {
 
     renderLogin() {
         return (
-            <div className={`${styles.page} ${styles.narrowPage}`}>
-                <form
-                    className={styles.panel}
-                    onSubmit={this.handleLogin}
-                >
-                    <h1>{'Entrar'}</h1>
-                    {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
-                    <label className={styles.field}>
-                        {'Email'}
-                        <input
-                            required
-                            name="email"
-                            type="email"
-                        />
-                    </label>
-                    <label className={styles.field}>
-                        {'Senha'}
-                        <input
-                            required
-                            minLength="8"
-                            name="password"
-                            type="password"
-                        />
-                    </label>
-                    <button className={styles.primaryButton}>
-                        <Icon><LogIn size={16} /></Icon>
-                        {this.state.loading ? 'Entrando...' : 'Entrar'}
-                    </button>
-                    <p className={styles.formHint}>
-                        {'Ainda nao tem conta? '}
-                        <button
-                            className={styles.inlineButton}
-                            type="button"
-                            onClick={this.handleNavigateRegister}
-                        >
-                            <UserPlus
-                                aria-hidden="true"
-                                className={styles.inlineIcon}
+            <div className={styles.authSection}>
+                <div className={styles.authCardWrap}>
+                    <form
+                        className={styles.panel}
+                        onSubmit={this.handleLogin}
+                    >
+                        <h1>{'Entrar'}</h1>
+                        {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
+                        <label className={styles.field}>
+                            {'Email'}
+                            <input
+                                required
+                                name="email"
+                                type="email"
                             />
-                            {'Cadastrar'}
+                        </label>
+                        <label className={styles.field}>
+                            {'Senha'}
+                            <input
+                                required
+                                minLength="8"
+                                name="password"
+                                type="password"
+                            />
+                        </label>
+                        <button className={styles.primaryButton}>
+                            <Icon><LogIn size={16} /></Icon>
+                            {this.state.loading ? 'Entrando...' : 'Entrar'}
                         </button>
-                    </p>
-                </form>
+                        <p className={styles.formHint}>
+                            {'Ainda nao tem conta? '}
+                            <button
+                                className={styles.inlineButton}
+                                type="button"
+                                onClick={this.handleNavigateRegister}
+                            >
+                                <UserPlus
+                                    aria-hidden="true"
+                                    className={styles.inlineIcon}
+                                />
+                                {'Cadastrar'}
+                            </button>
+                        </p>
+                    </form>
+                </div>
             </div>
         );
     }
 
     renderRegister() {
         return (
-            <div className={`${styles.page} ${styles.narrowPage}`}>
-                <form
-                    className={styles.panel}
-                    onSubmit={this.handleRegister}
-                >
-                    <h1>{'Cadastrar'}</h1>
-                    {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
-                    <label className={styles.field}>
-                        {'Nome'}
-                        <input
-                            required
-                            name="name"
-                            type="text"
-                        />
-                    </label>
-                    <label className={styles.field}>
-                        {'Usuario'}
-                        <input
-                            required
-                            minLength="3"
-                            name="username"
-                            type="text"
-                        />
-                    </label>
-                    <label className={styles.field}>
-                        {'Email'}
-                        <input
-                            required
-                            name="email"
-                            type="email"
-                        />
-                    </label>
-                    <label className={styles.field}>
-                        {'Senha'}
-                        <input
-                            required
-                            minLength="8"
-                            name="password"
-                            type="password"
-                        />
-                    </label>
-                    <button className={styles.primaryButton}>
-                        <Icon><UserPlus size={16} /></Icon>
-                        {this.state.loading ? 'Cadastrando...' : 'Cadastrar'}
-                    </button>
-                    <p className={styles.formHint}>
-                        {'Ja tem conta? '}
-                        <button
-                            className={styles.inlineButton}
-                            type="button"
-                            onClick={this.handleNavigateLogin}
-                        >
-                            <LogIn
-                                aria-hidden="true"
-                                className={styles.inlineIcon}
+            <div className={styles.authSection}>
+                <div className={styles.authCardWrap}>
+                    <form
+                        className={styles.panel}
+                        onSubmit={this.handleRegister}
+                    >
+                        <h1>{'Cadastrar'}</h1>
+                        {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
+                        <label className={styles.field}>
+                            {'Nome'}
+                            <input
+                                required
+                                name="name"
+                                type="text"
                             />
-                            {'Entrar'}
+                        </label>
+                        <label className={styles.field}>
+                            {'Usuario'}
+                            <input
+                                required
+                                minLength="3"
+                                name="username"
+                                type="text"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Email'}
+                            <input
+                                required
+                                name="email"
+                                type="email"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            {'Senha'}
+                            <input
+                                required
+                                minLength="8"
+                                name="password"
+                                type="password"
+                            />
+                        </label>
+                        <button className={styles.primaryButton}>
+                            <Icon><UserPlus size={16} /></Icon>
+                            {this.state.loading ? 'Cadastrando...' : 'Cadastrar'}
                         </button>
-                    </p>
-                </form>
+                        <p className={styles.formHint}>
+                            {'Ja tem conta? '}
+                            <button
+                                className={styles.inlineButton}
+                                type="button"
+                                onClick={this.handleNavigateLogin}
+                            >
+                                <LogIn
+                                    aria-hidden="true"
+                                    className={styles.inlineIcon}
+                                />
+                                {'Entrar'}
+                            </button>
+                        </p>
+                    </form>
+                </div>
             </div>
         );
     }
 
     renderProjects() {
         const publicList = !this.props.user || this.state.route.name === 'explore';
+        const { searchQuery, projects } = this.state;
+        
+        const filteredProjects = projects.filter(project => {
+            if (!searchQuery.trim()) return true;
+            const query = searchQuery.toLowerCase();
+            const title = (project.title || project.name || '').toLowerCase();
+            const author = getProjectAuthor(project).toLowerCase();
+            return title.includes(query) || author.includes(query);
+        });
+
         return (
             <div className={styles.page}>
                 <div className={styles.pageHeader}>
                     <h1>{publicList ? 'Projetos Públicos' : 'Meus Projetos'}</h1>
+                    <div className={styles.searchBar}>
+                        <Search className={styles.searchIcon} size={18} />
+                        <input
+                            type="text"
+                            placeholder="Buscar projetos..."
+                            value={searchQuery}
+                            onChange={this.handleSearchChange}
+                            className={styles.searchInput}
+                        />
+                    </div>
                     {publicList ? null : (
                         <div className={styles.actions}>
                             <button
@@ -1018,8 +1225,8 @@ class DogoblockWebApp extends React.Component {
                 </div>
                 {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
                 {this.state.loading ? <p>{'Carregando...'}</p> : null}
-                {this.renderProjectCards(this.state.projects, !publicList)}
-                {!this.state.loading && !this.state.projects.length ? (
+                {this.renderProjectCards(filteredProjects, !publicList)}
+                {!this.state.loading && !filteredProjects.length ? (
                     <div className={styles.emptyState}>
                         {publicList ?
                             'Nenhum projeto publico encontrado.' :
@@ -1043,12 +1250,22 @@ class DogoblockWebApp extends React.Component {
                             data-project-id={project.id}
                             onClick={this.handleOpenProjectDetails}
                         >
-                            <span className={styles.projectThumbnail}>
+                            <div className={styles.projectThumbnail}>
                                 {renderProjectThumbnail(project)}
-                            </span>
-                            <span className={styles.projectTitle}>{project.title}</span>
-                            <span className={styles.projectMeta}>{getVisibilityLabel(project.visibility)}</span>
-                            <span className={styles.projectMeta}>{formatDate(project.updatedAt)}</span>
+                            </div>
+                            <div className={styles.cardBody}>
+                                <div className={styles.cardAvatarCol}>
+                                    <User fill="currentColor" className={styles.cardAvatarIcon} />
+                                </div>
+                                <div className={styles.cardInfoCol}>
+                                    <span className={styles.cardTitle}>
+                                        {project.title || project.name || 'Projeto'}
+                                    </span>
+                                    <span className={styles.cardAuthor}>
+                                        {getProjectAuthor(project)}
+                                    </span>
+                                </div>
+                            </div>
                         </button>
                         {canDeleteProjects ? (
                             <button
@@ -1072,97 +1289,115 @@ class DogoblockWebApp extends React.Component {
 
     renderProfile() {
         const profile = this.state.profile || this.props.user || {};
-        const tab = this.state.profileTab;
-        const tabButton = (id, label, IconComponent) => (
-            <button
-                className={`${styles.profileTab} ${tab === id ? styles.profileTabActive : ''}`}
-                data-tab={id}
-                onClick={this.handleProfileTab}
-            >
-                <IconComponent
-                    aria-hidden="true"
-                    className={styles.navIcon}
-                />
-                {label}
-            </button>
-        );
+        const projects = this.state.projects;
+        const favorites = this.state.favoriteProjects;
+        // Use the first project as the "featured" one
+        const featuredProject = projects[0] || null;
 
         return (
             <div className={`${styles.page} ${styles.profilePage}`}>
                 {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
-                <section className={styles.profileHero}>
-                    <div className={styles.profileAvatar}>
-                        {profile.avatarUrl ? (
-                            <img
-                                alt={profile.username}
-                                src={profile.avatarUrl}
-                            />
-                        ) : getInitials(profile)}
-                    </div>
-                    <div className={styles.profileSummary}>
-                        <p className={styles.kicker}>{'PERFIL'}</p>
-                        <h1>{profile.name || profile.username || 'Meu perfil'}</h1>
-                        <p>{`@${profile.username || 'usuario'}`}</p>
-                        <p className={styles.profileBio}>
-                            {profile.bio || 'Adicione uma descrição para contar um pouco sobre você.'}
-                        </p>
-                    </div>
-                    <div className={styles.profileStats}>
-                        <strong>{profile.projectCount || this.state.projects.length || 0}</strong>
-                        <span>{'Projetos'}</span>
-                        <strong>{profile.favoriteCount || this.state.favoriteProjects.length || 0}</strong>
-                        <span>{'Favoritos'}</span>
-                    </div>
-                </section>
 
-                <div className={styles.profileTabs}>
-                    {tabButton('overview', 'Visão Geral', UserCircle)}
-                    {tabButton('edit', 'Dados', Save)}
-                    {tabButton('projects', 'Projetos', FolderOpen)}
-                    {tabButton('favorites', 'Favoritos', Star)}
-                    {tabButton('settings', 'Configurações', Settings)}
+                {/* ── TOP ROW: info card + featured project ─── */}
+                <div className={styles.profileTopRow}>
+
+                    {/* LEFT — user info card */}
+                    <div className={`${styles.profileInfoCard} ${styles.panel}`}>
+                        <div className={styles.profileInfoHeader}>
+                            <div className={styles.profileAvatar}>
+                                {profile.avatarUrl ? (
+                                    <img
+                                        alt={profile.username}
+                                        src={profile.avatarUrl}
+                                    />
+                                ) : getInitials(profile)}
+                            </div>
+                            <div className={styles.profileNameStack}>
+                                <h1 className={styles.profileName}>
+                                    {profile.name || profile.username || 'Meu Perfil'}
+                                </h1>
+                                <span className={styles.profileUsername}>
+                                    {`@${profile.username || 'usuario'}`}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className={styles.profileInfoBody}>
+                            <div className={styles.profileSection}>
+                                <h2 className={styles.profileSectionTitle}>{'Sobre mim'}</h2>
+                                <p className={styles.profileSectionText}>
+                                    {profile.bio || 'Adicione uma descrição para contar um pouco sobre você.'}
+                                </p>
+                            </div>
+
+                            <div className={styles.profileSection}>
+                                <h2 className={styles.profileSectionTitle}>{'No que estou trabalhando'}</h2>
+                                <p className={styles.profileSectionText}>
+                                    {profile.workingOn || 'Nenhum foco atual informado.'}
+                                </p>
+                            </div>
+
+                            <button
+                                className={styles.profileEditButton}
+                                onClick={this.handleProfileTab}
+                                data-tab="edit"
+                            >
+                                <Icon><Save size={15} /></Icon>
+                                {'Editar perfil'}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* RIGHT — projeto de destaque */}
+                    <div className={`${styles.profileFeaturedCard} ${styles.panel}`}>
+                        <div className={styles.profileFeaturedHeader}>
+                            <h2 className={styles.profileFeaturedTitle}>{'PROJETO\nDE DESTAQUE'}</h2>
+                        </div>
+                        <div className={styles.profileFeaturedBody}>
+                            {featuredProject ? (
+                                <button
+                                    className={styles.profileFeaturedThumb}
+                                    data-project-id={featuredProject.id}
+                                    onClick={this.handleOpenProjectDetails}
+                                >
+                                    {renderProjectThumbnail(featuredProject)}
+                                </button>
+                            ) : (
+                                <div className={styles.profileFeaturedEmpty}>
+                                    {'Nenhum projeto ainda.'}
+                                </div>
+                            )}
+                            {featuredProject ? (
+                                <div className={styles.profileFeaturedStats}>
+                                    <span className={styles.profileFeaturedStat}>
+                                        <Heart aria-hidden="true" size={16} />
+                                        {getProjectMetric(featuredProject, ['likeCount', 'likes', 'totalLikes']) || 0}
+                                    </span>
+                                    <span className={styles.profileFeaturedStat}>
+                                        <Star aria-hidden="true" size={16} />
+                                        {getProjectMetric(featuredProject, ['favoriteCount', 'favorites', 'starCount']) || 0}
+                                    </span>
+                                    <span className={styles.profileFeaturedStat}>
+                                        <FolderOpen aria-hidden="true" size={16} />
+                                        {getProjectMetric(featuredProject, ['remixCount', 'remixes', 'forkCount']) || 0}
+                                    </span>
+                                    <span className={styles.profileFeaturedStat}>
+                                        <MessageCircle aria-hidden="true" size={16} />
+                                        {getProjectMetric(featuredProject, ['commentCount', 'comments']) || 0}
+                                    </span>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
                 </div>
 
-                {this.state.loading ? <p>{'Carregando...'}</p> : null}
-
-                {tab === 'overview' ? (
-                    <div className={styles.profileGrid}>
-                        <section className={styles.profilePanel}>
-                            <h2>{'Descrição'}</h2>
-                            <p>{profile.bio || 'Nenhuma descrição adicionada.'}</p>
-                        </section>
-                        <section className={styles.profilePanel}>
-                            <h2>{'Em que estou trabalhando'}</h2>
-                            <p>{profile.workingOn || 'Nenhum foco atual informado.'}</p>
-                        </section>
-                        <section className={styles.profilePanel}>
-                            <h2>{'Atalhos'}</h2>
-                            <div className={styles.profileActions}>
-                                <button
-                                    className={styles.primaryButton}
-                                    onClick={this.handleNewProject}
-                                >
-                                    <Icon><Plus size={16} /></Icon>
-                                    {'Criar Projeto'}
-                                </button>
-                                <button
-                                    className={styles.secondaryButton}
-                                    onClick={this.handleNavigateExplore}
-                                >
-                                    <Icon><Compass size={16} /></Icon>
-                                    {'Explorar'}
-                                </button>
-                            </div>
-                        </section>
-                    </div>
-                ) : null}
-
-                {tab === 'edit' ? (
+                {/* edit form (shown inline when tab = edit) */}
+                {this.state.profileTab === 'edit' ? (
                     <form
                         className={`${styles.panel} ${styles.profileForm}`}
                         onSubmit={this.handleProfileSubmit}
                     >
-                        <h1>{'Editar Perfil'}</h1>
+                        <h2 className={styles.profileSectionTitle}>{'Editar Perfil'}</h2>
                         <label className={styles.field}>
                             {'Nome'}
                             <input
@@ -1192,7 +1427,7 @@ class DogoblockWebApp extends React.Component {
                             />
                         </label>
                         <label className={styles.field}>
-                            {'Descrição'}
+                            {'Sobre mim'}
                             <textarea
                                 defaultValue={profile.bio || ''}
                                 maxLength="500"
@@ -1201,7 +1436,7 @@ class DogoblockWebApp extends React.Component {
                             />
                         </label>
                         <label className={styles.field}>
-                            {'Em que está trabalhando'}
+                            {'No que estou trabalhando'}
                             <textarea
                                 defaultValue={profile.workingOn || ''}
                                 maxLength="280"
@@ -1209,98 +1444,348 @@ class DogoblockWebApp extends React.Component {
                                 rows="3"
                             />
                         </label>
-                        <button className={styles.primaryButton}>
-                            <Icon><Save size={16} /></Icon>
-                            {this.state.loading ? 'Salvando...' : 'Salvar Perfil'}
-                        </button>
+                        <div className={styles.profileFormActions}>
+                            <button className={styles.primaryButton}>
+                                <Icon><Save size={16} /></Icon>
+                                {this.state.loading ? 'Salvando...' : 'Salvar Perfil'}
+                            </button>
+                            <button
+                                className={styles.secondaryButton}
+                                type="button"
+                                onClick={this.handleProfileTab}
+                                data-tab="overview"
+                            >
+                                {'Cancelar'}
+                            </button>
+                        </div>
                     </form>
                 ) : null}
 
-                {tab === 'projects' ? (
-                    <React.Fragment>
-                        <div className={styles.pageHeader}>
-                            <h1>{'Meus Projetos'}</h1>
-                            <div className={styles.actions}>
-                                <button
-                                    className={styles.dangerButton}
-                                    onClick={this.handleNewProject}
-                                >
-                                    <Icon><Plus size={16} /></Icon>
-                                    {'Criar Projeto'}
-                                </button>
-                            </div>
-                        </div>
-                        {this.renderProjectCards(this.state.projects, true)}
-                        {!this.state.projects.length ? (
-                            <div className={styles.emptyState}>{'Você ainda não criou projetos.'}</div>
-                        ) : null}
-                    </React.Fragment>
-                ) : null}
-
-                {tab === 'favorites' ? (
-                    <React.Fragment>
-                        <div className={styles.pageHeader}>
-                            <h1>{'Favoritos'}</h1>
-                        </div>
-                        {this.renderProjectCards(this.state.favoriteProjects, false)}
-                        {!this.state.favoriteProjects.length ? (
-                            <div className={styles.emptyState}>{'Nenhum projeto favorito ainda.'}</div>
-                        ) : null}
-                    </React.Fragment>
-                ) : null}
-
-                {tab === 'settings' ? (
-                    <div className={styles.profileGrid}>
-                        <section className={styles.profilePanel}>
-                            <h2>{'Configurações da conta'}</h2>
-                            <p>{'Mais opções de segurança, senha e notificações serão adicionadas aqui.'}</p>
-                        </section>
-                        <section className={styles.profilePanel}>
-                            <h2>{'Sessão'}</h2>
-                            <button
-                                className={styles.dangerButton}
-                                onClick={this.handleLogout}
-                            >
-                                <Icon><LogOut size={16} /></Icon>
-                                {'Sair da conta'}
-                            </button>
-                        </section>
+                {/* ── PROJETOS ─────────────────────────────── */}
+                <div className={styles.profileSection2}>
+                    <div className={styles.profileSectionHeader}>
+                        <h2 className={styles.profileSectionHeading}>
+                            {`PROJETOS (${projects.length})`}
+                        </h2>
                     </div>
-                ) : null}
+                    <div className={styles.profileSectionBody}>
+                        {projects.length ? (
+                            this.renderProjectCards(projects, true)
+                        ) : (
+                            <div className={styles.emptyState}>{'Você ainda não criou projetos.'}</div>
+                        )}
+                    </div>
+                </div>
+
+                {/* ── FAVORITOS ────────────────────────────── */}
+                <div className={styles.profileSection2}>
+                    <div className={styles.profileSectionHeader}>
+                        <h2 className={styles.profileSectionHeading}>
+                            {`FAVORITOS (${favorites.length})`}
+                        </h2>
+                    </div>
+                    <div className={styles.profileSectionBody}>
+                        {favorites.length ? (
+                            this.renderProjectCards(favorites, false)
+                        ) : (
+                            <div className={styles.emptyState}>{'Nenhum projeto favorito ainda.'}</div>
+                        )}
+                    </div>
+                </div>
             </div>
         );
     }
 
     renderProjectDetails() {
-        const projectId = this.state.route.projectId;
+        const {
+            projectDetails, loading, error, route,
+            pdComments, pdCommentsLoading, pdCommentText,
+            pdInstructions, pdCredits,
+            pdSavingDetails, pdSaveDetailsFeedback, pdUploadingCover,
+            pdLiked, pdFavorited, pdLikeCount, pdStarCount
+        } = this.state;
+        const projectId = route.projectId;
+        const project = projectDetails || {};
+        const { user } = this.props;
+
+        const isOwner = user && project.ownerId && String(user.id) === String(project.ownerId);
+        const remixCount = getProjectMetric(project, ['remixCount', 'remixes', 'forkCount']);
+
+        const thumbnail = getProjectThumbnail(project);
+        const author    = getProjectAuthor(project);
+        const title     = project.title || project.name || 'Projeto';
+        const createdAt = formatDate(project.createdAt || project.created_at);
+        const isPublic  = project.visibility === 'PUBLIC';
+
         return (
-            <div className={`${styles.page} ${styles.projectDetailsPage}`}>
-                {this.state.error ? <div className={styles.error}>{this.state.error}</div> : null}
-                {this.state.loading ? <p>{'Carregando...'}</p> : null}
-                {projectId ? (
-                    <ProjectPageContainer
-                        projectId={projectId}
-                        onDeleteProject={this.handleDeleteProject}
-                        onClose={this.handleNavigateProjects}
-                        renderPlayer={() => (
-                            <GUI
-                                key={`project-page-player-${projectId}`}
-                                canCreateNew={false}
-                                canEditTitle={false}
-                                canSave={false}
-                                assetHost={getAssetHost()}
-                                projectHost={getProjectHost()}
-                                projectId={projectId}
-                                routeProjectId={projectId}
-                                onProjectLoaded={noop}
-                                onShowMessageBox={this.handleShowMessageBox}
-                            />
+            <div className={styles.pdPage}>
+                {error ? <div className={styles.error}>{error}</div> : null}
+                {loading ? <p className={styles.pdLoading}>{'Carregando...'}</p> : null}
+
+                {/* ── HEADER ───────────────────────────────────── */}
+                <div className={styles.pdHeader}>
+                    {/* Left: thumb (clicável para trocar capa) + title info */}
+                    <div className={styles.pdHeaderLeft}>
+                        <div className={styles.pdThumbBox}>
+                            {thumbnail
+                                ? <img alt="" className={styles.pdThumbImg} src={thumbnail} />
+                                : <div className={styles.pdThumbFallback}><span>{'DB'}</span></div>
+                            }
+                            {isOwner ? (
+                                <label
+                                    className={styles.pdThumbOverlay}
+                                    htmlFor="pd-cover-input"
+                                    title="Alterar capa"
+                                >
+                                    {pdUploadingCover ? '...' : (
+                                        <Upload aria-hidden="true" size={18} />
+                                    )}
+                                    <input
+                                        accept="image/*"
+                                        className={styles.hiddenInput}
+                                        id="pd-cover-input"
+                                        type="file"
+                                        onChange={this.handlePdCoverChange}
+                                    />
+                                </label>
+                            ) : null}
+                        </div>
+                        <div className={styles.pdTitleGroup}>
+                            <h1 className={styles.pdTitle}>{title.toUpperCase()}</h1>
+                            <p className={styles.pdAuthor}>{`Por @${author}`}</p>
+                            {createdAt ? <p className={styles.pdDate}>{`Criado em ${createdAt}`}</p> : null}
+                        </div>
+                    </div>
+
+                    {/* Right: action buttons */}
+                    <div className={styles.pdHeaderActions}>
+                        {isOwner ? (
+                            <button
+                                className={isPublic ? styles.pdBtnVisibilityPublic : styles.pdBtnVisibilityPrivate}
+                                onClick={this.handleToggleVisibility}
+                            >
+                                {isPublic ? 'Público' : 'Privado'}
+                            </button>
+                        ) : (
+                            <span className={isPublic ? styles.pdBtnVisibilityPublic : styles.pdBtnVisibilityPrivate}>
+                                {isPublic ? 'Público' : 'Privado'}
+                            </span>
                         )}
-                    />
-                ) : null}
+                        {isOwner ? (
+                            <button
+                                className={styles.pdBtnDelete}
+                                onClick={this.handleDeleteProject}
+                            >
+                                {'Excluir Projeto'}
+                            </button>
+                        ) : null}
+                    </div>
+                </div>
+
+                {/* ── MAIN GRID ────────────────────────────────── */}
+                <div className={styles.pdMainGrid}>
+
+                    {/* LEFT: player only (no wrapper chrome) + stats + "Ver por dentro" */}
+                    <div className={styles.pdPlayerCol}>
+                        {/* Stage / player */}
+                        <div className={styles.pdStage}>
+                            {projectId ? (
+                                <GUI
+                                    key={`project-page-player-${projectId}`}
+                                    canCreateNew={false}
+                                    canEditTitle={false}
+                                    canSave={false}
+                                    assetHost={getAssetHost()}
+                                    projectHost={getProjectHost()}
+                                    projectId={projectId}
+                                    routeProjectId={projectId}
+                                    onProjectLoaded={noop}
+                                    onShowMessageBox={this.handleShowMessageBox}
+                                />
+                            ) : null}
+                        </div>
+
+                        {/* Stats row (like/fav buttons) + "Ver por dentro" */}
+                        <div className={styles.pdStatsRow}>
+                            <div className={styles.pdStats}>
+                                <button
+                                    className={pdLiked ? styles.pdStatBtnActiveLike : styles.pdStatBtn}
+                                    title={pdLiked ? 'Descurtir' : 'Curtir'}
+                                    onClick={this.handlePdLike}
+                                >
+                                    <Heart
+                                        aria-hidden="true"
+                                        fill={pdLiked ? 'currentColor' : 'none'}
+                                        size={16}
+                                    />
+                                    {pdLikeCount}
+                                </button>
+                                <button
+                                    className={pdFavorited ? styles.pdStatBtnActiveFav : styles.pdStatBtn}
+                                    title={pdFavorited ? 'Remover dos favoritos' : 'Favoritar'}
+                                    onClick={this.handlePdFavorite}
+                                >
+                                    <Star
+                                        aria-hidden="true"
+                                        fill={pdFavorited ? 'currentColor' : 'none'}
+                                        size={16}
+                                    />
+                                    {pdStarCount}
+                                </button>
+                                {/* TODO: Implementar lógica de replicar projeto no backend */}
+                                <button
+                                    className={styles.pdStatBtn}
+                                    title="Replicar"
+                                    onClick={() => alert('Em breve: Replicar projeto!')}
+                                >
+                                    <Copy aria-hidden="true" size={16} />
+                                    {remixCount}
+                                </button>
+                            </div>
+                            <button
+                                className={styles.pdBtnSeeInside}
+                                onClick={() => navigate(`/editor/${projectId}`)}
+                            >
+                                <Code2 aria-hidden="true" size={15} />
+                                {'Ver por dentro'}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* RIGHT: Instructions + Notes + Save button */}
+                    <div className={styles.pdInfoCol}>
+                        <div className={styles.pdInfoSection}>
+                            <label
+                                className={styles.pdInfoLabel}
+                                htmlFor="pd-instructions"
+                            >
+                                {'Instruções'}
+                            </label>
+                            <textarea
+                                className={styles.pdInfoTextarea}
+                                id="pd-instructions"
+                                readOnly={!isOwner}
+                                rows={6}
+                                value={isOwner ? pdInstructions : (project.instructions || '')}
+                                onChange={isOwner ? this.handlePdInstructionsChange : undefined}
+                            />
+                        </div>
+
+                        <div className={styles.pdInfoSection}>
+                            <label
+                                className={styles.pdInfoLabel}
+                                htmlFor="pd-credits"
+                            >
+                                {'Notas e créditos'}
+                            </label>
+                            <textarea
+                                className={styles.pdInfoTextarea}
+                                id="pd-credits"
+                                readOnly={!isOwner}
+                                rows={6}
+                                value={isOwner ? pdCredits : (project.notesAndCredits || project.credits || project.notes || '')}
+                                onChange={isOwner ? this.handlePdCreditsChange : undefined}
+                            />
+                        </div>
+
+                        {isOwner ? (
+                            <button
+                                className={pdSaveDetailsFeedback
+                                    ? styles.pdBtnSaveDetailsDone
+                                    : styles.pdBtnSaveDetails}
+                                disabled={pdSavingDetails}
+                                onClick={this.handlePdSaveDetails}
+                            >
+                                <Save aria-hidden="true" size={14} />
+                                {pdSavingDetails
+                                    ? 'Salvando...'
+                                    : pdSaveDetailsFeedback
+                                        ? 'Salvo! ✓'
+                                        : 'Salvar alterações'}
+                            </button>
+                        ) : null}
+                    </div>
+                </div>
+
+                {/* ── COMENTÁRIOS ──────────────────────────────── */}
+                <div className={styles.pdComments}>
+                    <h2 className={styles.pdCommentsTitle}>{'Comentários'}</h2>
+
+                    {/* Composer */}
+                    <div className={styles.pdCommentComposer}>
+                        <div className={styles.pdCommentAvatar}>
+                            {user
+                                ? <span className={styles.pdCommentAvatarInitials}>{getInitials(user)}</span>
+                                : <UserCircle aria-hidden="true" size={28} />
+                            }
+                        </div>
+                        <div className={styles.pdCommentInputWrap}>
+                            <textarea
+                                className={styles.pdCommentInput}
+                                id="pd-comment-input"
+                                placeholder={user ? 'Escreva um comentário...' : 'Faça login para comentar'}
+                                rows={3}
+                                value={pdCommentText}
+                                onChange={this.handlePdCommentChange}
+                            />
+                            <div className={styles.pdCommentActions}>
+                                <button
+                                    className={styles.pdBtnPublish}
+                                    disabled={pdCommentsLoading || !pdCommentText.trim()}
+                                    onClick={this.handlePdCommentSubmit}
+                                >
+                                    {pdCommentsLoading ? 'Publicando...' : 'Publicar'}
+                                </button>
+                                <button
+                                    className={styles.pdBtnCancel}
+                                    onClick={this.handlePdCommentCancel}
+                                >
+                                    {'Cancelar'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Comment list */}
+                    {pdComments.length > 0 ? (
+                        <ul className={styles.pdCommentList}>
+                            {pdComments.map(comment => {
+                                const commentAuthor = comment.username || comment.author || (comment.user && (comment.user.username || comment.user.name)) || 'Usuário';
+                                const canDelete = user && (String(user.id) === String(comment.userId || (comment.user && comment.user.id)) || isOwner);
+                                return (
+                                    <li
+                                        className={styles.pdCommentItem}
+                                        key={comment.id}
+                                    >
+                                        <div className={styles.pdCommentItemAvatar}>
+                                            <UserCircle aria-hidden="true" size={32} />
+                                        </div>
+                                        <div className={styles.pdCommentItemBody}>
+                                            <span className={styles.pdCommentItemAuthor}>{`@${commentAuthor}`}</span>
+                                            <p className={styles.pdCommentItemText}>{comment.content}</p>
+                                        </div>
+                                        {canDelete ? (
+                                            <button
+                                                aria-label="Excluir comentário"
+                                                className={styles.pdCommentItemDelete}
+                                                data-comment-id={comment.id}
+                                                onClick={this.handlePdDeleteComment}
+                                            >
+                                                <Trash2 aria-hidden="true" size={32} />
+                                            </button>
+                                        ) : null}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    ) : (
+                        <p className={styles.pdCommentEmpty}>{'Nenhum comentário ainda. Seja o primeiro!'}</p>
+                    )}
+                </div>
             </div>
         );
     }
+
 
     renderEditor() {
         const route = this.state.route;
