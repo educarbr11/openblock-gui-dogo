@@ -1,7 +1,7 @@
 var GUI =
 (window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([[9],{
 
-/***/ 2064:
+/***/ 2067:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(119);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(19);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(82);
 /* harmony import */ var _components_box_box_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(18);
 /* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(212);
@@ -95,10 +95,10 @@ react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
-/***/ 2065:
+/***/ 2068:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(22)(false);
 // imports
 
 
@@ -118,7 +118,7 @@ exports.locals = {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2065);
+var content = __webpack_require__(2068);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -132,7 +132,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(22)(content, options);
+var update = __webpack_require__(23)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -140,5 +140,5 @@ if(false) {}
 
 /***/ })
 
-},[[2064,0]]]);
+},[[2067,0]]]);
 //# sourceMappingURL=player.js.map

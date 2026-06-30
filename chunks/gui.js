@@ -5,7 +5,7 @@ var GUI =
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2058);
+var content = __webpack_require__(2059);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -19,7 +19,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(22)(content, options);
+var update = __webpack_require__(23)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -27,18 +27,25 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1227:
+/***/ 1222:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/assets/25d528f3c84248144b39be3c1700c3e1.png";
+
+/***/ }),
+
+/***/ 1228:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1228);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1229);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1230);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1231);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1242);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1243);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1259);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1260);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
@@ -76,7 +83,7 @@ document.body.appendChild(appTarget);
 if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(2074).default(appTarget);
+  __webpack_require__(2077).default(appTarget);
 } else {
   _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
   var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
@@ -93,17 +100,17 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 
 /***/ }),
 
-/***/ 1261:
+/***/ 1262:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1669:
+/***/ 1670:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(22)(false);
 // imports
 
 
@@ -117,10 +124,36 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2058:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+
+var content = __webpack_require__(2061);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(23)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ 2059:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(22)(false);
 // imports
 
 
@@ -166,10 +199,10 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2059:
+/***/ 2060:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(22)(false);
 // imports
 
 
@@ -268,24 +301,30 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2060:
+/***/ 2061:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+var escape = __webpack_require__(460);
+exports = module.exports = __webpack_require__(22)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800&display=swap);", ""]);
 
 // module
-exports.push([module.i, ".dogoblock-web-app_app-shell_2PA39 {\n    min-height: 100vh;\n    background: #ffffff;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_topbar_3aLHW {\n    min-height: 4.25rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    padding: 0.35rem 5.8rem;\n    background: #243f8f;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.25);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.25);\n}\n\n.dogoblock-web-app_brand_25VAQ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 8.5rem;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_logo_2DRMj {\n    display: block;\n    width: 7.75rem;\n    height: auto;\n}\n\n.dogoblock-web-app_nav_5Hvdh {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1.35rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_nav-button_1dItK,\n.dogoblock-web-app_inline-button_wEmD4 {\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: inherit;\n    font: inherit;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_nav-button_1dItK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    color: #ffffff;\n    line-height: 1.2;\n}\n\n.dogoblock-web-app_nav-icon_27ZE8 {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.4;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL {\n    width: 1rem;\n    height: 1rem;\n    margin-right: 0.35rem;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL svg,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    width: 1rem;\n    height: 1rem;\n    stroke-width: 2.6;\n}\n\n.dogoblock-web-app_inline-icon_3pGo_ {\n    margin-right: 0.32rem;\n    vertical-align: -0.18rem;\n}\n\n.dogoblock-web-app_nav-button_1dItK:hover,\n.dogoblock-web-app_inline-button_wEmD4:hover {\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_user-badge_38q0T {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #ffffff;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_user-badge_38q0T::before {\n    content: \"\";\n    width: 0.75rem;\n    height: 0.75rem;\n    border-radius: 999px;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n            box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_page_z_onn {\n    width: min(100% - 2rem, 74rem);\n    margin: 0 auto;\n    padding: 2.3rem 0 3rem;\n}\n\n.dogoblock-web-app_home-page_4fkF1 {\n    padding-top: 3.25rem;\n}\n\n.dogoblock-web-app_hero_1xxqp {\n    min-height: 29rem;\n    display: grid;\n    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 2.5rem;\n}\n\n.dogoblock-web-app_hero-copy_156mN {\n    max-width: 44rem;\n}\n\n.dogoblock-web-app_kicker_1y7vH {\n    margin: 0 0 0.65rem;\n    color: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_hero_1xxqp h1,\n.dogoblock-web-app_page-header_2q-ME h1,\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_hero_1xxqp h1 {\n    max-width: 40rem;\n    font-size: clamp(2.2rem, 5vw, 4.8rem);\n}\n\n.dogoblock-web-app_hero-text_2OLVS {\n    max-width: 35rem;\n    margin: 1.2rem 0 0;\n    color: #344473;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.55;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc,\n.dogoblock-web-app_actions_XinWC {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc {\n    margin-top: 1.5rem;\n}\n\n.dogoblock-web-app_hero-preview_SVneW {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.dogoblock-web-app_preview-card_vDMIu {\n    width: min(100%, 23rem);\n    padding: 0.75rem;\n    border: 0.42rem solid #182b63;\n    border-radius: 1.25rem;\n    background: #0739a5;\n    color: #ffffff;\n    -webkit-box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n            box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 {\n    height: 14rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-bottom: 0.75rem;\n    border-radius: 0.65rem;\n    background:\n        -o-radial-gradient(76% 18%, circle, #ff8a1d 0 10%, transparent 11%),\n        -o-linear-gradient(315deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    background:\n        radial-gradient(circle at 76% 18%, #ff8a1d 0 10%, transparent 11%),\n        linear-gradient(135deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    overflow: hidden;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.1rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong,\n.dogoblock-web-app_preview-card_vDMIu small {\n    display: block;\n    padding: 0 0.2rem;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong {\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_preview-card_vDMIu small {\n    margin-top: 0.15rem;\n    font-size: 0.72rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_narrow-page_186pT {\n    width: min(100% - 2rem, 28rem);\n    padding-top: 3.5rem;\n}\n\n.dogoblock-web-app_panel_Q0s02 {\n    background: #ffffff;\n    border: 0.18rem solid #243f8f;\n    border-radius: 0.85rem;\n    padding: 1.4rem;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin-bottom: 1rem;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    margin-bottom: 1.25rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME h1 {\n    font-size: 1.9rem;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_primary-button_J8O77,\n.dogoblock-web-app_secondary-button_1TFxG,\n.dogoblock-web-app_danger-button_1pdOP,\n.dogoblock-web-app_light-button_KaXx_ {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_primary-button_J8O77 {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.dogoblock-web-app_secondary-button_1TFxG {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_danger-button_1pdOP {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.dogoblock-web-app_light-button_KaXx_ {\n    color: #243f8f;\n    background: #e7efff;\n    -webkit-box-shadow: 0 0.2rem 0 #c6d6ff;\n            box-shadow: 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_primary-button_J8O77:hover,\n.dogoblock-web-app_secondary-button_1TFxG:hover,\n.dogoblock-web-app_danger-button_1pdOP:hover,\n.dogoblock-web-app_light-button_KaXx_:hover,\n.dogoblock-web-app_project-card_2NByI:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.dogoblock-web-app_primary-button_J8O77:active,\n.dogoblock-web-app_secondary-button_1TFxG:active,\n.dogoblock-web-app_danger-button_1pdOP:active,\n.dogoblock-web-app_light-button_KaXx_:active,\n.dogoblock-web-app_project-card_2NByI:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.dogoblock-web-app_field_VXAJd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    margin-bottom: 0.85rem;\n    color: #243f8f;\n    font-size: 0.78rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_field_VXAJd input,\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 2.65rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    padding: 0 0.75rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.95rem;\n    font-weight: 700;\n    outline: none;\n}\n\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 5.5rem;\n    padding-top: 0.7rem;\n    padding-bottom: 0.7rem;\n    line-height: 1.4;\n    resize: vertical;\n}\n\n.dogoblock-web-app_field_VXAJd input:focus,\n.dogoblock-web-app_field_VXAJd textarea:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.dogoblock-web-app_form-hint_1ve3y {\n    margin: 1rem 0 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_inline-button_wEmD4 {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_error_3uIrk {\n    margin-bottom: 0.9rem;\n    border-radius: 0.45rem;\n    padding: 0.7rem 0.8rem;\n    color: #8d1111;\n    background: #ffe7e7;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_project-grid_W2vKL {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(13.9rem, 13.9rem));\n    gap: 1rem;\n}\n\n.dogoblock-web-app_project-card-wrap_3i3y1 {\n    position: relative;\n    width: 13.9rem;\n}\n\n.dogoblock-web-app_project-card_2NByI {\n    width: 13.9rem;\n    min-height: 11rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0.35rem;\n    border: 0.35rem solid #182b63;\n    border-radius: 0.85rem;\n    padding: 0.45rem 0.45rem 0.55rem;\n    background: #0739a5;\n    color: #ffffff;\n    text-align: left;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    cursor: pointer;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz {\n    position: absolute;\n    top: 0.62rem;\n    right: 0.62rem;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #ffffff;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.15rem 0 #b51616;\n            box-shadow: 0 0.15rem 0 #b51616;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz:hover {\n    -webkit-transform: translateY(-0.06rem);\n        -ms-transform: translateY(-0.06rem);\n            transform: translateY(-0.06rem);\n}\n\n.dogoblock-web-app_project-thumbnail_26w0a {\n    height: 6.45rem;\n    display: block;\n    overflow: hidden;\n    border-radius: 0.48rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_project-thumbnail-image_2HJxW {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background:\n        -o-radial-gradient(82% 12%, circle, #ff8a1d 0 12%, transparent 13%),\n        -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.05rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.dogoblock-web-app_project-title_1UyeV {\n    display: block;\n    min-height: 1rem;\n    margin-top: 0.15rem;\n    overflow: hidden;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.74rem;\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_project-meta_p_s94 {\n    display: block;\n    position: relative;\n    padding-left: 0.55rem;\n    color: #ffffff;\n    font-size: 0.58rem;\n    font-weight: 800;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_project-meta_p_s94::before {\n    content: \"\";\n    position: absolute;\n    left: 0.05rem;\n    top: 0.22rem;\n    width: 0.24rem;\n    height: 0.24rem;\n    border-radius: 999px;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_empty-state_oJImC {\n    width: min(100%, 28rem);\n    margin-top: 1rem;\n    border: 0.18rem dashed #c6d6ff;\n    border-radius: 0.75rem;\n    padding: 1.4rem;\n    color: #344473;\n    font-weight: 800;\n    text-align: center;\n}\n\n.dogoblock-web-app_project-details-page_HYCVs {\n    width: min(100% - 2rem, 79rem);\n}\n\n.dogoblock-web-app_details-header_3-XXe {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.45rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 0;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl h1 {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl p {\n    margin: 0.2rem 0 0;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl strong {\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_details-avatar_eht0D {\n    width: 4.6rem;\n    height: 4.6rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.7rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_details-main-grid_3v5Ue {\n    display: grid;\n    grid-template-columns: minmax(22rem, 38rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.dogoblock-web-app_details-player-column_boimX {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 {\n    width: 100%;\n    max-width: 100%;\n    min-height: 30.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: auto;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.8rem;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_detail-stats_favx8 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 1.4rem;\n    margin-top: 1rem;\n    color: #56648e;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_details-info-column_JMmlU {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb {\n    margin-bottom: 1rem;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb h2,\n.dogoblock-web-app_comments-section_3ZgUT h2,\n.dogoblock-web-app_remix-section_1yYhw h2 {\n    margin: 0 0 0.6rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_detail-text-box_2PJp4 {\n    min-height: 9.8rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    padding: 1rem;\n    color: #344473;\n    background: #eaf2ff;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n}\n\n.dogoblock-web-app_detail-meta-bar_Wnt9Z {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1rem;\n    margin-top: 0.55rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-lower-band_1Y7DY {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_comment-avatar_AxAjx {\n    width: 2.5rem;\n    height: 2.5rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 input {\n    width: min(100%, 28rem);\n    min-height: 2.55rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0 0.85rem;\n    color: #56648e;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_empty-comment_1h0gb {\n    margin-top: 1rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI span {\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv {\n    height: 9.4rem;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-image_2HJxW,\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_muted_1seQ1 {\n    color: #56648e;\n    font-size: 0.85rem;\n}\n\n.dogoblock-web-app_editor-shell_3Zz5e {\n    height: 100vh;\n}\n\n.dogoblock-web-app_hidden-input_2pI22 {\n    display: none;\n}\n\n.dogoblock-web-app_user-badge-button_2xFBg {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-page_2dR7P {\n    width: min(100% - 2rem, 78rem);\n}\n\n.dogoblock-web-app_profile-hero_3T3MG {\n    display: grid;\n    grid-template-columns: auto minmax(0, 1fr) auto;\n    gap: 1.25rem;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 1.2rem;\n    border: 0.18rem solid #243f8f;\n    border-radius: 0.95rem;\n    padding: 1.2rem;\n    background: #ffffff;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L {\n    width: 6.4rem;\n    height: 6.4rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.22rem solid #182b63;\n    border-radius: 1rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_profile-summary_16WTy {\n    min-width: 0;\n}\n\n.dogoblock-web-app_profile-summary_16WTy h1 {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 4vw, 3.2rem);\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_profile-summary_16WTy p {\n    margin: 0.25rem 0 0;\n    color: #56648e;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-bio_1wlvt {\n    max-width: 42rem;\n    line-height: 1.45;\n}\n\n.dogoblock-web-app_profile-stats_2Y3vS {\n    min-width: 8rem;\n    display: grid;\n    grid-template-columns: auto 1fr;\n    gap: 0.25rem 0.55rem;\n    -webkit-box-align: baseline;\n    -webkit-align-items: baseline;\n        -ms-flex-align: baseline;\n            align-items: baseline;\n    color: #56648e;\n    font-size: 0.8rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-stats_2Y3vS strong {\n    color: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.25rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_profile-tabs_2hl_k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.55rem;\n    margin: 1rem 0 1.35rem;\n}\n\n.dogoblock-web-app_profile-tab_G5MbT {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.35rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.8rem;\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.58rem;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_profile-tab-active_fjXNE {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.dogoblock-web-app_profile-grid_3XVac {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));\n    gap: 1rem;\n}\n\n.dogoblock-web-app_profile-panel_1O9VV {\n    border: 0.16rem solid #d7e0f5;\n    border-radius: 0.8rem;\n    padding: 1rem;\n    background: #eaf2ff;\n}\n\n.dogoblock-web-app_profile-panel_1O9VV h2 {\n    margin: 0 0 0.55rem;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_profile-panel_1O9VV p {\n    margin: 0;\n    color: #344473;\n    font-weight: 700;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_profile-actions_1Jgif {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n}\n\n.dogoblock-web-app_profile-form_3eCSN {\n    width: min(100%, 42rem);\n}\n\n@media (max-width: 900px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.45rem 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        gap: 0.75rem;\n        font-size: 0.72rem;\n    }\n\n    .dogoblock-web-app_hero_1xxqp {\n        grid-template-columns: 1fr;\n        gap: 1.5rem;\n    }\n\n    .dogoblock-web-app_hero-preview_SVneW {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe,\n    .dogoblock-web-app_details-main-grid_3v5Ue,\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n\n    .dogoblock-web-app_profile-hero_3T3MG {\n        grid-template-columns: auto minmax(0, 1fr);\n    }\n\n    .dogoblock-web-app_profile-stats_2Y3vS {\n        grid-column: 1 / -1;\n    }\n}\n\n@media (max-width: 640px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n        min-height: auto;\n        padding: 0.75rem 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_page_z_onn {\n        width: min(100% - 1.25rem, 74rem);\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_page-header_2q-ME {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_project-grid_W2vKL {\n        grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));\n    }\n\n    .dogoblock-web-app_project-card_2NByI,\n    .dogoblock-web-app_project-card-wrap_3i3y1 {\n        width: 100%;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl h1 {\n        white-space: normal;\n    }\n\n    .dogoblock-web-app_detail-meta-bar_Wnt9Z {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_profile-hero_3T3MG {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_profile-summary_16WTy h1 {\n        white-space: normal;\n    }\n\n    .dogoblock-web-app_profile-avatar_r_K2L {\n        width: 5.4rem;\n        height: 5.4rem;\n    }\n}\n", ""]);
+exports.push([module.i, ".dogoblock-web-app_app-shell_2PA39 {\n    min-height: 100vh;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background: #ffffff;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_topbar_3aLHW {\n    width: 100%;\n    background: #182b63;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n            box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n    padding: 0.35rem 0;\n}\n\n.dogoblock-web-app_topbar-inner_1PVrq {\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    position: relative;\n}\n\n.dogoblock-web-app_brand_25VAQ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 8.5rem;\n    cursor: pointer;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_logo_2DRMj {\n    display: block;\n    width: 7.75rem;\n    height: auto;\n}\n\n.dogoblock-web-app_nav-center_23sFd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 1.35rem;\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n        -ms-transform: translateX(-50%);\n            transform: translateX(-50%);\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_nav-right_1hx6M {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1.35rem;\n    font-size: 0.78rem; \n    font-weight: 700;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_nav-button_1dItK,\n.dogoblock-web-app_inline-button_wEmD4 {\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: inherit;\n    font: inherit;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_nav-button_1dItK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    color: #ffffff;\n    line-height: 1.2;\n}\n\n.dogoblock-web-app_nav-icon_27ZE8 {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.4;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL {\n    width: 1rem;\n    height: 1rem;\n    margin-right: 0.35rem;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL svg,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    width: 1rem;\n    height: 1rem;\n    stroke-width: 2.6;\n}\n\n.dogoblock-web-app_inline-icon_3pGo_ {\n    margin-right: 0.32rem;\n    vertical-align: -0.18rem;\n}\n\n.dogoblock-web-app_nav-button_1dItK:hover,\n.dogoblock-web-app_inline-button_wEmD4:hover {\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_user-badge_38q0T {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #ffffff;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_user-badge_38q0T::before {\n    content: \"\";\n    width: 0.75rem;\n    height: 0.75rem;\n    border-radius: 999px;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n            box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_page_z_onn {\n    width: min(100% - 2rem, 74rem);\n    margin: 0 auto;\n    padding: 2.3rem 0 3rem;\n}\n\n.dogoblock-web-app_home-page_4fkF1 {\n    padding-top: 3.25rem;\n}\n\n.dogoblock-web-app_hero_1xxqp {\n    min-height: 29rem;\n    display: grid;\n    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 2.5rem;\n}\n\n.dogoblock-web-app_hero-copy_156mN {\n    max-width: 44rem;\n}\n\n.dogoblock-web-app_kicker_1y7vH {\n    margin: 0 0 0.65rem;\n    color: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_hero_1xxqp h1,\n.dogoblock-web-app_page-header_2q-ME h1,\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_hero_1xxqp h1 {\n    max-width: 40rem;\n    font-size: clamp(2.2rem, 5vw, 4.8rem);\n}\n\n.dogoblock-web-app_hero-text_2OLVS {\n    max-width: 35rem;\n    margin: 1.2rem 0 0;\n    color: #344473;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.55;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc,\n.dogoblock-web-app_actions_XinWC {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc {\n    margin-top: 1.5rem;\n}\n\n.dogoblock-web-app_hero-preview_SVneW {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.dogoblock-web-app_preview-card_vDMIu {\n    width: min(100%, 23rem);\n    padding: 0.75rem;\n    border: 0.42rem solid #182b63;\n    border-radius: 1.25rem;\n    background: #0739a5;\n    color: #ffffff;\n    -webkit-box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n            box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 {\n    height: 14rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-bottom: 0.75rem;\n    border-radius: 0.65rem;\n    background:\n        -o-radial-gradient(76% 18%, circle, #ff8a1d 0 10%, transparent 11%),\n        -o-linear-gradient(315deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    background:\n        radial-gradient(circle at 76% 18%, #ff8a1d 0 10%, transparent 11%),\n        linear-gradient(135deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    overflow: hidden;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.1rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong,\n.dogoblock-web-app_preview-card_vDMIu small {\n    display: block;\n    padding: 0 0.2rem;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong {\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_preview-card_vDMIu small {\n    margin-top: 0.15rem;\n    font-size: 0.72rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_narrow-page_186pT {\n    width: min(100% - 2rem, 28rem);\n    padding-top: 3.5rem;\n}\n\n.dogoblock-web-app_auth-section_2gv_4 {\n    width: 100%;\n    min-height: calc(100vh - 8rem);\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 3.5rem 1.5rem;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #ffffff;\n    background-image: url(" + escape(__webpack_require__(2062)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG {\n    width: min(100%, 28rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG .dogoblock-web-app_panel_Q0s02 {\n    -webkit-box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_panel_Q0s02 {\n    background: #ffffff;\n    border: 0.18rem solid #243f8f;\n    border-radius: 0.85rem;\n    padding: 1.4rem;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin-bottom: 1rem;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    margin-bottom: 1.25rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME h1 {\n    font-size: 1.9rem;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_search-bar_2Winb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #ffffff;\n    border: 2px solid #e0e7ff;\n    border-radius: 99px;\n    padding: 0.4rem 1rem;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    max-width: 400px;\n    margin: 0 1rem;\n    -webkit-transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    -o-transition: border-color 0.2s ease, box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;\n}\n\n.dogoblock-web-app_search-bar_2Winb:focus-within {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n            box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n}\n\n.dogoblock-web-app_search-icon_1Qs5C {\n    color: #8d9ec4;\n    margin-right: 0.5rem;\n}\n\n.dogoblock-web-app_search-input_3D28S {\n    border: none;\n    background: transparent;\n    outline: none;\n    font-size: 0.95rem;\n    font-family: inherit;\n    color: #344473;\n    width: 100%;\n}\n\n.dogoblock-web-app_search-input_3D28S::-webkit-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-moz-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S:-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_primary-button_J8O77,\n.dogoblock-web-app_secondary-button_1TFxG,\n.dogoblock-web-app_danger-button_1pdOP,\n.dogoblock-web-app_light-button_KaXx_ {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_primary-button_J8O77 {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.dogoblock-web-app_secondary-button_1TFxG {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_danger-button_1pdOP {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.dogoblock-web-app_light-button_KaXx_ {\n    color: #243f8f;\n    background: #e7efff;\n    -webkit-box-shadow: 0 0.2rem 0 #c6d6ff;\n            box-shadow: 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_primary-button_J8O77:hover,\n.dogoblock-web-app_secondary-button_1TFxG:hover,\n.dogoblock-web-app_danger-button_1pdOP:hover,\n.dogoblock-web-app_light-button_KaXx_:hover,\n.dogoblock-web-app_project-card_2NByI:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.dogoblock-web-app_primary-button_J8O77:active,\n.dogoblock-web-app_secondary-button_1TFxG:active,\n.dogoblock-web-app_danger-button_1pdOP:active,\n.dogoblock-web-app_light-button_KaXx_:active,\n.dogoblock-web-app_project-card_2NByI:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.dogoblock-web-app_field_VXAJd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    margin-bottom: 0.85rem;\n    color: #243f8f;\n    font-size: 0.78rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_field_VXAJd input,\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 2.65rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    padding: 0 0.75rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.95rem;\n    font-weight: 700;\n    outline: none;\n}\n\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 5.5rem;\n    padding-top: 0.7rem;\n    padding-bottom: 0.7rem;\n    line-height: 1.4;\n    resize: vertical;\n}\n\n.dogoblock-web-app_field_VXAJd input:focus,\n.dogoblock-web-app_field_VXAJd textarea:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.dogoblock-web-app_form-hint_1ve3y {\n    margin: 1rem 0 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_inline-button_wEmD4 {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_error_3uIrk {\n    margin-bottom: 0.9rem;\n    border-radius: 0.45rem;\n    padding: 0.7rem 0.8rem;\n    color: #8d1111;\n    background: #ffe7e7;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_project-grid_W2vKL {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(13.9rem, 13.9rem));\n    gap: 1rem;\n}\n\n.dogoblock-web-app_project-card-wrap_3i3y1 {\n    position: relative;\n    width: 13.9rem;\n}\n\n.dogoblock-web-app_project-card_2NByI {\n    width: 13.9rem;\n    min-height: 11rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0;\n    border: 0.35rem solid #182b63;\n    border-radius: 0.85rem;\n    padding: 0;\n    background: #0739a5;\n    color: #ffffff;\n    text-align: left;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    cursor: pointer;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz {\n    position: absolute;\n    top: 0.62rem;\n    right: 0.62rem;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #ffffff;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.15rem 0 #b51616;\n            box-shadow: 0 0.15rem 0 #b51616;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz:hover {\n    -webkit-transform: translateY(-0.06rem);\n        -ms-transform: translateY(-0.06rem);\n            transform: translateY(-0.06rem);\n}\n\n.dogoblock-web-app_project-thumbnail_26w0a {\n    height: 7rem;\n    display: block;\n    overflow: hidden;\n    border-radius: 0;\n    background: #d8e4ff;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_project-thumbnail-image_2HJxW {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background:\n        -o-radial-gradient(82% 12%, circle, #ff8a1d 0 12%, transparent 13%),\n        -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.05rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.dogoblock-web-app_project-title_1UyeV {\n    display: block;\n    min-height: 1rem;\n    margin-top: 0.15rem;\n    overflow: hidden;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.74rem;\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_project-meta_p_s94 {\n    display: block;\n    position: relative;\n    padding-left: 0.55rem;\n    color: #ffffff;\n    font-size: 0.58rem;\n    font-weight: 800;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_project-meta_p_s94::before {\n    content: \"\";\n    position: absolute;\n    left: 0.05rem;\n    top: 0.22rem;\n    width: 0.24rem;\n    height: 0.24rem;\n    border-radius: 999px;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_card-body_2RDB_ {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    padding: 0.5rem 0.55rem 0.55rem;\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.dogoblock-web-app_featured-card_3hVgO .dogoblock-web-app_card-body_2RDB_ {\n    padding: 0.65rem 0.75rem 0.75rem;\n}\n\n.dogoblock-web-app_card-avatar-col_GPjdL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_card-avatar-icon_2H8lk {\n    width: 2.15rem;\n    height: 2.15rem;\n    color: #ffffff;\n    fill: #ffffff;\n    stroke-width: 1.8;\n}\n\n.dogoblock-web-app_card-info-col_3pwGi {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    gap: 0.12rem;\n}\n\n.dogoblock-web-app_card-title_1OH15 {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.85rem;\n    font-weight: 800;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_card-author_1lvNV {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: #a8b8ff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_empty-state_oJImC {\n    width: min(100%, 28rem);\n    margin-top: 1rem;\n    border: 0.18rem dashed #c6d6ff;\n    border-radius: 0.75rem;\n    padding: 1.4rem;\n    color: #344473;\n    font-weight: 800;\n    text-align: center;\n}\n\n.dogoblock-web-app_project-details-page_HYCVs {\n    width: min(100% - 2rem, 79rem);\n}\n\n.dogoblock-web-app_details-header_3-XXe {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.45rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 0;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl h1 {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl p {\n    margin: 0.2rem 0 0;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl strong {\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_details-avatar_eht0D {\n    width: 4.6rem;\n    height: 4.6rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.7rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_details-main-grid_3v5Ue {\n    display: grid;\n    grid-template-columns: minmax(22rem, 38rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.dogoblock-web-app_details-player-column_boimX {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 {\n    width: 100%;\n    max-width: 100%;\n    min-height: 30.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: auto;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.8rem;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_detail-stats_favx8 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 1.4rem;\n    margin-top: 1rem;\n    color: #56648e;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_details-info-column_JMmlU {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb {\n    margin-bottom: 1rem;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb h2,\n.dogoblock-web-app_comments-section_3ZgUT h2,\n.dogoblock-web-app_remix-section_1yYhw h2 {\n    margin: 0 0 0.6rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_detail-text-box_2PJp4 {\n    min-height: 9.8rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    padding: 1rem;\n    color: #344473;\n    background: #eaf2ff;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n}\n\n.dogoblock-web-app_detail-meta-bar_Wnt9Z {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1rem;\n    margin-top: 0.55rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-lower-band_1Y7DY {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_comment-avatar_AxAjx {\n    width: 2.5rem;\n    height: 2.5rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 input {\n    width: min(100%, 28rem);\n    min-height: 2.55rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0 0.85rem;\n    color: #56648e;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_empty-comment_1h0gb {\n    margin-top: 1rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI span {\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv {\n    height: 9.4rem;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-image_2HJxW,\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_muted_1seQ1 {\n    color: #56648e;\n    font-size: 0.85rem;\n}\n\n.dogoblock-web-app_editor-shell_3Zz5e {\n    height: 100vh;\n}\n\n.dogoblock-web-app_hidden-input_2pI22 {\n    display: none;\n}\n\n.dogoblock-web-app_user-badge-button_2xFBg {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-page_2dR7P {\n    width: min(100% - 2rem, 78rem);\n    padding-top: 2rem;\n    padding-bottom: 3rem;\n}\n\n/* ── TOP ROW ─────────────────────────────────────── */\n\n.dogoblock-web-app_profile-top-row_2pjAA {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 1.2rem;\n    margin-bottom: 1.4rem;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n}\n\n/* LEFT — user info card */\n\n.dogoblock-web-app_profile-info-card_3p37B {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-info-header_9XpmA {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    padding: 0.75rem 1.35rem;\n    background: #182b63;\n}\n\n.dogoblock-web-app_profile-info-body_3BmaB {\n    padding: 1.1rem 1.35rem 1.25rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 4.8rem;\n    height: 4.8rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.22rem solid #182b63;\n    border-radius: 0.85rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\nh1.dogoblock-web-app_profile-name_xdCx7 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n    font-weight: 400;\n    line-height: 1.1;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_profile-name-stack_dupRO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.2rem;\n}\n\n.dogoblock-web-app_profile-username_xpxIA {\n    color: #cacaca;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_profile-section_3mhFz {\n    margin-bottom: 1.1rem;\n}\n\n.dogoblock-web-app_profile-section-title_23Dve {\n    margin: 0 0 0.4rem;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_profile-section-text_ay6bA {\n    margin: 0.45rem 0 0;\n    color: #344473;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.6;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.4rem;\n    margin-top: auto;\n    padding: 0.55rem 1.2rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #182b63;\n    color: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd:hover {\n    opacity: 0.85;\n}\n\n/* RIGHT — featured project card */\n\n.dogoblock-web-app_profile-featured-card_2-syp {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-featured-header_wo1pS {\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-title_b9KMP {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.8rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    white-space: pre-line;\n    line-height: 1.3;\n    display: block;\n}\n\n.dogoblock-web-app_profile-featured-body_ylNPD {\n    padding: 1.1rem 1.35rem 1.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG {\n    display: block;\n    width: 100%;\n    aspect-ratio: 16 / 9;\n    overflow: hidden;\n    border-radius: 0.65rem;\n    border: 0;\n    padding: 0;\n    cursor: pointer;\n    background: #d8e4ff;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n    -webkit-transition: -webkit-transform 240ms ease;\n    transition: -webkit-transform 240ms ease;\n    -o-transition: transform 240ms ease;\n    transition: transform 240ms ease;\n    transition: transform 240ms ease, -webkit-transform 240ms ease;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG:hover img {\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG > div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_profile-featured-empty_2VneF {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n    color: #56648e;\n    font-weight: 700;\n    font-size: 0.82rem;\n    padding: 2rem;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-stats_2miVh {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.2rem;\n    margin-top: 0.85rem;\n}\n\n.dogoblock-web-app_profile-featured-stat_ylXqE {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    color: #243f8f;\n    font-size: 1rem;\n    font-weight: 700;\n}\n\n/* ── SECTION BLOCKS (projects / favorites) ──────── */\n\n.dogoblock-web-app_profile-section-2_3aWOC {\n    border: 0.22rem solid #243f8f;\n    border-radius: 0.95rem;\n    padding: 0;\n    background: #ffffff;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n    margin-bottom: 1.4rem;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-section-header_2CEuH {\n    margin: 0;\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-section-heading_2Axcz {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.15rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    display: block;\n}\n\n.dogoblock-web-app_profile-section-body_TwpfC {\n    padding: 1.25rem 1.35rem 1.5rem;\n}\n\n/* ── EDIT FORM ───────────────────────────────────── */\n\n.dogoblock-web-app_profile-form_3eCSN {\n    width: 100%;\n    margin-bottom: 1.4rem;\n}\n\n.dogoblock-web-app_profile-form-actions_1GpBH {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    gap: 0.65rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n/* ── LOGOUT ROW ─────────────────────────────────── */\n\n.dogoblock-web-app_profile-logout-row_1H6A9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    margin-top: 0.5rem;\n}\n\n/* Legacy classes kept for any remaining references */\n\n.dogoblock-web-app_profile-hero_3T3MG { display: none; }\n\n.dogoblock-web-app_profile-tabs_2hl_k { display: none; }\n\n.dogoblock-web-app_profile-tab_G5MbT { display: none; }\n\n.dogoblock-web-app_profile-tab-active_fjXNE { display: none; }\n\n.dogoblock-web-app_profile-grid_3XVac { display: none; }\n\n.dogoblock-web-app_profile-panel_1O9VV { display: none; }\n\n.dogoblock-web-app_profile-actions_1Jgif { display: none; }\n\n.dogoblock-web-app_profile-stats_2Y3vS { display: none; }\n\n@media (max-width: 900px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.45rem 0;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        padding: 0 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        gap: 0.75rem;\n        font-size: 0.72rem;\n    }\n\n    .dogoblock-web-app_hero_1xxqp {\n        grid-template-columns: 1fr;\n        gap: 1.5rem;\n    }\n\n    .dogoblock-web-app_hero-preview_SVneW {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe,\n    .dogoblock-web-app_details-main-grid_3v5Ue,\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 640px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.75rem 0;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n        min-height: auto;\n        padding: 0 1rem;\n        gap: 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_page_z_onn {\n        width: min(100% - 1.25rem, 74rem);\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_page-header_2q-ME {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_project-grid_W2vKL {\n        grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));\n    }\n\n    .dogoblock-web-app_project-card_2NByI,\n    .dogoblock-web-app_project-card-wrap_3i3y1 {\n        width: 100%;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl h1 {\n        white-space: normal;\n    }\n\n    .dogoblock-web-app_detail-meta-bar_Wnt9Z {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   NAVBAR — institutional links\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_nav-link_1wf1m {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: #ffffff;\n    font: inherit;\n    font-size: 0.82rem;\n    font-weight: 700;\n    line-height: 1.2;\n    text-decoration: none;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_nav-link_1wf1m:hover {\n    opacity: 0.8;\n}\n\n/* Botão \"</> Editor\" — borda amarela */\n\n.dogoblock-web-app_nav-btn-editor_kCCmG {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.1rem;\n    border: 0.14rem solid #FFB800;\n    border-radius: 999px;\n    background: transparent;\n    color: #FFB800;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-editor_kCCmG:hover {\n    background: rgba(255, 184, 0, 0.12);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Botão \"Criar Conta\" — preenchido amarelo */\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.25rem;\n    border: 0;\n    border-radius: 999px;\n    background: #FFB800;\n    color: #182b63;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 800;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -webkit-box-shadow: 0 0.18rem 0 #b87800;\n            box-shadow: 0 0.18rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #b87800;\n            box-shadow: 0 0.28rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #b87800;\n            box-shadow: 0 0.06rem 0 #b87800;\n}\n\n/* Botão username e Sair — estilo sutil */\n\n.dogoblock-web-app_nav-btn-user_2a2-x {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    min-height: 2.1rem;\n    padding: 0 1rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 400;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #971212;\n            box-shadow: 0 0.28rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #971212;\n            box-shadow: 0 0.06rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 2.1rem;\n    height: 2.1rem;\n    border: 0;\n    border-radius: 50%;\n    background: rgba(255, 255, 255, 0.12);\n    color: #ffffff;\n    cursor: pointer;\n    -webkit-transition: background 150ms ease, -webkit-transform 120ms ease;\n    transition: background 150ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 150ms ease, transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:hover {\n    background: rgba(255, 255, 255, 0.25);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:active {\n    background: rgba(255, 255, 255, 0.35);\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n/* ═══════════════════════════════════════════════════\n   HOME PAGE — full-width layout\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_home-page_4fkF1 {\n    width: 100%;\n    padding: 0;\n}\n\n/* ── HERO ──────────────────────────────────────────── */\n\n.dogoblock-web-app_hero-section_kEmie {\n    position: relative;\n    overflow: hidden;\n    background-color: #182b63;\n    background-image: url(" + escape(__webpack_require__(2063)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_hero-inner_1BSXF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%;\n    padding: 0;\n    margin: 0 auto;\n    min-height: 25rem;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-copy-new_1-NFP {\n    padding: 3rem 1rem 3rem max(1rem, calc((100% - 80rem) / 2));\n    max-width: none;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-title_3vzv9 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3.2rem);\n    font-weight: 400;\n    line-height: 1.12;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_hero-accent_fT7jP {\n    color: #FC0006;\n}\n\n.dogoblock-web-app_hero-actions-new_3rUsr {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.75rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0;\n    border-radius: 0.4rem;\n    background: #e02020;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-box-shadow: 0 0.22rem 0 #9e0f0f;\n            box-shadow: 0 0.22rem 0 #9e0f0f;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    -webkit-box-shadow: 0 0.35rem 0 #9e0f0f;\n            box-shadow: 0 0.35rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.1rem 0 #9e0f0f;\n            box-shadow: 0 0.1rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0.16rem solid #ffffff;\n    border-radius: 0.4rem;\n    background: transparent;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: transform 120ms ease, background 120ms ease;\n    transition: transform 120ms ease, background 120ms ease;\n    transition: transform 120ms ease, background 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    background: rgba(255, 255, 255, 0.1);\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt {\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: end;\n    -webkit-align-items: flex-end;\n        -ms-flex-align: end;\n            align-items: flex-end;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    z-index: 1;\n    pointer-events: none;\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt img {\n    display: block;\n    width: auto;\n    height: 100%;\n    max-height: 25rem;\n    -o-object-fit: contain;\n       object-fit: contain;\n    -o-object-position: bottom right;\n       object-position: bottom right;\n}\n\n/* ── PROJETOS EM DESTAQUE ──────────────────────────── */\n\n.dogoblock-web-app_featured-section_3NRT3 {\n    padding: 5rem 0 5rem;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_featured-title_tVGCx {\n    margin: 0 0 1.8rem;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.6rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_featured-empty_2RA0I {\n    color: #56648e;\n    text-align: center;\n    font-weight: 700;\n    padding: 2rem 0;\n}\n\n.dogoblock-web-app_featured-grid_3At29 {\n    display: grid;\n    grid-template-columns: repeat(4, 1fr);\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_featured-card_3hVgO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    border: 0.3rem solid #182b63;\n    border-radius: 0.85rem;\n    overflow: hidden;\n    background: #1a3aad;\n    color: #ffffff;\n    text-align: left;\n    cursor: pointer;\n    padding: 0;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    -webkit-transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    -o-transition: transform 130ms ease, box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease, -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n}\n\n.dogoblock-web-app_featured-card_3hVgO:hover {\n    -webkit-transform: translateY(-4px);\n        -ms-transform: translateY(-4px);\n            transform: translateY(-4px);\n    -webkit-box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n            box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n}\n\n.dogoblock-web-app_featured-card_3hVgO:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t {\n    height: 9rem;\n    overflow: hidden;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n    display: block;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t>div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_featured-card-body_3t-kX {\n    padding: 0.6rem 0.7rem 0.75rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.18rem;\n}\n\n.dogoblock-web-app_featured-card-title_2I_HI {\n    display: block;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_featured-card-author_fatHU {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    font-size: 0.6rem;\n    font-weight: 800;\n    color: rgba(255, 255, 255, 0.75);\n}\n\n.dogoblock-web-app_featured-card-author_fatHU::before {\n    content: \"\";\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 0.52rem;\n    height: 0.52rem;\n    border-radius: 999px;\n    border: 0.1rem solid rgba(255, 255, 255, 0.65);\n}\n\n/* ═══════════════════════════════════════════════════\n   SITE FOOTER\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_site-footer_1iprI {\n    margin-top: auto;\n    background: #182b63;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-inner_2qcat {\n    display: grid;\n    grid-template-columns: auto 1fr 1fr 1.4fr;\n    gap: 2.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    padding: 3rem 0 2.5rem;\n}\n\n.dogoblock-web-app_footer-brand_Gbx7N {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n}\n\n.dogoblock-web-app_footer-logo_1Vta7 {\n    width: 10rem;\n    height: auto;\n    display: block;\n}\n\n.dogoblock-web-app_footer-links_2GnH_,\n.dogoblock-web-app_footer-lei_2aRPq,\n.dogoblock-web-app_footer-contact_kixSb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.5rem;\n    font-size: 0.78rem;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ strong,\n.dogoblock-web-app_footer-lei_2aRPq strong,\n.dogoblock-web-app_footer-contact_kixSb strong {\n    display: block;\n    margin-bottom: 0.35rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    letter-spacing: 0.02em;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a,\n.dogoblock-web-app_footer-lei_2aRPq a {\n    color: rgba(255, 255, 255, 0.75);\n    text-decoration: none;\n    font-weight: 600;\n    line-height: 1.4;\n    -webkit-transition: color 120ms ease;\n    -o-transition: color 120ms ease;\n    transition: color 120ms ease;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a:hover,\n.dogoblock-web-app_footer-lei_2aRPq a:hover {\n    color: #ffffff;\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_footer-contact_kixSb span {\n    color: rgba(255, 255, 255, 0.75);\n    font-weight: 600;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_footer-bottom_18YbC {\n    border-top: 1px solid rgba(255, 255, 255, 0.1);\n    text-align: center;\n    padding: 1.1rem 1rem;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: rgba(255, 255, 255, 0.45);\n    letter-spacing: 0.03em;\n}\n\n/* ── HOME RESPONSIVE ─────────────────────────────── */\n\n@media (max-width: 960px) {\n    .dogoblock-web-app_hero-inner_1BSXF {\n        grid-template-columns: 1fr;\n        min-height: auto;\n    }\n\n    .dogoblock-web-app_hero-copy-new_1-NFP {\n        padding-bottom: 0;\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 55%;\n        margin: 0 auto;\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr 1fr;\n        gap: 2rem;\n    }\n\n    .dogoblock-web-app_footer-brand_Gbx7N {\n        grid-column: 1 / -1;\n    }\n\n    .dogoblock-web-app_footer-lei_2aRPq {\n        grid-column: auto;\n    }\n}\n\n@media (max-width: 620px) {\n    .dogoblock-web-app_hero-title_3vzv9 {\n        font-size: clamp(1.6rem, 6vw, 2.2rem);\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 80%;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n        gap: 0.75rem;\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   PROJECT DETAILS PAGE — wireframe-faithful layout\n═══════════════════════════════════════════════════ */\n\n/* Page wrapper */\n\n.dogoblock-web-app_pd-page_KaiaO {\n    width: min(100% - 2rem, 78rem);\n    margin: 0 auto;\n    padding: 1.8rem 0 3.5rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_pd-loading_2yBGM {\n    color: #56648e;\n    font-weight: 700;\n    margin-bottom: 1rem;\n}\n\n/* ── HEADER ─────────────────────────────────────── */\n\n.dogoblock-web-app_pd-header_15sVF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.5rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-header-left_Ywyhv {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n/* Project thumbnail in header */\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4 {\n    position: relative;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 5rem;\n    height: 5rem;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_pd-thumb-img_1KW1w {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 {\n    width: 100%;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background: linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    text-shadow: 0.06rem 0.06rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-title-group_15Btu {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.15rem;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-title_3OX_1 {\n    margin: 0;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.3rem, 3vw, 2.2rem);\n    font-weight: 400;\n    line-height: 1.1;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_pd-author_3AAnG,\n.dogoblock-web-app_pd-date_cKn04 {\n    margin: 0;\n    color: #56648e;\n    font-size: 0.82rem;\n    font-weight: 600;\n}\n\n/* Right action buttons */\n\n.dogoblock-web-app_pd-header-actions_2py2D {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0.55rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    -o-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:hover:not(:disabled) {\n    background: #dde6ff;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:disabled {\n    opacity: 0.75;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #ffc5c5;\n    border-radius: 0.45rem;\n    background: #fff0f0;\n    color: #c02020;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    -o-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI:hover {\n    background: #ffdede;\n}\n\n/* ── MAIN GRID ───────────────────────────────────── */\n\n.dogoblock-web-app_pd-main-grid_FNx8H {\n    display: grid;\n    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);\n    gap: 1.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    margin-bottom: 2rem;\n}\n\n/* LEFT COLUMN — player */\n\n.dogoblock-web-app_pd-player-col_BxfGo {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #ffffff;\n}\n\n/* Toolbar bar */\n\n.dogoblock-web-app_pd-toolbar_3dhry {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding: 0.35rem 0.65rem;\n    background: #f5f7ff;\n    border-bottom: 0.12rem solid #e0e7ff;\n}\n\n.dogoblock-web-app_pd-toolbar-flags_TXL2k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.45rem;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a,\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    display: inline-block;\n    width: 0.85rem;\n    height: 0.85rem;\n    border-radius: 999px;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a {\n    background: #22b455;\n    -webkit-box-shadow: 0 0 0 0.1rem #178a3e;\n            box-shadow: 0 0 0 0.1rem #178a3e;\n}\n\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    background: #e83030;\n    -webkit-box-shadow: 0 0 0 0.1rem #b51616;\n            box-shadow: 0 0 0 0.1rem #b51616;\n}\n\n.dogoblock-web-app_pd-toolbar-right_1SdU2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #56648e;\n    font-size: 0.7rem;\n    cursor: pointer;\n    opacity: 0.7;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_:hover {\n    opacity: 1;\n}\n\n/* Stage */\n\n.dogoblock-web-app_pd-stage_2YPmb {\n    width: 100%;\n    min-height: 21rem;\n    background: #f0f4ff;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-stage_2YPmb [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n/* Stats + \"Ver por dentro\" row */\n\n.dogoblock-web-app_pd-stats-row_3md3- {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    padding: 0.65rem 0.85rem;\n    background: #ffffff;\n    border-top: 0.12rem solid #e0e7ff;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-stats_32ety {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_pd-stat_a_ebm {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #344473;\n    font-size: 0.92rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:hover {\n    background: #dde6ff;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n/* RIGHT COLUMN — info textareas */\n\n.dogoblock-web-app_pd-info-col_28UnO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_pd-info-section_5wpZ9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.35rem;\n}\n\n.dogoblock-web-app_pd-info-label_3e4_s {\n    color: #243f8f;\n    font-size: 0.82rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 8rem;\n    padding: 0.65rem 0.75rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.5;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO[readonly] {\n    background: #eaf0fa;\n    color: #56648e;\n    cursor: default;\n}\n\n/* ── COMMENTS SECTION ────────────────────────────── */\n\n.dogoblock-web-app_pd-comments_3XlQU {\n    padding-top: 0.5rem;\n}\n\n.dogoblock-web-app_pd-comments-title_1bOdq {\n    margin: 0 0 0.85rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.05rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-comment-composer_3lF9C {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-avatar_32eUa {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2.8rem;\n    height: 2.8rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: #d8e4ff;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-comment-input-wrap_NelRJ {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.55rem;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 4rem;\n    padding: 0.65rem 0.85rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.9rem;\n    font-weight: 600;\n    line-height: 1.4;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-webkit-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-moz-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-comment-actions_2XheL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo,\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    min-height: 1.75rem;\n    padding: 0 0.85rem;\n    border-radius: 0.35rem;\n    border: 0;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo {\n    background: #c6d6ff;\n    color: #182b63;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:hover {\n    background: #b0c2f5;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    background: #e8ecf5;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS:hover {\n    background: #d7dff0;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Responsive — single column on smaller screens */\n\n@media (max-width: 860px) {\n    .dogoblock-web-app_pd-main-grid_FNx8H {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_pd-header_15sVF {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_pd-header-actions_2py2D {\n        -webkit-box-orient: horizontal;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: row;\n            -ms-flex-direction: row;\n                flex-direction: row;\n        -webkit-flex-wrap: wrap;\n            -ms-flex-wrap: wrap;\n                flex-wrap: wrap;\n        width: 100%;\n    }\n\n    .dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n    .dogoblock-web-app_pd-btn-visibility-private_2D01B,\n    .dogoblock-web-app_pd-btn-delete_eb3sI {\n        -webkit-box-flex: 1;\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1;\n    }\n}\n\n/* ── Visibility badge / button — state-based colours ── */\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.9rem;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    border: 0;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_ {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_:hover {\n    background: #1da04c;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B:hover {\n    background: #c41a1a;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* span version (non-owner, not clickable) */\n\nspan.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\nspan.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    cursor: default;\n    pointer-events: none;\n    opacity: 0.85;\n}\n\n/* ── Interactive stat buttons (like / fav) ── */\n\n.dogoblock-web-app_pd-stat-btn_2G3OI,\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH,\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    padding: 0.3rem 0.65rem;\n    border: 0.12rem solid transparent;\n    border-radius: 999px;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    -o-transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n    background: transparent;\n    color: #344473;\n}\n\n.dogoblock-web-app_pd-stat-btn_2G3OI:hover {\n    background: #eaf0fa;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH {\n    color: #e02020;\n    background: #ffeaea;\n    border-color: #ffc5c5;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH:hover {\n    background: #ffd6d6;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    color: #d69800;\n    background: #fff8e5;\n    border-color: #ffe699;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0:hover {\n    background: #fff2cc;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n/* ── Thumbnail overlay (change cover) ── */\n\n.dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    position: absolute;\n    inset: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.75rem;\n    background: rgba(0, 0, 0, 0.45);\n    color: #ffffff;\n    opacity: 0;\n    cursor: pointer;\n    -webkit-transition: opacity 160ms ease;\n    -o-transition: opacity 160ms ease;\n    transition: opacity 160ms ease;\n}\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4:hover .dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    opacity: 1;\n}\n\n/* ── Save details button ── */\n\n.dogoblock-web-app_pd-btn-save-details_RNirf,\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-align-self: flex-start;\n        -ms-flex-item-align: start;\n            align-self: flex-start;\n    margin-top: 0.35rem;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf {\n    background: #243f8f;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #182b63;\n            box-shadow: 0 0.18rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:hover:not(:disabled) {\n    background: #1b3070;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:disabled {\n    opacity: 0.65;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n/* ── Comment avatar initials ── */\n\n.dogoblock-web-app_pd-comment-avatar-initials_1IO8e {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 100%;\n    height: 100%;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n    color: #56648e;\n}\n\n/* ── Comment list ── */\n\n.dogoblock-web-app_pd-comment-list_27QY8 {\n    list-style: none;\n    margin: 1rem 0 0;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-item_9DLQt {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.65rem;\n    padding: 0.75rem 0.9rem;\n    border: 0.12rem solid #e0e7ff;\n    border-radius: 0.65rem;\n    background: #f9fbff;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-comment-item-avatar_3j-Br {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #8d9ec4;\n}\n\n.dogoblock-web-app_pd-comment-item-body_3-T6S {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-comment-item-author_1pVLK {\n    display: block;\n    font-size: 0.9rem;\n    font-weight: 800;\n    color: #243f8f;\n    margin-bottom: 0.25rem;\n}\n\n.dogoblock-web-app_pd-comment-item-text_1Ll3B {\n    margin: 0;\n    font-size: 0.88rem;\n    font-weight: 600;\n    color: #344473;\n    line-height: 1.5;\n    word-break: break-word;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 1.6rem;\n    height: 1.6rem;\n    border: 0;\n    border-radius: 0.35rem;\n    background: transparent;\n    color: #aab0c4;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease;\n    -o-transition: background 120ms ease, color 120ms ease;\n    transition: background 120ms ease, color 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog:hover {\n    background: #ffe7e7;\n    color: #e02020;\n}\n\n.dogoblock-web-app_pd-comment-empty_1I3-k {\n    margin: 1rem 0 0;\n    color: #8d9ec4;\n    font-size: 0.85rem;\n    font-weight: 600;\n}\n\n/* ── Publish button disabled state ── */\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:disabled {\n    opacity: 0.55;\n    cursor: default;\n}\n\n/* ── Reply button (inline, below comment text) ── */\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    margin-top: 0.4rem;\n    padding: 0.18rem 0.55rem;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 999px;\n    background: transparent;\n    color: #56648e;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.8rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    -o-transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n}\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg:hover {\n    background: #e8f0ff;\n    color: #182b63;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* ── Inline reply composer ── */\n\n.dogoblock-web-app_pd-reply-composer_1PY6w {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.55rem;\n    margin-top: 0.65rem;\n    padding: 0.65rem 0.75rem;\n    background: #f0f5ff;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    -webkit-animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n            animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n}\n\n@-webkit-keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n@keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n/* ── Threaded replies list ── */\n\n.dogoblock-web-app_pd-reply-list_1RzXI {\n    list-style: none;\n    margin: 0.65rem 0 0 2.2rem;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.45rem;\n    border-left: 0.22rem solid #c6d6ff;\n    padding-left: 0.75rem;\n}\n\n.dogoblock-web-app_pd-reply-item_2r86P {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.5rem;\n    padding: 0.5rem 0.7rem;\n    border: 0.1rem solid #e8eeff;\n    border-radius: 0.5rem;\n    background: #ffffff;\n    position: relative;\n}", ""]);
 
 // exports
 exports.locals = {
 	"app-shell": "dogoblock-web-app_app-shell_2PA39",
 	"appShell": "dogoblock-web-app_app-shell_2PA39",
 	"topbar": "dogoblock-web-app_topbar_3aLHW",
+	"topbar-inner": "dogoblock-web-app_topbar-inner_1PVrq",
+	"topbarInner": "dogoblock-web-app_topbar-inner_1PVrq",
 	"brand": "dogoblock-web-app_brand_25VAQ",
 	"logo": "dogoblock-web-app_logo_2DRMj",
-	"nav": "dogoblock-web-app_nav_5Hvdh",
+	"nav-center": "dogoblock-web-app_nav-center_23sFd",
+	"navCenter": "dogoblock-web-app_nav-center_23sFd",
+	"nav-right": "dogoblock-web-app_nav-right_1hx6M",
+	"navRight": "dogoblock-web-app_nav-right_1hx6M",
 	"nav-button": "dogoblock-web-app_nav-button_1dItK",
 	"navButton": "dogoblock-web-app_nav-button_1dItK",
 	"inline-button": "dogoblock-web-app_inline-button_wEmD4",
@@ -321,6 +360,16 @@ exports.locals = {
 	"previewWindow": "dogoblock-web-app_preview-window_3Grs6",
 	"narrow-page": "dogoblock-web-app_narrow-page_186pT",
 	"narrowPage": "dogoblock-web-app_narrow-page_186pT",
+	"auth-section": "dogoblock-web-app_auth-section_2gv_4",
+	"authSection": "dogoblock-web-app_auth-section_2gv_4",
+	"auth-card-wrap": "dogoblock-web-app_auth-card-wrap_JtkmG",
+	"authCardWrap": "dogoblock-web-app_auth-card-wrap_JtkmG",
+	"search-bar": "dogoblock-web-app_search-bar_2Winb",
+	"searchBar": "dogoblock-web-app_search-bar_2Winb",
+	"search-icon": "dogoblock-web-app_search-icon_1Qs5C",
+	"searchIcon": "dogoblock-web-app_search-icon_1Qs5C",
+	"search-input": "dogoblock-web-app_search-input_3D28S",
+	"searchInput": "dogoblock-web-app_search-input_3D28S",
 	"primary-button": "dogoblock-web-app_primary-button_J8O77",
 	"primaryButton": "dogoblock-web-app_primary-button_J8O77",
 	"secondary-button": "dogoblock-web-app_secondary-button_1TFxG",
@@ -351,6 +400,20 @@ exports.locals = {
 	"projectTitle": "dogoblock-web-app_project-title_1UyeV",
 	"project-meta": "dogoblock-web-app_project-meta_p_s94",
 	"projectMeta": "dogoblock-web-app_project-meta_p_s94",
+	"card-body": "dogoblock-web-app_card-body_2RDB_",
+	"cardBody": "dogoblock-web-app_card-body_2RDB_",
+	"featured-card": "dogoblock-web-app_featured-card_3hVgO",
+	"featuredCard": "dogoblock-web-app_featured-card_3hVgO",
+	"card-avatar-col": "dogoblock-web-app_card-avatar-col_GPjdL",
+	"cardAvatarCol": "dogoblock-web-app_card-avatar-col_GPjdL",
+	"card-avatar-icon": "dogoblock-web-app_card-avatar-icon_2H8lk",
+	"cardAvatarIcon": "dogoblock-web-app_card-avatar-icon_2H8lk",
+	"card-info-col": "dogoblock-web-app_card-info-col_3pwGi",
+	"cardInfoCol": "dogoblock-web-app_card-info-col_3pwGi",
+	"card-title": "dogoblock-web-app_card-title_1OH15",
+	"cardTitle": "dogoblock-web-app_card-title_1OH15",
+	"card-author": "dogoblock-web-app_card-author_1lvNV",
+	"cardAuthor": "dogoblock-web-app_card-author_1lvNV",
 	"empty-state": "dogoblock-web-app_empty-state_oJImC",
 	"emptyState": "dogoblock-web-app_empty-state_oJImC",
 	"project-details-page": "dogoblock-web-app_project-details-page_HYCVs",
@@ -402,16 +465,62 @@ exports.locals = {
 	"userBadgeButton": "dogoblock-web-app_user-badge-button_2xFBg",
 	"profile-page": "dogoblock-web-app_profile-page_2dR7P",
 	"profilePage": "dogoblock-web-app_profile-page_2dR7P",
-	"profile-hero": "dogoblock-web-app_profile-hero_3T3MG",
-	"profileHero": "dogoblock-web-app_profile-hero_3T3MG",
+	"profile-top-row": "dogoblock-web-app_profile-top-row_2pjAA",
+	"profileTopRow": "dogoblock-web-app_profile-top-row_2pjAA",
+	"profile-info-card": "dogoblock-web-app_profile-info-card_3p37B",
+	"profileInfoCard": "dogoblock-web-app_profile-info-card_3p37B",
+	"profile-info-header": "dogoblock-web-app_profile-info-header_9XpmA",
+	"profileInfoHeader": "dogoblock-web-app_profile-info-header_9XpmA",
+	"profile-info-body": "dogoblock-web-app_profile-info-body_3BmaB",
+	"profileInfoBody": "dogoblock-web-app_profile-info-body_3BmaB",
 	"profile-avatar": "dogoblock-web-app_profile-avatar_r_K2L",
 	"profileAvatar": "dogoblock-web-app_profile-avatar_r_K2L",
-	"profile-summary": "dogoblock-web-app_profile-summary_16WTy",
-	"profileSummary": "dogoblock-web-app_profile-summary_16WTy",
-	"profile-bio": "dogoblock-web-app_profile-bio_1wlvt",
-	"profileBio": "dogoblock-web-app_profile-bio_1wlvt",
-	"profile-stats": "dogoblock-web-app_profile-stats_2Y3vS",
-	"profileStats": "dogoblock-web-app_profile-stats_2Y3vS",
+	"profile-name": "dogoblock-web-app_profile-name_xdCx7",
+	"profileName": "dogoblock-web-app_profile-name_xdCx7",
+	"profile-name-stack": "dogoblock-web-app_profile-name-stack_dupRO",
+	"profileNameStack": "dogoblock-web-app_profile-name-stack_dupRO",
+	"profile-username": "dogoblock-web-app_profile-username_xpxIA",
+	"profileUsername": "dogoblock-web-app_profile-username_xpxIA",
+	"profile-section": "dogoblock-web-app_profile-section_3mhFz",
+	"profileSection": "dogoblock-web-app_profile-section_3mhFz",
+	"profile-section-title": "dogoblock-web-app_profile-section-title_23Dve",
+	"profileSectionTitle": "dogoblock-web-app_profile-section-title_23Dve",
+	"profile-section-text": "dogoblock-web-app_profile-section-text_ay6bA",
+	"profileSectionText": "dogoblock-web-app_profile-section-text_ay6bA",
+	"profile-edit-button": "dogoblock-web-app_profile-edit-button_2AMzd",
+	"profileEditButton": "dogoblock-web-app_profile-edit-button_2AMzd",
+	"profile-featured-card": "dogoblock-web-app_profile-featured-card_2-syp",
+	"profileFeaturedCard": "dogoblock-web-app_profile-featured-card_2-syp",
+	"profile-featured-header": "dogoblock-web-app_profile-featured-header_wo1pS",
+	"profileFeaturedHeader": "dogoblock-web-app_profile-featured-header_wo1pS",
+	"profile-featured-title": "dogoblock-web-app_profile-featured-title_b9KMP",
+	"profileFeaturedTitle": "dogoblock-web-app_profile-featured-title_b9KMP",
+	"profile-featured-body": "dogoblock-web-app_profile-featured-body_ylNPD",
+	"profileFeaturedBody": "dogoblock-web-app_profile-featured-body_ylNPD",
+	"profile-featured-thumb": "dogoblock-web-app_profile-featured-thumb_B6_VG",
+	"profileFeaturedThumb": "dogoblock-web-app_profile-featured-thumb_B6_VG",
+	"profile-featured-empty": "dogoblock-web-app_profile-featured-empty_2VneF",
+	"profileFeaturedEmpty": "dogoblock-web-app_profile-featured-empty_2VneF",
+	"profile-featured-stats": "dogoblock-web-app_profile-featured-stats_2miVh",
+	"profileFeaturedStats": "dogoblock-web-app_profile-featured-stats_2miVh",
+	"profile-featured-stat": "dogoblock-web-app_profile-featured-stat_ylXqE",
+	"profileFeaturedStat": "dogoblock-web-app_profile-featured-stat_ylXqE",
+	"profile-section-2": "dogoblock-web-app_profile-section-2_3aWOC",
+	"profileSection2": "dogoblock-web-app_profile-section-2_3aWOC",
+	"profile-section-header": "dogoblock-web-app_profile-section-header_2CEuH",
+	"profileSectionHeader": "dogoblock-web-app_profile-section-header_2CEuH",
+	"profile-section-heading": "dogoblock-web-app_profile-section-heading_2Axcz",
+	"profileSectionHeading": "dogoblock-web-app_profile-section-heading_2Axcz",
+	"profile-section-body": "dogoblock-web-app_profile-section-body_TwpfC",
+	"profileSectionBody": "dogoblock-web-app_profile-section-body_TwpfC",
+	"profile-form": "dogoblock-web-app_profile-form_3eCSN",
+	"profileForm": "dogoblock-web-app_profile-form_3eCSN",
+	"profile-form-actions": "dogoblock-web-app_profile-form-actions_1GpBH",
+	"profileFormActions": "dogoblock-web-app_profile-form-actions_1GpBH",
+	"profile-logout-row": "dogoblock-web-app_profile-logout-row_1H6A9",
+	"profileLogoutRow": "dogoblock-web-app_profile-logout-row_1H6A9",
+	"profile-hero": "dogoblock-web-app_profile-hero_3T3MG",
+	"profileHero": "dogoblock-web-app_profile-hero_3T3MG",
 	"profile-tabs": "dogoblock-web-app_profile-tabs_2hl_k",
 	"profileTabs": "dogoblock-web-app_profile-tabs_2hl_k",
 	"profile-tab": "dogoblock-web-app_profile-tab_G5MbT",
@@ -424,13 +533,213 @@ exports.locals = {
 	"profilePanel": "dogoblock-web-app_profile-panel_1O9VV",
 	"profile-actions": "dogoblock-web-app_profile-actions_1Jgif",
 	"profileActions": "dogoblock-web-app_profile-actions_1Jgif",
-	"profile-form": "dogoblock-web-app_profile-form_3eCSN",
-	"profileForm": "dogoblock-web-app_profile-form_3eCSN"
+	"profile-stats": "dogoblock-web-app_profile-stats_2Y3vS",
+	"profileStats": "dogoblock-web-app_profile-stats_2Y3vS",
+	"nav": "dogoblock-web-app_nav_5Hvdh",
+	"nav-link": "dogoblock-web-app_nav-link_1wf1m",
+	"navLink": "dogoblock-web-app_nav-link_1wf1m",
+	"nav-btn-editor": "dogoblock-web-app_nav-btn-editor_kCCmG",
+	"navBtnEditor": "dogoblock-web-app_nav-btn-editor_kCCmG",
+	"nav-btn-criar-conta": "dogoblock-web-app_nav-btn-criar-conta_f8GdL",
+	"navBtnCriarConta": "dogoblock-web-app_nav-btn-criar-conta_f8GdL",
+	"nav-btn-user": "dogoblock-web-app_nav-btn-user_2a2-x",
+	"navBtnUser": "dogoblock-web-app_nav-btn-user_2a2-x",
+	"nav-btn-sair": "dogoblock-web-app_nav-btn-sair_2e95R",
+	"navBtnSair": "dogoblock-web-app_nav-btn-sair_2e95R",
+	"nav-user-icon-btn": "dogoblock-web-app_nav-user-icon-btn_1M-Tc",
+	"navUserIconBtn": "dogoblock-web-app_nav-user-icon-btn_1M-Tc",
+	"hero-section": "dogoblock-web-app_hero-section_kEmie",
+	"heroSection": "dogoblock-web-app_hero-section_kEmie",
+	"hero-inner": "dogoblock-web-app_hero-inner_1BSXF",
+	"heroInner": "dogoblock-web-app_hero-inner_1BSXF",
+	"hero-copy-new": "dogoblock-web-app_hero-copy-new_1-NFP",
+	"heroCopyNew": "dogoblock-web-app_hero-copy-new_1-NFP",
+	"hero-title": "dogoblock-web-app_hero-title_3vzv9",
+	"heroTitle": "dogoblock-web-app_hero-title_3vzv9",
+	"hero-accent": "dogoblock-web-app_hero-accent_fT7jP",
+	"heroAccent": "dogoblock-web-app_hero-accent_fT7jP",
+	"hero-actions-new": "dogoblock-web-app_hero-actions-new_3rUsr",
+	"heroActionsNew": "dogoblock-web-app_hero-actions-new_3rUsr",
+	"hero-btn-primary": "dogoblock-web-app_hero-btn-primary_1OBbc",
+	"heroBtnPrimary": "dogoblock-web-app_hero-btn-primary_1OBbc",
+	"hero-btn-outline": "dogoblock-web-app_hero-btn-outline_344fC",
+	"heroBtnOutline": "dogoblock-web-app_hero-btn-outline_344fC",
+	"hero-illustration": "dogoblock-web-app_hero-illustration_Xpfzt",
+	"heroIllustration": "dogoblock-web-app_hero-illustration_Xpfzt",
+	"featured-section": "dogoblock-web-app_featured-section_3NRT3",
+	"featuredSection": "dogoblock-web-app_featured-section_3NRT3",
+	"featured-title": "dogoblock-web-app_featured-title_tVGCx",
+	"featuredTitle": "dogoblock-web-app_featured-title_tVGCx",
+	"featured-empty": "dogoblock-web-app_featured-empty_2RA0I",
+	"featuredEmpty": "dogoblock-web-app_featured-empty_2RA0I",
+	"featured-grid": "dogoblock-web-app_featured-grid_3At29",
+	"featuredGrid": "dogoblock-web-app_featured-grid_3At29",
+	"featured-thumbnail": "dogoblock-web-app_featured-thumbnail_1W30t",
+	"featuredThumbnail": "dogoblock-web-app_featured-thumbnail_1W30t",
+	"featured-card-body": "dogoblock-web-app_featured-card-body_3t-kX",
+	"featuredCardBody": "dogoblock-web-app_featured-card-body_3t-kX",
+	"featured-card-title": "dogoblock-web-app_featured-card-title_2I_HI",
+	"featuredCardTitle": "dogoblock-web-app_featured-card-title_2I_HI",
+	"featured-card-author": "dogoblock-web-app_featured-card-author_fatHU",
+	"featuredCardAuthor": "dogoblock-web-app_featured-card-author_fatHU",
+	"site-footer": "dogoblock-web-app_site-footer_1iprI",
+	"siteFooter": "dogoblock-web-app_site-footer_1iprI",
+	"footer-inner": "dogoblock-web-app_footer-inner_2qcat",
+	"footerInner": "dogoblock-web-app_footer-inner_2qcat",
+	"footer-brand": "dogoblock-web-app_footer-brand_Gbx7N",
+	"footerBrand": "dogoblock-web-app_footer-brand_Gbx7N",
+	"footer-logo": "dogoblock-web-app_footer-logo_1Vta7",
+	"footerLogo": "dogoblock-web-app_footer-logo_1Vta7",
+	"footer-links": "dogoblock-web-app_footer-links_2GnH_",
+	"footerLinks": "dogoblock-web-app_footer-links_2GnH_",
+	"footer-lei": "dogoblock-web-app_footer-lei_2aRPq",
+	"footerLei": "dogoblock-web-app_footer-lei_2aRPq",
+	"footer-contact": "dogoblock-web-app_footer-contact_kixSb",
+	"footerContact": "dogoblock-web-app_footer-contact_kixSb",
+	"footer-bottom": "dogoblock-web-app_footer-bottom_18YbC",
+	"footerBottom": "dogoblock-web-app_footer-bottom_18YbC",
+	"pd-page": "dogoblock-web-app_pd-page_KaiaO",
+	"pdPage": "dogoblock-web-app_pd-page_KaiaO",
+	"pd-loading": "dogoblock-web-app_pd-loading_2yBGM",
+	"pdLoading": "dogoblock-web-app_pd-loading_2yBGM",
+	"pd-header": "dogoblock-web-app_pd-header_15sVF",
+	"pdHeader": "dogoblock-web-app_pd-header_15sVF",
+	"pd-header-left": "dogoblock-web-app_pd-header-left_Ywyhv",
+	"pdHeaderLeft": "dogoblock-web-app_pd-header-left_Ywyhv",
+	"pd-thumb-box": "dogoblock-web-app_pd-thumb-box_2-Fq4",
+	"pdThumbBox": "dogoblock-web-app_pd-thumb-box_2-Fq4",
+	"pd-thumb-img": "dogoblock-web-app_pd-thumb-img_1KW1w",
+	"pdThumbImg": "dogoblock-web-app_pd-thumb-img_1KW1w",
+	"pd-thumb-fallback": "dogoblock-web-app_pd-thumb-fallback_tB_L1",
+	"pdThumbFallback": "dogoblock-web-app_pd-thumb-fallback_tB_L1",
+	"pd-title-group": "dogoblock-web-app_pd-title-group_15Btu",
+	"pdTitleGroup": "dogoblock-web-app_pd-title-group_15Btu",
+	"pd-title": "dogoblock-web-app_pd-title_3OX_1",
+	"pdTitle": "dogoblock-web-app_pd-title_3OX_1",
+	"pd-author": "dogoblock-web-app_pd-author_3AAnG",
+	"pdAuthor": "dogoblock-web-app_pd-author_3AAnG",
+	"pd-date": "dogoblock-web-app_pd-date_cKn04",
+	"pdDate": "dogoblock-web-app_pd-date_cKn04",
+	"pd-header-actions": "dogoblock-web-app_pd-header-actions_2py2D",
+	"pdHeaderActions": "dogoblock-web-app_pd-header-actions_2py2D",
+	"pd-btn-visibility": "dogoblock-web-app_pd-btn-visibility_1jaCu",
+	"pdBtnVisibility": "dogoblock-web-app_pd-btn-visibility_1jaCu",
+	"pd-btn-delete": "dogoblock-web-app_pd-btn-delete_eb3sI",
+	"pdBtnDelete": "dogoblock-web-app_pd-btn-delete_eb3sI",
+	"pd-main-grid": "dogoblock-web-app_pd-main-grid_FNx8H",
+	"pdMainGrid": "dogoblock-web-app_pd-main-grid_FNx8H",
+	"pd-player-col": "dogoblock-web-app_pd-player-col_BxfGo",
+	"pdPlayerCol": "dogoblock-web-app_pd-player-col_BxfGo",
+	"pd-toolbar": "dogoblock-web-app_pd-toolbar_3dhry",
+	"pdToolbar": "dogoblock-web-app_pd-toolbar_3dhry",
+	"pd-toolbar-flags": "dogoblock-web-app_pd-toolbar-flags_TXL2k",
+	"pdToolbarFlags": "dogoblock-web-app_pd-toolbar-flags_TXL2k",
+	"pd-flag-green": "dogoblock-web-app_pd-flag-green_1Yb_a",
+	"pdFlagGreen": "dogoblock-web-app_pd-flag-green_1Yb_a",
+	"pd-flag-red": "dogoblock-web-app_pd-flag-red_OuNdy",
+	"pdFlagRed": "dogoblock-web-app_pd-flag-red_OuNdy",
+	"pd-toolbar-right": "dogoblock-web-app_pd-toolbar-right_1SdU2",
+	"pdToolbarRight": "dogoblock-web-app_pd-toolbar-right_1SdU2",
+	"pd-bar-icon": "dogoblock-web-app_pd-bar-icon_3WJm_",
+	"pdBarIcon": "dogoblock-web-app_pd-bar-icon_3WJm_",
+	"pd-stage": "dogoblock-web-app_pd-stage_2YPmb",
+	"pdStage": "dogoblock-web-app_pd-stage_2YPmb",
+	"pd-stats-row": "dogoblock-web-app_pd-stats-row_3md3-",
+	"pdStatsRow": "dogoblock-web-app_pd-stats-row_3md3-",
+	"pd-stats": "dogoblock-web-app_pd-stats_32ety",
+	"pdStats": "dogoblock-web-app_pd-stats_32ety",
+	"pd-stat": "dogoblock-web-app_pd-stat_a_ebm",
+	"pdStat": "dogoblock-web-app_pd-stat_a_ebm",
+	"pd-btn-see-inside": "dogoblock-web-app_pd-btn-see-inside_1mD05",
+	"pdBtnSeeInside": "dogoblock-web-app_pd-btn-see-inside_1mD05",
+	"pd-info-col": "dogoblock-web-app_pd-info-col_28UnO",
+	"pdInfoCol": "dogoblock-web-app_pd-info-col_28UnO",
+	"pd-info-section": "dogoblock-web-app_pd-info-section_5wpZ9",
+	"pdInfoSection": "dogoblock-web-app_pd-info-section_5wpZ9",
+	"pd-info-label": "dogoblock-web-app_pd-info-label_3e4_s",
+	"pdInfoLabel": "dogoblock-web-app_pd-info-label_3e4_s",
+	"pd-info-textarea": "dogoblock-web-app_pd-info-textarea_1VRTO",
+	"pdInfoTextarea": "dogoblock-web-app_pd-info-textarea_1VRTO",
+	"pd-comments": "dogoblock-web-app_pd-comments_3XlQU",
+	"pdComments": "dogoblock-web-app_pd-comments_3XlQU",
+	"pd-comments-title": "dogoblock-web-app_pd-comments-title_1bOdq",
+	"pdCommentsTitle": "dogoblock-web-app_pd-comments-title_1bOdq",
+	"pd-comment-composer": "dogoblock-web-app_pd-comment-composer_3lF9C",
+	"pdCommentComposer": "dogoblock-web-app_pd-comment-composer_3lF9C",
+	"pd-comment-avatar": "dogoblock-web-app_pd-comment-avatar_32eUa",
+	"pdCommentAvatar": "dogoblock-web-app_pd-comment-avatar_32eUa",
+	"pd-comment-input-wrap": "dogoblock-web-app_pd-comment-input-wrap_NelRJ",
+	"pdCommentInputWrap": "dogoblock-web-app_pd-comment-input-wrap_NelRJ",
+	"pd-comment-input": "dogoblock-web-app_pd-comment-input_3zPZo",
+	"pdCommentInput": "dogoblock-web-app_pd-comment-input_3zPZo",
+	"pd-comment-actions": "dogoblock-web-app_pd-comment-actions_2XheL",
+	"pdCommentActions": "dogoblock-web-app_pd-comment-actions_2XheL",
+	"pd-btn-publish": "dogoblock-web-app_pd-btn-publish_1qnjo",
+	"pdBtnPublish": "dogoblock-web-app_pd-btn-publish_1qnjo",
+	"pd-btn-cancel": "dogoblock-web-app_pd-btn-cancel_3KsTS",
+	"pdBtnCancel": "dogoblock-web-app_pd-btn-cancel_3KsTS",
+	"pd-btn-visibility-public": "dogoblock-web-app_pd-btn-visibility-public_1XRR_",
+	"pdBtnVisibilityPublic": "dogoblock-web-app_pd-btn-visibility-public_1XRR_",
+	"pd-btn-visibility-private": "dogoblock-web-app_pd-btn-visibility-private_2D01B",
+	"pdBtnVisibilityPrivate": "dogoblock-web-app_pd-btn-visibility-private_2D01B",
+	"pd-stat-btn": "dogoblock-web-app_pd-stat-btn_2G3OI",
+	"pdStatBtn": "dogoblock-web-app_pd-stat-btn_2G3OI",
+	"pd-stat-btn-active-like": "dogoblock-web-app_pd-stat-btn-active-like_2k0RH",
+	"pdStatBtnActiveLike": "dogoblock-web-app_pd-stat-btn-active-like_2k0RH",
+	"pd-stat-btn-active-fav": "dogoblock-web-app_pd-stat-btn-active-fav_34SY0",
+	"pdStatBtnActiveFav": "dogoblock-web-app_pd-stat-btn-active-fav_34SY0",
+	"pd-thumb-overlay": "dogoblock-web-app_pd-thumb-overlay_1FiyH",
+	"pdThumbOverlay": "dogoblock-web-app_pd-thumb-overlay_1FiyH",
+	"pd-btn-save-details": "dogoblock-web-app_pd-btn-save-details_RNirf",
+	"pdBtnSaveDetails": "dogoblock-web-app_pd-btn-save-details_RNirf",
+	"pd-btn-save-details-done": "dogoblock-web-app_pd-btn-save-details-done_k0fD4",
+	"pdBtnSaveDetailsDone": "dogoblock-web-app_pd-btn-save-details-done_k0fD4",
+	"pd-comment-avatar-initials": "dogoblock-web-app_pd-comment-avatar-initials_1IO8e",
+	"pdCommentAvatarInitials": "dogoblock-web-app_pd-comment-avatar-initials_1IO8e",
+	"pd-comment-list": "dogoblock-web-app_pd-comment-list_27QY8",
+	"pdCommentList": "dogoblock-web-app_pd-comment-list_27QY8",
+	"pd-comment-item": "dogoblock-web-app_pd-comment-item_9DLQt",
+	"pdCommentItem": "dogoblock-web-app_pd-comment-item_9DLQt",
+	"pd-comment-item-avatar": "dogoblock-web-app_pd-comment-item-avatar_3j-Br",
+	"pdCommentItemAvatar": "dogoblock-web-app_pd-comment-item-avatar_3j-Br",
+	"pd-comment-item-body": "dogoblock-web-app_pd-comment-item-body_3-T6S",
+	"pdCommentItemBody": "dogoblock-web-app_pd-comment-item-body_3-T6S",
+	"pd-comment-item-author": "dogoblock-web-app_pd-comment-item-author_1pVLK",
+	"pdCommentItemAuthor": "dogoblock-web-app_pd-comment-item-author_1pVLK",
+	"pd-comment-item-text": "dogoblock-web-app_pd-comment-item-text_1Ll3B",
+	"pdCommentItemText": "dogoblock-web-app_pd-comment-item-text_1Ll3B",
+	"pd-comment-item-delete": "dogoblock-web-app_pd-comment-item-delete_kSpog",
+	"pdCommentItemDelete": "dogoblock-web-app_pd-comment-item-delete_kSpog",
+	"pd-comment-empty": "dogoblock-web-app_pd-comment-empty_1I3-k",
+	"pdCommentEmpty": "dogoblock-web-app_pd-comment-empty_1I3-k",
+	"pd-comment-reply-btn": "dogoblock-web-app_pd-comment-reply-btn_3Lyzg",
+	"pdCommentReplyBtn": "dogoblock-web-app_pd-comment-reply-btn_3Lyzg",
+	"pd-reply-composer": "dogoblock-web-app_pd-reply-composer_1PY6w",
+	"pdReplyComposer": "dogoblock-web-app_pd-reply-composer_1PY6w",
+	"replyFadeIn": "dogoblock-web-app_replyFadeIn_flhdW",
+	"pd-reply-list": "dogoblock-web-app_pd-reply-list_1RzXI",
+	"pdReplyList": "dogoblock-web-app_pd-reply-list_1RzXI",
+	"pd-reply-item": "dogoblock-web-app_pd-reply-item_2r86P",
+	"pdReplyItem": "dogoblock-web-app_pd-reply-item_2r86P"
 };
 
 /***/ }),
 
-/***/ 2074:
+/***/ 2062:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/assets/a0f2f98e8648fcb6c90756bd16e5eb7d.png";
+
+/***/ }),
+
+/***/ 2063:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/assets/6ab57785fe92515fe2b802064b584d42.png";
+
+/***/ }),
+
+/***/ 2077:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -459,67 +768,70 @@ var prop_types = __webpack_require__(0);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
-var react_redux_es = __webpack_require__(19);
-
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/folder-open.js
-var folder_open = __webpack_require__(2107);
-
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/code-xml.js
-var code_xml = __webpack_require__(2104);
-
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/compass.js
-var compass = __webpack_require__(2108);
+var react_redux_es = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/circle-user.js
-var circle_user = __webpack_require__(2109);
+var circle_user = __webpack_require__(2110);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-out.js
-var log_out = __webpack_require__(2110);
+var log_out = __webpack_require__(2111);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user.js
+var icons_user = __webpack_require__(2112);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-in.js
-var log_in = __webpack_require__(2111);
-
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/plus.js
-var plus = __webpack_require__(2112);
+var log_in = __webpack_require__(2113);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user-plus.js
-var user_plus = __webpack_require__(2113);
+var user_plus = __webpack_require__(2114);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/search.js
+var search = __webpack_require__(2115);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/upload.js
-var upload = __webpack_require__(2105);
+var upload = __webpack_require__(2108);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/plus.js
+var plus = __webpack_require__(2116);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/trash-2.js
-var trash_2 = __webpack_require__(2100);
+var trash_2 = __webpack_require__(2103);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/save.js
-var save = __webpack_require__(2114);
+var save = __webpack_require__(2117);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/heart.js
+var heart = __webpack_require__(2095);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/star.js
-var star = __webpack_require__(2093);
+var star = __webpack_require__(2096);
 
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/settings.js
-var settings = __webpack_require__(2115);
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/folder-open.js
+var folder_open = __webpack_require__(2118);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/message-circle.js
+var message_circle = __webpack_require__(2093);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/copy.js
+var copy = __webpack_require__(2119);
+
+// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/code-xml.js
+var code_xml = __webpack_require__(2107);
 
 // EXTERNAL MODULE: ./src/containers/gui.jsx + 300 modules
 var gui = __webpack_require__(212);
 
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/message-circle.js
-var message_circle = __webpack_require__(2090);
-
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
-var icons_reply = __webpack_require__(2091);
-
-// EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/heart.js
-var heart = __webpack_require__(2092);
+var icons_reply = __webpack_require__(2094);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/repeat-2.js
-var repeat_2 = __webpack_require__(2094);
+var repeat_2 = __webpack_require__(2097);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/bell.js
-var bell = __webpack_require__(2095);
+var bell = __webpack_require__(2098);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/check-check.js
-var check_check = __webpack_require__(2096);
+var check_check = __webpack_require__(2099);
 
 // EXTERNAL MODULE: ./src/components/notifications/notifications-bell.css
 var notifications_bell = __webpack_require__(118);
@@ -798,28 +1110,28 @@ var project_state = __webpack_require__(38);
 var project_interactions = __webpack_require__(235);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(74);
+var dogoblock_api = __webpack_require__(55);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
-var lock_open = __webpack_require__(2097);
+var lock_open = __webpack_require__(2100);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/share-2.js
-var share_2 = __webpack_require__(2098);
+var share_2 = __webpack_require__(2101);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock.js
-var lock = __webpack_require__(2099);
+var lock = __webpack_require__(2102);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/pen-line.js
-var pen_line = __webpack_require__(2101);
+var pen_line = __webpack_require__(2104);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/ellipsis.js
-var ellipsis = __webpack_require__(2102);
+var ellipsis = __webpack_require__(2105);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/send.js
-var send = __webpack_require__(2103);
+var send = __webpack_require__(2106);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/eye.js
-var eye = __webpack_require__(2106);
+var eye = __webpack_require__(2109);
 
 // EXTERNAL MODULE: ./src/components/project-page/project-page.css
 var project_page = __webpack_require__(34);
@@ -1978,7 +2290,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnlike() {
       var _this4 = this;
 
-      Object(dogoblock_api["z" /* unlikeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["A" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -1996,7 +2308,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnfavorite() {
       var _this6 = this;
 
-      Object(dogoblock_api["y" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["z" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2042,7 +2354,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateVisibility(visibility) {
       var _this10 = this;
 
-      Object(dogoblock_api["C" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
+      Object(dogoblock_api["D" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
         _this10.props.onSetDetails(Object.assign({}, _this10.props, {
           visibility: res.visibility
         }));
@@ -2053,7 +2365,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateDetails(patch) {
       var _this11 = this;
 
-      return Object(dogoblock_api["B" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
+      return Object(dogoblock_api["C" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
         _this11.props.onSetDetails(Object.assign({}, _this11.props, res));
       });
     }
@@ -2062,7 +2374,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateCover(coverFile) {
       var _this12 = this;
 
-      return Object(dogoblock_api["D" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
+      return Object(dogoblock_api["E" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
         _this12.props.onSetDetails(Object.assign({}, _this12.props, res));
 
         return res;
@@ -2206,15 +2518,25 @@ var reducers_session = __webpack_require__(371);
 var mode = __webpack_require__(178);
 
 // EXTERNAL MODULE: ./static/dogoblock_logo_full.svg
-var dogoblock_logo_full = __webpack_require__(357);
+var dogoblock_logo_full = __webpack_require__(323);
 var dogoblock_logo_full_default = /*#__PURE__*/__webpack_require__.n(dogoblock_logo_full);
 
+// EXTERNAL MODULE: ./static/hero-illustration.png
+var hero_illustration = __webpack_require__(1222);
+var hero_illustration_default = /*#__PURE__*/__webpack_require__.n(hero_illustration);
+
 // EXTERNAL MODULE: ./src/playground/dogoblock-web-app.css
-var dogoblock_web_app = __webpack_require__(32);
+var dogoblock_web_app = __webpack_require__(19);
 var dogoblock_web_app_default = /*#__PURE__*/__webpack_require__.n(dogoblock_web_app);
 
 // CONCATENATED MODULE: ./src/playground/dogoblock-web-app.jsx
 function dogoblock_web_app_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { dogoblock_web_app_typeof = function _typeof(obj) { return typeof obj; }; } else { dogoblock_web_app_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return dogoblock_web_app_typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { dogoblock_web_app_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function dogoblock_web_app_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || dogoblock_web_app_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -2255,6 +2577,7 @@ function dogoblock_web_app_arrayLikeToArray(arr, len) { if (len == null || len >
 function dogoblock_web_app_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function dogoblock_web_app_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2436,12 +2759,30 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       copyLinkFeedback: false,
       projects: [],
       projectDetails: null,
+      featuredProjectDetails: null,
       profile: null,
       favoriteProjects: [],
       profileTab: 'overview',
+      searchQuery: '',
       notifications: [],
       notificationsLoading: false,
-      unreadCount: 0
+      unreadCount: 0,
+      // project details page state
+      pdComments: [],
+      pdCommentsLoading: false,
+      pdCommentText: '',
+      pdReplyToId: null,
+      pdReplyText: '',
+      pdReplyLoading: false,
+      pdInstructions: '',
+      pdCredits: '',
+      pdSavingDetails: false,
+      pdSaveDetailsFeedback: false,
+      pdUploadingCover: false,
+      pdLiked: false,
+      pdFavorited: false,
+      pdLikeCount: 0,
+      pdStarCount: 0
     };
     _this.handleHashChange = _this.handleHashChange.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleLogin = _this.handleLogin.bind(dogoblock_web_app_assertThisInitialized(_this));
@@ -2471,6 +2812,23 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     _this.handleOpenNotification = _this.handleOpenNotification.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleProfileSubmit = _this.handleProfileSubmit.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleProfileTab = _this.handleProfileTab.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handleSearchChange = _this.handleSearchChange.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdLike = _this.handlePdLike.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdFavorite = _this.handlePdFavorite.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdRemix = _this.handlePdRemix.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdSaveDetails = _this.handlePdSaveDetails.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdInstructionsChange = _this.handlePdInstructionsChange.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdCreditsChange = _this.handlePdCreditsChange.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdCommentChange = _this.handlePdCommentChange.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdCommentSubmit = _this.handlePdCommentSubmit.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdCommentCancel = _this.handlePdCommentCancel.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdDeleteComment = _this.handlePdDeleteComment.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdReplyOpen = _this.handlePdReplyOpen.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdReplyChange = _this.handlePdReplyChange.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdReplySubmit = _this.handlePdReplySubmit.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdReplyCancel = _this.handlePdReplyCancel.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdDeleteReply = _this.handlePdDeleteReply.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handlePdCoverChange = _this.handlePdCoverChange.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.renderHome = _this.renderHome.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.renderLogin = _this.renderLogin.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.renderRegister = _this.renderRegister.bind(dogoblock_web_app_assertThisInitialized(_this));
@@ -2531,6 +2889,22 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return;
       }
 
+      if (route.name === 'home') {
+        this.setState({
+          loading: true
+        });
+        Object(dogoblock_api["q" /* listPublicProjects */])().then(function (projects) {
+          return _this3.setState({
+            projects: projects,
+            loading: false
+          });
+        }).catch(function () {
+          return _this3.setState({
+            loading: false
+          });
+        });
+      }
+
       if (route.name === 'profile') {
         if (!this.props.user) {
           dogoblock_web_app_navigate(loginRouteFor('/profile'));
@@ -2539,7 +2913,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
 
         this.setState({
           loading: true,
-          error: null
+          error: null,
+          featuredProjectDetails: null
         });
         Promise.all([Object(dogoblock_api["j" /* getMyProfile */])(), Object(dogoblock_api["p" /* listProjects */])(), Object(dogoblock_api["n" /* listFavoriteProjects */])()]).then(function (_ref2) {
           var _ref3 = dogoblock_web_app_slicedToArray(_ref2, 3),
@@ -2553,7 +2928,33 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
             favoriteProjects: favoriteProjects,
             loading: false,
             error: null
-          });
+          }); // Fetch details for up to 10 projects to find the most-liked one
+
+
+          var candidates = projects.slice(0, 10);
+
+          if (candidates.length > 0) {
+            Promise.all(candidates.map(function (p) {
+              return Object(dogoblock_api["k" /* getProjectDetails */])(p.id).catch(function () {
+                return null;
+              });
+            })).then(function (details) {
+              var valid = details.filter(Boolean);
+              if (!valid.length) return; // Sort by likeCount desc, then favoriteCount desc as tiebreaker
+
+              valid.sort(function (a, b) {
+                var likes = (b.likeCount || 0) - (a.likeCount || 0);
+                if (likes !== 0) return likes;
+                return (b.favoriteCount || 0) - (a.favoriteCount || 0);
+              });
+
+              _this3.setState({
+                featuredProjectDetails: valid[0]
+              });
+            }).catch(function () {
+              /* silently ignore */
+            });
+          }
         }).catch(function (error) {
           return _this3.setState({
             error: error.message,
@@ -2584,16 +2985,37 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         var requestedProjectId = route.projectId;
         this.setState({
           loading: true,
-          projectDetails: null
+          projectDetails: null,
+          pdComments: [],
+          pdCommentText: '',
+          pdLiked: false,
+          pdFavorited: false,
+          pdLikeCount: 0,
+          pdStarCount: 0
         });
-        Object(dogoblock_api["k" /* getProjectDetails */])(requestedProjectId).then(function (projectDetails) {
+        Promise.all([Object(dogoblock_api["k" /* getProjectDetails */])(requestedProjectId), Object(dogoblock_api["i" /* getComments */])(requestedProjectId).catch(function () {
+          return {
+            comments: []
+          };
+        })]).then(function (_ref4) {
+          var _ref5 = dogoblock_web_app_slicedToArray(_ref4, 2),
+              projectDetails = _ref5[0],
+              commentsResult = _ref5[1];
+
           if (_this3.state.route.name !== 'projectDetails' || _this3.state.route.projectId !== requestedProjectId) {
             return;
           }
 
           _this3.setState({
             projectDetails: projectDetails,
-            loading: false
+            loading: false,
+            pdComments: commentsResult.comments || commentsResult || [],
+            pdInstructions: projectDetails.instructions || '',
+            pdCredits: projectDetails.notesAndCredits || projectDetails.credits || projectDetails.notes || '',
+            pdLiked: Boolean(projectDetails.liked || projectDetails.isLiked),
+            pdFavorited: Boolean(projectDetails.favorited || projectDetails.isFavorited),
+            pdLikeCount: getProjectMetric(projectDetails, ['likeCount', 'likes', 'totalLikes']),
+            pdStarCount: getProjectMetric(projectDetails, ['favoriteCount', 'favorites', 'starCount'])
           });
         }).catch(function (error) {
           if (_this3.state.route.name !== 'projectDetails' || _this3.state.route.projectId !== requestedProjectId) {
@@ -2986,7 +3408,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["C" /* updateProjectVisibility */])(project.id, visibility).then(function () {
+      Object(dogoblock_api["D" /* updateProjectVisibility */])(project.id, visibility).then(function () {
         return Object(dogoblock_api["k" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         return _this13.setState({
@@ -3042,16 +3464,357 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       dogoblock_web_app_navigate(loginRouteFor(currentRouteHash()));
     }
   }, {
+    key: "handleSearchChange",
+    value: function handleSearchChange(event) {
+      this.setState({
+        searchQuery: event.target.value
+      });
+    }
+  }, {
     key: "handleProfileTab",
     value: function handleProfileTab(event) {
       this.setState({
         profileTab: event.currentTarget.dataset.tab
       });
+    } // ── Project Details handlers ─────────────────────────────────────────────
+
+  }, {
+    key: "handlePdLike",
+    value: function handlePdLike() {
+      var _this14 = this;
+
+      var project = this.state.projectDetails;
+      if (!project) return;
+
+      if (!this.props.user) {
+        dogoblock_web_app_navigate(loginRouteFor());
+        return;
+      }
+
+      var wasLiked = this.state.pdLiked;
+      this.setState(function (prevState) {
+        return {
+          pdLiked: !wasLiked,
+          pdLikeCount: prevState.pdLikeCount + (wasLiked ? -1 : 1)
+        };
+      });
+      var action = wasLiked ? dogoblock_api["A" /* unlikeProject */] : dogoblock_api["m" /* likeProject */];
+      action(project.id).catch(function () {
+        // rollback on error
+        _this14.setState(function (prevState) {
+          return {
+            pdLiked: wasLiked,
+            pdLikeCount: prevState.pdLikeCount + (wasLiked ? 1 : -1)
+          };
+        });
+      });
+    }
+  }, {
+    key: "handlePdFavorite",
+    value: function handlePdFavorite() {
+      var _this15 = this;
+
+      var project = this.state.projectDetails;
+      if (!project) return;
+
+      if (!this.props.user) {
+        dogoblock_web_app_navigate(loginRouteFor());
+        return;
+      }
+
+      var wasFavorited = this.state.pdFavorited;
+      this.setState(function (prevState) {
+        return {
+          pdFavorited: !wasFavorited,
+          pdStarCount: prevState.pdStarCount + (wasFavorited ? -1 : 1)
+        };
+      });
+      var action = wasFavorited ? dogoblock_api["z" /* unfavoriteProject */] : dogoblock_api["g" /* favoriteProject */];
+      action(project.id).catch(function () {
+        _this15.setState(function (prevState) {
+          return {
+            pdFavorited: wasFavorited,
+            pdStarCount: prevState.pdStarCount + (wasFavorited ? 1 : -1)
+          };
+        });
+      });
+    }
+  }, {
+    key: "handlePdRemix",
+    value: function handlePdRemix() {
+      var _this16 = this;
+
+      var project = this.state.projectDetails;
+      if (!project) return;
+
+      if (!this.props.user) {
+        dogoblock_web_app_navigate(loginRouteFor());
+        return;
+      }
+
+      if (this.state.pdRemixing) return;
+      this.setState({
+        pdRemixing: true,
+        error: null
+      });
+      Object(dogoblock_api["y" /* remixProject */])(project.id).then(function (result) {
+        _this16.setState({
+          pdRemixing: false
+        });
+
+        dogoblock_web_app_navigate("/editor/".concat(result.id));
+      }).catch(function (err) {
+        _this16.setState({
+          pdRemixing: false,
+          error: err.message || 'Erro ao replicar projeto'
+        });
+      });
+    }
+  }, {
+    key: "handlePdSaveDetails",
+    value: function handlePdSaveDetails() {
+      var _this17 = this;
+
+      var project = this.state.projectDetails;
+      if (!project || !this.props.user) return;
+      var _this$state = this.state,
+          pdInstructions = _this$state.pdInstructions,
+          pdCredits = _this$state.pdCredits;
+      this.setState({
+        pdSavingDetails: true,
+        error: null
+      });
+      Object(dogoblock_api["C" /* updateProjectDetails */])(project.id, {
+        instructions: pdInstructions,
+        notesAndCredits: pdCredits
+      }).then(function (updated) {
+        _this17.setState(function (prevState) {
+          return {
+            pdSavingDetails: false,
+            pdSaveDetailsFeedback: true,
+            projectDetails: Object.assign({}, prevState.projectDetails, updated)
+          };
+        });
+
+        if (_this17.pdSaveFeedbackTimer) clearTimeout(_this17.pdSaveFeedbackTimer);
+        _this17.pdSaveFeedbackTimer = setTimeout(function () {
+          return _this17.setState({
+            pdSaveDetailsFeedback: false
+          });
+        }, 2500);
+      }).catch(function (err) {
+        return _this17.setState({
+          pdSavingDetails: false,
+          error: err.message
+        });
+      });
+    }
+  }, {
+    key: "handlePdInstructionsChange",
+    value: function handlePdInstructionsChange(event) {
+      this.setState({
+        pdInstructions: event.target.value
+      });
+    }
+  }, {
+    key: "handlePdCreditsChange",
+    value: function handlePdCreditsChange(event) {
+      this.setState({
+        pdCredits: event.target.value
+      });
+    }
+  }, {
+    key: "handlePdCommentChange",
+    value: function handlePdCommentChange(event) {
+      this.setState({
+        pdCommentText: event.target.value
+      });
+    }
+  }, {
+    key: "handlePdCommentSubmit",
+    value: function handlePdCommentSubmit() {
+      var _this18 = this;
+
+      var project = this.state.projectDetails;
+
+      if (!project || !this.props.user) {
+        dogoblock_web_app_navigate(loginRouteFor());
+        return;
+      }
+
+      var content = this.state.pdCommentText.trim();
+      if (!content) return;
+      this.setState({
+        pdCommentsLoading: true
+      });
+      Object(dogoblock_api["v" /* postComment */])(project.id, content).then(function (comment) {
+        _this18.setState(function (prevState) {
+          return {
+            pdComments: [comment].concat(_toConsumableArray(prevState.pdComments)),
+            pdCommentText: '',
+            pdCommentsLoading: false
+          };
+        });
+      }).catch(function (err) {
+        return _this18.setState({
+          pdCommentsLoading: false,
+          error: err.message
+        });
+      });
+    }
+  }, {
+    key: "handlePdCommentCancel",
+    value: function handlePdCommentCancel() {
+      this.setState({
+        pdCommentText: ''
+      });
+    }
+  }, {
+    key: "handlePdDeleteComment",
+    value: function handlePdDeleteComment(event) {
+      var _this19 = this;
+
+      var commentId = event.currentTarget.dataset.commentId;
+      var project = this.state.projectDetails;
+      if (!project || !commentId) return;
+      Object(dogoblock_api["c" /* deleteComment */])(project.id, commentId).then(function () {
+        _this19.setState(function (prevState) {
+          return {
+            pdComments: prevState.pdComments.filter(function (c) {
+              return String(c.id) !== String(commentId);
+            })
+          };
+        });
+      }).catch(function (err) {
+        return _this19.setState({
+          error: err.message
+        });
+      });
+    }
+  }, {
+    key: "handlePdReplyOpen",
+    value: function handlePdReplyOpen(event) {
+      var parentId = event.currentTarget.dataset.commentId;
+      this.setState({
+        pdReplyToId: parentId,
+        pdReplyText: ''
+      });
+    }
+  }, {
+    key: "handlePdReplyChange",
+    value: function handlePdReplyChange(event) {
+      this.setState({
+        pdReplyText: event.target.value
+      });
+    }
+  }, {
+    key: "handlePdReplyCancel",
+    value: function handlePdReplyCancel() {
+      this.setState({
+        pdReplyToId: null,
+        pdReplyText: ''
+      });
+    }
+  }, {
+    key: "handlePdReplySubmit",
+    value: function handlePdReplySubmit() {
+      var _this20 = this;
+
+      var project = this.state.projectDetails;
+      var _this$state2 = this.state,
+          pdReplyToId = _this$state2.pdReplyToId,
+          pdReplyText = _this$state2.pdReplyText;
+
+      if (!project || !this.props.user) {
+        dogoblock_web_app_navigate(loginRouteFor());
+        return;
+      }
+
+      var content = pdReplyText.trim();
+      if (!content || !pdReplyToId) return;
+      this.setState({
+        pdReplyLoading: true
+      });
+      Object(dogoblock_api["v" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
+        _this20.setState(function (prevState) {
+          return {
+            pdComments: prevState.pdComments.map(function (c) {
+              if (String(c.id) !== String(pdReplyToId)) return c;
+              return _objectSpread(_objectSpread({}, c), {}, {
+                replies: [].concat(_toConsumableArray(c.replies || []), [reply])
+              });
+            }),
+            pdReplyToId: null,
+            pdReplyText: '',
+            pdReplyLoading: false
+          };
+        });
+      }).catch(function (err) {
+        return _this20.setState({
+          pdReplyLoading: false,
+          error: err.message
+        });
+      });
+    }
+  }, {
+    key: "handlePdDeleteReply",
+    value: function handlePdDeleteReply(event) {
+      var _this21 = this;
+
+      var replyId = event.currentTarget.dataset.replyId;
+      var parentId = event.currentTarget.dataset.parentId;
+      var project = this.state.projectDetails;
+      if (!project || !replyId) return;
+      Object(dogoblock_api["c" /* deleteComment */])(project.id, replyId).then(function () {
+        _this21.setState(function (prevState) {
+          return {
+            pdComments: prevState.pdComments.map(function (c) {
+              if (String(c.id) !== String(parentId)) return c;
+              return _objectSpread(_objectSpread({}, c), {}, {
+                replies: (c.replies || []).filter(function (r) {
+                  return String(r.id) !== String(replyId);
+                })
+              });
+            })
+          };
+        });
+      }).catch(function (err) {
+        return _this21.setState({
+          error: err.message
+        });
+      });
+    }
+  }, {
+    key: "handlePdCoverChange",
+    value: function handlePdCoverChange(event) {
+      var _this22 = this;
+
+      var file = event.target.files && event.target.files[0];
+      var project = this.state.projectDetails;
+      if (!file || !project) return;
+      this.setState({
+        pdUploadingCover: true
+      });
+      Object(dogoblock_api["E" /* uploadProjectCover */])(project.id, file).then(function (updated) {
+        _this22.setState(function (prevState) {
+          return {
+            pdUploadingCover: false,
+            projectDetails: Object.assign({}, prevState.projectDetails, updated)
+          };
+        });
+      }).catch(function (err) {
+        return _this22.setState({
+          pdUploadingCover: false,
+          error: err.message
+        });
+      }); // reset input so same file can be selected again
+
+      event.target.value = '';
     }
   }, {
     key: "handleProfileSubmit",
     value: function handleProfileSubmit(event) {
-      var _this14 = this;
+      var _this23 = this;
 
       event.preventDefault();
       var form = new FormData(event.currentTarget);
@@ -3059,7 +3822,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["A" /* updateMyProfile */])({
+      Object(dogoblock_api["B" /* updateMyProfile */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -3075,16 +3838,17 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
           Object(auth_session["d" /* writeAuthSession */])(nextSession);
 
-          _this14.props.onLoginSuccess(nextSession);
+          _this23.props.onLoginSuccess(nextSession);
         }
 
-        _this14.setState({
+        _this23.setState({
           profile: profile,
+          profileTab: 'overview',
           loading: false,
           error: null
         });
       }).catch(function (error) {
-        return _this14.setState({
+        return _this23.setState({
           error: error.message,
           loading: false
         });
@@ -3093,8 +3857,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderHeader",
     value: function renderHeader() {
-      return /*#__PURE__*/react_default.a.createElement("div", {
+      var user = this.props.user;
+      return /*#__PURE__*/react_default.a.createElement("header", {
         className: dogoblock_web_app_default.a.topbar
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.topbarInner
       }, /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.brand,
         onClick: this.handleNavigateHome
@@ -3102,27 +3869,23 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         alt: "Dogoblock",
         className: dogoblock_web_app_default.a.logo,
         src: dogoblock_logo_full_default.a
-      })), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.nav
-      }, this.props.user ? /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateProjects
-      }, /*#__PURE__*/react_default.a.createElement(folder_open["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Meus Projetos'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateEditor
-      }, /*#__PURE__*/react_default.a.createElement(code_xml["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Editor'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
+      })), /*#__PURE__*/react_default.a.createElement("nav", {
+        className: dogoblock_web_app_default.a.navCenter
+      }, /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.navLink,
         onClick: this.handleNavigateExplore
-      }, /*#__PURE__*/react_default.a.createElement(compass["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Explorar Projetos'), /*#__PURE__*/react_default.a.createElement(notifications_notifications_bell, {
+      }, 'Explorar'), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.navLink,
+        onClick: this.handleNavigateProjects
+      }, 'Meus Projetos'), user ? /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.navLink,
+        onClick: this.handleNavigateProfile
+      }, 'Meu Perfil') : null, /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.navBtnEditor,
+        onClick: this.handleNavigateEditor
+      }, '</> Editor')), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.navRight
+      }, user ? /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, /*#__PURE__*/react_default.a.createElement(notifications_notifications_bell, {
         loading: this.state.notificationsLoading,
         notifications: this.state.notifications,
         unreadCount: this.state.unreadCount,
@@ -3130,87 +3893,138 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         onOpen: this.handleLoadNotifications,
         onOpenNotification: this.handleOpenNotification
       }), /*#__PURE__*/react_default.a.createElement("button", {
-        className: "".concat(dogoblock_web_app_default.a.navButton, " ").concat(dogoblock_web_app_default.a.userBadgeButton),
+        "aria-label": "Meu Perfil",
+        className: dogoblock_web_app_default.a.navUserIconBtn,
+        title: "Meu Perfil",
         onClick: this.handleNavigateProfile
       }, /*#__PURE__*/react_default.a.createElement(circle_user["a" /* default */], {
         "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), this.props.user.username), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
+        size: 26
+      })), /*#__PURE__*/react_default.a.createElement("button", {
+        className: "".concat(dogoblock_web_app_default.a.navLink, " ").concat(dogoblock_web_app_default.a.navBtnSair),
         onClick: this.handleLogout
       }, /*#__PURE__*/react_default.a.createElement(log_out["a" /* default */], {
         "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Sair')) : /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateProjects
-      }, /*#__PURE__*/react_default.a.createElement(folder_open["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Meus Projetos'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateEditor
-      }, /*#__PURE__*/react_default.a.createElement(code_xml["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Editor'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateExplore
-      }, /*#__PURE__*/react_default.a.createElement(compass["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Explorar Projetos'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.navButton,
-        onClick: this.handleNavigateLogin
-      }, /*#__PURE__*/react_default.a.createElement(log_in["a" /* default */], {
-        "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.navIcon
-      }), 'Entrar/Cadastrar'))));
+        size: 13
+      }), 'Sair da Conta')) : /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.navBtnCriarConta,
+        onClick: this.handleNavigateRegister
+      }, 'Criar Conta'))));
     }
   }, {
     key: "renderHome",
     value: function renderHome() {
+      var _this24 = this;
+
+      var featured = (this.state.projects || []).slice(0, 4);
       return /*#__PURE__*/react_default.a.createElement("div", {
-        className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.homePage)
+        className: dogoblock_web_app_default.a.homePage
       }, /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.hero
+        className: dogoblock_web_app_default.a.heroSection
       }, /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.heroCopy
-      }, /*#__PURE__*/react_default.a.createElement("p", {
-        className: dogoblock_web_app_default.a.kicker
-      }, 'DOGOBLOCK'), /*#__PURE__*/react_default.a.createElement("h1", null, 'Crie, programe e compartilhe seus projetos'), /*#__PURE__*/react_default.a.createElement("p", {
-        className: dogoblock_web_app_default.a.heroText
-      }, 'Monte jogos, animações e experiências com blocos, Arduino e micro:bit em um ambiente ', 'simples para aprender fazendo.'), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.heroActions
+        className: dogoblock_web_app_default.a.heroInner
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.heroCopyNew
+      }, /*#__PURE__*/react_default.a.createElement("h1", {
+        className: dogoblock_web_app_default.a.heroTitle
+      }, 'CRIE HISTÓRIAS, ANIMAÇÕES', /*#__PURE__*/react_default.a.createElement("br", null), 'E JOGOS COM O ', /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.heroAccent
+      }, 'DOGOBLOCK.')), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.heroActionsNew
       }, /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.primaryButton,
-        onClick: this.handleNewProject
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(plus["a" /* default */], {
-        size: 16
-      })), 'Criar Projeto'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.secondaryButton,
+        className: dogoblock_web_app_default.a.heroBtnPrimary,
         onClick: this.handleNavigateExplore
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(compass["a" /* default */], {
-        size: 16
-      })), 'Explorar Projetos'), this.props.user ? null : /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.lightButton,
-        onClick: this.handleNavigateLogin
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(log_in["a" /* default */], {
-        size: 16
-      })), 'Entrar/Cadastrar'))), /*#__PURE__*/react_default.a.createElement("div", {
+      }, 'EXPLORAR PROJETOS'), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.heroBtnOutline,
+        onClick: this.handleNewProject
+      }, 'COMEÇAR A CRIAR'))), /*#__PURE__*/react_default.a.createElement("div", {
         "aria-hidden": "true",
-        className: dogoblock_web_app_default.a.heroPreview
+        className: dogoblock_web_app_default.a.heroIllustration
+      }, /*#__PURE__*/react_default.a.createElement("img", {
+        alt: "",
+        src: hero_illustration_default.a
+      })))), /*#__PURE__*/react_default.a.createElement("section", {
+        className: dogoblock_web_app_default.a.featuredSection
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.featuredTitle
+      }, 'PROJETOS EM DESTAQUE'), featured.length === 0 ? /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.featuredEmpty
+      }, this.state.loading ? 'Carregando projetos...' : 'Nenhum projeto em destaque ainda.') : /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.featuredGrid
+      }, featured.map(function (project) {
+        return /*#__PURE__*/react_default.a.createElement("button", {
+          className: dogoblock_web_app_default.a.featuredCard,
+          "data-project-id": project.id,
+          key: project.id,
+          onClick: _this24.handleOpenProjectDetails
+        }, /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.featuredThumbnail
+        }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardBody
+        }, /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardAvatarCol
+        }, /*#__PURE__*/react_default.a.createElement(icons_user["a" /* default */], {
+          fill: "currentColor",
+          className: dogoblock_web_app_default.a.cardAvatarIcon
+        })), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardInfoCol
+        }, /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.cardTitle
+        }, project.title || project.name || 'Projeto'), /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.cardAuthor
+        }, getProjectAuthor(project)))));
+      }))));
+    }
+  }, {
+    key: "renderFooter",
+    value: function renderFooter() {
+      return /*#__PURE__*/react_default.a.createElement("footer", {
+        className: dogoblock_web_app_default.a.siteFooter
       }, /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.previewCard
+        className: dogoblock_web_app_default.a.footerInner
       }, /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.previewWindow
-      }, /*#__PURE__*/react_default.a.createElement("span", null, 'MOON')), /*#__PURE__*/react_default.a.createElement("strong", null, 'Moon Game'), /*#__PURE__*/react_default.a.createElement("small", null, 'Projeto em blocos')))));
+        className: dogoblock_web_app_default.a.footerBrand
+      }, /*#__PURE__*/react_default.a.createElement("img", {
+        alt: "Editora DogoMaker",
+        className: dogoblock_web_app_default.a.footerLogo,
+        src: dogoblock_logo_full_default.a
+      })), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.footerLinks
+      }, /*#__PURE__*/react_default.a.createElement("strong", null, 'LINKS'), /*#__PURE__*/react_default.a.createElement("a", {
+        href: "#",
+        rel: "noopener noreferrer",
+        target: "_blank"
+      }, 'Home'), /*#__PURE__*/react_default.a.createElement("a", {
+        href: "https://app.portaldogomaker.com.br",
+        rel: "noopener noreferrer",
+        target: "_blank"
+      }, 'Portal do Professor'), /*#__PURE__*/react_default.a.createElement("a", {
+        href: "https://www.editoradogomaker.com.br",
+        rel: "noopener noreferrer",
+        target: "_blank"
+      }, 'Site da Editora')), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.footerLei
+      }, /*#__PURE__*/react_default.a.createElement("strong", null, 'LEI'), /*#__PURE__*/react_default.a.createElement("a", {
+        href: "#",
+        rel: "noopener noreferrer",
+        target: "_blank"
+      }, 'Termos de Uso'), /*#__PURE__*/react_default.a.createElement("a", {
+        href: "#",
+        rel: "noopener noreferrer",
+        target: "_blank"
+      }, 'Política de Privacidade')), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.footerContact
+      }, /*#__PURE__*/react_default.a.createElement("strong", null, 'CONTATO E ENDEREÇO'), /*#__PURE__*/react_default.a.createElement("span", null, 'contato@editoradogomaker.com'), /*#__PURE__*/react_default.a.createElement("span", null, '(31) 99259-9654'), /*#__PURE__*/react_default.a.createElement("span", null, 'BR-316, Km7, nº 186 – Qd. 201, Lt. 4776 (Loja)', /*#__PURE__*/react_default.a.createElement("br", null), 'Centro, Ananindeua – PA'))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.footerBottom
+      }, 'EDITORA DOGOMAKER - TODOS OS DIREITOS RESERVADOS'));
     }
   }, {
     key: "renderLogin",
     value: function renderLogin() {
       return /*#__PURE__*/react_default.a.createElement("div", {
-        className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.narrowPage)
+        className: dogoblock_web_app_default.a.authSection
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.authCardWrap
       }, /*#__PURE__*/react_default.a.createElement("form", {
         className: dogoblock_web_app_default.a.panel,
         onSubmit: this.handleLogin
@@ -3242,13 +4056,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       }, /*#__PURE__*/react_default.a.createElement(user_plus["a" /* default */], {
         "aria-hidden": "true",
         className: dogoblock_web_app_default.a.inlineIcon
-      }), 'Cadastrar'))));
+      }), 'Cadastrar')))));
     }
   }, {
     key: "renderRegister",
     value: function renderRegister() {
       return /*#__PURE__*/react_default.a.createElement("div", {
-        className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.narrowPage)
+        className: dogoblock_web_app_default.a.authSection
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.authCardWrap
       }, /*#__PURE__*/react_default.a.createElement("form", {
         className: dogoblock_web_app_default.a.panel,
         onSubmit: this.handleRegister
@@ -3293,17 +4109,38 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       }, /*#__PURE__*/react_default.a.createElement(log_in["a" /* default */], {
         "aria-hidden": "true",
         className: dogoblock_web_app_default.a.inlineIcon
-      }), 'Entrar'))));
+      }), 'Entrar')))));
     }
   }, {
     key: "renderProjects",
     value: function renderProjects() {
       var publicList = !this.props.user || this.state.route.name === 'explore';
+      var _this$state3 = this.state,
+          searchQuery = _this$state3.searchQuery,
+          projects = _this$state3.projects;
+      var filteredProjects = projects.filter(function (project) {
+        if (!searchQuery.trim()) return true;
+        var query = searchQuery.toLowerCase();
+        var title = (project.title || project.name || '').toLowerCase();
+        var author = getProjectAuthor(project).toLowerCase();
+        return title.includes(query) || author.includes(query);
+      });
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.page
       }, /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.pageHeader
-      }, /*#__PURE__*/react_default.a.createElement("h1", null, publicList ? 'Projetos Públicos' : 'Meus Projetos'), publicList ? null : /*#__PURE__*/react_default.a.createElement("div", {
+      }, /*#__PURE__*/react_default.a.createElement("h1", null, publicList ? 'Projetos Públicos' : 'Meus Projetos'), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.searchBar
+      }, /*#__PURE__*/react_default.a.createElement(search["a" /* default */], {
+        className: dogoblock_web_app_default.a.searchIcon,
+        size: 18
+      }), /*#__PURE__*/react_default.a.createElement("input", {
+        type: "text",
+        placeholder: "Buscar projetos...",
+        value: searchQuery,
+        onChange: this.handleSearchChange,
+        className: dogoblock_web_app_default.a.searchInput
+      })), publicList ? null : /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.actions
       }, /*#__PURE__*/react_default.a.createElement("button", {
         className: dogoblock_web_app_default.a.secondaryButton,
@@ -3317,14 +4154,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         size: 16
       })), 'Criar Projeto'))), this.state.error ? /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.error
-      }, this.state.error) : null, this.state.loading ? /*#__PURE__*/react_default.a.createElement("p", null, 'Carregando...') : null, this.renderProjectCards(this.state.projects, !publicList), !this.state.loading && !this.state.projects.length ? /*#__PURE__*/react_default.a.createElement("div", {
+      }, this.state.error) : null, this.state.loading ? /*#__PURE__*/react_default.a.createElement("p", null, 'Carregando...') : null, this.renderProjectCards(filteredProjects, !publicList), !this.state.loading && !filteredProjects.length ? /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.emptyState
       }, publicList ? 'Nenhum projeto publico encontrado.' : 'Voce ainda nao criou projetos.') : null);
     }
   }, {
     key: "renderProjectCards",
     value: function renderProjectCards(projects, canDeleteProjects) {
-      var _this15 = this;
+      var _this25 = this;
 
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.projectGrid
@@ -3335,21 +4172,28 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.projectCard,
           "data-project-id": project.id,
-          onClick: _this15.handleOpenProjectDetails
-        }, /*#__PURE__*/react_default.a.createElement("span", {
+          onClick: _this25.handleOpenProjectDetails
+        }, /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.projectThumbnail
-        }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("span", {
-          className: dogoblock_web_app_default.a.projectTitle
-        }, project.title), /*#__PURE__*/react_default.a.createElement("span", {
-          className: dogoblock_web_app_default.a.projectMeta
-        }, getVisibilityLabel(project.visibility)), /*#__PURE__*/react_default.a.createElement("span", {
-          className: dogoblock_web_app_default.a.projectMeta
-        }, dogoblock_web_app_formatDate(project.updatedAt))), canDeleteProjects ? /*#__PURE__*/react_default.a.createElement("button", {
+        }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardBody
+        }, /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardAvatarCol
+        }, /*#__PURE__*/react_default.a.createElement(icons_user["a" /* default */], {
+          fill: "currentColor",
+          className: dogoblock_web_app_default.a.cardAvatarIcon
+        })), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.cardInfoCol
+        }, /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.cardTitle
+        }, project.title || project.name || 'Projeto'), /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.cardAuthor
+        }, getProjectAuthor(project))))), canDeleteProjects ? /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.projectDeleteButton,
           "data-project-id": project.id,
           title: "Excluir projeto",
           "aria-label": "Excluir projeto ".concat(project.title),
-          onClick: _this15.handleDeleteProjectFromCard
+          onClick: _this25.handleDeleteProjectFromCard
         }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
           "aria-hidden": "true",
           size: 15
@@ -3359,67 +4203,95 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderProfile",
     value: function renderProfile() {
-      var _this16 = this;
-
       var profile = this.state.profile || this.props.user || {};
-      var tab = this.state.profileTab;
+      var projects = this.state.projects;
+      var favorites = this.state.favoriteProjects; // Use the first project as the "featured" one;
+      // prefer the fully-loaded details (with stats) if available
 
-      var tabButton = function tabButton(id, label, IconComponent) {
-        return /*#__PURE__*/react_default.a.createElement("button", {
-          className: "".concat(dogoblock_web_app_default.a.profileTab, " ").concat(tab === id ? dogoblock_web_app_default.a.profileTabActive : ''),
-          "data-tab": id,
-          onClick: _this16.handleProfileTab
-        }, /*#__PURE__*/react_default.a.createElement(IconComponent, {
-          "aria-hidden": "true",
-          className: dogoblock_web_app_default.a.navIcon
-        }), label);
-      };
-
+      var featuredProject = this.state.featuredProjectDetails || projects[0] || null;
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.profilePage)
       }, this.state.error ? /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.error
-      }, this.state.error) : null, /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profileHero
+      }, this.state.error) : null, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileTopRow
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: "".concat(dogoblock_web_app_default.a.profileInfoCard, " ").concat(dogoblock_web_app_default.a.panel)
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileInfoHeader
       }, /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.profileAvatar
       }, profile.avatarUrl ? /*#__PURE__*/react_default.a.createElement("img", {
         alt: profile.username,
         src: profile.avatarUrl
       }) : dogoblock_web_app_getInitials(profile)), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileSummary
-      }, /*#__PURE__*/react_default.a.createElement("p", {
-        className: dogoblock_web_app_default.a.kicker
-      }, 'PERFIL'), /*#__PURE__*/react_default.a.createElement("h1", null, profile.name || profile.username || 'Meu perfil'), /*#__PURE__*/react_default.a.createElement("p", null, "@".concat(profile.username || 'usuario')), /*#__PURE__*/react_default.a.createElement("p", {
-        className: dogoblock_web_app_default.a.profileBio
+        className: dogoblock_web_app_default.a.profileNameStack
+      }, /*#__PURE__*/react_default.a.createElement("h1", {
+        className: dogoblock_web_app_default.a.profileName
+      }, profile.name || profile.username || 'Meu Perfil'), /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.profileUsername
+      }, "@".concat(profile.username || 'usuario')))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileInfoBody
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSection
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileSectionTitle
+      }, 'Sobre mim'), /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.profileSectionText
       }, profile.bio || 'Adicione uma descrição para contar um pouco sobre você.')), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileStats
-      }, /*#__PURE__*/react_default.a.createElement("strong", null, profile.projectCount || this.state.projects.length || 0), /*#__PURE__*/react_default.a.createElement("span", null, 'Projetos'), /*#__PURE__*/react_default.a.createElement("strong", null, profile.favoriteCount || this.state.favoriteProjects.length || 0), /*#__PURE__*/react_default.a.createElement("span", null, 'Favoritos'))), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileTabs
-      }, tabButton('overview', 'Visão Geral', circle_user["a" /* default */]), tabButton('edit', 'Dados', save["a" /* default */]), tabButton('projects', 'Projetos', folder_open["a" /* default */]), tabButton('favorites', 'Favoritos', star["a" /* default */]), tabButton('settings', 'Configurações', settings["a" /* default */])), this.state.loading ? /*#__PURE__*/react_default.a.createElement("p", null, 'Carregando...') : null, tab === 'overview' ? /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileGrid
-      }, /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profilePanel
-      }, /*#__PURE__*/react_default.a.createElement("h2", null, 'Descrição'), /*#__PURE__*/react_default.a.createElement("p", null, profile.bio || 'Nenhuma descrição adicionada.')), /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profilePanel
-      }, /*#__PURE__*/react_default.a.createElement("h2", null, 'Em que estou trabalhando'), /*#__PURE__*/react_default.a.createElement("p", null, profile.workingOn || 'Nenhum foco atual informado.')), /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profilePanel
-      }, /*#__PURE__*/react_default.a.createElement("h2", null, 'Atalhos'), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileActions
-      }, /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.primaryButton,
-        onClick: this.handleNewProject
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(plus["a" /* default */], {
+        className: dogoblock_web_app_default.a.profileSection
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileSectionTitle
+      }, 'No que estou trabalhando'), /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.profileSectionText
+      }, profile.workingOn || 'Nenhum foco atual informado.')), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.profileEditButton,
+        onClick: this.handleProfileTab,
+        "data-tab": "edit"
+      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(save["a" /* default */], {
+        size: 15
+      })), 'Editar perfil'))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: "".concat(dogoblock_web_app_default.a.profileFeaturedCard, " ").concat(dogoblock_web_app_default.a.panel)
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileFeaturedHeader
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileFeaturedTitle
+      }, 'PROJETO\nDE DESTAQUE')), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileFeaturedBody
+      }, featuredProject ? /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.profileFeaturedThumb,
+        "data-project-id": featuredProject.id,
+        onClick: this.handleOpenProjectDetails
+      }, dogoblock_web_app_renderProjectThumbnail(featuredProject)) : /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileFeaturedEmpty
+      }, 'Nenhum projeto ainda.'), featuredProject ? /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileFeaturedStats
+      }, /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.profileFeaturedStat
+      }, /*#__PURE__*/react_default.a.createElement(heart["a" /* default */], {
+        "aria-hidden": "true",
         size: 16
-      })), 'Criar Projeto'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.secondaryButton,
-        onClick: this.handleNavigateExplore
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(compass["a" /* default */], {
+      }), getProjectMetric(featuredProject, ['likeCount', 'likes', 'totalLikes']) || 0), /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.profileFeaturedStat
+      }, /*#__PURE__*/react_default.a.createElement(star["a" /* default */], {
+        "aria-hidden": "true",
         size: 16
-      })), 'Explorar')))) : null, tab === 'edit' ? /*#__PURE__*/react_default.a.createElement("form", {
+      }), getProjectMetric(featuredProject, ['favoriteCount', 'favorites', 'starCount']) || 0), /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.profileFeaturedStat
+      }, /*#__PURE__*/react_default.a.createElement(folder_open["a" /* default */], {
+        "aria-hidden": "true",
+        size: 16
+      }), getProjectMetric(featuredProject, ['remixCount', 'remixes', 'forkCount']) || 0), /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.profileFeaturedStat
+      }, /*#__PURE__*/react_default.a.createElement(message_circle["a" /* default */], {
+        "aria-hidden": "true",
+        size: 16
+      }), getProjectMetric(featuredProject, ['commentCount', 'comments']) || 0)) : null))), this.state.profileTab === 'edit' ? /*#__PURE__*/react_default.a.createElement("form", {
         className: "".concat(dogoblock_web_app_default.a.panel, " ").concat(dogoblock_web_app_default.a.profileForm),
         onSubmit: this.handleProfileSubmit
-      }, /*#__PURE__*/react_default.a.createElement("h1", null, 'Editar Perfil'), /*#__PURE__*/react_default.a.createElement("label", {
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileSectionTitle
+      }, 'Editar Perfil'), /*#__PURE__*/react_default.a.createElement("label", {
         className: dogoblock_web_app_default.a.field
       }, 'Nome', /*#__PURE__*/react_default.a.createElement("input", {
         defaultValue: profile.name || '',
@@ -3443,79 +4315,351 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         type: "email"
       })), /*#__PURE__*/react_default.a.createElement("label", {
         className: dogoblock_web_app_default.a.field
-      }, 'Descrição', /*#__PURE__*/react_default.a.createElement("textarea", {
+      }, 'Sobre mim', /*#__PURE__*/react_default.a.createElement("textarea", {
         defaultValue: profile.bio || '',
         maxLength: "500",
         name: "bio",
         rows: "4"
       })), /*#__PURE__*/react_default.a.createElement("label", {
         className: dogoblock_web_app_default.a.field
-      }, 'Em que está trabalhando', /*#__PURE__*/react_default.a.createElement("textarea", {
+      }, 'No que estou trabalhando', /*#__PURE__*/react_default.a.createElement("textarea", {
         defaultValue: profile.workingOn || '',
         maxLength: "280",
         name: "workingOn",
         rows: "3"
-      })), /*#__PURE__*/react_default.a.createElement("button", {
+      })), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileFormActions
+      }, /*#__PURE__*/react_default.a.createElement("button", {
         className: dogoblock_web_app_default.a.primaryButton
       }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(save["a" /* default */], {
         size: 16
-      })), this.state.loading ? 'Salvando...' : 'Salvar Perfil')) : null, tab === 'projects' ? /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.pageHeader
-      }, /*#__PURE__*/react_default.a.createElement("h1", null, 'Meus Projetos'), /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.actions
-      }, /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.dangerButton,
-        onClick: this.handleNewProject
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(plus["a" /* default */], {
-        size: 16
-      })), 'Criar Projeto'))), this.renderProjectCards(this.state.projects, true), !this.state.projects.length ? /*#__PURE__*/react_default.a.createElement("div", {
+      })), this.state.loading ? 'Salvando...' : 'Salvar Perfil'), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.secondaryButton,
+        type: "button",
+        onClick: this.handleProfileTab,
+        "data-tab": "overview"
+      }, 'Cancelar'))) : null, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSection2
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSectionHeader
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileSectionHeading
+      }, "PROJETOS (".concat(projects.length, ")"))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSectionBody
+      }, projects.length ? this.renderProjectCards(projects, true) : /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.emptyState
-      }, 'Você ainda não criou projetos.') : null) : null, tab === 'favorites' ? /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.pageHeader
-      }, /*#__PURE__*/react_default.a.createElement("h1", null, 'Favoritos')), this.renderProjectCards(this.state.favoriteProjects, false), !this.state.favoriteProjects.length ? /*#__PURE__*/react_default.a.createElement("div", {
+      }, 'Você ainda não criou projetos.'))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSection2
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSectionHeader
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.profileSectionHeading
+      }, "FAVORITOS (".concat(favorites.length, ")"))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.profileSectionBody
+      }, favorites.length ? this.renderProjectCards(favorites, false) : /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.emptyState
-      }, 'Nenhum projeto favorito ainda.') : null) : null, tab === 'settings' ? /*#__PURE__*/react_default.a.createElement("div", {
-        className: dogoblock_web_app_default.a.profileGrid
-      }, /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profilePanel
-      }, /*#__PURE__*/react_default.a.createElement("h2", null, 'Configurações da conta'), /*#__PURE__*/react_default.a.createElement("p", null, 'Mais opções de segurança, senha e notificações serão adicionadas aqui.')), /*#__PURE__*/react_default.a.createElement("section", {
-        className: dogoblock_web_app_default.a.profilePanel
-      }, /*#__PURE__*/react_default.a.createElement("h2", null, 'Sessão'), /*#__PURE__*/react_default.a.createElement("button", {
-        className: dogoblock_web_app_default.a.dangerButton,
-        onClick: this.handleLogout
-      }, /*#__PURE__*/react_default.a.createElement(dogoblock_web_app_Icon, null, /*#__PURE__*/react_default.a.createElement(log_out["a" /* default */], {
-        size: 16
-      })), 'Sair da conta'))) : null);
+      }, 'Nenhum projeto favorito ainda.'))));
     }
   }, {
     key: "renderProjectDetails",
     value: function renderProjectDetails() {
-      var _this17 = this;
+      var _this26 = this;
 
-      var projectId = this.state.route.projectId;
+      var _this$state4 = this.state,
+          projectDetails = _this$state4.projectDetails,
+          loading = _this$state4.loading,
+          error = _this$state4.error,
+          route = _this$state4.route,
+          pdComments = _this$state4.pdComments,
+          pdCommentsLoading = _this$state4.pdCommentsLoading,
+          pdCommentText = _this$state4.pdCommentText,
+          pdReplyToId = _this$state4.pdReplyToId,
+          pdReplyText = _this$state4.pdReplyText,
+          pdReplyLoading = _this$state4.pdReplyLoading,
+          pdInstructions = _this$state4.pdInstructions,
+          pdCredits = _this$state4.pdCredits,
+          pdSavingDetails = _this$state4.pdSavingDetails,
+          pdSaveDetailsFeedback = _this$state4.pdSaveDetailsFeedback,
+          pdUploadingCover = _this$state4.pdUploadingCover,
+          pdLiked = _this$state4.pdLiked,
+          pdFavorited = _this$state4.pdFavorited,
+          pdLikeCount = _this$state4.pdLikeCount,
+          pdStarCount = _this$state4.pdStarCount;
+      var projectId = route.projectId;
+      var project = projectDetails || {};
+      var user = this.props.user;
+      var isOwner = user && project.ownerId && String(user.id) === String(project.ownerId);
+      var remixCount = getProjectMetric(project, ['remixCount', 'remixes', 'forkCount']);
+      var thumbnail = getProjectThumbnail(project);
+      var author = getProjectAuthor(project);
+      var title = project.title || project.name || 'Projeto';
+      var createdAt = dogoblock_web_app_formatDate(project.createdAt || project.created_at);
+      var isPublic = project.visibility === 'PUBLIC';
       return /*#__PURE__*/react_default.a.createElement("div", {
-        className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.projectDetailsPage)
-      }, this.state.error ? /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdPage
+      }, error ? /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.error
-      }, this.state.error) : null, this.state.loading ? /*#__PURE__*/react_default.a.createElement("p", null, 'Carregando...') : null, projectId ? /*#__PURE__*/react_default.a.createElement(containers_project_page, {
+      }, error) : null, loading ? /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.pdLoading
+      }, 'Carregando...') : null, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdHeader
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdHeaderLeft
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdThumbBox
+      }, thumbnail ? /*#__PURE__*/react_default.a.createElement("img", {
+        alt: "",
+        className: dogoblock_web_app_default.a.pdThumbImg,
+        src: thumbnail
+      }) : /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdThumbFallback
+      }, /*#__PURE__*/react_default.a.createElement("span", null, 'DB')), isOwner ? /*#__PURE__*/react_default.a.createElement("label", {
+        className: dogoblock_web_app_default.a.pdThumbOverlay,
+        htmlFor: "pd-cover-input",
+        title: "Alterar capa"
+      }, pdUploadingCover ? '...' : /*#__PURE__*/react_default.a.createElement(upload["a" /* default */], {
+        "aria-hidden": "true",
+        size: 18
+      }), /*#__PURE__*/react_default.a.createElement("input", {
+        accept: "image/*",
+        className: dogoblock_web_app_default.a.hiddenInput,
+        id: "pd-cover-input",
+        type: "file",
+        onChange: this.handlePdCoverChange
+      })) : null), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdTitleGroup
+      }, /*#__PURE__*/react_default.a.createElement("h1", {
+        className: dogoblock_web_app_default.a.pdTitle
+      }, title.toUpperCase()), /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.pdAuthor
+      }, "Por @".concat(author)), createdAt ? /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.pdDate
+      }, "Criado em ".concat(createdAt)) : null)), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdHeaderActions
+      }, isOwner ? /*#__PURE__*/react_default.a.createElement("button", {
+        className: isPublic ? dogoblock_web_app_default.a.pdBtnVisibilityPublic : dogoblock_web_app_default.a.pdBtnVisibilityPrivate,
+        onClick: this.handleToggleVisibility
+      }, isPublic ? 'Público' : 'Privado') : /*#__PURE__*/react_default.a.createElement("span", {
+        className: isPublic ? dogoblock_web_app_default.a.pdBtnVisibilityPublic : dogoblock_web_app_default.a.pdBtnVisibilityPrivate
+      }, isPublic ? 'Público' : 'Privado'), isOwner ? /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.pdBtnDelete,
+        onClick: this.handleDeleteProject
+      }, 'Excluir Projeto') : null)), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdMainGrid
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdPlayerCol
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdStage
+      }, projectId ? /*#__PURE__*/react_default.a.createElement(gui["a" /* default */], {
+        key: "project-page-player-".concat(projectId),
+        canCreateNew: false,
+        canEditTitle: false,
+        canSave: false,
+        assetHost: Object(dogoblock_api_config["b" /* getAssetHost */])(),
+        projectHost: Object(dogoblock_api_config["c" /* getProjectHost */])(),
         projectId: projectId,
-        onDeleteProject: this.handleDeleteProject,
-        onClose: this.handleNavigateProjects,
-        renderPlayer: function renderPlayer() {
-          return /*#__PURE__*/react_default.a.createElement(gui["a" /* default */], {
-            key: "project-page-player-".concat(projectId),
-            canCreateNew: false,
-            canEditTitle: false,
-            canSave: false,
-            assetHost: Object(dogoblock_api_config["b" /* getAssetHost */])(),
-            projectHost: Object(dogoblock_api_config["c" /* getProjectHost */])(),
-            projectId: projectId,
-            routeProjectId: projectId,
-            onProjectLoaded: noop,
-            onShowMessageBox: _this17.handleShowMessageBox
-          });
+        routeProjectId: projectId,
+        onProjectLoaded: noop,
+        onShowMessageBox: this.handleShowMessageBox
+      }) : null), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdStatsRow
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdStats
+      }, /*#__PURE__*/react_default.a.createElement("button", {
+        className: pdLiked ? dogoblock_web_app_default.a.pdStatBtnActiveLike : dogoblock_web_app_default.a.pdStatBtn,
+        title: pdLiked ? 'Descurtir' : 'Curtir',
+        onClick: this.handlePdLike
+      }, /*#__PURE__*/react_default.a.createElement(heart["a" /* default */], {
+        "aria-hidden": "true",
+        fill: pdLiked ? 'currentColor' : 'none',
+        size: 16
+      }), pdLikeCount), /*#__PURE__*/react_default.a.createElement("button", {
+        className: pdFavorited ? dogoblock_web_app_default.a.pdStatBtnActiveFav : dogoblock_web_app_default.a.pdStatBtn,
+        title: pdFavorited ? 'Remover dos favoritos' : 'Favoritar',
+        onClick: this.handlePdFavorite
+      }, /*#__PURE__*/react_default.a.createElement(star["a" /* default */], {
+        "aria-hidden": "true",
+        fill: pdFavorited ? 'currentColor' : 'none',
+        size: 16
+      }), pdStarCount), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.pdStatBtn,
+        disabled: this.state.pdRemixing,
+        title: this.state.pdRemixing ? 'Replicando...' : 'Replicar projeto para a minha biblioteca',
+        onClick: this.handlePdRemix
+      }, /*#__PURE__*/react_default.a.createElement(copy["a" /* default */], {
+        "aria-hidden": "true",
+        size: 16
+      }), this.state.pdRemixing ? '...' : remixCount)), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.pdBtnSeeInside,
+        onClick: function onClick() {
+          return dogoblock_web_app_navigate("/editor/".concat(projectId));
         }
-      }) : null);
+      }, /*#__PURE__*/react_default.a.createElement(code_xml["a" /* default */], {
+        "aria-hidden": "true",
+        size: 15
+      }), 'Ver por dentro'))), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdInfoCol
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdInfoSection
+      }, /*#__PURE__*/react_default.a.createElement("label", {
+        className: dogoblock_web_app_default.a.pdInfoLabel,
+        htmlFor: "pd-instructions"
+      }, 'Instruções'), /*#__PURE__*/react_default.a.createElement("textarea", {
+        className: dogoblock_web_app_default.a.pdInfoTextarea,
+        id: "pd-instructions",
+        readOnly: !isOwner,
+        rows: 6,
+        value: isOwner ? pdInstructions : project.instructions || '',
+        onChange: isOwner ? this.handlePdInstructionsChange : undefined
+      })), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdInfoSection
+      }, /*#__PURE__*/react_default.a.createElement("label", {
+        className: dogoblock_web_app_default.a.pdInfoLabel,
+        htmlFor: "pd-credits"
+      }, 'Notas e créditos'), /*#__PURE__*/react_default.a.createElement("textarea", {
+        className: dogoblock_web_app_default.a.pdInfoTextarea,
+        id: "pd-credits",
+        readOnly: !isOwner,
+        rows: 6,
+        value: isOwner ? pdCredits : project.notesAndCredits || project.credits || project.notes || '',
+        onChange: isOwner ? this.handlePdCreditsChange : undefined
+      })), isOwner ? /*#__PURE__*/react_default.a.createElement("button", {
+        className: pdSaveDetailsFeedback ? dogoblock_web_app_default.a.pdBtnSaveDetailsDone : dogoblock_web_app_default.a.pdBtnSaveDetails,
+        disabled: pdSavingDetails,
+        onClick: this.handlePdSaveDetails
+      }, /*#__PURE__*/react_default.a.createElement(save["a" /* default */], {
+        "aria-hidden": "true",
+        size: 14
+      }), pdSavingDetails ? 'Salvando...' : pdSaveDetailsFeedback ? 'Salvo! ✓' : 'Salvar alterações') : null)), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdComments
+      }, /*#__PURE__*/react_default.a.createElement("h2", {
+        className: dogoblock_web_app_default.a.pdCommentsTitle
+      }, 'Comentários'), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdCommentComposer
+      }, /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdCommentAvatar
+      }, user ? /*#__PURE__*/react_default.a.createElement("span", {
+        className: dogoblock_web_app_default.a.pdCommentAvatarInitials
+      }, dogoblock_web_app_getInitials(user)) : /*#__PURE__*/react_default.a.createElement(circle_user["a" /* default */], {
+        "aria-hidden": "true",
+        size: 28
+      })), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdCommentInputWrap
+      }, /*#__PURE__*/react_default.a.createElement("textarea", {
+        className: dogoblock_web_app_default.a.pdCommentInput,
+        id: "pd-comment-input",
+        placeholder: user ? 'Escreva um comentário...' : 'Faça login para comentar',
+        rows: 3,
+        value: pdCommentText,
+        onChange: this.handlePdCommentChange
+      }), /*#__PURE__*/react_default.a.createElement("div", {
+        className: dogoblock_web_app_default.a.pdCommentActions
+      }, /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.pdBtnPublish,
+        disabled: pdCommentsLoading || !pdCommentText.trim(),
+        onClick: this.handlePdCommentSubmit
+      }, pdCommentsLoading ? 'Publicando...' : 'Publicar'), /*#__PURE__*/react_default.a.createElement("button", {
+        className: dogoblock_web_app_default.a.pdBtnCancel,
+        onClick: this.handlePdCommentCancel
+      }, 'Cancelar')))), pdComments.length > 0 ? /*#__PURE__*/react_default.a.createElement("ul", {
+        className: dogoblock_web_app_default.a.pdCommentList
+      }, pdComments.map(function (comment) {
+        var commentAuthor = comment.username || comment.author || comment.user && (comment.user.username || comment.user.name) || 'Usuário';
+        var canDelete = user && (String(user.id) === String(comment.userId || comment.user && comment.user.id) || isOwner);
+        var isReplying = pdReplyToId === String(comment.id);
+        return /*#__PURE__*/react_default.a.createElement("li", {
+          className: dogoblock_web_app_default.a.pdCommentItem,
+          key: comment.id
+        }, /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdCommentItemAvatar
+        }, /*#__PURE__*/react_default.a.createElement(circle_user["a" /* default */], {
+          "aria-hidden": "true",
+          size: 32
+        })), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdCommentItemBody
+        }, /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.pdCommentItemAuthor
+        }, "@".concat(commentAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
+          className: dogoblock_web_app_default.a.pdCommentItemText
+        }, comment.content), user ? /*#__PURE__*/react_default.a.createElement("button", {
+          className: dogoblock_web_app_default.a.pdCommentReplyBtn,
+          "data-comment-id": comment.id,
+          onClick: isReplying ? _this26.handlePdReplyCancel : _this26.handlePdReplyOpen
+        }, /*#__PURE__*/react_default.a.createElement(message_circle["a" /* default */], {
+          "aria-hidden": "true",
+          size: 12
+        }), isReplying ? 'Cancelar' : 'Responder') : null, isReplying ? /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdReplyComposer
+        }, /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdCommentAvatar,
+          style: {
+            width: '2rem',
+            height: '2rem'
+          }
+        }, /*#__PURE__*/react_default.a.createElement("span", {
+          className: dogoblock_web_app_default.a.pdCommentAvatarInitials,
+          style: {
+            fontSize: '0.7rem'
+          }
+        }, dogoblock_web_app_getInitials(user))), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdCommentInputWrap
+        }, /*#__PURE__*/react_default.a.createElement("textarea", {
+          autoFocus: true,
+          className: dogoblock_web_app_default.a.pdCommentInput,
+          placeholder: "Respondendo a @".concat(commentAuthor, "..."),
+          rows: 2,
+          value: pdReplyText,
+          onChange: _this26.handlePdReplyChange
+        }), /*#__PURE__*/react_default.a.createElement("div", {
+          className: dogoblock_web_app_default.a.pdCommentActions
+        }, /*#__PURE__*/react_default.a.createElement("button", {
+          className: dogoblock_web_app_default.a.pdBtnPublish,
+          disabled: pdReplyLoading || !pdReplyText.trim(),
+          onClick: _this26.handlePdReplySubmit
+        }, pdReplyLoading ? 'Enviando...' : 'Responder'), /*#__PURE__*/react_default.a.createElement("button", {
+          className: dogoblock_web_app_default.a.pdBtnCancel,
+          onClick: _this26.handlePdReplyCancel
+        }, 'Cancelar')))) : null, comment.replies && comment.replies.length > 0 ? /*#__PURE__*/react_default.a.createElement("ul", {
+          className: dogoblock_web_app_default.a.pdReplyList
+        }, comment.replies.map(function (reply) {
+          var replyAuthor = reply.username || reply.author || reply.user && (reply.user.username || reply.user.name) || 'Usuário';
+          var canDeleteReply = user && (String(user.id) === String(reply.userId || reply.user && reply.user.id) || isOwner);
+          return /*#__PURE__*/react_default.a.createElement("li", {
+            className: dogoblock_web_app_default.a.pdReplyItem,
+            key: reply.id
+          }, /*#__PURE__*/react_default.a.createElement("div", {
+            className: dogoblock_web_app_default.a.pdCommentItemAvatar
+          }, /*#__PURE__*/react_default.a.createElement(circle_user["a" /* default */], {
+            "aria-hidden": "true",
+            size: 24
+          })), /*#__PURE__*/react_default.a.createElement("div", {
+            className: dogoblock_web_app_default.a.pdCommentItemBody
+          }, /*#__PURE__*/react_default.a.createElement("span", {
+            className: dogoblock_web_app_default.a.pdCommentItemAuthor
+          }, "@".concat(replyAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
+            className: dogoblock_web_app_default.a.pdCommentItemText
+          }, reply.content)), canDeleteReply ? /*#__PURE__*/react_default.a.createElement("button", {
+            "aria-label": "Excluir resposta",
+            className: dogoblock_web_app_default.a.pdCommentItemDelete,
+            "data-reply-id": reply.id,
+            "data-parent-id": comment.id,
+            onClick: _this26.handlePdDeleteReply
+          }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
+            "aria-hidden": "true",
+            size: 14
+          })) : null);
+        })) : null), canDelete ? /*#__PURE__*/react_default.a.createElement("button", {
+          "aria-label": "Excluir coment\xE1rio",
+          className: dogoblock_web_app_default.a.pdCommentItemDelete,
+          "data-comment-id": comment.id,
+          onClick: _this26.handlePdDeleteComment
+        }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
+          "aria-hidden": "true",
+          size: 14
+        })) : null);
+      })) : /*#__PURE__*/react_default.a.createElement("p", {
+        className: dogoblock_web_app_default.a.pdCommentEmpty
+      }, 'Nenhum comentário ainda. Seja o primeiro!')));
     }
   }, {
     key: "renderEditor",
@@ -3549,7 +4693,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var editor = route.name === 'editor';
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: editor ? dogoblock_web_app_default.a.editorShell : dogoblock_web_app_default.a.appShell
-      }, editor ? null : this.renderHeader(), route.name === 'home' ? this.renderHome() : null, route.name === 'login' ? this.renderLogin() : null, route.name === 'register' ? this.renderRegister() : null, route.name === 'projects' || route.name === 'explore' ? this.renderProjects() : null, route.name === 'profile' ? this.renderProfile() : null, route.name === 'projectDetails' ? this.renderProjectDetails() : null, editor ? this.renderEditor() : null);
+      }, editor ? null : this.renderHeader(), route.name === 'home' ? this.renderHome() : null, route.name === 'login' ? this.renderLogin() : null, route.name === 'register' ? this.renderRegister() : null, route.name === 'projects' || route.name === 'explore' ? this.renderProjects() : null, route.name === 'profile' ? this.renderProfile() : null, route.name === 'projectDetails' ? this.renderProjectDetails() : null, editor ? this.renderEditor() : null, editor ? null : this.renderFooter());
     }
   }]);
 
@@ -3593,7 +4737,7 @@ var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch)
 var hash_parser_hoc = __webpack_require__(291);
 
 // EXTERNAL MODULE: ./src/lib/log.js
-var log = __webpack_require__(57);
+var log = __webpack_require__(59);
 
 // CONCATENATED MODULE: ./src/playground/render-gui.jsx
 function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { render_gui_typeof = function _typeof(obj) { return typeof obj; }; } else { render_gui_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return render_gui_typeof(obj); }
@@ -3738,7 +4882,7 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
 
 /***/ }),
 
-/***/ 32:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -3756,33 +4900,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(22)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(2059);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(22)(content, options);
+var update = __webpack_require__(23)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -3794,7 +4912,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1669);
+var content = __webpack_require__(1670);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3808,7 +4926,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(22)(content, options);
+var update = __webpack_require__(23)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -3816,5 +4934,5 @@ if(false) {}
 
 /***/ })
 
-},[[1227,0]]]);
+},[[1228,0]]]);
 //# sourceMappingURL=gui.js.map

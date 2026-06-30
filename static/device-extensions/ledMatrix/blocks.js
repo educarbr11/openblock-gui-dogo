@@ -66,9 +66,9 @@ function registerBlocks (Blockly) {
             const thumbX = Blockly.BlockSvg.DROPDOWN_ARROW_PADDING / 2;
             const thumbY = (this.size_.height - Blockly.FieldMatrix8x8.THUMBNAIL_SIZE) / 2;
             const thumbnail = Blockly.utils.createSvgElement('g', {
-                transform: `translate(${thumbX}, ${thumbY})`,
+                'transform': `translate(${thumbX}, ${thumbY})`,
                 'pointer-events': 'bounding-box',
-                cursor: 'pointer'
+                'cursor': 'pointer'
             }, this.fieldGroup_);
 
             this.ledThumbNodes_ = [];
@@ -127,12 +127,12 @@ function registerBlocks (Blockly) {
                 (Blockly.FieldMatrix8x8.MATRIX_NODE_PAD * 9);
 
             this.matrixStage_ = Blockly.utils.createSvgElement('svg', {
-                xmlns: 'http://www.w3.org/2000/svg',
+                'xmlns': 'http://www.w3.org/2000/svg',
                 'xmlns:html': 'http://www.w3.org/1999/xhtml',
                 'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-                version: '1.1',
-                height: `${matrixSize}px`,
-                width: `${matrixSize}px`
+                'version': '1.1',
+                'height': `${matrixSize}px`,
+                'width': `${matrixSize}px`
             }, div);
 
             this.ledButtons_ = [];
@@ -176,12 +176,12 @@ function registerBlocks (Blockly) {
 
         Blockly.FieldMatrix8x8.prototype.createButton_ = function (fill) {
             const button = Blockly.utils.createSvgElement('svg', {
-                xmlns: 'http://www.w3.org/2000/svg',
+                'xmlns': 'http://www.w3.org/2000/svg',
                 'xmlns:html': 'http://www.w3.org/1999/xhtml',
                 'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-                version: '1.1',
-                height: `${Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE}px`,
-                width: `${Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE}px`
+                'version': '1.1',
+                'height': `${Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE}px`,
+                'width': `${Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE}px`
             });
             const nodeSize = Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE / 4;
             const nodePad = Blockly.FieldMatrix8x8.MATRIX_NODE_SIZE / 16;
