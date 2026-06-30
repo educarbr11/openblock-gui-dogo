@@ -718,6 +718,77 @@ const patchOpenBlockVmArduinoNanoUpload = () => {
     ].forEach(patchOpenBlockVmArduinoNanoUploadPackage);
 };
 
+const patchOpenBlockVmArduinoDiscoveryPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const nanoFile = path.join(packageDir, 'src', 'devices', 'arduinoUno', 'arduinoNano.js');
+    const webSerialFile = path.join(packageDir, 'src', 'util', 'scratch-link-web-serial.js');
+    let changed = false;
+
+    if (fs.existsSync(nanoFile)) {
+        const before = fs.readFileSync(nanoFile, 'utf8');
+        let after = before;
+        const knownIds = [
+            "'*'",
+            "'USB\\\\VID_1A86&PID_55D3'",
+            "'USB\\\\VID_067B&PID_2303'",
+            "'USB\\\\VID_0403&PID_6010'"
+        ];
+
+        if (!after.includes("'*'")) {
+            after = after.replace(
+                'const PNPID_LIST = [\n',
+                "const PNPID_LIST = [\n    // Nano clones use many USB-serial chips. Some drivers do not report a\n" +
+                    "    // stable VID/PID, so show all serial ports and let the user pick the Nano.\n" +
+                    "    '*',\n"
+            );
+        }
+
+        for (const id of knownIds) {
+            if (!after.includes(id) && id !== "'*'") {
+                after = after.replace(
+                    "    'USB\\\\VID_1A86&PID_7523',",
+                    `    'USB\\\\VID_1A86&PID_7523',\n    ${id},`
+                );
+            }
+        }
+
+        if (after !== before) {
+            fs.writeFileSync(nanoFile, after);
+            changed = true;
+        }
+    }
+
+    if (fs.existsSync(webSerialFile)) {
+        const before = fs.readFileSync(webSerialFile, 'utf8');
+        const after = before.replace(
+            "const allowAnyPort = params.deviceId === 'arduinoNano';",
+            "const allowAnyPort = ['arduinoUno', 'arduinoNano'].includes(params.deviceId);"
+        );
+        if (after !== before) {
+            fs.writeFileSync(webSerialFile, after);
+            changed = true;
+        }
+    }
+
+    if (changed) {
+        console.log(`Applied openblock-vm Arduino discovery patch: ${packageDir}`);
+    } else if (
+        (!fs.existsSync(nanoFile) || fs.readFileSync(nanoFile, 'utf8').includes("'*'")) &&
+        (!fs.existsSync(webSerialFile) ||
+            fs.readFileSync(webSerialFile, 'utf8').includes("['arduinoUno', 'arduinoNano']"))
+    ) {
+        console.log(`openblock-vm Arduino discovery patch already applied: ${packageDir}`);
+    }
+};
+
+const patchOpenBlockVmArduinoDiscovery = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmArduinoDiscoveryPackage);
+};
+
 const webSerialUploadStk500Method = `    _uploadStk500v1 (params) {
         const hex = this._decodeTextMessage(params.message, params.encoding);
         const config = params.config || {};
@@ -1284,6 +1355,7 @@ patchOpenBlockBlocksArduinoPins();
 patchOpenBlockBlocksKeyReleased();
 patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
+patchOpenBlockVmArduinoDiscovery();
 patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockVmMicrobitBleWatchdog();
