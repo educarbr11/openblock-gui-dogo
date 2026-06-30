@@ -898,18 +898,21 @@ const patchOpenBlockVmCompiledArtifactUploadPackage = packageDir => {
     const peripheralFile = path.join(packageDir, 'src', 'devices', 'common', 'arduino-peripheral.js');
     if (!fs.existsSync(peripheralFile)) return;
     let source = fs.readFileSync(peripheralFile, 'utf8');
-    if (source.includes("Object.assign({artifactType: 'compiledArtifact'}")) {
+    if (source.includes("artifactType: 'compiledArtifact'")) {
         console.log(`openblock-vm compiled artifact upload patch already applied: ${packageDir}`);
         return;
     }
 
-    const before = '        return this._serialport.upload(artifact, this.diveceOpt, encoding, options);';
+    const uploadCallPattern =
+        /(\s*)return this\._serialport\.upload\(artifact,\s*this\.(diveceOpt|deviceOpt),\s*encoding(?:,\s*options)?\);/;
+    const uploadCallMatch = source.match(uploadCallPattern);
     const after = "        const uploadOptions = Object.assign({artifactType: 'compiledArtifact'}, options || {});\n" +
-        '        return this._serialport.upload(artifact, this.diveceOpt, encoding, uploadOptions);';
-    if (!source.includes(before)) {
-        throw new Error(`Could not apply openblock-vm compiled artifact upload patch: ${peripheralFile}`);
+        '        return this._serialport.upload(artifact, this.$DEVICE_OPT, encoding, uploadOptions);';
+    if (!uploadCallMatch) {
+        console.warn(`Could not apply openblock-vm compiled artifact upload patch; upload call was not found: ${peripheralFile}`);
+        return;
     }
-    source = source.replace(before, after);
+    source = source.replace(uploadCallPattern, after.replace('$DEVICE_OPT', uploadCallMatch[2]));
     fs.writeFileSync(peripheralFile, source);
     console.log(`Applied openblock-vm compiled artifact upload patch: ${packageDir}`);
 };
