@@ -1097,6 +1097,151 @@ const patchOpenBlockL10nKeyReleased = () => {
     ].forEach(patchOpenBlockL10nKeyReleasedPackage);
 };
 
+const microbitBleBlockTranslationsPtBr = {
+    'microbit.buttonsMenu.any': 'qualquer',
+    'microbit.gesturesMenu.moved': 'movido',
+    'microbit.gesturesMenu.shaken': 'sacudido',
+    'microbit.gesturesMenu.jumped': 'queda livre',
+    'microbit.pinStateMenu.on': 'ligado',
+    'microbit.pinStateMenu.off': 'desligado',
+    'microbit.tiltDirectionMenu.front': 'para frente',
+    'microbit.tiltDirectionMenu.back': 'para trás',
+    'microbit.tiltDirectionMenu.left': 'para esquerda',
+    'microbit.tiltDirectionMenu.right': 'para direita',
+    'microbit.tiltDirectionMenu.any': 'qualquer direção',
+    'microbitBle.uploadBleFirmware': 'enviar firmware Bluetooth',
+    'microbit.whenButtonPressed': 'quando o botão [BTN] for pressionado',
+    'microbit.isButtonPressed': 'botão [BTN] pressionado?',
+    'microbit.whenGesture': 'quando [GESTURE]',
+    'microbit.displaySymbol': 'mostrar [MATRIX]',
+    'microbit.displayText': 'mostrar texto [TEXT]',
+    'microbit.defaultTextToDisplay': 'Olá!',
+    'microbit.clearDisplay': 'limpar tela',
+    'microbit.whenTilted': 'quando inclinar [DIRECTION]',
+    'microbit.isTilted': 'inclinado [DIRECTION]?',
+    'microbit.tiltAngle': 'ângulo de inclinação [DIRECTION]',
+    'microbit.whenPinConnected': 'quando o pino [PIN] for tocado',
+    'microbit.isPinConnected': 'pino [PIN] tocado?',
+    'microbit.pinValue': 'valor do pino [PIN]',
+    'microbit.setPinValue': 'definir pino [PIN] para [VALUE]',
+    'microbit.setPwmValue': 'definir PWM do pino [PIN] para [VALUE]',
+    'microbit.analogPinValue': 'valor analógico do pino [PIN]',
+    'microbit.acceleration': 'aceleração [AXIS]',
+    'microbit.temperature': 'temperatura',
+    'microbit.lightLevel': 'nível de luz',
+    'microbit.runningTime': 'tempo ligado'
+};
+
+const microbitBleBlockTranslationsPt = Object.assign({}, microbitBleBlockTranslationsPtBr, {
+    'microbit.buttonsMenu.any': 'qualquer',
+    'microbit.tiltDirectionMenu.left': 'para a esquerda',
+    'microbit.tiltDirectionMenu.right': 'para a direita',
+    'microbit.tiltDirectionMenu.any': 'qualquer direção',
+    'microbitBle.uploadBleFirmware': 'enviar firmware Bluetooth',
+    'microbit.whenButtonPressed': 'quando o botão [BTN] for pressionado',
+    'microbit.defaultTextToDisplay': 'Olá!',
+    'microbit.clearDisplay': 'limpar ecrã',
+    'microbit.whenPinConnected': 'quando o pino [PIN] for tocado',
+    'microbit.isPinConnected': 'pino [PIN] tocado?',
+    'microbit.runningTime': 'tempo ligado'
+});
+
+const microbitConnectionTranslationsPtBr = {
+    'gui.connection.reconnect': 'Reconectar',
+    'gui.connection.auto-scanning.noPeripheralsFound': 'Nenhum dispositivo encontrado',
+    'gui.connection.auto-scanning.prescan': 'Deixe o dispositivo perto do computador e comece a busca.',
+    'gui.connection.auto-scanning.pressbutton': 'Pressione o botão no dispositivo.',
+    'gui.connection.auto-scanning.start-search': 'Começar busca',
+    'gui.connection.connecting-searchbutton': 'Procurando...',
+    'gui.connection.auto-scanning.try-again': 'Tentar novamente',
+    'gui.connection.connected': 'Conectado',
+    'gui.connection.disconnect': 'Desconectar',
+    'gui.connection.go-to-editor': 'Voltar ao editor',
+    'gui.connection.connecting-cancelbutton': 'Conectando...',
+    'gui.connection.accessDeniedError.errorMessage': 'Não foi possível acessar a porta. Verifique se ela já está sendo usada.',
+    'gui.connection.unknownErrorCode31.errorMessage': 'Não foi possível conectar. Desconecte o dispositivo, conecte novamente e tente outra vez.',
+    'gui.connection.error.errorMessage': 'Algo deu errado na conexão.',
+    'gui.connection.error.tryagainbutton': 'Tentar novamente',
+    'gui.connection.error.helpbutton': 'Ajuda',
+    'gui.connection.peripheral-name-label': 'Nome do dispositivo',
+    'gui.connection.connect': 'Conectar',
+    'gui.connection.scanning.listAll': 'Mostrar todos os dispositivos conectáveis',
+    'gui.connection.scanning.lookingforperipherals': 'Procurando dispositivos',
+    'gui.connection.scanning.noPeripheralsFound': 'Nenhum dispositivo encontrado',
+    'gui.connection.scanning.instructions': 'Selecione seu dispositivo na lista acima.',
+    'gui.connection.scanning.webSerialSelect': 'Clique em Atualizar para escolher um dispositivo USB',
+    'gui.connection.scanning.webBluetoothSelect': 'Clique em Atualizar para escolher seu micro:bit pelo Web Bluetooth',
+    'gui.connection.scanning.microbitBleInstructions': 'Envie o firmware pelo DoGoBlock Link. Depois selecione seu micro:bit.',
+    'gui.connection.scanning.microbitBleWebBluetoothInstructions': 'Web Bluetooth está desativado por enquanto. Use o DoGoBlock Link para enviar o firmware e conectar o micro:bit.',
+    'gui.connection.search': 'Atualizar',
+    'gui.connection.sendFirmware': 'Enviar firmware',
+    'gui.connection.type.label': 'Tipo de conexão',
+    'gui.connection.webBluetooth.notSecure': 'Web Bluetooth exige HTTPS ou localhost.',
+    'gui.connection.webBluetooth.missingApi': 'Web Bluetooth não está disponível. Use Chrome ou Edge com HTTPS/localhost.',
+    'gui.connection.webSerial.notSecure': 'Web Serial exige HTTPS ou localhost.',
+    'gui.connection.webSerial.missingApi': 'Web Serial não está disponível. Use Chrome ou Edge com HTTPS/localhost.',
+    'gui.connection.scanning.arduinoWebSerialSelect': 'Clique em Atualizar para escolher seu Arduino USB',
+    'gui.connection.unavailable.webSerialAccess': 'Use o Chrome no ChromeOS e permita acesso ao dispositivo USB quando solicitado.',
+    'gui.connection.unavailable.installscratchlink': 'Confira se o DoGoBlock Link está instalado e aberto.',
+    'gui.connection.unavailable.webSerialFirmware': 'Conecte o USB e confira se o Arduino está com o firmware de tempo real.',
+    'gui.connection.unavailable.connectUsbEnableBluetooth': 'Confira se o cabo USB está conectado ou se o Bluetooth está ligado.',
+    'gui.connection.unavailable.tryagainbutton': 'Tentar novamente',
+    'gui.connection.unavailable.helpbutton': 'Ajuda',
+    'gui.extension.microbitBle.name': 'micro:bit Bluetooth',
+    'gui.extension.microbitBle.description': 'Controle personagens usando o micro:bit por Bluetooth.',
+    'gui.extension.microbit.connectingMessage': 'Conectando'
+};
+
+const microbitConnectionTranslationsPt = Object.assign({}, microbitConnectionTranslationsPtBr, {
+    'gui.connection.go-to-editor': 'Voltar ao editor',
+    'gui.connection.error.errorMessage': 'Algo correu mal na ligação.',
+    'gui.connection.scanning.instructions': 'Selecione o seu dispositivo na lista acima.',
+    'gui.connection.search': 'Atualizar',
+    'gui.connection.type.label': 'Tipo de ligação',
+    'gui.connection.unavailable.installscratchlink': 'Confirme que o DoGoBlock Link está instalado e aberto.',
+    'gui.extension.microbitBle.description': 'Controle personagens usando o micro:bit por Bluetooth.',
+    'gui.extension.microbit.connectingMessage': 'Ligando'
+});
+
+const writeJsonValues = (file, values) => {
+    if (!fs.existsSync(file)) return;
+    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+    Object.keys(values).forEach(key => {
+        data[key] = values[key];
+    });
+    fs.writeFileSync(file, `${JSON.stringify(data, null, 4)}\n`);
+};
+
+const patchOpenBlockL10nMicrobitPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'blocks', 'pt-br.json'),
+        microbitBleBlockTranslationsPtBr
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'blocks', 'pt.json'),
+        microbitBleBlockTranslationsPt
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt-br.json'),
+        microbitConnectionTranslationsPtBr
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt.json'),
+        microbitConnectionTranslationsPt
+    );
+
+    console.log(`Applied openblock-l10n micro:bit BLE translations: ${packageDir}`);
+};
+
+const patchOpenBlockL10nMicrobit = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-l10n'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
+    ].forEach(patchOpenBlockL10nMicrobitPackage);
+};
+
 for (const patch of patches) {
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
         continue;
@@ -1140,3 +1285,4 @@ patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockVmMicrobitBleWatchdog();
 patchOpenBlockL10nKeyReleased();
+patchOpenBlockL10nMicrobit();

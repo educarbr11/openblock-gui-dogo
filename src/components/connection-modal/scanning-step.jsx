@@ -29,7 +29,7 @@ const ScanningStep = props => (
                     onChange={props.onConnectionTypeChange}
                 >
                     <option value="link">
-                        {'OpenBlock Link'}
+                        {'DoGoBlock Link'}
                     </option>
                     {props.webBluetoothConnectionVisible ? (
                         <option
