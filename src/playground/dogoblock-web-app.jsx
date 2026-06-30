@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {
     Code2,
     Compass,
@@ -26,7 +26,7 @@ import GUI from '../containers/gui.jsx';
 import NotificationsBell from '../components/notifications/notifications-bell.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
-import { getAssetHost, getProjectHost } from '../lib/dogoblock-api-config';
+import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
     createNotificationsStream,
     deleteProject,
@@ -52,12 +52,13 @@ import {
     unfavoriteProject,
     postComment,
     getComments,
-    deleteComment
+    deleteComment,
+    remixProject
 } from '../lib/dogoblock-api';
-import { readAuthSession, writeAuthSession } from '../lib/auth-session';
-import { defaultProjectId } from '../reducers/project-state';
-import { loginSuccess, logout as logoutAction } from '../reducers/session';
-import { setPlayer } from '../reducers/mode';
+import {readAuthSession, writeAuthSession} from '../lib/auth-session';
+import {defaultProjectId} from '../reducers/project-state';
+import {loginSuccess, logout as logoutAction} from '../reducers/session';
+import {setPlayer} from '../reducers/mode';
 
 import dogoblockLogo from '../../static/dogoblock_logo_full.svg';
 import heroIllustration from '../../static/hero-illustration.png';
@@ -67,16 +68,16 @@ const parseRoute = () => {
     const rawHash = window.location.hash.replace(/^#/, '');
     const legacyMatch = rawHash.match(/^(\d+)$/);
     if (legacyMatch) {
-        return { name: 'editor', projectId: legacyMatch[1] };
+        return {name: 'editor', projectId: legacyMatch[1]};
     }
     const [path, query = ''] = (rawHash || '/').split('?');
     const parts = path.split('/').filter(Boolean);
     const queryParams = new URLSearchParams(query);
-    if (!parts.length) return { name: 'home' };
-    if (parts[0] === 'login') return { name: 'login', next: queryParams.get('next') };
-    if (parts[0] === 'register') return { name: 'register', next: queryParams.get('next') };
-    if (parts[0] === 'profile') return { name: 'profile' };
-    if (parts[0] === 'explore') return { name: 'explore' };
+    if (!parts.length) return {name: 'home'};
+    if (parts[0] === 'login') return {name: 'login', next: queryParams.get('next')};
+    if (parts[0] === 'register') return {name: 'register', next: queryParams.get('next')};
+    if (parts[0] === 'profile') return {name: 'profile'};
+    if (parts[0] === 'explore') return {name: 'explore'};
     if (parts[0] === 'editor') {
         return {
             name: 'editor',
@@ -85,8 +86,8 @@ const parseRoute = () => {
             importKey: queryParams.get('import')
         };
     }
-    if (parts[0] === 'projects' && parts[1]) return { name: 'projectDetails', projectId: parts[1] };
-    return { name: 'projects' };
+    if (parts[0] === 'projects' && parts[1]) return {name: 'projectDetails', projectId: parts[1]};
+    return {name: 'projects'};
 };
 
 const navigate = hash => {
@@ -180,7 +181,7 @@ const renderProjectThumbnail = project => {
     );
 };
 
-const Icon = ({ children }) => (
+const Icon = ({children}) => (
     <span
         aria-hidden="true"
         className={styles.iconWrap}
@@ -194,7 +195,7 @@ Icon.propTypes = {
 };
 
 class DogoblockWebApp extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             route: parseRoute(),
@@ -203,6 +204,7 @@ class DogoblockWebApp extends React.Component {
             copyLinkFeedback: false,
             projects: [],
             projectDetails: null,
+            featuredProjectDetails: null,
             profile: null,
             favoriteProjects: [],
             profileTab: 'overview',
@@ -214,6 +216,9 @@ class DogoblockWebApp extends React.Component {
             pdComments: [],
             pdCommentsLoading: false,
             pdCommentText: '',
+            pdReplyToId: null,
+            pdReplyText: '',
+            pdReplyLoading: false,
             pdInstructions: '',
             pdCredits: '',
             pdSavingDetails: false,
@@ -255,6 +260,7 @@ class DogoblockWebApp extends React.Component {
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handlePdLike = this.handlePdLike.bind(this);
         this.handlePdFavorite = this.handlePdFavorite.bind(this);
+        this.handlePdRemix = this.handlePdRemix.bind(this);
         this.handlePdSaveDetails = this.handlePdSaveDetails.bind(this);
         this.handlePdInstructionsChange = this.handlePdInstructionsChange.bind(this);
         this.handlePdCreditsChange = this.handlePdCreditsChange.bind(this);
@@ -262,6 +268,11 @@ class DogoblockWebApp extends React.Component {
         this.handlePdCommentSubmit = this.handlePdCommentSubmit.bind(this);
         this.handlePdCommentCancel = this.handlePdCommentCancel.bind(this);
         this.handlePdDeleteComment = this.handlePdDeleteComment.bind(this);
+        this.handlePdReplyOpen = this.handlePdReplyOpen.bind(this);
+        this.handlePdReplyChange = this.handlePdReplyChange.bind(this);
+        this.handlePdReplySubmit = this.handlePdReplySubmit.bind(this);
+        this.handlePdReplyCancel = this.handlePdReplyCancel.bind(this);
+        this.handlePdDeleteReply = this.handlePdDeleteReply.bind(this);
         this.handlePdCoverChange = this.handlePdCoverChange.bind(this);
         this.renderHome = this.renderHome.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
@@ -272,20 +283,20 @@ class DogoblockWebApp extends React.Component {
         this.renderEditor = this.renderEditor.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount () {
         window.addEventListener('hashchange', this.handleHashChange);
         this.loadRouteData(this.state.route);
         this.setupNotifications();
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         window.removeEventListener('hashchange', this.handleHashChange);
         if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
         this.closeNotificationsStream();
         this.props.onSetPlayerOnly(false);
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate (prevProps) {
         const previousUserId = prevProps.user && prevProps.user.id;
         const currentUserId = this.props.user && this.props.user.id;
         if (previousUserId !== currentUserId) {
@@ -293,7 +304,7 @@ class DogoblockWebApp extends React.Component {
         }
     }
 
-    handleHashChange() {
+    handleHashChange () {
         const route = parseRoute();
         this.setState({
             route,
@@ -301,24 +312,24 @@ class DogoblockWebApp extends React.Component {
         }, () => this.loadRouteData(route));
     }
 
-    loadRouteData(route) {
+    loadRouteData (route) {
         this.props.onSetPlayerOnly(route.name === 'projectDetails');
         if (this.props.user && (route.name === 'login' || route.name === 'register')) {
             navigate(route.next || '/projects');
             return;
         }
         if (route.name === 'home') {
-            this.setState({ loading: true });
+            this.setState({loading: true});
             listPublicProjects()
-                .then(projects => this.setState({ projects, loading: false }))
-                .catch(() => this.setState({ loading: false }));
+                .then(projects => this.setState({projects, loading: false}))
+                .catch(() => this.setState({loading: false}));
         }
         if (route.name === 'profile') {
             if (!this.props.user) {
                 navigate(loginRouteFor('/profile'));
                 return;
             }
-            this.setState({ loading: true, error: null });
+            this.setState({loading: true, error: null, featuredProjectDetails: null});
             Promise.all([
                 getMyProfile(),
                 listProjects(),
@@ -332,15 +343,32 @@ class DogoblockWebApp extends React.Component {
                         loading: false,
                         error: null
                     });
+                    // Fetch details for up to 10 projects to find the most-liked one
+                    const candidates = projects.slice(0, 10);
+                    if (candidates.length > 0) {
+                        Promise.all(
+                            candidates.map(p => getProjectDetails(p.id).catch(() => null))
+                        ).then(details => {
+                            const valid = details.filter(Boolean);
+                            if (!valid.length) return;
+                            // Sort by likeCount desc, then favoriteCount desc as tiebreaker
+                            valid.sort((a, b) => {
+                                const likes = (b.likeCount || 0) - (a.likeCount || 0);
+                                if (likes !== 0) return likes;
+                                return (b.favoriteCount || 0) - (a.favoriteCount || 0);
+                            });
+                            this.setState({featuredProjectDetails: valid[0]});
+                        }).catch(() => { /* silently ignore */ });
+                    }
                 })
-                .catch(error => this.setState({ error: error.message, loading: false }));
+                .catch(error => this.setState({error: error.message, loading: false}));
         }
         if (route.name === 'projects' || route.name === 'explore') {
-            this.setState({ loading: true });
+            this.setState({loading: true});
             const loader = this.props.user && route.name === 'projects' ? listProjects : listPublicProjects;
             loader()
-                .then(projects => this.setState({ projects, loading: false }))
-                .catch(error => this.setState({ error: error.message, loading: false }));
+                .then(projects => this.setState({projects, loading: false}))
+                .catch(error => this.setState({error: error.message, loading: false}));
         }
         if (route.name === 'projectDetails') {
             const requestedProjectId = route.projectId;
@@ -356,7 +384,7 @@ class DogoblockWebApp extends React.Component {
             });
             Promise.all([
                 getProjectDetails(requestedProjectId),
-                getComments(requestedProjectId).catch(() => ({ comments: [] }))
+                getComments(requestedProjectId).catch(() => ({comments: []}))
             ])
                 .then(([projectDetails, commentsResult]) => {
                     if (
@@ -384,15 +412,15 @@ class DogoblockWebApp extends React.Component {
                     ) {
                         return;
                     }
-                    this.setState({ error: error.message, loading: false });
+                    this.setState({error: error.message, loading: false});
                 });
         }
     }
 
-    handleLogin(event) {
+    handleLogin (event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({ error: null, loading: true });
+        this.setState({error: null, loading: true});
         login({
             email: form.get('email'),
             password: form.get('password')
@@ -401,13 +429,13 @@ class DogoblockWebApp extends React.Component {
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    handleRegister(event) {
+    handleRegister (event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({ error: null, loading: true });
+        this.setState({error: null, loading: true});
         register({
             name: form.get('name'),
             username: form.get('username'),
@@ -418,10 +446,10 @@ class DogoblockWebApp extends React.Component {
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    handleLogout() {
+    handleLogout () {
         this.closeNotificationsStream();
         apiLogout();
         this.props.onLogout();
@@ -433,7 +461,7 @@ class DogoblockWebApp extends React.Component {
         navigate('/projects');
     }
 
-    setupNotifications() {
+    setupNotifications () {
         this.closeNotificationsStream();
         if (!this.props.user) {
             this.setState({
@@ -444,7 +472,7 @@ class DogoblockWebApp extends React.Component {
             return;
         }
         getUnreadCount()
-            .then(result => this.setState({ unreadCount: result.unreadCount || 0 }))
+            .then(result => this.setState({unreadCount: result.unreadCount || 0}))
             .catch(() => { });
 
         const session = readAuthSession();
@@ -467,7 +495,7 @@ class DogoblockWebApp extends React.Component {
         stream.addEventListener('unread-count', event => {
             try {
                 const data = JSON.parse(event.data);
-                this.setState({ unreadCount: data.unreadCount || 0 });
+                this.setState({unreadCount: data.unreadCount || 0});
             } catch {
                 // Ignore malformed stream payloads.
             }
@@ -476,15 +504,15 @@ class DogoblockWebApp extends React.Component {
         this.notificationsStream = stream;
     }
 
-    closeNotificationsStream() {
+    closeNotificationsStream () {
         if (!this.notificationsStream) return;
         this.notificationsStream.close();
         this.notificationsStream = null;
     }
 
-    handleLoadNotifications() {
+    handleLoadNotifications () {
         if (!this.props.user) return;
-        this.setState({ notificationsLoading: true });
+        this.setState({notificationsLoading: true});
         listNotifications(1, 10)
             .then(result => this.setState({
                 notifications: result.notifications || [],
@@ -497,7 +525,7 @@ class DogoblockWebApp extends React.Component {
             }));
     }
 
-    handleOpenNotification(notification) {
+    handleOpenNotification (notification) {
         const navigateToProject = () => {
             if (notification.projectId) {
                 navigate(`/projects/${notification.projectId}`);
@@ -520,7 +548,7 @@ class DogoblockWebApp extends React.Component {
         navigateToProject();
     }
 
-    handleMarkAllNotificationsRead() {
+    handleMarkAllNotificationsRead () {
         if (!this.props.user || this.state.unreadCount === 0) return;
         markAllNotificationsRead()
             .then(result => this.setState(prevState => ({
@@ -529,10 +557,10 @@ class DogoblockWebApp extends React.Component {
                     readAt: item.readAt || result.readAt || new Date().toISOString()
                 }))
             })))
-            .catch(error => this.setState({ error: error.message }));
+            .catch(error => this.setState({error: error.message}));
     }
 
-    handleImportProject() {
+    handleImportProject () {
         const importRoute = `/editor?import=${Date.now()}`;
         if (!this.props.user) {
             navigate(loginRouteFor(importRoute));
@@ -541,7 +569,7 @@ class DogoblockWebApp extends React.Component {
         navigate(importRoute);
     }
 
-    handleNewProject() {
+    handleNewProject () {
         if (!this.props.user) {
             navigate(loginRouteFor('/editor'));
             return;
@@ -549,14 +577,14 @@ class DogoblockWebApp extends React.Component {
         navigate('/editor');
     }
 
-    handleCopyProjectLink() {
+    handleCopyProjectLink () {
         const project = this.state.projectDetails;
         if (!project) return;
         const link = getProjectPublicUrl(project);
         const onCopied = () => {
             if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
-            this.setState({ copyLinkFeedback: true });
-            this.copyLinkTimer = setTimeout(() => this.setState({ copyLinkFeedback: false }), 2200);
+            this.setState({copyLinkFeedback: true});
+            this.copyLinkTimer = setTimeout(() => this.setState({copyLinkFeedback: false}), 2200);
         };
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -578,7 +606,7 @@ class DogoblockWebApp extends React.Component {
         onCopied();
     }
 
-    handleDeleteProject() {
+    handleDeleteProject () {
         if (!this.props.user) {
             navigate(loginRouteFor());
             return;
@@ -586,13 +614,13 @@ class DogoblockWebApp extends React.Component {
         const id = this.state.route.projectId;
         if (!id) return;
         if (!window.confirm('Excluir este projeto? Esta acao nao pode ser desfeita.')) return; // eslint-disable-line no-alert
-        this.setState({ loading: true, error: null });
+        this.setState({loading: true, error: null});
         deleteProject(id)
             .then(() => navigate('/projects'))
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    handleDeleteProjectFromCard(event) {
+    handleDeleteProjectFromCard (event) {
         event.preventDefault();
         event.stopPropagation();
         if (!this.props.user) {
@@ -602,7 +630,7 @@ class DogoblockWebApp extends React.Component {
         const id = event.currentTarget.dataset.projectId;
         if (!id) return;
         if (!window.confirm('Excluir este projeto? Esta ação não pode ser desfeita.')) return; // eslint-disable-line no-alert
-        this.setState({ loading: true, error: null });
+        this.setState({loading: true, error: null});
         deleteProject(id)
             .then(() => this.setState(prevState => ({
                 projects: prevState.projects.filter(project => project.id !== id),
@@ -610,74 +638,74 @@ class DogoblockWebApp extends React.Component {
                 loading: false,
                 error: null
             })))
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    handleProjectCreated(projectId) {
+    handleProjectCreated (projectId) {
         if (projectId && projectId !== defaultProjectId) navigate(`/editor/${projectId}`);
     }
 
-    handleOpenCurrentProject() {
+    handleOpenCurrentProject () {
         const project = this.state.projectDetails;
         this.props.onSetPlayerOnly(false);
         if (project) navigate(`/editor/${project.id}`);
     }
 
-    handleOpenProjectDetails(event) {
+    handleOpenProjectDetails (event) {
         const projectId = event.currentTarget.dataset.projectId;
         if (projectId) navigate(`/projects/${projectId}`);
     }
 
-    handleShowMessageBox(type, message) {
+    handleShowMessageBox (type, message) {
         if (type === MessageBoxType.confirm) return confirm(message); // eslint-disable-line no-alert
         if (type === MessageBoxType.alert) return alert(message); // eslint-disable-line no-alert
     }
 
-    handleToggleVisibility() {
+    handleToggleVisibility () {
         const project = this.state.projectDetails;
         if (!project) return;
         const nextVisibility = project.visibility === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
         this.handleUpdateVisibility(nextVisibility);
     }
 
-    handleUpdateVisibility(visibility) {
+    handleUpdateVisibility (visibility) {
         const project = this.state.projectDetails;
         if (!this.props.user || !project) {
             navigate(loginRouteFor());
             return;
         }
-        this.setState({ loading: true, error: null });
+        this.setState({loading: true, error: null});
         updateProjectVisibility(project.id, visibility)
             .then(() => getProjectDetails(project.id))
-            .then(projectDetails => this.setState({ projectDetails, loading: false, error: null }))
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .then(projectDetails => this.setState({projectDetails, loading: false, error: null}))
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    handleNavigateHome() {
+    handleNavigateHome () {
         navigate('/');
     }
 
-    handleNavigateProjects() {
+    handleNavigateProjects () {
         navigate('/projects');
     }
 
-    handleNavigateExplore() {
+    handleNavigateExplore () {
         navigate('/explore');
     }
 
-    handleNavigateEditor() {
+    handleNavigateEditor () {
         navigate('/editor');
     }
 
-    handleNavigateLogin() {
+    handleNavigateLogin () {
         navigate('/login');
     }
 
-    handleNavigateProfile() {
+    handleNavigateProfile () {
         navigate('/profile');
     }
 
-    handleNavigateRegister() {
+    handleNavigateRegister () {
         navigate('/register');
     }
 
@@ -685,8 +713,8 @@ class DogoblockWebApp extends React.Component {
         navigate(loginRouteFor(currentRouteHash()));
     }
 
-    handleSearchChange(event) {
-        this.setState({ searchQuery: event.target.value });
+    handleSearchChange (event) {
+        this.setState({searchQuery: event.target.value});
     }
 
     handleProfileTab (event) {
@@ -695,10 +723,12 @@ class DogoblockWebApp extends React.Component {
 
     // ── Project Details handlers ─────────────────────────────────────────────
 
-    handlePdLike() {
+    handlePdLike () {
         const project = this.state.projectDetails;
         if (!project) return;
-        if (!this.props.user) { navigate(loginRouteFor()); return; }
+        if (!this.props.user) {
+            navigate(loginRouteFor()); return;
+        }
         const wasLiked = this.state.pdLiked;
         this.setState(prevState => ({
             pdLiked: !wasLiked,
@@ -714,10 +744,12 @@ class DogoblockWebApp extends React.Component {
         });
     }
 
-    handlePdFavorite() {
+    handlePdFavorite () {
         const project = this.state.projectDetails;
         if (!project) return;
-        if (!this.props.user) { navigate(loginRouteFor()); return; }
+        if (!this.props.user) {
+            navigate(loginRouteFor()); return;
+        }
         const wasFavorited = this.state.pdFavorited;
         this.setState(prevState => ({
             pdFavorited: !wasFavorited,
@@ -732,11 +764,29 @@ class DogoblockWebApp extends React.Component {
         });
     }
 
-    handlePdSaveDetails() {
+    handlePdRemix () {
+        const project = this.state.projectDetails;
+        if (!project) return;
+        if (!this.props.user) {
+            navigate(loginRouteFor()); return;
+        }
+        if (this.state.pdRemixing) return;
+        this.setState({pdRemixing: true, error: null});
+        remixProject(project.id)
+            .then(result => {
+                this.setState({pdRemixing: false});
+                navigate(`/editor/${result.id}`);
+            })
+            .catch(err => {
+                this.setState({pdRemixing: false, error: err.message || 'Erro ao replicar projeto'});
+            });
+    }
+
+    handlePdSaveDetails () {
         const project = this.state.projectDetails;
         if (!project || !this.props.user) return;
-        const { pdInstructions, pdCredits } = this.state;
-        this.setState({ pdSavingDetails: true, error: null });
+        const {pdInstructions, pdCredits} = this.state;
+        this.setState({pdSavingDetails: true, error: null});
         updateProjectDetails(project.id, {
             instructions: pdInstructions,
             notesAndCredits: pdCredits
@@ -749,30 +799,32 @@ class DogoblockWebApp extends React.Component {
                 }));
                 if (this.pdSaveFeedbackTimer) clearTimeout(this.pdSaveFeedbackTimer);
                 this.pdSaveFeedbackTimer = setTimeout(
-                    () => this.setState({ pdSaveDetailsFeedback: false }), 2500
+                    () => this.setState({pdSaveDetailsFeedback: false}), 2500
                 );
             })
-            .catch(err => this.setState({ pdSavingDetails: false, error: err.message }));
+            .catch(err => this.setState({pdSavingDetails: false, error: err.message}));
     }
 
-    handlePdInstructionsChange(event) {
-        this.setState({ pdInstructions: event.target.value });
+    handlePdInstructionsChange (event) {
+        this.setState({pdInstructions: event.target.value});
     }
 
-    handlePdCreditsChange(event) {
-        this.setState({ pdCredits: event.target.value });
+    handlePdCreditsChange (event) {
+        this.setState({pdCredits: event.target.value});
     }
 
-    handlePdCommentChange(event) {
-        this.setState({ pdCommentText: event.target.value });
+    handlePdCommentChange (event) {
+        this.setState({pdCommentText: event.target.value});
     }
 
-    handlePdCommentSubmit() {
+    handlePdCommentSubmit () {
         const project = this.state.projectDetails;
-        if (!project || !this.props.user) { navigate(loginRouteFor()); return; }
+        if (!project || !this.props.user) {
+            navigate(loginRouteFor()); return;
+        }
         const content = this.state.pdCommentText.trim();
         if (!content) return;
-        this.setState({ pdCommentsLoading: true });
+        this.setState({pdCommentsLoading: true});
         postComment(project.id, content)
             .then(comment => {
                 this.setState(prevState => ({
@@ -781,14 +833,14 @@ class DogoblockWebApp extends React.Component {
                     pdCommentsLoading: false
                 }));
             })
-            .catch(err => this.setState({ pdCommentsLoading: false, error: err.message }));
+            .catch(err => this.setState({pdCommentsLoading: false, error: err.message}));
     }
 
-    handlePdCommentCancel() {
-        this.setState({ pdCommentText: '' });
+    handlePdCommentCancel () {
+        this.setState({pdCommentText: ''});
     }
 
-    handlePdDeleteComment(event) {
+    handlePdDeleteComment (event) {
         const commentId = event.currentTarget.dataset.commentId;
         const project = this.state.projectDetails;
         if (!project || !commentId) return;
@@ -798,14 +850,68 @@ class DogoblockWebApp extends React.Component {
                     pdComments: prevState.pdComments.filter(c => String(c.id) !== String(commentId))
                 }));
             })
-            .catch(err => this.setState({ error: err.message }));
+            .catch(err => this.setState({error: err.message}));
     }
 
-    handlePdCoverChange(event) {
+    handlePdReplyOpen (event) {
+        const parentId = event.currentTarget.dataset.commentId;
+        this.setState({pdReplyToId: parentId, pdReplyText: ''});
+    }
+
+    handlePdReplyChange (event) {
+        this.setState({pdReplyText: event.target.value});
+    }
+
+    handlePdReplyCancel () {
+        this.setState({pdReplyToId: null, pdReplyText: ''});
+    }
+
+    handlePdReplySubmit () {
+        const project = this.state.projectDetails;
+        const {pdReplyToId, pdReplyText} = this.state;
+        if (!project || !this.props.user) {
+            navigate(loginRouteFor()); return;
+        }
+        const content = pdReplyText.trim();
+        if (!content || !pdReplyToId) return;
+        this.setState({pdReplyLoading: true});
+        postComment(project.id, content, pdReplyToId)
+            .then(reply => {
+                this.setState(prevState => ({
+                    pdComments: prevState.pdComments.map(c => {
+                        if (String(c.id) !== String(pdReplyToId)) return c;
+                        return {...c, replies: [...(c.replies || []), reply]};
+                    }),
+                    pdReplyToId: null,
+                    pdReplyText: '',
+                    pdReplyLoading: false
+                }));
+            })
+            .catch(err => this.setState({pdReplyLoading: false, error: err.message}));
+    }
+
+    handlePdDeleteReply (event) {
+        const replyId = event.currentTarget.dataset.replyId;
+        const parentId = event.currentTarget.dataset.parentId;
+        const project = this.state.projectDetails;
+        if (!project || !replyId) return;
+        deleteComment(project.id, replyId)
+            .then(() => {
+                this.setState(prevState => ({
+                    pdComments: prevState.pdComments.map(c => {
+                        if (String(c.id) !== String(parentId)) return c;
+                        return {...c, replies: (c.replies || []).filter(r => String(r.id) !== String(replyId))};
+                    })
+                }));
+            })
+            .catch(err => this.setState({error: err.message}));
+    }
+
+    handlePdCoverChange (event) {
         const file = event.target.files && event.target.files[0];
         const project = this.state.projectDetails;
         if (!file || !project) return;
-        this.setState({ pdUploadingCover: true });
+        this.setState({pdUploadingCover: true});
         uploadProjectCover(project.id, file)
             .then(updated => {
                 this.setState(prevState => ({
@@ -813,15 +919,15 @@ class DogoblockWebApp extends React.Component {
                     projectDetails: Object.assign({}, prevState.projectDetails, updated)
                 }));
             })
-            .catch(err => this.setState({ pdUploadingCover: false, error: err.message }));
+            .catch(err => this.setState({pdUploadingCover: false, error: err.message}));
         // reset input so same file can be selected again
         event.target.value = '';
     }
 
-    handleProfileSubmit(event) {
+    handleProfileSubmit (event) {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
-        this.setState({ loading: true, error: null });
+        this.setState({loading: true, error: null});
         updateMyProfile({
             name: form.get('name'),
             username: form.get('username'),
@@ -839,13 +945,13 @@ class DogoblockWebApp extends React.Component {
                     writeAuthSession(nextSession);
                     this.props.onLoginSuccess(nextSession);
                 }
-                this.setState({ profile, loading: false, error: null });
+                this.setState({profile, profileTab: 'overview', loading: false, error: null});
             })
-            .catch(error => this.setState({ error: error.message, loading: false }));
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
-    renderHeader() {
-        const { user } = this.props;
+    renderHeader () {
+        const {user} = this.props;
         return (
             <header className={styles.topbar}>
                 <div className={styles.topbarInner}>
@@ -894,10 +1000,24 @@ class DogoblockWebApp extends React.Component {
                                     onOpenNotification={this.handleOpenNotification}
                                 />
                                 <button
+                                    aria-label="Meu Perfil"
+                                    className={styles.navUserIconBtn}
+                                    title="Meu Perfil"
+                                    onClick={this.handleNavigateProfile}
+                                >
+                                    <UserCircle
+                                        aria-hidden="true"
+                                        size={26}
+                                    />
+                                </button>
+                                <button
                                     className={`${styles.navLink} ${styles.navBtnSair}`}
                                     onClick={this.handleLogout}
                                 >
-                                    <LogOut aria-hidden="true" size={13} />
+                                    <LogOut
+                                        aria-hidden="true"
+                                        size={13}
+                                    />
                                     {'Sair da Conta'}
                                 </button>
                             </React.Fragment>
@@ -915,7 +1035,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderHome() {
+    renderHome () {
         const featured = (this.state.projects || []).slice(0, 4);
         return (
             <div className={styles.homePage}>
@@ -978,7 +1098,10 @@ class DogoblockWebApp extends React.Component {
                                     </div>
                                     <div className={styles.cardBody}>
                                         <div className={styles.cardAvatarCol}>
-                                            <User fill="currentColor" className={styles.cardAvatarIcon} />
+                                            <User
+                                                fill="currentColor"
+                                                className={styles.cardAvatarIcon}
+                                            />
                                         </div>
                                         <div className={styles.cardInfoCol}>
                                             <span className={styles.cardTitle}>
@@ -999,7 +1122,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderFooter() {
+    renderFooter () {
         return (
             <footer className={styles.siteFooter}>
                 <div className={styles.footerInner}>
@@ -1013,17 +1136,17 @@ class DogoblockWebApp extends React.Component {
                     <div className={styles.footerLinks}>
                         <strong>{'LINKS'}</strong>
                         <a
-                            href="https://editoradogomaker.com/"
+                            href="#"
                             rel="noopener noreferrer"
                             target="_blank"
                         >{'Home'}</a>
                         <a
-                            href="https://editoradogomaker.com/portal-do-professor"
+                            href="https://app.portaldogomaker.com.br"
                             rel="noopener noreferrer"
                             target="_blank"
                         >{'Portal do Professor'}</a>
                         <a
-                            href="https://editoradogomaker.com/"
+                            href="https://www.editoradogomaker.com.br"
                             rel="noopener noreferrer"
                             target="_blank"
                         >{'Site da Editora'}</a>
@@ -1031,12 +1154,12 @@ class DogoblockWebApp extends React.Component {
                     <div className={styles.footerLei}>
                         <strong>{'LEI'}</strong>
                         <a
-                            href="https://editoradogomaker.com/termos-de-uso"
+                            href="#"
                             rel="noopener noreferrer"
                             target="_blank"
                         >{'Termos de Uso'}</a>
                         <a
-                            href="https://editoradogomaker.com/politica-de-privacidade"
+                            href="#"
                             rel="noopener noreferrer"
                             target="_blank"
                         >{'Política de Privacidade'}</a>
@@ -1059,7 +1182,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderLogin() {
+    renderLogin () {
         return (
             <div className={styles.authSection}>
                 <div className={styles.authCardWrap}>
@@ -1110,7 +1233,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderRegister() {
+    renderRegister () {
         return (
             <div className={styles.authSection}>
                 <div className={styles.authCardWrap}>
@@ -1178,9 +1301,9 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjects() {
+    renderProjects () {
         const publicList = !this.props.user || this.state.route.name === 'explore';
-        const { searchQuery, projects } = this.state;
+        const {searchQuery, projects} = this.state;
         
         const filteredProjects = projects.filter(project => {
             if (!searchQuery.trim()) return true;
@@ -1195,7 +1318,10 @@ class DogoblockWebApp extends React.Component {
                 <div className={styles.pageHeader}>
                     <h1>{publicList ? 'Projetos Públicos' : 'Meus Projetos'}</h1>
                     <div className={styles.searchBar}>
-                        <Search className={styles.searchIcon} size={18} />
+                        <Search
+                            className={styles.searchIcon}
+                            size={18}
+                        />
                         <input
                             type="text"
                             placeholder="Buscar projetos..."
@@ -1237,7 +1363,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjectCards(projects, canDeleteProjects) {
+    renderProjectCards (projects, canDeleteProjects) {
         return (
             <div className={styles.projectGrid}>
                 {projects.map(project => (
@@ -1255,7 +1381,10 @@ class DogoblockWebApp extends React.Component {
                             </div>
                             <div className={styles.cardBody}>
                                 <div className={styles.cardAvatarCol}>
-                                    <User fill="currentColor" className={styles.cardAvatarIcon} />
+                                    <User
+                                        fill="currentColor"
+                                        className={styles.cardAvatarIcon}
+                                    />
                                 </div>
                                 <div className={styles.cardInfoCol}>
                                     <span className={styles.cardTitle}>
@@ -1287,12 +1416,13 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProfile() {
+    renderProfile () {
         const profile = this.state.profile || this.props.user || {};
         const projects = this.state.projects;
         const favorites = this.state.favoriteProjects;
-        // Use the first project as the "featured" one
-        const featuredProject = projects[0] || null;
+        // Use the first project as the "featured" one;
+        // prefer the fully-loaded details (with stats) if available
+        const featuredProject = this.state.featuredProjectDetails || projects[0] || null;
 
         return (
             <div className={`${styles.page} ${styles.profilePage}`}>
@@ -1370,19 +1500,31 @@ class DogoblockWebApp extends React.Component {
                             {featuredProject ? (
                                 <div className={styles.profileFeaturedStats}>
                                     <span className={styles.profileFeaturedStat}>
-                                        <Heart aria-hidden="true" size={16} />
+                                        <Heart
+                                            aria-hidden="true"
+                                            size={16}
+                                        />
                                         {getProjectMetric(featuredProject, ['likeCount', 'likes', 'totalLikes']) || 0}
                                     </span>
                                     <span className={styles.profileFeaturedStat}>
-                                        <Star aria-hidden="true" size={16} />
+                                        <Star
+                                            aria-hidden="true"
+                                            size={16}
+                                        />
                                         {getProjectMetric(featuredProject, ['favoriteCount', 'favorites', 'starCount']) || 0}
                                     </span>
                                     <span className={styles.profileFeaturedStat}>
-                                        <FolderOpen aria-hidden="true" size={16} />
+                                        <FolderOpen
+                                            aria-hidden="true"
+                                            size={16}
+                                        />
                                         {getProjectMetric(featuredProject, ['remixCount', 'remixes', 'forkCount']) || 0}
                                     </span>
                                     <span className={styles.profileFeaturedStat}>
-                                        <MessageCircle aria-hidden="true" size={16} />
+                                        <MessageCircle
+                                            aria-hidden="true"
+                                            size={16}
+                                        />
                                         {getProjectMetric(featuredProject, ['commentCount', 'comments']) || 0}
                                     </span>
                                 </div>
@@ -1496,26 +1638,27 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    renderProjectDetails() {
+    renderProjectDetails () {
         const {
             projectDetails, loading, error, route,
             pdComments, pdCommentsLoading, pdCommentText,
+            pdReplyToId, pdReplyText, pdReplyLoading,
             pdInstructions, pdCredits,
             pdSavingDetails, pdSaveDetailsFeedback, pdUploadingCover,
             pdLiked, pdFavorited, pdLikeCount, pdStarCount
         } = this.state;
         const projectId = route.projectId;
         const project = projectDetails || {};
-        const { user } = this.props;
+        const {user} = this.props;
 
         const isOwner = user && project.ownerId && String(user.id) === String(project.ownerId);
         const remixCount = getProjectMetric(project, ['remixCount', 'remixes', 'forkCount']);
 
         const thumbnail = getProjectThumbnail(project);
-        const author    = getProjectAuthor(project);
-        const title     = project.title || project.name || 'Projeto';
+        const author = getProjectAuthor(project);
+        const title = project.title || project.name || 'Projeto';
         const createdAt = formatDate(project.createdAt || project.created_at);
-        const isPublic  = project.visibility === 'PUBLIC';
+        const isPublic = project.visibility === 'PUBLIC';
 
         return (
             <div className={styles.pdPage}>
@@ -1527,9 +1670,13 @@ class DogoblockWebApp extends React.Component {
                     {/* Left: thumb (clicável para trocar capa) + title info */}
                     <div className={styles.pdHeaderLeft}>
                         <div className={styles.pdThumbBox}>
-                            {thumbnail
-                                ? <img alt="" className={styles.pdThumbImg} src={thumbnail} />
-                                : <div className={styles.pdThumbFallback}><span>{'DB'}</span></div>
+                            {thumbnail ?
+                                <img
+                                    alt=""
+                                    className={styles.pdThumbImg}
+                                    src={thumbnail}
+                                /> :
+                                <div className={styles.pdThumbFallback}><span>{'DB'}</span></div>
                             }
                             {isOwner ? (
                                 <label
@@ -1538,7 +1685,10 @@ class DogoblockWebApp extends React.Component {
                                     title="Alterar capa"
                                 >
                                     {pdUploadingCover ? '...' : (
-                                        <Upload aria-hidden="true" size={18} />
+                                        <Upload
+                                            aria-hidden="true"
+                                            size={18}
+                                        />
                                     )}
                                     <input
                                         accept="image/*"
@@ -1632,21 +1782,28 @@ class DogoblockWebApp extends React.Component {
                                     />
                                     {pdStarCount}
                                 </button>
-                                {/* TODO: Implementar lógica de replicar projeto no backend */}
+                                {/* Botão Replicar */}
                                 <button
                                     className={styles.pdStatBtn}
-                                    title="Replicar"
-                                    onClick={() => alert('Em breve: Replicar projeto!')}
+                                    disabled={this.state.pdRemixing}
+                                    title={this.state.pdRemixing ? 'Replicando...' : 'Replicar projeto para a minha biblioteca'}
+                                    onClick={this.handlePdRemix}
                                 >
-                                    <Copy aria-hidden="true" size={16} />
-                                    {remixCount}
+                                    <Copy
+                                        aria-hidden="true"
+                                        size={16}
+                                    />
+                                    {this.state.pdRemixing ? '...' : remixCount}
                                 </button>
                             </div>
                             <button
                                 className={styles.pdBtnSeeInside}
                                 onClick={() => navigate(`/editor/${projectId}`)}
                             >
-                                <Code2 aria-hidden="true" size={15} />
+                                <Code2
+                                    aria-hidden="true"
+                                    size={15}
+                                />
                                 {'Ver por dentro'}
                             </button>
                         </div>
@@ -1690,18 +1847,21 @@ class DogoblockWebApp extends React.Component {
 
                         {isOwner ? (
                             <button
-                                className={pdSaveDetailsFeedback
-                                    ? styles.pdBtnSaveDetailsDone
-                                    : styles.pdBtnSaveDetails}
+                                className={pdSaveDetailsFeedback ?
+                                    styles.pdBtnSaveDetailsDone :
+                                    styles.pdBtnSaveDetails}
                                 disabled={pdSavingDetails}
                                 onClick={this.handlePdSaveDetails}
                             >
-                                <Save aria-hidden="true" size={14} />
-                                {pdSavingDetails
-                                    ? 'Salvando...'
-                                    : pdSaveDetailsFeedback
-                                        ? 'Salvo! ✓'
-                                        : 'Salvar alterações'}
+                                <Save
+                                    aria-hidden="true"
+                                    size={14}
+                                />
+                                {pdSavingDetails ?
+                                    'Salvando...' :
+                                    pdSaveDetailsFeedback ?
+                                        'Salvo! ✓' :
+                                        'Salvar alterações'}
                             </button>
                         ) : null}
                     </div>
@@ -1714,9 +1874,12 @@ class DogoblockWebApp extends React.Component {
                     {/* Composer */}
                     <div className={styles.pdCommentComposer}>
                         <div className={styles.pdCommentAvatar}>
-                            {user
-                                ? <span className={styles.pdCommentAvatarInitials}>{getInitials(user)}</span>
-                                : <UserCircle aria-hidden="true" size={28} />
+                            {user ?
+                                <span className={styles.pdCommentAvatarInitials}>{getInitials(user)}</span> :
+                                <UserCircle
+                                    aria-hidden="true"
+                                    size={28}
+                                />
                             }
                         </div>
                         <div className={styles.pdCommentInputWrap}>
@@ -1752,17 +1915,117 @@ class DogoblockWebApp extends React.Component {
                             {pdComments.map(comment => {
                                 const commentAuthor = comment.username || comment.author || (comment.user && (comment.user.username || comment.user.name)) || 'Usuário';
                                 const canDelete = user && (String(user.id) === String(comment.userId || (comment.user && comment.user.id)) || isOwner);
+                                const isReplying = pdReplyToId === String(comment.id);
                                 return (
                                     <li
                                         className={styles.pdCommentItem}
                                         key={comment.id}
                                     >
                                         <div className={styles.pdCommentItemAvatar}>
-                                            <UserCircle aria-hidden="true" size={32} />
+                                            <UserCircle
+                                                aria-hidden="true"
+                                                size={32}
+                                            />
                                         </div>
                                         <div className={styles.pdCommentItemBody}>
                                             <span className={styles.pdCommentItemAuthor}>{`@${commentAuthor}`}</span>
                                             <p className={styles.pdCommentItemText}>{comment.content}</p>
+
+                                            {/* Reply button */}
+                                            {user ? (
+                                                <button
+                                                    className={styles.pdCommentReplyBtn}
+                                                    data-comment-id={comment.id}
+                                                    onClick={isReplying ? this.handlePdReplyCancel : this.handlePdReplyOpen}
+                                                >
+                                                    <MessageCircle
+                                                        aria-hidden="true"
+                                                        size={12}
+                                                    />
+                                                    {isReplying ? 'Cancelar' : 'Responder'}
+                                                </button>
+                                            ) : null}
+
+                                            {/* Inline reply composer */}
+                                            {isReplying ? (
+                                                <div className={styles.pdReplyComposer}>
+                                                    <div
+                                                        className={styles.pdCommentAvatar}
+                                                        style={{width: '2rem', height: '2rem'}}
+                                                    >
+                                                        <span
+                                                            className={styles.pdCommentAvatarInitials}
+                                                            style={{fontSize: '0.7rem'}}
+                                                        >{getInitials(user)}</span>
+                                                    </div>
+                                                    <div className={styles.pdCommentInputWrap}>
+                                                        <textarea
+                                                            autoFocus
+                                                            className={styles.pdCommentInput}
+                                                            placeholder={`Respondendo a @${commentAuthor}...`}
+                                                            rows={2}
+                                                            value={pdReplyText}
+                                                            onChange={this.handlePdReplyChange}
+                                                        />
+                                                        <div className={styles.pdCommentActions}>
+                                                            <button
+                                                                className={styles.pdBtnPublish}
+                                                                disabled={pdReplyLoading || !pdReplyText.trim()}
+                                                                onClick={this.handlePdReplySubmit}
+                                                            >
+                                                                {pdReplyLoading ? 'Enviando...' : 'Responder'}
+                                                            </button>
+                                                            <button
+                                                                className={styles.pdBtnCancel}
+                                                                onClick={this.handlePdReplyCancel}
+                                                            >
+                                                                {'Cancelar'}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : null}
+
+                                            {/* Replies list */}
+                                            {comment.replies && comment.replies.length > 0 ? (
+                                                <ul className={styles.pdReplyList}>
+                                                    {comment.replies.map(reply => {
+                                                        const replyAuthor = reply.username || reply.author || (reply.user && (reply.user.username || reply.user.name)) || 'Usuário';
+                                                        const canDeleteReply = user && (String(user.id) === String(reply.userId || (reply.user && reply.user.id)) || isOwner);
+                                                        return (
+                                                            <li
+                                                                className={styles.pdReplyItem}
+                                                                key={reply.id}
+                                                            >
+                                                                <div className={styles.pdCommentItemAvatar}>
+                                                                    <UserCircle
+                                                                        aria-hidden="true"
+                                                                        size={24}
+                                                                    />
+                                                                </div>
+                                                                <div className={styles.pdCommentItemBody}>
+                                                                    <span className={styles.pdCommentItemAuthor}>{`@${replyAuthor}`}</span>
+                                                                    <p className={styles.pdCommentItemText}>{reply.content}</p>
+                                                                </div>
+                                                                {canDeleteReply ? (
+                                                                    <button
+                                                                        aria-label="Excluir resposta"
+                                                                        className={styles.pdCommentItemDelete}
+                                                                        data-reply-id={reply.id}
+                                                                        data-parent-id={comment.id}
+                                                                        onClick={this.handlePdDeleteReply}
+                                                                    >
+                                                                        <Trash2
+                                                                            aria-hidden="true"
+                                                                            size={14}
+                                                                        />
+                                                                    </button>
+                                                                ) : null}
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            ) : null}
                                         </div>
                                         {canDelete ? (
                                             <button
@@ -1771,7 +2034,10 @@ class DogoblockWebApp extends React.Component {
                                                 data-comment-id={comment.id}
                                                 onClick={this.handlePdDeleteComment}
                                             >
-                                                <Trash2 aria-hidden="true" size={32} />
+                                                <Trash2
+                                                    aria-hidden="true"
+                                                    size={14}
+                                                />
                                             </button>
                                         ) : null}
                                     </li>
@@ -1787,7 +2053,7 @@ class DogoblockWebApp extends React.Component {
     }
 
 
-    renderEditor() {
+    renderEditor () {
         const route = this.state.route;
         const canPersist = Boolean(this.props.user);
         const projectId = route.projectId || defaultProjectId;
@@ -1813,7 +2079,7 @@ class DogoblockWebApp extends React.Component {
         );
     }
 
-    render() {
+    render () {
         const route = this.state.route;
         const editor = route.name === 'editor';
         return (

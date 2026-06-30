@@ -1382,6 +1382,31 @@ h1.profile-name {
     box-shadow: 0 0.06rem 0 #971212;
 }
 
+.nav-user-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 150ms ease, transform 120ms ease;
+    flex: 0 0 auto;
+}
+
+.nav-user-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.nav-user-icon-btn:active {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(1px);
+}
+
 /* ═══════════════════════════════════════════════════
    HOME PAGE — full-width layout
 ═══════════════════════════════════════════════════ */
@@ -2455,7 +2480,7 @@ span.pd-btn-visibility-private {
 
 .pd-comment-item-author {
     display: block;
-    font-size: 0.72rem;
+    font-size: 0.9rem;
     font-weight: 800;
     color: #243f8f;
     margin-bottom: 0.25rem;
@@ -2502,4 +2527,72 @@ span.pd-btn-visibility-private {
 .pd-btn-publish:disabled {
     opacity: 0.55;
     cursor: default;
+}
+
+/* ── Reply button (inline, below comment text) ── */
+
+.pd-comment-reply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    margin-top: 0.4rem;
+    padding: 0.18rem 0.55rem;
+    border: 0.1rem solid #c6d6ff;
+    border-radius: 999px;
+    background: transparent;
+    color: #56648e;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease, transform 100ms ease;
+}
+
+.pd-comment-reply-btn:hover {
+    background: #e8f0ff;
+    color: #182b63;
+    transform: translateY(-1px);
+}
+
+/* ── Inline reply composer ── */
+
+.pd-reply-composer {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+    padding: 0.65rem 0.75rem;
+    background: #f0f5ff;
+    border: 0.1rem solid #c6d6ff;
+    border-radius: 0.55rem;
+    animation: replyFadeIn 160ms ease;
+}
+
+@keyframes replyFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Threaded replies list ── */
+
+.pd-reply-list {
+    list-style: none;
+    margin: 0.65rem 0 0 2.2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    border-left: 0.22rem solid #c6d6ff;
+    padding-left: 0.75rem;
+}
+
+.pd-reply-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem;
+    border: 0.1rem solid #e8eeff;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    position: relative;
 }

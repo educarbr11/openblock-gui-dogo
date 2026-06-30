@@ -116,6 +116,7 @@ const unlikeProject = projectId => request(`/projects/${projectId}/like`, {metho
 const favoriteProject = projectId => request(`/projects/${projectId}/favorite`, {method: 'POST'});
 const unfavoriteProject = projectId => request(`/projects/${projectId}/favorite`, {method: 'DELETE'});
 const recordProjectView = projectId => request(`/projects/${projectId}/view`, {method: 'POST'});
+const remixProject = projectId => request(`/projects/${projectId}/remix`, {method: 'POST'});
 
 // ─── Comments ─────────────────────────────────────────────────────────────────
 
@@ -193,6 +194,7 @@ export {
     favoriteProject,
     unfavoriteProject,
     recordProjectView,
+    remixProject,
     getComments,
     postComment,
     deleteComment,

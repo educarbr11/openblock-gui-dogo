@@ -90,9 +90,9 @@ const renderCommentContent = content => {
 
 const VisibilityBadge = ({visibility}) => {
     const map = {
-        PUBLIC:   {label: 'Público',     cls: styles.badgePublic, IconComponent: Unlock},
+        PUBLIC: {label: 'Público', cls: styles.badgePublic, IconComponent: Unlock},
         UNLISTED: {label: 'Não-listado', cls: styles.badgeUnlisted, IconComponent: Share2},
-        PRIVATE:  {label: 'Privado',     cls: styles.badgePrivate, IconComponent: Lock}
+        PRIVATE: {label: 'Privado', cls: styles.badgePrivate, IconComponent: Lock}
     };
     const v = map[visibility] || map.PRIVATE;
     const BadgeIcon = v.IconComponent;
@@ -134,9 +134,12 @@ const CommentItem = ({
     return (
         <div className={isReply ? `${styles.comment} ${styles.commentReply}` : styles.comment}>
             <div className={styles.commentAvatar}>
-                {comment.user?.avatarUrl
-                    ? <img src={comment.user.avatarUrl} alt={comment.user.username} />
-                    : initials}
+                {comment.user?.avatarUrl ?
+                    <img
+                        src={comment.user.avatarUrl}
+                        alt={comment.user.username}
+                    /> :
+                    initials}
             </div>
             <div className={styles.commentBubble}>
                 <div className={styles.commentHeader}>
@@ -496,9 +499,9 @@ class ProjectPage extends React.Component {
                     </>
                 ) : (
                     <>
-                        {value
-                            ? <p className={styles.sectionText}>{value}</p>
-                            : <p className={styles.emptyText}>{placeholder}</p>}
+                        {value ?
+                            <p className={styles.sectionText}>{value}</p> :
+                            <p className={styles.emptyText}>{placeholder}</p>}
                         {isOwner && (
                             <button
                                 className={styles.editBtn}
@@ -541,7 +544,10 @@ class ProjectPage extends React.Component {
                 {remixedFromId && (
                     <div className={styles.section}>
                         <h3 className={styles.sectionTitle}>Remix</h3>
-                        <a className={styles.remixBadge} href={`#${remixedFromId}`}>
+                        <a
+                            className={styles.remixBadge}
+                            href={`#${remixedFromId}`}
+                        >
                             <Share2
                                 aria-hidden="true"
                                 className={styles.buttonIcon}
@@ -669,7 +675,10 @@ class ProjectPage extends React.Component {
                 {remixedFromId && (
                     <div className={styles.section}>
                         <h3 className={styles.sectionTitle}>Remix</h3>
-                        <a className={styles.remixBadge} href={`#${remixedFromId}`}>
+                        <a
+                            className={styles.remixBadge}
+                            href={`#${remixedFromId}`}
+                        >
                             Baseado no projeto {remixedFromId}
                         </a>
                     </div>
@@ -702,9 +711,13 @@ class ProjectPage extends React.Component {
                             {/* Header */}
                             <div className={styles.header}>
                                 <div className={styles.thumbnailWrap}>
-                                    {currentThumbnail
-                                        ? <img className={styles.thumbnail} src={currentThumbnail} alt={title} />
-                                        : (
+                                    {currentThumbnail ?
+                                        <img
+                                            className={styles.thumbnail}
+                                            src={currentThumbnail}
+                                            alt={title}
+                                        /> :
+                                        (
                                             <div className={styles.thumbnailPlaceholder}>
                                                 <Code2
                                                     aria-hidden="true"
@@ -794,9 +807,13 @@ class ProjectPage extends React.Component {
                                     )}
                                     <div className={styles.authorRow}>
                                         <div className={styles.avatar}>
-                                            {owner?.avatarUrl
-                                                ? <img src={owner.avatarUrl} alt={owner.username} style={{width:'100%',height:'100%',borderRadius:'50%',objectFit:'cover'}} />
-                                                : (owner?.name || '?')[0].toUpperCase()}
+                                            {owner?.avatarUrl ?
+                                                <img
+                                                    src={owner.avatarUrl}
+                                                    alt={owner.username}
+                                                    style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}}
+                                                /> :
+                                                (owner?.name || '?')[0].toUpperCase()}
                                         </div>
                                         <span className={styles.authorName}>
                                             por <strong>{owner?.name || owner?.username || '…'}</strong>
@@ -896,9 +913,12 @@ class ProjectPage extends React.Component {
                                 <section className={styles.playerColumn}>
                                     <div className={styles.playerFrame}>
                                         {renderPlayer ? renderPlayer() : (
-                                            thumbnailUrl
-                                                ? <img src={thumbnailUrl} alt={title} />
-                                                : <div className={styles.playerFallback}>DOGOBLOCK</div>
+                                            thumbnailUrl ?
+                                                <img
+                                                    src={thumbnailUrl}
+                                                    alt={title}
+                                                /> :
+                                                <div className={styles.playerFallback}>DOGOBLOCK</div>
                                         )}
                                     </div>
                                 </section>
