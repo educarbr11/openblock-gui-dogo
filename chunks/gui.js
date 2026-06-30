@@ -30,7 +30,7 @@ if(false) {}
 /***/ 1222:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "static/assets/25d528f3c84248144b39be3c1700c3e1.png";
+module.exports = __webpack_require__.p + "static/assets/4c6a5e88d07eebfe480ecb247d793925.png";
 
 /***/ }),
 
