@@ -45,7 +45,7 @@ const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblocka
 const envDefinitions = {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'process.env.DEBUG': Boolean(process.env.DEBUG),
-    'process.env.GA_ID': JSON.stringify(process.env.GA_ID || 'UA-000000-01'),
+    'process.env.GA_ID': JSON.stringify(process.env.GA_ID || ''),
     'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
     'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
 };

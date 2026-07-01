@@ -14,9 +14,17 @@ import supportedBrowser from '../lib/supported-browser';
 
 import styles from './index.css';
 
+const getAnalyticsPage = () => {
+    const hashPath = window.location.hash.replace(/^#/, '') || '/';
+    return `/community/web${hashPath.startsWith('/') ? hashPath : `/${hashPath}`}`;
+};
+
 initialAnalytics();
-// Register "base" page view
-analytics.send({hitType: 'pageview', page: '/community/web'});
+analytics.send({hitType: 'pageview', page: getAnalyticsPage()});
+
+window.addEventListener('hashchange', () => {
+    analytics.send({hitType: 'pageview', page: getAnalyticsPage()});
+});
 
 const appTarget = document.createElement('div');
 appTarget.className = styles.app;
