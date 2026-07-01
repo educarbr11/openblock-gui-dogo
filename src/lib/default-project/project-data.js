@@ -61,7 +61,7 @@ const projectData = translateFunction => {
             },
             {
                 isStage: false,
-                name: translator(messages.sprite, {index: 1}),
+                name: 'Blue Bit',
                 variables: {},
                 lists: {},
                 broadcasts: {},
@@ -69,35 +69,34 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: '5de48e72637db4d7fc7f6bb526354114',
-                        name: translator(messages.costume, {index: 1}),
+                        assetId: '1a921caa44b897aa7d23880e5980e431',
+                        name: 'bluebitfalando-01',
                         bitmapResolution: 1,
-                        md5ext: '5de48e72637db4d7fc7f6bb526354114.svg',
+                        md5ext: '1a921caa44b897aa7d23880e5980e431.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 93,
-                        rotationCenterY: 80
+                        rotationCenterX: 56,
+                        rotationCenterY: 121
                     },
                     {
-                        assetId: '48bbc82a10af3d0e0b7d5c677097df0e',
-                        name: translator(messages.costume, {index: 2}),
+                        assetId: '71c07db8b6b7cff4ed64d30572194583',
+                        name: 'bluebitfalando-02',
                         bitmapResolution: 1,
-                        md5ext: '48bbc82a10af3d0e0b7d5c677097df0e.svg',
+                        md5ext: '71c07db8b6b7cff4ed64d30572194583.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 93,
-                        rotationCenterY: 80
-                    }
-                ],
-                sounds: [
+                        rotationCenterX: 56,
+                        rotationCenterY: 120
+                    },
                     {
-                        assetId: '4e080acae1c3dc65eef30f07c2b0d4a5',
-                        name: translator(messages.chirp),
-                        dataFormat: 'wav',
-                        format: '',
-                        rate: 22050,
-                        sampleCount: 18688,
-                        md5ext: '4e080acae1c3dc65eef30f07c2b0d4a5.wav'
+                        assetId: '44cd70c54f1484a6fb8497c7f4336edc',
+                        name: 'bluebitfalando-03',
+                        bitmapResolution: 1,
+                        md5ext: '44cd70c54f1484a6fb8497c7f4336edc.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 56,
+                        rotationCenterY: 121
                     }
                 ],
+                sounds: [],
                 volume: 100,
                 visible: true,
                 x: 0,

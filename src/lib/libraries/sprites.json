@@ -1,4 +1,80 @@
 [
+   {
+    "name": "blue bit",
+    "tags": [
+        "dogomaker",
+        "blue bit",
+        "robo",
+        "android."
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "1a921caa44b897aa7d23880e5980e431",
+        "name": "bluebitfalando-01",
+        "bitmapResolution": 1,
+        "md5ext": "1a921caa44b897aa7d23880e5980e431.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 56,
+        "rotationCenterY": 121
+        },
+        {
+        "assetId": "71c07db8b6b7cff4ed64d30572194583",
+        "name": "bluebitfalando-02",
+        "bitmapResolution": 1,
+        "md5ext": "71c07db8b6b7cff4ed64d30572194583.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 56,
+        "rotationCenterY": 120
+        },
+        {
+        "assetId": "44cd70c54f1484a6fb8497c7f4336edc",
+        "name": "bluebitfalando-03",
+        "bitmapResolution": 1,
+        "md5ext": "44cd70c54f1484a6fb8497c7f4336edc.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 56,
+        "rotationCenterY": 121
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+    "name": "dogo",
+    "tags": [
+        "animal",
+        "dogo",
+        "dog",
+        "cachorro"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "4e1f30695438a5a2ed2e7d07abd3406d",
+        "name": "dogocaminhando-01",
+        "bitmapResolution": 1,
+        "md5ext": "4e1f30695438a5a2ed2e7d07abd3406d.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 65,
+        "rotationCenterY": 75
+        },
+        {
+        "assetId": "67d2b21f7bf69ff04d3470725ab2db31",
+        "name": "dogocaminhando-02",
+        "bitmapResolution": 1,
+        "md5ext": "67d2b21f7bf69ff04d3470725ab2db31.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 65,
+        "rotationCenterY": 75
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+
     {
         "name": "Abby",
         "tags": [
@@ -58,69 +134,6 @@
             }
         ],
         "blocks": {}
-    },
-    {
-    "name": "Blue Bit",
-    "tags": ["custom", "personagem", "dogomaker", "dogo", "dogo maker"],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "c0f9a316ae5f1fdb91cc274f50dabebd",
-        "name": "blue-bit",
-        "bitmapResolution": 2,
-        "md5ext": "c0f9a316ae5f1fdb91cc274f50dabebd.png",
-        "dataFormat": "png",
-        "rotationCenterX": 200,
-        "rotationCenterY": 300
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
-    },
-    {
-    "name": "selo",
-    "tags": [
-        "dogo",
-        "maker"
-    ],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "61624d3239c80bcf4e32d2a48b3946b3",
-        "name": "selo-bncc",
-        "bitmapResolution": 2,
-        "md5ext": "61624d3239c80bcf4e32d2a48b3946b3.png",
-        "dataFormat": "png",
-        "rotationCenterX": 992,
-        "rotationCenterY": 1185
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
-    },
-    {
-    "name": "dogo",
-    "tags": [
-        "dogo",
-        "maker"
-    ],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "0eb8087b51b13f719b748fe0c955216e",
-        "name": "dogo",
-        "bitmapResolution": 2,
-        "md5ext": "0eb8087b51b13f719b748fe0c955216e.png",
-        "dataFormat": "png",
-        "rotationCenterX": 19,
-        "rotationCenterY": 25
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
     },
     {
   "name": "astronauta",
