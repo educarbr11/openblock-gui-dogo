@@ -1,7 +1,7 @@
 var GUI =
 (window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([[7],{
 
-/***/ 118:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -49,9 +49,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(119);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(120);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(121);
+/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(113);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(230);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(410);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(411);
@@ -70,11 +70,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Object(_lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* initialAnalytics */ "b"])(); // Register "base" page view
 
+var getAnalyticsPage = function getAnalyticsPage() {
+  var hashPath = window.location.hash.replace(/^#/, '') || '/';
+  return "/community/web".concat(hashPath.startsWith('/') ? hashPath : "/".concat(hashPath));
+};
+
+Object(_lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* initialAnalytics */ "b"])();
 _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
   hitType: 'pageview',
-  page: '/community/web'
+  page: getAnalyticsPage()
+});
+window.addEventListener('hashchange', function () {
+  _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
+    hitType: 'pageview',
+    page: getAnalyticsPage()
+  });
 });
 var appTarget = document.createElement('div');
 appTarget.className = _index_css__WEBPACK_IMPORTED_MODULE_10___default.a.app;
@@ -751,7 +762,7 @@ var react = __webpack_require__(1);
 var react_default = /*#__PURE__*/__webpack_require__.n(react);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(119);
+var react_dom = __webpack_require__(120);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // EXTERNAL MODULE: ./node_modules/redux/es/index.js + 6 modules
@@ -834,7 +845,7 @@ var bell = __webpack_require__(2092);
 var check_check = __webpack_require__(2093);
 
 // EXTERNAL MODULE: ./src/components/notifications/notifications-bell.css
-var notifications_bell = __webpack_require__(118);
+var notifications_bell = __webpack_require__(119);
 var notifications_bell_default = /*#__PURE__*/__webpack_require__.n(notifications_bell);
 
 // CONCATENATED MODULE: ./src/components/notifications/notifications-bell.jsx
@@ -2505,6 +2516,9 @@ var project_page_mapDispatchToProps = function mapDispatchToProps(dispatch) {
 // EXTERNAL MODULE: ./src/lib/message-box.js
 var message_box = __webpack_require__(155);
 
+// EXTERNAL MODULE: ./src/lib/analytics.js
+var analytics = __webpack_require__(113);
+
 // EXTERNAL MODULE: ./src/lib/dogoblock-api-config.js
 var dogoblock_api_config = __webpack_require__(249);
 
@@ -2596,6 +2610,7 @@ function dogoblock_web_app_arrayWithHoles(arr) { if (Array.isArray(arr)) return 
 
 
 
+
 var parseRoute = function parseRoute() {
   var rawHash = window.location.hash.replace(/^#/, '');
   var legacyMatch = rawHash.match(/^(\d+)$/);
@@ -2656,6 +2671,14 @@ var dogoblock_web_app_navigate = function navigate(hash) {
 };
 
 var noop = function noop() {};
+
+var dogoblock_web_app_trackEvent = function trackEvent(action, label) {
+  analytics["a" /* default */].event({
+    category: 'dogoblock-web',
+    action: action,
+    label: label
+  });
+};
 
 var currentRouteHash = function currentRouteHash() {
   return window.location.hash.replace(/^#/, '') || '/';
@@ -3044,11 +3067,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         email: form.get('email'),
         password: form.get('password')
       }).then(function (session) {
+        dogoblock_web_app_trackEvent('login success', 'email');
+
         _this4.props.onLoginSuccess(session);
 
         dogoblock_web_app_navigate(_this4.state.route.next || '/projects');
       }).catch(function (error) {
-        return _this4.setState({
+        dogoblock_web_app_trackEvent('login error', 'email');
+
+        _this4.setState({
           error: error.message,
           loading: false
         });
@@ -3071,11 +3098,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         email: form.get('email'),
         password: form.get('password')
       }).then(function (session) {
+        dogoblock_web_app_trackEvent('register success', 'email');
+
         _this5.props.onLoginSuccess(session);
 
         dogoblock_web_app_navigate(_this5.state.route.next || '/projects');
       }).catch(function (error) {
-        return _this5.setState({
+        dogoblock_web_app_trackEvent('register error', 'email');
+
+        _this5.setState({
           error: error.message,
           loading: false
         });
@@ -3084,6 +3115,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleLogout",
     value: function handleLogout() {
+      dogoblock_web_app_trackEvent('logout', 'header');
       this.closeNotificationsStream();
       Object(dogoblock_api["s" /* logout */])();
       this.props.onLogout();
@@ -3236,20 +3268,24 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var importRoute = "/editor?import=".concat(Date.now());
 
       if (!this.props.user) {
+        dogoblock_web_app_trackEvent('import project requires login', 'anonymous');
         dogoblock_web_app_navigate(loginRouteFor(importRoute));
         return;
       }
 
+      dogoblock_web_app_trackEvent('import project', 'authenticated');
       dogoblock_web_app_navigate(importRoute);
     }
   }, {
     key: "handleNewProject",
     value: function handleNewProject() {
       if (!this.props.user) {
+        dogoblock_web_app_trackEvent('new project requires login', 'anonymous');
         dogoblock_web_app_navigate(loginRouteFor('/editor'));
         return;
       }
 
+      dogoblock_web_app_trackEvent('new project', 'authenticated');
       dogoblock_web_app_navigate('/editor');
     }
   }, {
@@ -3310,9 +3346,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null
       });
       Object(dogoblock_api["d" /* deleteProject */])(id).then(function () {
-        return dogoblock_web_app_navigate('/projects');
+        dogoblock_web_app_trackEvent('delete project success', 'details');
+        dogoblock_web_app_navigate('/projects');
       }).catch(function (error) {
-        return _this11.setState({
+        dogoblock_web_app_trackEvent('delete project error', 'details');
+
+        _this11.setState({
           error: error.message,
           loading: false
         });
@@ -3351,9 +3390,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
             loading: false,
             error: null
           };
+        }, function () {
+          return dogoblock_web_app_trackEvent('delete project success', 'card');
         });
       }).catch(function (error) {
-        return _this12.setState({
+        dogoblock_web_app_trackEvent('delete project error', 'card');
+
+        _this12.setState({
           error: error.message,
           loading: false
         });
@@ -3362,7 +3405,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleProjectCreated",
     value: function handleProjectCreated(projectId) {
-      if (projectId && projectId !== project_state["f" /* defaultProjectId */]) dogoblock_web_app_navigate("/editor/".concat(projectId));
+      if (projectId && projectId !== project_state["f" /* defaultProjectId */]) {
+        dogoblock_web_app_trackEvent('project created', 'editor');
+        dogoblock_web_app_navigate("/editor/".concat(projectId));
+      }
     }
   }, {
     key: "handleOpenCurrentProject",
@@ -3411,13 +3457,17 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       Object(dogoblock_api["D" /* updateProjectVisibility */])(project.id, visibility).then(function () {
         return Object(dogoblock_api["k" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
-        return _this13.setState({
+        dogoblock_web_app_trackEvent('update project visibility success', visibility);
+
+        _this13.setState({
           projectDetails: projectDetails,
           loading: false,
           error: null
         });
       }).catch(function (error) {
-        return _this13.setState({
+        dogoblock_web_app_trackEvent('update project visibility error', visibility);
+
+        _this13.setState({
           error: error.message,
           loading: false
         });
@@ -3461,6 +3511,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleRequestLoginToSave",
     value: function handleRequestLoginToSave() {
+      dogoblock_web_app_trackEvent('save project requires login', 'anonymous');
       dogoblock_web_app_navigate(loginRouteFor(currentRouteHash()));
     }
   }, {
@@ -3499,7 +3550,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         };
       });
       var action = wasLiked ? dogoblock_api["A" /* unlikeProject */] : dogoblock_api["m" /* likeProject */];
-      action(project.id).catch(function () {
+      action(project.id).then(function () {
+        dogoblock_web_app_trackEvent(wasLiked ? 'unlike project' : 'like project', 'project details');
+      }).catch(function () {
         // rollback on error
         _this14.setState(function (prevState) {
           return {
@@ -3530,7 +3583,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         };
       });
       var action = wasFavorited ? dogoblock_api["z" /* unfavoriteProject */] : dogoblock_api["g" /* favoriteProject */];
-      action(project.id).catch(function () {
+      action(project.id).then(function () {
+        dogoblock_web_app_trackEvent(wasFavorited ? 'unfavorite project' : 'favorite project', 'project details');
+      }).catch(function () {
         _this15.setState(function (prevState) {
           return {
             pdFavorited: wasFavorited,
@@ -3558,12 +3613,16 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null
       });
       Object(dogoblock_api["y" /* remixProject */])(project.id).then(function (result) {
+        dogoblock_web_app_trackEvent('remix project success', 'project details');
+
         _this16.setState({
           pdRemixing: false
         });
 
         dogoblock_web_app_navigate("/editor/".concat(result.id));
       }).catch(function (err) {
+        dogoblock_web_app_trackEvent('remix project error', 'project details');
+
         _this16.setState({
           pdRemixing: false,
           error: err.message || 'Erro ao replicar projeto'
@@ -3648,6 +3707,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdCommentsLoading: true
       });
       Object(dogoblock_api["v" /* postComment */])(project.id, content).then(function (comment) {
+        dogoblock_web_app_trackEvent('comment project success', 'project details');
+
         _this18.setState(function (prevState) {
           return {
             pdComments: [comment].concat(_toConsumableArray(prevState.pdComments)),
@@ -3656,7 +3717,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this18.setState({
+        dogoblock_web_app_trackEvent('comment project error', 'project details');
+
+        _this18.setState({
           pdCommentsLoading: false,
           error: err.message
         });
@@ -3736,6 +3799,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdReplyLoading: true
       });
       Object(dogoblock_api["v" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
+        dogoblock_web_app_trackEvent('reply comment success', 'project details');
+
         _this20.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
@@ -3750,7 +3815,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this20.setState({
+        dogoblock_web_app_trackEvent('reply comment error', 'project details');
+
+        _this20.setState({
           pdReplyLoading: false,
           error: err.message
         });
