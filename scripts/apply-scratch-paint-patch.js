@@ -1224,6 +1224,32 @@ const patchOpenBlockL10nKeyReleased = () => {
     ].forEach(patchOpenBlockL10nKeyReleasedPackage);
 };
 
+const patchOpenBlockL10nLostConnectionBrandingPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt-br.json'),
+        {
+            'gui.alerts.lostPeripheralConnection': 'O DoGo Block perdeu a conexão com {extensionName}.'
+        }
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt.json'),
+        {
+            'gui.alerts.lostPeripheralConnection': 'O DoGo Block perdeu a ligação a {extensionName}.'
+        }
+    );
+
+    console.log(`Applied openblock-l10n lost connection branding patch: ${packageDir}`);
+};
+
+const patchOpenBlockL10nLostConnectionBranding = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-l10n'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
+    ].forEach(patchOpenBlockL10nLostConnectionBrandingPackage);
+};
+
 const microbitBleBlockTranslationsPtBr = {
     'microbit.buttonsMenu.any': 'qualquer',
     'microbit.gesturesMenu.moved': 'movido',
@@ -1414,4 +1440,5 @@ patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockVmMicrobitBleWatchdog();
 patchOpenBlockL10nKeyReleased();
+patchOpenBlockL10nLostConnectionBranding();
 patchOpenBlockL10nMicrobit();
