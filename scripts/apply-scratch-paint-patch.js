@@ -789,6 +789,59 @@ const patchOpenBlockVmArduinoDiscovery = () => {
     ].forEach(patchOpenBlockVmArduinoDiscoveryPackage);
 };
 
+const patchOpenBlockVmLinkPortPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const websocketFile = path.join(packageDir, 'src', 'util', 'scratch-link-websocket.js');
+    if (!fs.existsSync(websocketFile)) return;
+
+    const before = fs.readFileSync(websocketFile, 'utf8');
+    let after = before;
+
+    if (!after.includes('_getServerUrl (path)')) {
+        after = after.replace(
+            '        this._ws = null;\n    }\n\n    open () {',
+            '        this._ws = null;\n    }\n\n' +
+                '    _getServerUrl (path) {\n' +
+                "        const envPort = typeof process !== 'undefined' && process.env ?\n" +
+                '            process.env.OPENBLOCK_LINK_PORT :\n' +
+                '            null;\n' +
+                "        const port = envPort || '20111';\n" +
+                '        return `ws://127.0.0.1:${port}${path}`;\n' +
+                '    }\n\n' +
+                '    open () {'
+        );
+    }
+
+    after = after
+        .replace(
+            "new WebSocket('ws://127.0.0.1:20111/openblock/ble')",
+            "new WebSocket(this._getServerUrl('/openblock/ble'))"
+        )
+        .replace(
+            "new WebSocket('ws://127.0.0.1:20111/openblock/bt')",
+            "new WebSocket(this._getServerUrl('/openblock/bt'))"
+        )
+        .replace(
+            "new WebSocket('ws://127.0.0.1:20111/openblock/serialport')",
+            "new WebSocket(this._getServerUrl('/openblock/serialport'))"
+        );
+
+    if (after !== before) {
+        fs.writeFileSync(websocketFile, after);
+        console.log(`Applied openblock-vm configurable Link port patch: ${packageDir}`);
+    } else if (after.includes('_getServerUrl (path)')) {
+        console.log(`openblock-vm configurable Link port patch already applied: ${packageDir}`);
+    }
+};
+
+const patchOpenBlockVmLinkPort = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmLinkPortPackage);
+};
+
 const webSerialUploadStk500Method = `    _uploadStk500v1 (params) {
         const hex = this._decodeTextMessage(params.message, params.encoding);
         const config = params.config || {};
@@ -1356,6 +1409,7 @@ patchOpenBlockBlocksKeyReleased();
 patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
 patchOpenBlockVmArduinoDiscovery();
+patchOpenBlockVmLinkPort();
 patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockVmMicrobitBleWatchdog();
