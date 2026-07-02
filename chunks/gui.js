@@ -53,8 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(113);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(230);
-/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(410);
-/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(411);
+/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(409);
+/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(410);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(963);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 // Polyfills
@@ -79,12 +79,14 @@ var getAnalyticsPage = function getAnalyticsPage() {
 Object(_lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* initialAnalytics */ "b"])();
 _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
   hitType: 'pageview',
-  page: getAnalyticsPage()
+  page: getAnalyticsPage(),
+  title: document.title
 });
 window.addEventListener('hashchange', function () {
   _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
     hitType: 'pageview',
-    page: getAnalyticsPage()
+    page: getAnalyticsPage(),
+    title: document.title
   });
 });
 var appTarget = document.createElement('div');
@@ -315,7 +317,7 @@ exports.locals = {
 /***/ 2055:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(460);
+var escape = __webpack_require__(459);
 exports = module.exports = __webpack_require__(22)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800&display=swap);", ""]);
@@ -2526,7 +2528,7 @@ var dogoblock_api_config = __webpack_require__(249);
 var auth_session = __webpack_require__(143);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
-var reducers_session = __webpack_require__(371);
+var reducers_session = __webpack_require__(370);
 
 // EXTERNAL MODULE: ./src/reducers/mode.js
 var mode = __webpack_require__(178);
