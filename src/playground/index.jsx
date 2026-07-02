@@ -20,10 +20,18 @@ const getAnalyticsPage = () => {
 };
 
 initialAnalytics();
-analytics.send({hitType: 'pageview', page: getAnalyticsPage()});
+analytics.send({
+    hitType: 'pageview',
+    page: getAnalyticsPage(),
+    title: document.title
+});
 
 window.addEventListener('hashchange', () => {
-    analytics.send({hitType: 'pageview', page: getAnalyticsPage()});
+    analytics.send({
+        hitType: 'pageview',
+        page: getAnalyticsPage(),
+        title: document.title
+    });
 });
 
 const appTarget = document.createElement('div');
