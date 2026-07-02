@@ -39,14 +39,16 @@ const loadDotEnv = () => {
 
 loadDotEnv();
 
+const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production' : 'development');
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
 const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
 const envDefinitions = {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    'process.env.NODE_ENV': JSON.stringify(BUILD_NODE_ENV),
     'process.env.DEBUG': Boolean(process.env.DEBUG),
     'process.env.GA_ID': JSON.stringify(process.env.GA_ID || ''),
     'process.env.GA_DEBUG': JSON.stringify(process.env.GA_DEBUG || 'false'),
+    'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
     'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
     'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
 };
@@ -66,7 +68,7 @@ const WATCH_IGNORED = [
 ];
 
 const base = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode: BUILD_NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),

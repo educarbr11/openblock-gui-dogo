@@ -5,13 +5,16 @@ import log from './log';
 const PLACEHOLDER_GA_IDS = ['G-XXXXXXXXXX', 'UA-000000-01'];
 
 const getConfiguredGaId = () => {
-    const id = (process.env.GA_ID || window.GA_ID || '').trim();
+    const id = (process.env.GA_ID || window.GA_ID || '')
+        .trim()
+        .replace(/^:+/, '');
     if (!id || PLACEHOLDER_GA_IDS.includes(id)) return '';
     return id;
 };
 
 const GA_ID = getConfiguredGaId();
 const GA_DEBUG = process.env.GA_DEBUG === 'true' || window.GA_DEBUG === true;
+const GA_TEST_MODE = process.env.GA_TEST_MODE === 'true' || window.GA_TEST_MODE === true;
 
 const initialAnalytics = (clientId = null) => {
     if (GA_ID) {
@@ -28,7 +31,7 @@ const initialAnalytics = (clientId = null) => {
         }
 
         GoogleAnalytics.initialize(GA_ID, {
-            testMode: (process.env.NODE_ENV !== 'production'),
+            testMode: GA_TEST_MODE,
             gaOptions,
             gtagOptions
         });
@@ -37,6 +40,7 @@ const initialAnalytics = (clientId = null) => {
             enabled: true,
             gaId: GA_ID,
             debug: GA_DEBUG,
+            testMode: GA_TEST_MODE,
             nodeEnv: process.env.NODE_ENV
         };
     } else {
@@ -45,6 +49,7 @@ const initialAnalytics = (clientId = null) => {
             enabled: false,
             gaId: '',
             debug: GA_DEBUG,
+            testMode: GA_TEST_MODE,
             nodeEnv: process.env.NODE_ENV
         };
         window.ga = () => {
