@@ -12,6 +12,9 @@ import refreshIcon from './icons/refresh.svg';
 
 import styles from './connection-modal.css';
 
+const MICROBIT_BLE_FIRMWARE_V2_URL = 'static/firmwares/microbit/dogoblock-microbit-ble-v2.hex';
+const MICROBIT_BLE_FIRMWARE_V1_URL = 'static/firmwares/microbit/dogoblock-microbit-ble.hex';
+
 const ScanningStep = props => (
     <Box className={styles.body}>
         {props.webBluetoothConnectionVisible || props.webSerialConnectionVisible ? (
@@ -176,15 +179,15 @@ const ScanningStep = props => (
                     props.connectionType === 'webBluetooth' ? (
                         <FormattedMessage
                             defaultMessage={
-                                'Web Bluetooth is temporarily disabled. Use DoGoBlock Link to send firmware ' +
-                                'and connect your micro:bit.'
+                                'Web Bluetooth está desativado por enquanto. Use o DoGoBlock Link para enviar ' +
+                                'o firmware e conectar o micro:bit.'
                             }
                             description="Prompt for Web Bluetooth micro:bit BLE firmware limitation"
                             id="gui.connection.scanning.microbitBleWebBluetoothInstructions"
                         />
                     ) : (
                         <FormattedMessage
-                            defaultMessage="Send the firmware with DoGoBlock Link, then select your micro:bit."
+                            defaultMessage="Envie o firmware pelo DoGoBlock Link. Depois selecione seu micro:bit."
                             description="Prompt for connecting a micro:bit Bluetooth device"
                             id="gui.connection.scanning.microbitBleInstructions"
                         />
@@ -197,6 +200,18 @@ const ScanningStep = props => (
                     />
                 )}
             </Box>
+            {props.firmwareUploadRequired && props.deviceId === 'microbitBle' ? (
+                <button
+                    className={classNames(styles.bottomAreaItem, styles.connectionButton, styles.microbitFirmwareManualButton)}
+                    onClick={props.onOpenManualFirmware}
+                >
+                    <FormattedMessage
+                        defaultMessage="Enviar manualmente"
+                        description="Button to open manual micro:bit firmware installation instructions"
+                        id="gui.connection.microbitFirmwareManual.openButton"
+                    />
+                </button>
+            ) : null}
             <Dots
                 className={styles.bottomAreaItem}
                 counter={0}
@@ -229,12 +244,97 @@ const ScanningStep = props => (
                 />
             </button>
         </Box>
+        {props.showManualFirmware ? (
+            <Box className={styles.microbitFirmwareOverlay}>
+                <Box className={styles.microbitFirmwareManual}>
+                    <div className={styles.microbitFirmwareTitle}>
+                        <FormattedMessage
+                            defaultMessage="Instalar firmware manualmente"
+                            description="Title for manual micro:bit firmware install instructions"
+                            id="gui.connection.microbitFirmwareManual.title"
+                        />
+                    </div>
+                    <ol className={styles.microbitFirmwareSteps}>
+                        <li>
+                            <FormattedMessage
+                                defaultMessage="Baixe o arquivo .hex."
+                                description="Manual micro:bit firmware install step"
+                                id="gui.connection.microbitFirmwareManual.stepDownload"
+                            />
+                        </li>
+                        <li>
+                            <FormattedMessage
+                                defaultMessage="Conecte o micro:bit pelo cabo USB."
+                                description="Manual micro:bit firmware install step"
+                                id="gui.connection.microbitFirmwareManual.stepConnect"
+                            />
+                        </li>
+                        <li>
+                            <FormattedMessage
+                                defaultMessage="Copie o arquivo para a unidade MICROBIT."
+                                description="Manual micro:bit firmware install step"
+                                id="gui.connection.microbitFirmwareManual.stepCopy"
+                            />
+                        </li>
+                        <li>
+                            <FormattedMessage
+                                defaultMessage="Aguarde o micro:bit reiniciar."
+                                description="Manual micro:bit firmware install step"
+                                id="gui.connection.microbitFirmwareManual.stepRestart"
+                            />
+                        </li>
+                        <li>
+                            <FormattedMessage
+                                defaultMessage="Clique em Atualizar e conecte pelo DoGoBlock Link."
+                                description="Manual micro:bit firmware install step"
+                                id="gui.connection.microbitFirmwareManual.stepConnectLink"
+                            />
+                        </li>
+                    </ol>
+                    <div className={styles.microbitFirmwareActions}>
+                        <a
+                            className={classNames(styles.connectionButton, styles.microbitFirmwareDownload)}
+                            download="dogoblock-microbit-ble-v2.hex"
+                            href={MICROBIT_BLE_FIRMWARE_V2_URL}
+                        >
+                            <FormattedMessage
+                                defaultMessage="Baixar firmware micro:bit v2"
+                                description="Button to download Dogoblock BLE firmware for micro:bit v2"
+                                id="gui.connection.microbitFirmwareManual.downloadV2"
+                            />
+                        </a>
+                        <a
+                            className={styles.microbitFirmwareSecondaryLink}
+                            download="dogoblock-microbit-ble.hex"
+                            href={MICROBIT_BLE_FIRMWARE_V1_URL}
+                        >
+                            <FormattedMessage
+                                defaultMessage="Baixar firmware micro:bit v1"
+                                description="Link to download Dogoblock BLE firmware for micro:bit v1"
+                                id="gui.connection.microbitFirmwareManual.downloadV1"
+                            />
+                        </a>
+                    </div>
+                    <button
+                        className={classNames(styles.connectionButton, styles.microbitFirmwareClose)}
+                        onClick={props.onCloseManualFirmware}
+                    >
+                        <FormattedMessage
+                            defaultMessage="Fechar"
+                            description="Button to close manual micro:bit firmware install instructions"
+                            id="gui.connection.microbitFirmwareManual.close"
+                        />
+                    </button>
+                </Box>
+            </Box>
+        ) : null}
     </Box>
 );
 
 ScanningStep.propTypes = {
     connectionType: PropTypes.string,
     connectionSmallIconURL: PropTypes.string,
+    deviceId: PropTypes.string,
     firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
     isListAll: PropTypes.bool.isRequired,
@@ -242,6 +342,8 @@ ScanningStep.propTypes = {
     onClickListAll: PropTypes.func.isRequired,
     onConnectionTypeChange: PropTypes.func,
     onConnecting: PropTypes.func,
+    onCloseManualFirmware: PropTypes.func,
+    onOpenManualFirmware: PropTypes.func,
     onUploadFirmware: PropTypes.func,
     onRefresh: PropTypes.func,
     peripheralList: PropTypes.arrayOf(PropTypes.shape({
@@ -250,6 +352,7 @@ ScanningStep.propTypes = {
         peripheralId: PropTypes.string
     })),
     scanning: PropTypes.bool.isRequired,
+    showManualFirmware: PropTypes.bool,
     webBluetoothConnectionSupported: PropTypes.bool,
     webBluetoothConnectionVisible: PropTypes.bool,
     webBluetoothDebugInfo: PropTypes.string,
@@ -263,6 +366,7 @@ ScanningStep.defaultProps = {
     connectionType: 'link',
     peripheralList: [],
     scanning: true,
+    showManualFirmware: false,
     webBluetoothConnectionSupported: false,
     webBluetoothConnectionVisible: false,
     webBluetoothStatus: 'notMicrobitBle',

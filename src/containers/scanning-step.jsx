@@ -12,11 +12,14 @@ class ScanningStep extends React.Component {
             'handlePeripheralScanTimeout',
             'handleClickListAll',
             'handleConnectionTypeChange',
+            'handleCloseManualFirmware',
+            'handleOpenManualFirmware',
             'handleRefresh'
         ]);
         this.state = {
             scanning: true,
-            peripheralList: []
+            peripheralList: [],
+            manualFirmwareOpen: false
         };
     }
     componentDidMount () {
@@ -75,6 +78,16 @@ class ScanningStep extends React.Component {
             peripheralList: []
         });
     }
+    handleOpenManualFirmware () {
+        this.setState({
+            manualFirmwareOpen: true
+        });
+    }
+    handleCloseManualFirmware () {
+        this.setState({
+            manualFirmwareOpen: false
+        });
+    }
     handleRefresh () {
         this.scanForPeripheral(this.props.isListAll);
         this.setState({
@@ -87,6 +100,7 @@ class ScanningStep extends React.Component {
             <ScanningStepComponent
                 connectionType={this.props.connectionType}
                 connectionSmallIconURL={this.props.connectionSmallIconURL}
+                deviceId={this.props.deviceId}
                 firmwareUploadRequired={this.props.firmwareUploadRequired}
                 isChromeOS={this.props.isChromeOS}
                 isSerialport={this.props.isSerialport}
@@ -106,8 +120,11 @@ class ScanningStep extends React.Component {
                 onConnectionTypeChange={this.handleConnectionTypeChange}
                 onConnecting={this.props.onConnecting}
                 onClickListAll={this.handleClickListAll}
+                onCloseManualFirmware={this.handleCloseManualFirmware}
+                onOpenManualFirmware={this.handleOpenManualFirmware}
                 onRefresh={this.handleRefresh}
                 onUploadFirmware={this.props.onUploadFirmware}
+                showManualFirmware={this.state.manualFirmwareOpen}
             />
         );
     }
