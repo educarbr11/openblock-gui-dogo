@@ -169,6 +169,21 @@ const downloadArduinoCompileArtifact = jobId => requestRaw(`/compiler/arduino/jo
     skipAuth: true
 }).then(response => response.text());
 
+const createMicrobitCompileJob = code => request('/compiler/microbit/jobs', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({board: 'microbitV2', code}),
+    skipAuth: true
+});
+
+const getMicrobitCompileJob = jobId => request(`/compiler/microbit/jobs/${jobId}`, {
+    skipAuth: true
+});
+
+const downloadMicrobitCompileArtifact = jobId => requestRaw(`/compiler/microbit/jobs/${jobId}/artifact`, {
+    skipAuth: true
+}).then(response => response.text());
+
 const downloadArduinoRealtimeFirmware = board => requestRaw(`/firmwares/arduino/realtime/${board}`, {
     skipAuth: true
 }).then(response => response.text());
@@ -206,5 +221,8 @@ export {
     createArduinoCompileJob,
     getArduinoCompileJob,
     downloadArduinoCompileArtifact,
+    createMicrobitCompileJob,
+    getMicrobitCompileJob,
+    downloadMicrobitCompileArtifact,
     downloadArduinoRealtimeFirmware
 };

@@ -27,6 +27,10 @@ import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';
 import esp32ConnectionSmallIconURL from './esp32/esp32-small.svg';
 
+import microbitIconURL from './microbit/microbit.png';
+import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
+import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
+
 
 const deviceData = [
     /**
@@ -53,6 +57,43 @@ const deviceData = [
         programMode: ['realtime'],
         programLanguage: ['block'],
         tags: ['realtime']
+    },
+    {
+        name: 'micro:bit',
+        deviceId: 'microbitV2',
+        manufactor: 'micro:bit',
+        learnMore: 'https://microbit.org/get-started/user-guide/overview/',
+        type: DeviceType.microbit,
+        iconURL: microbitIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Use o micro:bit pelo DoGoBlock Link com cabo USB."
+                description="Description for the micro:bit device"
+                id="gui.device.microbitV2.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        defaultBaudRate: '115200',
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: microbitConnectionIconURL,
+        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their device."
+                id="gui.device.connectingMessage"
+            />
+        ),
+        programMode: ['realtime', 'upload'],
+        defaultProgramMode: 'upload',
+        programLanguage: ['python'],
+        tags: ['microbit'],
+        helpLink: 'https://microbit.org/get-started/user-guide/overview/'
     },
     {
         name: 'Arduino Uno',

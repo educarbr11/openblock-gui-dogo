@@ -13,44 +13,12 @@ import videoSensingInsetIconURL from './videoSensing/video-sensing-small.svg';
 import text2speechIconURL from './text2speech/text2speech.png';
 import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 
-import microbitIconURL from './microbit/microbit.png';
-import microbitInsetIconURL from './microbit/microbit-small.svg';
-import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
-
 import machineLearningIconURL from './machineLearning/machine-learning.svg';
 import machineLearningInsetIconURL from './machineLearning/machine-learning-small.svg';
 import handPoseDetectionIconURL from './handPoseDetection/hand-pose-detection.svg';
 import handPoseDetectionInsetIconURL from './handPoseDetection/hand-pose-detection-small.svg';
 
 export default [
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="micro:bit Bluetooth"
-                description="Name for the micro:bit Bluetooth extension"
-                id="gui.extension.microbitBle.name"
-            />
-        ),
-        extensionId: 'microbitBle',
-        collaborator: 'micro:bit',
-        iconURL: microbitIconURL,
-        insetIconURL: microbitInsetIconURL,
-        connectionIconURL: microbitConnectionIconURL,
-        connectionSmallIconURL: microbitInsetIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Control sprites with a micro:bit over Bluetooth."
-                description="Description for the micro:bit Bluetooth extension"
-                id="gui.extension.microbitBle.description"
-            />
-        ),
-        featured: true,
-        bluetoothRequired: true,
-        firmwareUploadRequired: true,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        helpLink: 'https://support.microbit.org/support/solutions/articles/19000026080-using-the-micro-bit-with-scratch'
-    },
     {
         name: (
             <FormattedMessage

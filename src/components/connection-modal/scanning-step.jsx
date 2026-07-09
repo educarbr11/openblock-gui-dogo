@@ -12,8 +12,8 @@ import refreshIcon from './icons/refresh.svg';
 
 import styles from './connection-modal.css';
 
-const MICROBIT_BLE_FIRMWARE_V2_URL = 'static/firmwares/microbit/dogoblock-microbit-ble-v2.hex';
-const MICROBIT_BLE_FIRMWARE_V1_URL = 'static/firmwares/microbit/dogoblock-microbit-ble.hex';
+const MICROBIT_REALTIME_FIRMWARE_V2_URL = 'static/firmwares/microbit/dogoblock-microbit-realtime-v2.hex';
+const isMicrobitFirmwareDevice = deviceId => ['microbit', 'microbitV2', 'microbitBle'].indexOf(deviceId) !== -1;
 
 const ScanningStep = props => (
     <Box className={styles.body}>
@@ -200,7 +200,7 @@ const ScanningStep = props => (
                     />
                 )}
             </Box>
-            {props.firmwareUploadRequired && props.deviceId === 'microbitBle' ? (
+            {props.firmwareUploadRequired && isMicrobitFirmwareDevice(props.deviceId) ? (
                 <button
                     className={classNames(styles.bottomAreaItem, styles.connectionButton, styles.microbitFirmwareManualButton)}
                     onClick={props.onOpenManualFirmware}
@@ -294,24 +294,13 @@ const ScanningStep = props => (
                     <div className={styles.microbitFirmwareActions}>
                         <a
                             className={classNames(styles.connectionButton, styles.microbitFirmwareDownload)}
-                            download="dogoblock-microbit-ble-v2.hex"
-                            href={MICROBIT_BLE_FIRMWARE_V2_URL}
+                            download="dogoblock-microbit-realtime-v2.hex"
+                            href={MICROBIT_REALTIME_FIRMWARE_V2_URL}
                         >
                             <FormattedMessage
-                                defaultMessage="Baixar firmware micro:bit v2"
-                                description="Button to download Dogoblock BLE firmware for micro:bit v2"
+                                defaultMessage="Baixar firmware do modo palco"
+                                description="Button to download Dogoblock realtime firmware for micro:bit v2"
                                 id="gui.connection.microbitFirmwareManual.downloadV2"
-                            />
-                        </a>
-                        <a
-                            className={styles.microbitFirmwareSecondaryLink}
-                            download="dogoblock-microbit-ble.hex"
-                            href={MICROBIT_BLE_FIRMWARE_V1_URL}
-                        >
-                            <FormattedMessage
-                                defaultMessage="Baixar firmware micro:bit v1"
-                                description="Link to download Dogoblock BLE firmware for micro:bit v1"
-                                id="gui.connection.microbitFirmwareManual.downloadV1"
                             />
                         </a>
                     </div>
