@@ -1319,6 +1319,75 @@ const patchOpenBlockVmMicrobitBleWatchdog = () => {
     ].forEach(patchOpenBlockVmMicrobitBleWatchdogPackage);
 };
 
+const patchOpenBlockVmWebpackHashPackage = packageDir => {
+    const webpackConfig = path.join(packageDir, 'webpack.config.js');
+    if (!fs.existsSync(webpackConfig)) return;
+
+    let text = fs.readFileSync(webpackConfig, 'utf8');
+    if (text.includes("hashFunction: 'sha256'")) {
+        console.log(`openblock-vm webpack hash patch already applied: ${packageDir}`);
+        return;
+    }
+
+    const before = text;
+    text = text.replace(
+        `    output: {
+        library: 'VirtualMachine',
+        filename: '[name].js'
+    },`,
+        `    output: {
+        library: 'VirtualMachine',
+        filename: '[name].js',
+        hashFunction: 'sha256'
+    },`
+    );
+
+    if (text === before) {
+        throw new Error(`Could not patch openblock-vm webpack hash: ${webpackConfig}`);
+    }
+
+    fs.writeFileSync(webpackConfig, text);
+    console.log(`Applied openblock-vm webpack hash patch: ${packageDir}`);
+};
+
+const patchOpenBlockVmWebpackHash = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmWebpackHashPackage);
+};
+
+const patchOpenBlockVmWebpackCreateHashPackage = packageDir => {
+    const createHashFile = path.join(packageDir, 'node_modules', 'webpack', 'lib', 'util', 'createHash.js');
+    if (!fs.existsSync(createHashFile)) return;
+
+    let text = fs.readFileSync(createHashFile, 'utf8');
+    if (text.includes('algorithm === "md4"')) {
+        console.log(`openblock-vm webpack createHash patch already applied: ${packageDir}`);
+        return;
+    }
+
+    const before = text;
+    text = text.replace(
+        'module.exports = algorithm => {\n\tif (typeof algorithm === "function") {',
+        'module.exports = algorithm => {\n\tif (algorithm === "md4") algorithm = "sha256";\n\tif (typeof algorithm === "function") {'
+    );
+
+    if (text === before) {
+        throw new Error(`Could not patch webpack createHash: ${createHashFile}`);
+    }
+
+    fs.writeFileSync(createHashFile, text);
+    console.log(`Applied openblock-vm webpack createHash patch: ${packageDir}`);
+};
+
+const patchOpenBlockVmWebpackCreateHash = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(root, '.openblock-vm')
+    ].forEach(patchOpenBlockVmWebpackCreateHashPackage);
+};
+
 const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -1646,6 +1715,8 @@ patchOpenBlockVmLinkPort();
 patchOpenBlockVmWebSerialUpload();
 patchOpenBlockVmCompiledArtifactUpload();
 patchOpenBlockVmMicrobitBleWatchdog();
+patchOpenBlockVmWebpackHash();
+patchOpenBlockVmWebpackCreateHash();
 patchOpenBlockL10nKeyReleased();
 patchOpenBlockL10nLostConnectionBranding();
 patchOpenBlockL10nMicrobit();
