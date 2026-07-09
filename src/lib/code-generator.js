@@ -106,16 +106,19 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         return variablesName.length ? `${python.INDENT}global ${variablesName.join(', ')}\n` : '';
     };
 
-    python.microbitEventFunction_ = python.microbitEventFunction_ || function (block, functionName) {
-        let code = `def ${functionName}():\n`;
+    python.microbitIndentedEventBody_ = function (block) {
         const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
         if (!nextBlock) {
-            code += `${python.INDENT}pass\n`;
-        } else {
-            code += python.microbitGlobalVariables_();
-            code = python.scrub_(block, code);
+            return `${python.INDENT}pass\n`;
         }
-        return code;
+
+        const globals = python.microbitGlobalVariables_();
+        const body = python.blockToCode(nextBlock) || 'pass\n';
+        return globals + python.prefixLines(body, python.INDENT);
+    };
+
+    python.microbitEventFunction_ = function (block, functionName) {
+        return `def ${functionName}():\n${python.microbitIndentedEventBody_(block)}`;
     };
 
     if (!python.__dogoblockMicrobitCheckPatch && typeof python.check_ === 'function') {
