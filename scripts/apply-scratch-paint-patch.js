@@ -769,6 +769,88 @@ Blockly.Python.microbitEventFunction_ = function(block, functionName) {
 `;
             fs.writeFileSync(microbitGenerator, text);
         }
+        text = fs.readFileSync(microbitGenerator, 'utf8');
+        if (!text.includes('__dogoblockMicrobitSafeCodePatch')) {
+            text += `
+
+Blockly.Python.__dogoblockMicrobitSafeCodePatch = true;
+Blockly.Python.microbitNumberCode_ = function(block, name, fallback) {
+  return Blockly.Python.valueToCode(block, name, Blockly.Python.ORDER_FUNCTION_CALL) || String(fallback);
+};
+Blockly.Python.microbitTextCode_ = function(block, name, fallback) {
+  return Blockly.Python.valueToCode(block, name, Blockly.Python.ORDER_FUNCTION_CALL) || Blockly.Python.quote_(fallback || "");
+};
+Blockly.Python.microbitDigitalLevelCode_ = function(block) {
+  var value = Blockly.Python.valueToCode(block, "LEVEL", Blockly.Python.ORDER_FUNCTION_CALL) ||
+    block.getFieldValue("LEVEL") ||
+    Blockly.Python.microbitFieldValueFromNames_(block, ["level"], "1");
+  var normalized = String(value).replace(/^['"]|['"]$/g, "").toUpperCase();
+  if (normalized === "HIGH" || normalized === "ON" || normalized === "LIGADO") return "1";
+  if (normalized === "LOW" || normalized === "OFF" || normalized === "DESLIGADO") return "0";
+  return value;
+};
+Blockly.Python.microbit_pin_setDigitalOutput = function(block) {
+  var pin = Blockly.Python.microbitValueOrField_(block, "PIN", ["pins"], "0");
+  return "pin" + pin + ".write_digital(" + Blockly.Python.microbitDigitalLevelCode_(block) + ")\\n";
+};
+Blockly.Python.microbit_pin_setPwmOutput = function(block) {
+  var pin = Blockly.Python.microbitValueOrField_(block, "PIN", ["pins"], "0");
+  return "pin" + pin + ".write_analog(" + Blockly.Python.microbitNumberCode_(block, "OUT", 0) + ")\\n";
+};
+Blockly.Python.microbit_display_show = function(block) {
+  var text = Blockly.Python.microbitTextCode_(block, "TEXT", "");
+  return "display.scroll(str(" + text + "), wait=False, loop=False)\\n";
+};
+Blockly.Python.microbit_display_showUntilScrollDone = function(block) {
+  var text = Blockly.Python.microbitTextCode_(block, "TEXT", "");
+  return "display.scroll(str(" + text + "), wait=True, loop=False)\\n";
+};
+Blockly.Python.microbit_display_lightPixelAt = function(block) {
+  var state = Blockly.Python.microbitValueOrField_(block, "STATE", ["ledState"], "on") === "off" ? 0 : 9;
+  var x = Blockly.Python.microbitNumberCode_(block, "X", 0);
+  var y = Blockly.Python.microbitNumberCode_(block, "Y", 0);
+  return "display.set_pixel(int(" + x + "), int(" + y + "), " + state + ")\\n";
+};
+Blockly.Python.microbit_display_showOnPiexlbrightness = function(block) {
+  var x = Blockly.Python.microbitNumberCode_(block, "X", 0);
+  var y = Blockly.Python.microbitNumberCode_(block, "Y", 0);
+  var brightness = Blockly.Python.microbitNumberCode_(block, "BRT", 9);
+  return "display.set_pixel(int(" + x + "), int(" + y + "), " + brightness + ")\\n";
+};
+Blockly.Python.microbit_wireless_sendWirelessMessage = function(block) {
+  Blockly.Python.imports_.radio = "import radio";
+  var text = Blockly.Python.microbitTextCode_(block, "TEXT", "");
+  return "radio.send(str(" + text + "))\\n";
+};
+Blockly.Python.microbit_wireless_setWirelessCommunicationChannel = function(block) {
+  Blockly.Python.imports_.radio = "import radio";
+  var channel = Blockly.Python.microbitValueOrField_(block, "CH", ["channel"], "0");
+  return "radio.config(channel=int(" + channel + "))\\n";
+};
+Blockly.Python.microbit_console_consolePrint = function(block) {
+  return "print(" + Blockly.Python.microbitTextCode_(block, "TEXT", "") + ")\\n";
+};
+Blockly.Python.microbit_setDigitalOutput = Blockly.Python.microbit_pin_setDigitalOutput;
+Blockly.Python.microbit_setPwmOutput = Blockly.Python.microbit_pin_setPwmOutput;
+Blockly.Python.microbit_show = Blockly.Python.microbit_display_show;
+Blockly.Python.microbit_showUntilScrollDone = Blockly.Python.microbit_display_showUntilScrollDone;
+Blockly.Python.microbit_lightPixelAt = Blockly.Python.microbit_display_lightPixelAt;
+Blockly.Python.microbit_showOnPiexlbrightness = Blockly.Python.microbit_display_showOnPiexlbrightness;
+Blockly.Python.microbit_sendWirelessMessage = Blockly.Python.microbit_wireless_sendWirelessMessage;
+Blockly.Python.microbit_setWirelessCommunicationChannel = Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;
+Blockly.Python.microbit_consolePrint = Blockly.Python.microbit_console_consolePrint;
+Blockly.Python.pin_setDigitalOutput = Blockly.Python.microbit_pin_setDigitalOutput;
+Blockly.Python.pin_setPwmOutput = Blockly.Python.microbit_pin_setPwmOutput;
+Blockly.Python.display_show = Blockly.Python.microbit_display_show;
+Blockly.Python.display_showUntilScrollDone = Blockly.Python.microbit_display_showUntilScrollDone;
+Blockly.Python.display_lightPixelAt = Blockly.Python.microbit_display_lightPixelAt;
+Blockly.Python.display_showOnPiexlbrightness = Blockly.Python.microbit_display_showOnPiexlbrightness;
+Blockly.Python.wireless_sendWirelessMessage = Blockly.Python.microbit_wireless_sendWirelessMessage;
+Blockly.Python.wireless_setWirelessCommunicationChannel = Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;
+Blockly.Python.console_consolePrint = Blockly.Python.microbit_console_consolePrint;
+`;
+            fs.writeFileSync(microbitGenerator, text);
+        }
     }
 
     const compressedFile = path.join(packageDir, 'python_compressed.js');
@@ -783,6 +865,10 @@ Blockly.Python.microbitEventFunction_ = function(block, functionName) {
         }
         if (!text.includes('__dogoblockMicrobitEventIndentPatch')) {
             text += '\nBlockly.Python.__dogoblockMicrobitEventIndentPatch=!0;Blockly.Python.microbitIndentedEventBody_=function(a){var b=a.nextConnection&&a.nextConnection.targetBlock();if(!b)return Blockly.Python.INDENT+"pass\\n";var c=Blockly.Python.microbitGlobalVariables_?Blockly.Python.microbitGlobalVariables_():"";(b=Blockly.Python.blockToCode(b))||(b="pass\\n");return c+Blockly.Python.prefixLines(b,Blockly.Python.INDENT)};Blockly.Python.microbitEventFunction_=function(a,b){return"def "+b+"():\\n"+Blockly.Python.microbitIndentedEventBody_(a)};\n';
+            fs.writeFileSync(compressedFile, text);
+        }
+        if (!text.includes('__dogoblockMicrobitSafeCodePatch')) {
+            text += '\nBlockly.Python.__dogoblockMicrobitSafeCodePatch=!0;Blockly.Python.microbitNumberCode_=function(a,b,c){return Blockly.Python.valueToCode(a,b,Blockly.Python.ORDER_FUNCTION_CALL)||String(c)};Blockly.Python.microbitTextCode_=function(a,b,c){return Blockly.Python.valueToCode(a,b,Blockly.Python.ORDER_FUNCTION_CALL)||Blockly.Python.quote_(c||"")};Blockly.Python.microbitDigitalLevelCode_=function(a){var b=Blockly.Python.valueToCode(a,"LEVEL",Blockly.Python.ORDER_FUNCTION_CALL)||a.getFieldValue("LEVEL")||Blockly.Python.microbitFieldValueFromNames_(a,["level"],"1"),c=String(b).replace(/^[\\\'"]|[\\\'"]$/g,"").toUpperCase();return"HIGH"===c||"ON"===c||"LIGADO"===c?"1":"LOW"===c||"OFF"===c||"DESLIGADO"===c?"0":b};Blockly.Python.microbit_pin_setDigitalOutput=function(a){var b=Blockly.Python.microbitValueOrField_(a,"PIN",["pins"],"0");return"pin"+b+".write_digital("+Blockly.Python.microbitDigitalLevelCode_(a)+")\\n"};Blockly.Python.microbit_pin_setPwmOutput=function(a){var b=Blockly.Python.microbitValueOrField_(a,"PIN",["pins"],"0");return"pin"+b+".write_analog("+Blockly.Python.microbitNumberCode_(a,"OUT",0)+")\\n"};Blockly.Python.microbit_display_show=function(a){a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"display.scroll(str("+a+"), wait=False, loop=False)\\n"};Blockly.Python.microbit_display_showUntilScrollDone=function(a){a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"display.scroll(str("+a+"), wait=True, loop=False)\\n"};Blockly.Python.microbit_display_lightPixelAt=function(a){var b="off"===Blockly.Python.microbitValueOrField_(a,"STATE",["ledState"],"on")?0:9,c=Blockly.Python.microbitNumberCode_(a,"X",0);a=Blockly.Python.microbitNumberCode_(a,"Y",0);return"display.set_pixel(int("+c+"), int("+a+"), "+b+")\\n"};Blockly.Python.microbit_display_showOnPiexlbrightness=function(a){var b=Blockly.Python.microbitNumberCode_(a,"X",0),c=Blockly.Python.microbitNumberCode_(a,"Y",0);a=Blockly.Python.microbitNumberCode_(a,"BRT",9);return"display.set_pixel(int("+b+"), int("+c+"), "+a+")\\n"};Blockly.Python.microbit_wireless_sendWirelessMessage=function(a){Blockly.Python.imports_.radio="import radio";a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"radio.send(str("+a+"))\\n"};Blockly.Python.microbit_wireless_setWirelessCommunicationChannel=function(a){Blockly.Python.imports_.radio="import radio";a=Blockly.Python.microbitValueOrField_(a,"CH",["channel"],"0");return"radio.config(channel=int("+a+"))\\n"};Blockly.Python.microbit_console_consolePrint=function(a){return"print("+Blockly.Python.microbitTextCode_(a,"TEXT","")+")\\n"};Blockly.Python.microbit_setDigitalOutput=Blockly.Python.microbit_pin_setDigitalOutput;Blockly.Python.microbit_setPwmOutput=Blockly.Python.microbit_pin_setPwmOutput;Blockly.Python.microbit_show=Blockly.Python.microbit_display_show;Blockly.Python.microbit_showUntilScrollDone=Blockly.Python.microbit_display_showUntilScrollDone;Blockly.Python.microbit_lightPixelAt=Blockly.Python.microbit_display_lightPixelAt;Blockly.Python.microbit_showOnPiexlbrightness=Blockly.Python.microbit_display_showOnPiexlbrightness;Blockly.Python.microbit_sendWirelessMessage=Blockly.Python.microbit_wireless_sendWirelessMessage;Blockly.Python.microbit_setWirelessCommunicationChannel=Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;Blockly.Python.microbit_consolePrint=Blockly.Python.microbit_console_consolePrint;Blockly.Python.pin_setDigitalOutput=Blockly.Python.microbit_pin_setDigitalOutput;Blockly.Python.pin_setPwmOutput=Blockly.Python.microbit_pin_setPwmOutput;Blockly.Python.display_show=Blockly.Python.microbit_display_show;Blockly.Python.display_showUntilScrollDone=Blockly.Python.microbit_display_showUntilScrollDone;Blockly.Python.display_lightPixelAt=Blockly.Python.microbit_display_lightPixelAt;Blockly.Python.display_showOnPiexlbrightness=Blockly.Python.microbit_display_showOnPiexlbrightness;Blockly.Python.wireless_sendWirelessMessage=Blockly.Python.microbit_wireless_sendWirelessMessage;Blockly.Python.wireless_setWirelessCommunicationChannel=Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;Blockly.Python.console_consolePrint=Blockly.Python.microbit_console_consolePrint;\n';
             fs.writeFileSync(compressedFile, text);
         }
         const compressedImagePatch = '\nBlockly.Python.microbitImageValue_=Blockly.Python.microbitImageValue_||function(a){' +

@@ -94,6 +94,24 @@ const installMicrobitPythonGenerators = scratchBlocks => {
             python.microbitFieldValueFromNames_(block, fieldNames.concat([name]), fallback);
     };
 
+    python.microbitNumberCode_ = function (block, name, fallback) {
+        return python.valueToCode(block, name, python.ORDER_FUNCTION_CALL) || String(fallback);
+    };
+
+    python.microbitTextCode_ = function (block, name, fallback) {
+        return python.valueToCode(block, name, python.ORDER_FUNCTION_CALL) || python.quote_(fallback || '');
+    };
+
+    python.microbitDigitalLevelCode_ = function (block) {
+        const value = python.valueToCode(block, 'LEVEL', python.ORDER_FUNCTION_CALL) ||
+            block.getFieldValue('LEVEL') ||
+            python.microbitFieldValueFromNames_(block, ['level'], '1');
+        const normalized = String(value).replace(/^['"]|['"]$/g, '').toUpperCase();
+        if (normalized === 'HIGH' || normalized === 'ON' || normalized === 'LIGADO') return '1';
+        if (normalized === 'LOW' || normalized === 'OFF' || normalized === 'DESLIGADO') return '0';
+        return value;
+    };
+
     python.microbitGlobalVariables_ = python.microbitGlobalVariables_ || function () {
         const variablesName = [];
         Object.keys(python.variables_ || {}).forEach(key => {
@@ -181,13 +199,12 @@ const installMicrobitPythonGenerators = scratchBlocks => {
     if (!python.microbit_pin_setDigitalOutput || !python.__dogoblockMicrobitPinPatch) {
         python.microbit_pin_setDigitalOutput = block => {
             const pin = python.microbitValueOrField_(block, 'PIN', ['pins'], '0');
-            const level = python.valueToCode(block, 'LEVEL', python.ORDER_FUNCTION_CALL) ||
-                block.getFieldValue('LEVEL') || '1';
+            const level = python.microbitDigitalLevelCode_(block);
             return `pin${pin}.write_digital(${level})\n`;
         };
         python.microbit_pin_setPwmOutput = block => {
             const pin = python.microbitValueOrField_(block, 'PIN', ['pins'], '0');
-            const out = python.valueToCode(block, 'OUT', python.ORDER_FUNCTION_CALL) || '0';
+            const out = python.microbitNumberCode_(block, 'OUT', 0);
             return `pin${pin}.write_analog(${out})\n`;
         };
         python.microbit_pin_readDigitalPin = block => [
@@ -204,8 +221,8 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         ];
         python.microbit_display_lightPixelAt = block => {
             const state = python.microbitValueOrField_(block, 'STATE', ['ledState'], 'on') === 'off' ? 0 : 9;
-            const x = python.valueToCode(block, 'X', python.ORDER_FUNCTION_CALL) || '0';
-            const y = python.valueToCode(block, 'Y', python.ORDER_FUNCTION_CALL) || '0';
+            const x = python.microbitNumberCode_(block, 'X', 0);
+            const y = python.microbitNumberCode_(block, 'Y', 0);
             return `display.set_pixel(int(${x}), int(${y}), ${state})\n`;
         };
         python.microbit_sensor_buttonIsPressed = block => [
@@ -289,14 +306,69 @@ const installMicrobitPythonGenerators = scratchBlocks => {
 
     python.microbit_display_showImageUntil = block => {
         const image = python.microbitImageValue_(python.valueToCode(block, 'VALUE', python.ORDER_ATOMIC) || '0');
-        const time = python.valueToCode(block, 'TIME', python.ORDER_ATOMIC) || '0';
+        const time = python.microbitNumberCode_(block, 'TIME', 0);
         return `display.show(Image('${image}'))\nsleep(float(${time}) * 1000)\ndisplay.clear()\n`;
+    };
+
+    python.microbit_display_show = block => {
+        const text = python.microbitTextCode_(block, 'TEXT', '');
+        return `display.scroll(str(${text}), wait=False, loop=False)\n`;
+    };
+
+    python.microbit_display_showUntilScrollDone = block => {
+        const text = python.microbitTextCode_(block, 'TEXT', '');
+        return `display.scroll(str(${text}), wait=True, loop=False)\n`;
+    };
+
+    python.microbit_display_lightPixelAt = block => {
+        const state = python.microbitValueOrField_(block, 'STATE', ['ledState'], 'on') === 'off' ? 0 : 9;
+        const x = python.microbitNumberCode_(block, 'X', 0);
+        const y = python.microbitNumberCode_(block, 'Y', 0);
+        return `display.set_pixel(int(${x}), int(${y}), ${state})\n`;
+    };
+
+    python.microbit_display_showOnPiexlbrightness = block => {
+        const x = python.microbitNumberCode_(block, 'X', 0);
+        const y = python.microbitNumberCode_(block, 'Y', 0);
+        const brightness = python.microbitNumberCode_(block, 'BRT', 9);
+        return `display.set_pixel(int(${x}), int(${y}), ${brightness})\n`;
+    };
+
+    python.microbit_wireless_sendWirelessMessage = block => {
+        python.imports_.radio = 'import radio';
+        const text = python.microbitTextCode_(block, 'TEXT', '');
+        return `radio.send(str(${text}))\n`;
+    };
+
+    python.microbit_wireless_setWirelessCommunicationChannel = block => {
+        python.imports_.radio = 'import radio';
+        const channel = python.microbitValueOrField_(block, 'CH', ['channel'], '0');
+        return `radio.config(channel=int(${channel}))\n`;
+    };
+
+    python.microbit_console_consolePrint = block => {
+        const text = python.microbitTextCode_(block, 'TEXT', '');
+        return `print(${text})\n`;
     };
 
     python.microbit_showImage = python.microbit_display_showImage;
     python.microbit_showImageUntil = python.microbit_display_showImageUntil;
+    python.microbit_show = python.microbit_display_show;
+    python.microbit_showUntilScrollDone = python.microbit_display_showUntilScrollDone;
+    python.microbit_lightPixelAt = python.microbit_display_lightPixelAt;
+    python.microbit_showOnPiexlbrightness = python.microbit_display_showOnPiexlbrightness;
+    python.microbit_sendWirelessMessage = python.microbit_wireless_sendWirelessMessage;
+    python.microbit_setWirelessCommunicationChannel = python.microbit_wireless_setWirelessCommunicationChannel;
+    python.microbit_consolePrint = python.microbit_console_consolePrint;
     python.display_showImage = python.microbit_display_showImage;
     python.display_showImageUntil = python.microbit_display_showImageUntil;
+    python.display_show = python.microbit_display_show;
+    python.display_showUntilScrollDone = python.microbit_display_showUntilScrollDone;
+    python.display_lightPixelAt = python.microbit_display_lightPixelAt;
+    python.display_showOnPiexlbrightness = python.microbit_display_showOnPiexlbrightness;
+    python.wireless_sendWirelessMessage = python.microbit_wireless_sendWirelessMessage;
+    python.wireless_setWirelessCommunicationChannel = python.microbit_wireless_setWirelessCommunicationChannel;
+    python.console_consolePrint = python.microbit_console_consolePrint;
 
     if (!python.microbit_whenMicrobitBegin) {
         python.microbit_whenMicrobitBegin = block => {
