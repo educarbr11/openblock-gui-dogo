@@ -756,21 +756,30 @@ Blockly.Python['microbit_display_showImageUntil'] = function(block) {
             );
             fs.writeFileSync(compressedFile, text);
         }
+        const compressedImagePatch = '\nBlockly.Python.microbitImageValue_=Blockly.Python.microbitImageValue_||function(a){' +
+            'a=String(a||"0");' +
+            'var b=a.charCodeAt(0),c=a.charCodeAt(a.length-1);' +
+            'if(39===b&&39===c||34===b&&34===c)a=a.slice(1,-1);' +
+            'a=a.replace(/[^01]/g,"");' +
+            '25>a.length?a=(a+"0000000000000000000000000").slice(0,25):25<a.length&&(a=a.slice(0,25));' +
+            'a=a.replace(/1/g,"9");' +
+            'return a.slice(0,5)+":"+a.slice(5,10)+":"+a.slice(10,15)+":"+a.slice(15,20)+":"+a.slice(20,25)};' +
+            'Blockly.Python.microbit_display_showImage=function(a){' +
+            'a=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
+            'return"display.show(Image(\\\'"+a+"\\\'))\\\\n"};' +
+            'Blockly.Python.microbit_display_showImageUntil=function(a){' +
+            'var b=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
+            'a=Blockly.Python.valueToCode(a,"TIME",Blockly.Python.ORDER_ATOMIC)||"0";' +
+            'return"display.show(Image(\\\'"+b+"\\\'))\\\\nsleep(float("+a+") * 1000)\\\\ndisplay.clear()\\\\n"};\n';
         if (!text.includes('microbitImageValue_')) {
-            text += '\nBlockly.Python.microbitImageValue_=Blockly.Python.microbitImageValue_||function(a){' +
-                'a=String(a||"0");' +
-                'if("\\\'"===a.charAt(0)&&"\\\'"===a.charAt(a.length-1)||"\\\\""===a.charAt(0)&&"\\\\""===a.charAt(a.length-1))a=a.slice(1,-1);' +
-                'a=a.replace(/[^01]/g,"");' +
-                '25>a.length?a=(a+"0000000000000000000000000").slice(0,25):25<a.length&&(a=a.slice(0,25));' +
-                'a=a.replace(/1/g,"9");' +
-                'return a.slice(0,5)+":"+a.slice(5,10)+":"+a.slice(10,15)+":"+a.slice(15,20)+":"+a.slice(20,25)};' +
-                'Blockly.Python.microbit_display_showImage=function(a){' +
-                'a=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
-                'return"display.show(Image(\\\'"+a+"\\\'))\\\\n"};' +
-                'Blockly.Python.microbit_display_showImageUntil=function(a){' +
-                'var b=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
-                'a=Blockly.Python.valueToCode(a,"TIME",Blockly.Python.ORDER_ATOMIC)||"0";' +
-                'return"display.show(Image(\\\'"+b+"\\\'))\\\\nsleep(float("+a+") * 1000)\\\\ndisplay.clear()\\\\n"};\n';
+            text += compressedImagePatch;
+            fs.writeFileSync(compressedFile, text);
+        } else if (text.includes('if("\\\'"===a.charAt(0)')) {
+            const patchIndex = text.indexOf('\nBlockly.Python.microbitImageValue_=');
+            if (patchIndex < 0) {
+                throw new Error(`Could not repair openblock-blocks Python image patch: ${compressedFile}`);
+            }
+            text = text.slice(0, patchIndex) + compressedImagePatch;
             fs.writeFileSync(compressedFile, text);
         }
     }
