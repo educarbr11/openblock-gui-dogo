@@ -260,6 +260,14 @@ class MenuBar extends React.Component {
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
         this.props.vm.removeListener('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
         window.removeEventListener('resize', this.handleWindowsResize);
+        if (this.programModeSwitchFrame) {
+            window.cancelAnimationFrame(this.programModeSwitchFrame);
+            this.programModeSwitchFrame = null;
+        }
+        if (this.programModeSwitchTimeout) {
+            window.clearTimeout(this.programModeSwitchTimeout);
+            this.programModeSwitchTimeout = null;
+        }
     }
     handleWindowsResize () {
         this.setState({isOverflow: false});
@@ -435,9 +443,14 @@ class MenuBar extends React.Component {
         }
     }
     handleProgramModeSwitchOnChange () {
-        if (this.props.isRealtimeMode) {
-            this.props.vm.runtime.setRealtimeMode(false);
-        } else {
+        if (this.programModeSwitchPending) {
+            return;
+        }
+
+        const nextRealtimeMode = !this.props.isRealtimeMode;
+        this.programModeSwitchPending = true;
+
+        if (nextRealtimeMode) {
             /**
              * The realtime stage framwork didn't support STAGE_SIZE_MODES.hide,
              * so if the mode is hide switch to large mode.
@@ -445,7 +458,24 @@ class MenuBar extends React.Component {
             if (this.props.stageSizeMode === STAGE_SIZE_MODES.hide) {
                 this.props.onSetStageLarge();
             }
-            this.props.vm.runtime.setRealtimeMode(true);
+        }
+
+        const applyModeSwitch = () => {
+            this.programModeSwitchFrame = null;
+            this.programModeSwitchTimeout = window.setTimeout(() => {
+                this.programModeSwitchTimeout = null;
+                try {
+                    this.props.vm.runtime.setRealtimeMode(nextRealtimeMode);
+                } finally {
+                    this.programModeSwitchPending = false;
+                }
+            }, 0);
+        };
+
+        if (window.requestAnimationFrame) {
+            this.programModeSwitchFrame = window.requestAnimationFrame(applyModeSwitch);
+        } else {
+            applyModeSwitch();
         }
     }
     handleProgramModeUpdate (data) {

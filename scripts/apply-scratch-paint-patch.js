@@ -642,6 +642,72 @@ const patchOpenBlockBlocksKeyReleased = () => {
     ].forEach(patchOpenBlockBlocksKeyReleasedPackage);
 };
 
+const patchOpenBlockBlocksMicrobitPythonEventsPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const microbitGenerator = path.join(packageDir, 'generators', 'python', 'microbit.js');
+    if (fs.existsSync(microbitGenerator)) {
+        let text = fs.readFileSync(microbitGenerator, 'utf8');
+        if (!text.includes('microbitIndentedEventBody_')) {
+            text = text.replace(
+                `Blockly.Python.microbitEventFunction_ = Blockly.Python.microbitEventFunction_ || function(block, functionName) {
+  var code = "def " + functionName + "():\\n";
+  var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+  if (!nextBlock) {
+    code += Blockly.Python.INDENT + "pass\\n";
+  } else {
+    code += Blockly.Python.microbitGlobalVariables_();
+    code = Blockly.Python.scrub_(block, code);
+  }
+  return code;
+};
+`,
+                `Blockly.Python.microbitIndentedEventBody_ = Blockly.Python.microbitIndentedEventBody_ || function(block) {
+  var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
+  if (!nextBlock) {
+    return Blockly.Python.INDENT + "pass\\n";
+  }
+
+  var code = Blockly.Python.microbitGlobalVariables_();
+  var body = Blockly.Python.blockToCode(nextBlock);
+  if (!body) {
+    body = "pass\\n";
+  }
+  return code + Blockly.Python.prefixLines(body, Blockly.Python.INDENT);
+};
+
+Blockly.Python.microbitEventFunction_ = Blockly.Python.microbitEventFunction_ || function(block, functionName) {
+  var code = "def " + functionName + "():\\n";
+  return code + Blockly.Python.microbitIndentedEventBody_(block);
+};
+`
+            );
+            fs.writeFileSync(microbitGenerator, text);
+        }
+    }
+
+    const compressedFile = path.join(packageDir, 'python_compressed.js');
+    if (fs.existsSync(compressedFile)) {
+        let text = fs.readFileSync(compressedFile, 'utf8');
+        if (!text.includes('microbitIndentedEventBody_')) {
+            text = text.replace(
+                /Blockly\.Python\.microbitEventFunction_=Blockly\.Python\.microbitEventFunction_\|\|function\(a,b\)\{var c="def "\+b\+"\(\):\\n";[\s\S]*?return c\};/,
+                'Blockly.Python.microbitIndentedEventBody_=Blockly.Python.microbitIndentedEventBody_||function(a){var b=a.nextConnection&&a.nextConnection.targetBlock();if(!b)return Blockly.Python.INDENT+"pass\\n";a=Blockly.Python.microbitGlobalVariables_();(b=Blockly.Python.blockToCode(b))||(b="pass\\n");return a+Blockly.Python.prefixLines(b,Blockly.Python.INDENT)};Blockly.Python.microbitEventFunction_=Blockly.Python.microbitEventFunction_||function(a,b){return"def "+b+"():\\n"+Blockly.Python.microbitIndentedEventBody_(a)};'
+            );
+            fs.writeFileSync(compressedFile, text);
+        }
+    }
+
+    console.log(`Applied openblock-blocks micro:bit Python event patch: ${packageDir}`);
+};
+
+const patchOpenBlockBlocksMicrobitPythonEvents = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
+    ].forEach(patchOpenBlockBlocksMicrobitPythonEventsPackage);
+};
+
 const patchOpenBlockVmKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -1282,7 +1348,60 @@ const microbitBleBlockTranslationsPtBr = {
     'microbit.acceleration': 'aceleração [AXIS]',
     'microbit.temperature': 'temperatura',
     'microbit.lightLevel': 'nível de luz',
-    'microbit.runningTime': 'tempo ligado'
+    'microbit.runningTime': 'tempo ligado',
+    'microbit.ledState.on': 'ligado',
+    'microbit.ledState.off': 'desligado',
+    'microbit.gestruesMenu.shaken': 'sacudido',
+    'microbit.gestruesMenu.tiltedUpward': 'inclinado para cima',
+    'microbit.gestruesMenu.tiltedDownward': 'inclinado para baixo',
+    'microbit.gestruesMenu.tiltedLeftward': 'inclinado para a esquerda',
+    'microbit.gestruesMenu.tiltedRightward': 'inclinado para a direita',
+    'microbit.gestruesMenu.faceUp': 'virado para cima',
+    'microbit.gestruesMenu.faceDown': 'virado para baixo',
+    'microbit.gestruesMenu.freefall': 'queda livre',
+    'microbit.axisMenu.xAxis': 'eixo X',
+    'microbit.axisMenu.yAxis': 'eixo Y',
+    'microbit.axisMenu.zAxis': 'eixo Z',
+    'microbit.levelMenu.high': 'ligado',
+    'microbit.levelMenu.low': 'desligado',
+    'microbit.category.pins': 'Pinos',
+    'microbit.pins.setDigitalOutput': 'definir pino digital [PIN] para [LEVEL]',
+    'microbit.pins.setPwmOutput': 'definir PWM do pino [PIN] para [OUT]',
+    'microbit.pins.readDigitalPin': 'ler pino digital [PIN]',
+    'microbit.pins.readAnalogPin': 'ler pino analógico [PIN]',
+    'microbit.pins.pinIsTouched': 'pino [PIN] tocado?',
+    'microbit.category.display': 'Tela',
+    'microbit.display.showImage': 'mostrar desenho [VALUE]',
+    'microbit.display.showImageUntil': 'mostrar desenho [VALUE] por [TIME] segundos',
+    'microbit.display.show': 'mostrar texto [TEXT]',
+    'microbit.display.showUntilScrollDone': 'mostrar texto [TEXT] até terminar',
+    'microbit.display.clearDisplay': 'limpar tela',
+    'microbit.display.lightPixelAt': '[STATE] LED em x [X] y [Y]',
+    'microbit.display.showOnPiexlbrightness': 'mostrar LED em x [X] y [Y] com brilho [BRT]',
+    'microbit.category.sensor': 'Sensores',
+    'microbit.sensor.buttonIsPressed': 'botão [KEY] pressionado?',
+    'microbit.sensor.gestureIsX': 'gesto é [STA]?',
+    'microbit.sensor.axisAcceleration': 'aceleração no [AXIS]',
+    'microbit.sensor.compassAngle': 'ângulo da bússola',
+    'microbit.sensor.compassMagneticDensity': 'força magnética da bússola',
+    'microbit.sensor.calibrateCompass': 'calibrar bússola',
+    'microbit.sensor.lightLevel': 'nível de luz',
+    'microbit.sensor.temperature': 'temperatura',
+    'microbit.sensor.runningTime': 'tempo ligado',
+    'microbit.category.wireless': 'Rádio',
+    'microbit.wireless.openWirelessCommunication': 'iniciar rádio',
+    'microbit.wireless.closeWirelessCommunication': 'parar rádio',
+    'microbit.wireless.resetWirelessCommunication': 'reiniciar rádio',
+    'microbit.wireless.sendWirelessMessage': 'enviar mensagem [TEXT] pelo rádio',
+    'microbit.wireless.receiveWirelessMessage': 'mensagem recebida pelo rádio',
+    'microbit.wireless.setWirelessCommunicationChannel': 'definir canal do rádio para [CH]',
+    'microbit.category.console': 'Console',
+    'microbit.console.consolePrint': 'imprimir [TEXT]',
+    'microbit.event.whenMicrobitBegin': 'quando o micro:bit iniciar',
+    'microbit.event.whenButtonPressed': 'quando o botão [KEY] for pressionado',
+    'microbit.event.whenPinTouched': 'quando o pino [PIN] for tocado',
+    'microbit.event.whenGesture': 'quando o gesto for [STA]',
+    'microbit.category.microbit': 'micro:bit v2'
 };
 
 const microbitBleBlockTranslationsPt = Object.assign({}, microbitBleBlockTranslationsPtBr, {
@@ -1442,6 +1561,7 @@ for (const patch of patches) {
 
 patchOpenBlockBlocksArduinoPins();
 patchOpenBlockBlocksKeyReleased();
+patchOpenBlockBlocksMicrobitPythonEvents();
 patchOpenBlockVmKeyReleased();
 patchOpenBlockVmArduinoNanoUpload();
 patchOpenBlockVmArduinoDiscovery();

@@ -90,7 +90,7 @@ class HardwareHeader extends React.Component {
                 this.props.onWorkspaceIsEmpty();
             } else {
                 this.props.onOpenUploadProgress();
-                if (isMicrobitUpload) {
+                if (!isScratchDesktop() && isMicrobitUpload) {
                     window.setTimeout(this.handleMicrobitCompilerUpload, 0);
                 } else if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
                     window.setTimeout(this.handleArduinoCompilerUpload, 0);

@@ -59,7 +59,7 @@ const deviceData = [
         tags: ['realtime']
     },
     {
-        name: 'micro:bit',
+        name: 'micro:bit v2',
         deviceId: 'microbitV2',
         manufactor: 'micro:bit',
         learnMore: 'https://microbit.org/get-started/user-guide/overview/',
@@ -285,10 +285,7 @@ const allowedDeviceIds = new Set(deviceData.map(device => device.deviceId));
 const eventBlock = {
     [DeviceType.arduino]: '<block type="event_whenarduinobegin"/>',
     [DeviceType.microPython]: '<block type="event_whenmicropythonbegin"/>',
-    [DeviceType.microbit]: `<block type="event_whenmicrobitbegin"/>
-                                <block type="event_whenmicrobitbuttonpressed"/>
-                                <block type="event_whenmicrobitpinbeingtouched"/>
-                                <block type="event_whenmicrobitgesture"/>`
+    [DeviceType.microbit]: ''
 };
 
 /**
