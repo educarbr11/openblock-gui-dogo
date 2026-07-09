@@ -262,6 +262,39 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         python.__dogoblockMicrobitPinPatch = true;
     }
 
+    python.microbitImageValue_ = python.microbitImageValue_ || function (value) {
+        value = String(value || '0');
+        if ((value.charAt(0) === '\'' && value.charAt(value.length - 1) === '\'') ||
+            (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"')) {
+            value = value.slice(1, -1);
+        }
+        value = value.replace(/[^01]/g, '');
+        if (value.length < 25) {
+            value = `${value}0000000000000000000000000`.slice(0, 25);
+        } else if (value.length > 25) {
+            value = value.slice(0, 25);
+        }
+        value = value.replace(/1/g, '9');
+        return `${value.slice(0, 5)}:${value.slice(5, 10)}:${value.slice(10, 15)}:` +
+            `${value.slice(15, 20)}:${value.slice(20, 25)}`;
+    };
+
+    python.microbit_display_showImage = block => {
+        const image = python.microbitImageValue_(python.valueToCode(block, 'VALUE', python.ORDER_ATOMIC) || '0');
+        return `display.show(Image('${image}'))\n`;
+    };
+
+    python.microbit_display_showImageUntil = block => {
+        const image = python.microbitImageValue_(python.valueToCode(block, 'VALUE', python.ORDER_ATOMIC) || '0');
+        const time = python.valueToCode(block, 'TIME', python.ORDER_ATOMIC) || '0';
+        return `display.show(Image('${image}'))\nsleep(float(${time}) * 1000)\ndisplay.clear()\n`;
+    };
+
+    python.microbit_showImage = python.microbit_display_showImage;
+    python.microbit_showImageUntil = python.microbit_display_showImageUntil;
+    python.display_showImage = python.microbit_display_showImage;
+    python.display_showImageUntil = python.microbit_display_showImageUntil;
+
     if (!python.microbit_whenMicrobitBegin) {
         python.microbit_whenMicrobitBegin = block => {
             python.imports_.microbit = 'from microbit import *';

@@ -684,6 +684,66 @@ Blockly.Python.microbitEventFunction_ = Blockly.Python.microbitEventFunction_ ||
             );
             fs.writeFileSync(microbitGenerator, text);
         }
+        if (!text.includes('microbitImageValue_')) {
+            text = text.replace(
+                `Blockly.Python['microbit_display_showImage'] = function(block) {
+  var arg0 = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC) || '0';
+
+  arg0 = arg0.replace(/1/g, '9');
+  arg0 = arg0.slice(0, 5) + ':' + arg0.slice(5, 10) + ':' + arg0.slice(10, 15)
+    + ':' + arg0.slice(15, 20) + ':' + arg0.slice(20, 25);
+  var code = "display.show(Image('" + arg0 + "'))\\n";
+  return code;
+};
+
+Blockly.Python['microbit_display_showImageUntil'] = function(block) {
+  var arg0 = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC) || '0';
+  var arg1 = Blockly.Python.valueToCode(block, 'TIME', Blockly.Python.ORDER_ATOMIC) || '0';
+
+  arg0 = arg0.replace(/1/g, '9');
+  arg0 = arg0.slice(0, 5) + ':' + arg0.slice(5, 10) + ':' + arg0.slice(10, 15)
+    + ':' + arg0.slice(15, 20) + ':' + arg0.slice(20, 25);
+  var code = "display.show(Image('" + arg0 + "'))\\n" + "sleep(float(" + arg1 + ") * 1000)\\n" + "display.clear()\\n";
+  return code;
+};
+`,
+                `Blockly.Python.microbitImageValue_ = Blockly.Python.microbitImageValue_ || function(value) {
+  value = String(value || '0');
+  if ((value.charAt(0) === "'" && value.charAt(value.length - 1) === "'") ||
+      (value.charAt(0) === '"' && value.charAt(value.length - 1) === '"')) {
+    value = value.slice(1, -1);
+  }
+  value = value.replace(/[^01]/g, '');
+  if (value.length < 25) {
+    value = (value + '0000000000000000000000000').slice(0, 25);
+  } else if (value.length > 25) {
+    value = value.slice(0, 25);
+  }
+  value = value.replace(/1/g, '9');
+  return value.slice(0, 5) + ':' + value.slice(5, 10) + ':' + value.slice(10, 15) +
+    ':' + value.slice(15, 20) + ':' + value.slice(20, 25);
+};
+
+Blockly.Python['microbit_display_showImage'] = function(block) {
+  var arg0 = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC) || '0';
+
+  arg0 = Blockly.Python.microbitImageValue_(arg0);
+  var code = "display.show(Image('" + arg0 + "'))\\n";
+  return code;
+};
+
+Blockly.Python['microbit_display_showImageUntil'] = function(block) {
+  var arg0 = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC) || '0';
+  var arg1 = Blockly.Python.valueToCode(block, 'TIME', Blockly.Python.ORDER_ATOMIC) || '0';
+
+  arg0 = Blockly.Python.microbitImageValue_(arg0);
+  var code = "display.show(Image('" + arg0 + "'))\\n" + "sleep(float(" + arg1 + ") * 1000)\\n" + "display.clear()\\n";
+  return code;
+};
+`
+            );
+            fs.writeFileSync(microbitGenerator, text);
+        }
     }
 
     const compressedFile = path.join(packageDir, 'python_compressed.js');
@@ -694,6 +754,23 @@ Blockly.Python.microbitEventFunction_ = Blockly.Python.microbitEventFunction_ ||
                 /Blockly\.Python\.microbitEventFunction_=Blockly\.Python\.microbitEventFunction_\|\|function\(a,b\)\{var c="def "\+b\+"\(\):\\n";[\s\S]*?return c\};/,
                 'Blockly.Python.microbitIndentedEventBody_=Blockly.Python.microbitIndentedEventBody_||function(a){var b=a.nextConnection&&a.nextConnection.targetBlock();if(!b)return Blockly.Python.INDENT+"pass\\n";a=Blockly.Python.microbitGlobalVariables_();(b=Blockly.Python.blockToCode(b))||(b="pass\\n");return a+Blockly.Python.prefixLines(b,Blockly.Python.INDENT)};Blockly.Python.microbitEventFunction_=Blockly.Python.microbitEventFunction_||function(a,b){return"def "+b+"():\\n"+Blockly.Python.microbitIndentedEventBody_(a)};'
             );
+            fs.writeFileSync(compressedFile, text);
+        }
+        if (!text.includes('microbitImageValue_')) {
+            text += '\nBlockly.Python.microbitImageValue_=Blockly.Python.microbitImageValue_||function(a){' +
+                'a=String(a||"0");' +
+                'if("\\\'"===a.charAt(0)&&"\\\'"===a.charAt(a.length-1)||"\\\\""===a.charAt(0)&&"\\\\""===a.charAt(a.length-1))a=a.slice(1,-1);' +
+                'a=a.replace(/[^01]/g,"");' +
+                '25>a.length?a=(a+"0000000000000000000000000").slice(0,25):25<a.length&&(a=a.slice(0,25));' +
+                'a=a.replace(/1/g,"9");' +
+                'return a.slice(0,5)+":"+a.slice(5,10)+":"+a.slice(10,15)+":"+a.slice(15,20)+":"+a.slice(20,25)};' +
+                'Blockly.Python.microbit_display_showImage=function(a){' +
+                'a=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
+                'return"display.show(Image(\\\'"+a+"\\\'))\\\\n"};' +
+                'Blockly.Python.microbit_display_showImageUntil=function(a){' +
+                'var b=Blockly.Python.microbitImageValue_(Blockly.Python.valueToCode(a,"VALUE",Blockly.Python.ORDER_ATOMIC)||"0");' +
+                'a=Blockly.Python.valueToCode(a,"TIME",Blockly.Python.ORDER_ATOMIC)||"0";' +
+                'return"display.show(Image(\\\'"+b+"\\\'))\\\\nsleep(float("+a+") * 1000)\\\\ndisplay.clear()\\\\n"};\n';
             fs.writeFileSync(compressedFile, text);
         }
     }
