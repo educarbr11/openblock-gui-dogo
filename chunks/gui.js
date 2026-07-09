@@ -27,25 +27,25 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1216:
+/***/ 1217:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "static/assets/4c6a5e88d07eebfe480ecb247d793925.png";
 
 /***/ }),
 
-/***/ 1222:
+/***/ 1223:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1224);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1225);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1226);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1237);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1238);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1254);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1255);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(230);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(409);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(410);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(963);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(966);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 // Polyfills
 
@@ -113,14 +113,14 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 
 /***/ }),
 
-/***/ 1256:
+/***/ 1257:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 1664:
+/***/ 1665:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(22)(false);
@@ -317,7 +317,7 @@ exports.locals = {
 /***/ 2055:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(459);
+var escape = __webpack_require__(460);
 exports = module.exports = __webpack_require__(22)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800&display=swap);", ""]);
@@ -1123,7 +1123,7 @@ var project_state = __webpack_require__(38);
 var project_interactions = __webpack_require__(235);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(55);
+var dogoblock_api = __webpack_require__(52);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
 var lock_open = __webpack_require__(2094);
@@ -2258,7 +2258,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       if (projectId) {
         this.loadDetails(projectId); // Record a view (fire and forget)
 
-        Object(dogoblock_api["w" /* recordProjectView */])(projectId).catch(function () {});
+        Object(dogoblock_api["z" /* recordProjectView */])(projectId).catch(function () {});
       }
     }
   }, {
@@ -2275,7 +2275,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
 
       this.props.onSetLoading(true);
       this.props.onSetComments([], 0, 1);
-      Object(dogoblock_api["k" /* getProjectDetails */])(projectId).then(function (details) {
+      Object(dogoblock_api["n" /* getProjectDetails */])(projectId).then(function (details) {
         if (_this2.props.projectId !== projectId) return;
 
         _this2.props.onSetDetails(details);
@@ -2294,7 +2294,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleLike() {
       var _this3 = this;
 
-      Object(dogoblock_api["m" /* likeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["p" /* likeProject */])(this.props.projectId).then(function (res) {
         return _this3.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -2303,7 +2303,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnlike() {
       var _this4 = this;
 
-      Object(dogoblock_api["A" /* unlikeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["D" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -2312,7 +2312,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleFavorite() {
       var _this5 = this;
 
-      Object(dogoblock_api["g" /* favoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["i" /* favoriteProject */])(this.props.projectId).then(function (res) {
         return _this5.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2321,7 +2321,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUnfavorite() {
       var _this6 = this;
 
-      Object(dogoblock_api["z" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["C" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2337,7 +2337,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handlePostComment(content, parentId) {
       var _this7 = this;
 
-      return Object(dogoblock_api["v" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
+      return Object(dogoblock_api["y" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
         return _this7.props.onAddComment(comment);
       });
     }
@@ -2346,7 +2346,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleDeleteComment(commentId) {
       var _this8 = this;
 
-      Object(dogoblock_api["c" /* deleteComment */])(this.props.projectId, commentId).then(function (res) {
+      Object(dogoblock_api["d" /* deleteComment */])(this.props.projectId, commentId).then(function (res) {
         return _this8.props.onRemoveComment(commentId, res && res.deletedCount);
       }).catch(console.error);
     }
@@ -2356,7 +2356,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       var projectId = this.props.projectId;
-      Object(dogoblock_api["i" /* getComments */])(projectId, page).then(function (res) {
+      Object(dogoblock_api["k" /* getComments */])(projectId, page).then(function (res) {
         if (_this9.props.projectId !== projectId) return;
 
         _this9.props.onSetComments(res.comments, res.total, res.page);
@@ -2367,7 +2367,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateVisibility(visibility) {
       var _this10 = this;
 
-      Object(dogoblock_api["D" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
+      Object(dogoblock_api["G" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
         _this10.props.onSetDetails(Object.assign({}, _this10.props, {
           visibility: res.visibility
         }));
@@ -2378,7 +2378,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateDetails(patch) {
       var _this11 = this;
 
-      return Object(dogoblock_api["C" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
+      return Object(dogoblock_api["F" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
         _this11.props.onSetDetails(Object.assign({}, _this11.props, res));
       });
     }
@@ -2387,7 +2387,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     value: function handleUpdateCover(coverFile) {
       var _this12 = this;
 
-      return Object(dogoblock_api["E" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
+      return Object(dogoblock_api["H" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
         _this12.props.onSetDetails(Object.assign({}, _this12.props, res));
 
         return res;
@@ -2528,7 +2528,7 @@ var dogoblock_api_config = __webpack_require__(249);
 var auth_session = __webpack_require__(143);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
-var reducers_session = __webpack_require__(370);
+var reducers_session = __webpack_require__(371);
 
 // EXTERNAL MODULE: ./src/reducers/mode.js
 var mode = __webpack_require__(178);
@@ -2538,7 +2538,7 @@ var dogoblock_logo_full = __webpack_require__(323);
 var dogoblock_logo_full_default = /*#__PURE__*/__webpack_require__.n(dogoblock_logo_full);
 
 // EXTERNAL MODULE: ./static/hero-illustration.png
-var hero_illustration = __webpack_require__(1216);
+var hero_illustration = __webpack_require__(1217);
 var hero_illustration_default = /*#__PURE__*/__webpack_require__.n(hero_illustration);
 
 // EXTERNAL MODULE: ./src/playground/dogoblock-web-app.css
@@ -2918,7 +2918,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         this.setState({
           loading: true
         });
-        Object(dogoblock_api["q" /* listPublicProjects */])().then(function (projects) {
+        Object(dogoblock_api["t" /* listPublicProjects */])().then(function (projects) {
           return _this3.setState({
             projects: projects,
             loading: false
@@ -2941,7 +2941,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           error: null,
           featuredProjectDetails: null
         });
-        Promise.all([Object(dogoblock_api["j" /* getMyProfile */])(), Object(dogoblock_api["p" /* listProjects */])(), Object(dogoblock_api["n" /* listFavoriteProjects */])()]).then(function (_ref2) {
+        Promise.all([Object(dogoblock_api["m" /* getMyProfile */])(), Object(dogoblock_api["s" /* listProjects */])(), Object(dogoblock_api["q" /* listFavoriteProjects */])()]).then(function (_ref2) {
           var _ref3 = dogoblock_web_app_slicedToArray(_ref2, 3),
               profile = _ref3[0],
               projects = _ref3[1],
@@ -2960,7 +2960,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
 
           if (candidates.length > 0) {
             Promise.all(candidates.map(function (p) {
-              return Object(dogoblock_api["k" /* getProjectDetails */])(p.id).catch(function () {
+              return Object(dogoblock_api["n" /* getProjectDetails */])(p.id).catch(function () {
                 return null;
               });
             })).then(function (details) {
@@ -2992,7 +2992,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         this.setState({
           loading: true
         });
-        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["p" /* listProjects */] : dogoblock_api["q" /* listPublicProjects */];
+        var loader = this.props.user && route.name === 'projects' ? dogoblock_api["s" /* listProjects */] : dogoblock_api["t" /* listPublicProjects */];
         loader().then(function (projects) {
           return _this3.setState({
             projects: projects,
@@ -3018,7 +3018,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           pdLikeCount: 0,
           pdStarCount: 0
         });
-        Promise.all([Object(dogoblock_api["k" /* getProjectDetails */])(requestedProjectId), Object(dogoblock_api["i" /* getComments */])(requestedProjectId).catch(function () {
+        Promise.all([Object(dogoblock_api["n" /* getProjectDetails */])(requestedProjectId), Object(dogoblock_api["k" /* getComments */])(requestedProjectId).catch(function () {
           return {
             comments: []
           };
@@ -3065,7 +3065,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["r" /* login */])({
+      Object(dogoblock_api["u" /* login */])({
         email: form.get('email'),
         password: form.get('password')
       }).then(function (session) {
@@ -3094,7 +3094,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null,
         loading: true
       });
-      Object(dogoblock_api["x" /* register */])({
+      Object(dogoblock_api["A" /* register */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -3119,7 +3119,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     value: function handleLogout() {
       dogoblock_web_app_trackEvent('logout', 'header');
       this.closeNotificationsStream();
-      Object(dogoblock_api["s" /* logout */])();
+      Object(dogoblock_api["v" /* logout */])();
       this.props.onLogout();
       this.setState({
         notifications: [],
@@ -3144,13 +3144,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return;
       }
 
-      Object(dogoblock_api["l" /* getUnreadCount */])().then(function (result) {
+      Object(dogoblock_api["o" /* getUnreadCount */])().then(function (result) {
         return _this6.setState({
           unreadCount: result.unreadCount || 0
         });
       }).catch(function () {});
       var session = Object(auth_session["c" /* readAuthSession */])();
-      var stream = Object(dogoblock_api["b" /* createNotificationsStream */])(session && session.accessToken);
+      var stream = Object(dogoblock_api["c" /* createNotificationsStream */])(session && session.accessToken);
       if (!stream) return;
       stream.addEventListener('notification', function (event) {
         try {
@@ -3197,7 +3197,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         notificationsLoading: true
       });
-      Object(dogoblock_api["o" /* listNotifications */])(1, 10).then(function (result) {
+      Object(dogoblock_api["r" /* listNotifications */])(1, 10).then(function (result) {
         return _this7.setState({
           notifications: result.notifications || [],
           unreadCount: result.unreadCount || 0,
@@ -3222,7 +3222,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       };
 
       if (!notification.readAt) {
-        Object(dogoblock_api["u" /* markNotificationRead */])(notification.id).then(function (updated) {
+        Object(dogoblock_api["x" /* markNotificationRead */])(notification.id).then(function (updated) {
           _this8.setState(function (prevState) {
             return {
               notifications: prevState.notifications.map(function (item) {
@@ -3247,7 +3247,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var _this9 = this;
 
       if (!this.props.user || this.state.unreadCount === 0) return;
-      Object(dogoblock_api["t" /* markAllNotificationsRead */])().then(function (result) {
+      Object(dogoblock_api["w" /* markAllNotificationsRead */])().then(function (result) {
         return _this9.setState(function (prevState) {
           return {
             unreadCount: 0,
@@ -3347,7 +3347,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["d" /* deleteProject */])(id).then(function () {
+      Object(dogoblock_api["e" /* deleteProject */])(id).then(function () {
         dogoblock_web_app_trackEvent('delete project success', 'details');
         dogoblock_web_app_navigate('/projects');
       }).catch(function (error) {
@@ -3380,7 +3380,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["d" /* deleteProject */])(id).then(function () {
+      Object(dogoblock_api["e" /* deleteProject */])(id).then(function () {
         return _this12.setState(function (prevState) {
           return {
             projects: prevState.projects.filter(function (project) {
@@ -3456,8 +3456,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["D" /* updateProjectVisibility */])(project.id, visibility).then(function () {
-        return Object(dogoblock_api["k" /* getProjectDetails */])(project.id);
+      Object(dogoblock_api["G" /* updateProjectVisibility */])(project.id, visibility).then(function () {
+        return Object(dogoblock_api["n" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         dogoblock_web_app_trackEvent('update project visibility success', visibility);
 
@@ -3551,7 +3551,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           pdLikeCount: prevState.pdLikeCount + (wasLiked ? -1 : 1)
         };
       });
-      var action = wasLiked ? dogoblock_api["A" /* unlikeProject */] : dogoblock_api["m" /* likeProject */];
+      var action = wasLiked ? dogoblock_api["D" /* unlikeProject */] : dogoblock_api["p" /* likeProject */];
       action(project.id).then(function () {
         dogoblock_web_app_trackEvent(wasLiked ? 'unlike project' : 'like project', 'project details');
       }).catch(function () {
@@ -3584,7 +3584,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           pdStarCount: prevState.pdStarCount + (wasFavorited ? -1 : 1)
         };
       });
-      var action = wasFavorited ? dogoblock_api["z" /* unfavoriteProject */] : dogoblock_api["g" /* favoriteProject */];
+      var action = wasFavorited ? dogoblock_api["C" /* unfavoriteProject */] : dogoblock_api["i" /* favoriteProject */];
       action(project.id).then(function () {
         dogoblock_web_app_trackEvent(wasFavorited ? 'unfavorite project' : 'favorite project', 'project details');
       }).catch(function () {
@@ -3614,7 +3614,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdRemixing: true,
         error: null
       });
-      Object(dogoblock_api["y" /* remixProject */])(project.id).then(function (result) {
+      Object(dogoblock_api["B" /* remixProject */])(project.id).then(function (result) {
         dogoblock_web_app_trackEvent('remix project success', 'project details');
 
         _this16.setState({
@@ -3645,7 +3645,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdSavingDetails: true,
         error: null
       });
-      Object(dogoblock_api["C" /* updateProjectDetails */])(project.id, {
+      Object(dogoblock_api["F" /* updateProjectDetails */])(project.id, {
         instructions: pdInstructions,
         notesAndCredits: pdCredits
       }).then(function (updated) {
@@ -3708,7 +3708,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         pdCommentsLoading: true
       });
-      Object(dogoblock_api["v" /* postComment */])(project.id, content).then(function (comment) {
+      Object(dogoblock_api["y" /* postComment */])(project.id, content).then(function (comment) {
         dogoblock_web_app_trackEvent('comment project success', 'project details');
 
         _this18.setState(function (prevState) {
@@ -3742,7 +3742,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var commentId = event.currentTarget.dataset.commentId;
       var project = this.state.projectDetails;
       if (!project || !commentId) return;
-      Object(dogoblock_api["c" /* deleteComment */])(project.id, commentId).then(function () {
+      Object(dogoblock_api["d" /* deleteComment */])(project.id, commentId).then(function () {
         _this19.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.filter(function (c) {
@@ -3800,7 +3800,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         pdReplyLoading: true
       });
-      Object(dogoblock_api["v" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
+      Object(dogoblock_api["y" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
         dogoblock_web_app_trackEvent('reply comment success', 'project details');
 
         _this20.setState(function (prevState) {
@@ -3834,7 +3834,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var parentId = event.currentTarget.dataset.parentId;
       var project = this.state.projectDetails;
       if (!project || !replyId) return;
-      Object(dogoblock_api["c" /* deleteComment */])(project.id, replyId).then(function () {
+      Object(dogoblock_api["d" /* deleteComment */])(project.id, replyId).then(function () {
         _this21.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
@@ -3864,7 +3864,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         pdUploadingCover: true
       });
-      Object(dogoblock_api["E" /* uploadProjectCover */])(project.id, file).then(function (updated) {
+      Object(dogoblock_api["H" /* uploadProjectCover */])(project.id, file).then(function (updated) {
         _this22.setState(function (prevState) {
           return {
             pdUploadingCover: false,
@@ -3891,7 +3891,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["B" /* updateMyProfile */])({
+      Object(dogoblock_api["E" /* updateMyProfile */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -4977,11 +4977,11 @@ if(false) {}
 
 /***/ }),
 
-/***/ 963:
+/***/ 966:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1664);
+var content = __webpack_require__(1665);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -5003,5 +5003,5 @@ if(false) {}
 
 /***/ })
 
-},[[1222,0]]]);
+},[[1223,0]]]);
 //# sourceMappingURL=gui.js.map
