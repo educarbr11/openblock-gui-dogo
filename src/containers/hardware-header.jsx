@@ -271,7 +271,7 @@ class HardwareHeader extends React.Component {
                 const uploadCompletion = this.waitForUploadCompletion();
                 const uploadResult = this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
                     artifactType: 'microbitHex',
-                    fileName: 'dogoblock-microbit-program.hex',
+                    fileName: 'main.hex',
                     resumeRealtime: false
                 });
                 if (uploadResult === false) {
