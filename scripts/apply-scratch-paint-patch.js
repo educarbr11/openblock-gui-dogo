@@ -180,18 +180,10 @@ Blockly.Arduino['arduino_pin_menu_level'] = Blockly.Arduino['arduino_pin_menu_le
 Blockly.Arduino['arduino_pin_setDigitalOutput'] = function(block) {
   var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '0');
   var level = Blockly.Arduino.valueToCode(block, 'LEVEL', Blockly.Arduino.ORDER_UNARY_POSTFIX) || 'LOW';
-  var pinIsReporter = Boolean(block.getInputTargetBlock && block.getInputTargetBlock('PIN'));
-  if (pinIsReporter) {
-    Blockly.Arduino.customFunctions_['dogoblock_digital_write'] =
-      'void dogoblockDigitalWrite(int pin, int value) {\\n' +
-      '  pinMode(pin, OUTPUT);\\n' +
-      '  digitalWrite(pin, value);\\n' +
-      '}\\n';
-    return 'dogoblockDigitalWrite(' + pin + ', ' + level + ');\\n';
-  }
   Blockly.Arduino.setups_['setups_pin_mode_output_' + pin] = 'pinMode(' + pin + ', OUTPUT);';
   return 'digitalWrite(' + pin + ', ' + level + ');\\n';
 };
+Blockly.Arduino.__dogoblockDigitalWriteSetupOnly = true;
 `;
 
     const buzzerUltrasonicGenerators = `
@@ -310,6 +302,14 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
         if (!fs.existsSync(file)) return;
         const before = fs.readFileSync(file, 'utf8');
         let after = replaceAll(before, sourceReplacements);
+        if (file.endsWith(path.join('generators', 'arduino', 'arduino.js'))) {
+            const digitalStart = after.indexOf("Blockly.Arduino['arduino_pin_setDigitalOutput'] = function(block) {");
+            const digitalEnd = after.indexOf("Blockly.Arduino['arduino_pin_menu_level']", digitalStart);
+            if (digitalStart !== -1 && digitalEnd !== -1) {
+                after = after.slice(0, digitalStart) + digitalOutputGenerator.trim() + '\n\n' +
+                    after.slice(digitalEnd);
+            }
+        }
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
             !after.includes("arduino_pin_menu_pins")
@@ -415,6 +415,9 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
 
     const before = fs.readFileSync(compressedFile, 'utf8');
     let after = replaceAll(before, compressedReplacements);
+    if (!after.includes('__dogoblockDigitalWriteSetupOnly')) {
+        after += digitalOutputGenerator;
+    }
     if (!after.includes("arduino_pin_menu_pins")) {
         after += pinMenuGenerators;
     }

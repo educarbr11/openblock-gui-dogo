@@ -9,6 +9,12 @@ const normalizeHost = host => {
     return hostWithProtocol.replace(/\/+$/, '');
 };
 
+const getAssetApiHostFromProjectHost = projectHost => {
+    const normalizedProjectHost = normalizeHost(projectHost);
+    if (!normalizedProjectHost) return null;
+    return `${normalizedProjectHost.replace(/\/projects$/, '')}/assets`;
+};
+
 const contentTypeForFormat = dataFormat => {
     const format = dataFormat && dataFormat.toLowerCase ? dataFormat.toLowerCase() : dataFormat;
     const contentTypes = {
@@ -55,6 +61,12 @@ class Storage extends ScratchStorage {
             this.getAssetCreateConfig.bind(this),
             this.getAssetCreateConfig.bind(this)
         );
+        // User-created Dogoblock assets are persisted by the API. Keep the public
+        // CDN as the primary read source and use the API when the asset is not there.
+        this.addWebStore(
+            [this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound],
+            this.getAssetApiGetConfig.bind(this)
+        );
         this.addWebStore(
             [this.AssetType.Sound],
             asset => `static/extension-assets/scratch3_music/${asset.assetId}.${asset.dataFormat}`
@@ -62,6 +74,7 @@ class Storage extends ScratchStorage {
     }
     setProjectHost (projectHost) {
         this.projectHost = normalizeHost(projectHost);
+        this.assetApiHost = getAssetApiHostFromProjectHost(this.projectHost);
     }
     getProjectGetConfig (projectAsset) {
         return {
@@ -101,19 +114,28 @@ class Storage extends ScratchStorage {
         }
         return `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`;
     }
+    getAssetApiGetConfig (asset) {
+        if (!this.isDogoblockAssetHost() || !this.assetApiHost) return false;
+        return `${this.assetApiHost}/${asset.assetId}.${asset.dataFormat}`;
+    }
     getAssetCreateConfig (asset) {
+        const uploadHost = this.isDogoblockAssetHost() && this.assetApiHost ?
+            this.assetApiHost : this.assetHost;
         return {
             // There is no such thing as updating assets, but storage assumes it
             // should update if there is an assetId, and the asset store uses the
             // assetId as part of the create URI. So, force the method to POST.
             // Then when storage finds this config to use for the "update", still POSTs
             method: 'post',
-            url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
+            url: `${uploadHost}/${asset.assetId}.${asset.dataFormat}`,
             headers: Object.assign({
                 'Content-Type': contentTypeForFormat(asset.dataFormat)
             }, getAuthHeaders()),
             withCredentials: true
         };
+    }
+    isDogoblockAssetHost () {
+        return Boolean(this.assetHost && this.assetHost.includes('dogoblockcdn.dogomaker.com'));
     }
     setTranslatorFunction (translator) {
         this.translator = translator;

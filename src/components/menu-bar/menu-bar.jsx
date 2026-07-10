@@ -435,12 +435,7 @@ class MenuBar extends React.Component {
         }
     }
     handleSelectDeviceMouseUp () {
-        const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-        if (blocklyBlockCanvas.childNodes.length === 0) {
-            this.props.onOpenDeviceLibrary();
-        } else {
-            this.props.onWorkspaceIsNotEmpty();
-        }
+        this.props.onOpenDeviceLibrary();
     }
     handleProgramModeSwitchOnChange () {
         if (this.programModeSwitchPending) {
@@ -1209,7 +1204,6 @@ MenuBar.propTypes = {
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
-    onWorkspaceIsNotEmpty: PropTypes.func.isRequired,
     onOpenDeviceLibrary: PropTypes.func,
     onProjectChanged: PropTypes.func,
     onSetPendingProjectCover: PropTypes.func,
@@ -1306,7 +1300,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),
-    onWorkspaceIsNotEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsNotEmpty'),
     onOpenDeviceLibrary: () => dispatch(openDeviceLibrary()),
     onDeviceIsEmpty: () => showAlertWithTimeout(dispatch, 'selectADeviceFirst')
 });
