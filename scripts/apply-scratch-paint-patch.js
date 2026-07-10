@@ -851,6 +851,64 @@ Blockly.Python.console_consolePrint = Blockly.Python.microbit_console_consolePri
 `;
             fs.writeFileSync(microbitGenerator, text);
         }
+        text = fs.readFileSync(microbitGenerator, 'utf8');
+        if (!text.includes('__dogoblockMicrobitEventFilteringPatch')) {
+            text += `
+
+Blockly.Python.__dogoblockMicrobitEventFilteringPatch = true;
+Blockly.Python.microbitHasEventBody_ = function(block) {
+  return Boolean(block && block.nextConnection && block.nextConnection.targetBlock());
+};
+Blockly.Python.microbitEventSuffix_ = function(key) {
+  var suffix = "";
+  while (Blockly.Python.loops_[key + suffix]) suffix = suffix === "" ? 1 : suffix + 1;
+  return suffix;
+};
+Blockly.Python.microbit_whenMicrobitBegin = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  return "";
+};
+Blockly.Python.microbit_whenButtonPressed = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  var key = Blockly.Python.microbitValueOrField_(block, "KEY", ["keys"], "a");
+  var loopKey = "microbit_whenButtonPressed" + key;
+  var suffix = Blockly.Python.microbitEventSuffix_(loopKey);
+  var functionName = "on_button_" + key + suffix;
+  Blockly.Python.loops_[loopKey + suffix] = "if button_" + key + ".was_pressed():\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + functionName + "()";
+  Blockly.Python.libraries_["def " + functionName] = Blockly.Python.microbitEventFunction_(block, functionName);
+  return null;
+};
+Blockly.Python.microbit_whenPinTouched = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  var pin = Blockly.Python.microbitValueOrField_(block, "PIN", ["touchPins"], "0");
+  var loopKey = "microbit_whenPinTouched" + pin;
+  var suffix = Blockly.Python.microbitEventSuffix_(loopKey);
+  var functionName = "on_pin" + pin + suffix;
+  Blockly.Python.loops_[loopKey + suffix] = "if pin" + pin + ".is_touched():\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + functionName + "()";
+  Blockly.Python.libraries_["def " + functionName] = Blockly.Python.microbitEventFunction_(block, functionName);
+  return null;
+};
+Blockly.Python.microbit_whenGesture = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  var gesture = Blockly.Python.microbitValueOrField_(block, "STA", ["gestrues"], "shake");
+  var safeGesture = String(gesture).replace(/[^a-z0-9_]/gi, "_");
+  var loopKey = "microbit_whenGesture" + safeGesture;
+  var suffix = Blockly.Python.microbitEventSuffix_(loopKey);
+  var functionName = "on_" + safeGesture + suffix;
+  Blockly.Python.loops_[loopKey + suffix] = "if accelerometer.was_gesture('" + gesture + "'):\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + functionName + "()";
+  Blockly.Python.libraries_["def " + functionName] = Blockly.Python.microbitEventFunction_(block, functionName);
+  return null;
+};
+`;
+            fs.writeFileSync(microbitGenerator, text);
+        }
     }
 
     const compressedFile = path.join(packageDir, 'python_compressed.js');
@@ -869,6 +927,11 @@ Blockly.Python.console_consolePrint = Blockly.Python.microbit_console_consolePri
         }
         if (!text.includes('__dogoblockMicrobitSafeCodePatch')) {
             text += '\nBlockly.Python.__dogoblockMicrobitSafeCodePatch=!0;Blockly.Python.microbitNumberCode_=function(a,b,c){return Blockly.Python.valueToCode(a,b,Blockly.Python.ORDER_FUNCTION_CALL)||String(c)};Blockly.Python.microbitTextCode_=function(a,b,c){return Blockly.Python.valueToCode(a,b,Blockly.Python.ORDER_FUNCTION_CALL)||Blockly.Python.quote_(c||"")};Blockly.Python.microbitDigitalLevelCode_=function(a){var b=Blockly.Python.valueToCode(a,"LEVEL",Blockly.Python.ORDER_FUNCTION_CALL)||a.getFieldValue("LEVEL")||Blockly.Python.microbitFieldValueFromNames_(a,["level"],"1"),c=String(b).replace(/^[\\\'"]|[\\\'"]$/g,"").toUpperCase();return"HIGH"===c||"ON"===c||"LIGADO"===c?"1":"LOW"===c||"OFF"===c||"DESLIGADO"===c?"0":b};Blockly.Python.microbit_pin_setDigitalOutput=function(a){var b=Blockly.Python.microbitValueOrField_(a,"PIN",["pins"],"0");return"pin"+b+".write_digital("+Blockly.Python.microbitDigitalLevelCode_(a)+")\\n"};Blockly.Python.microbit_pin_setPwmOutput=function(a){var b=Blockly.Python.microbitValueOrField_(a,"PIN",["pins"],"0");return"pin"+b+".write_analog("+Blockly.Python.microbitNumberCode_(a,"OUT",0)+")\\n"};Blockly.Python.microbit_display_show=function(a){a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"display.scroll(str("+a+"), wait=False, loop=False)\\n"};Blockly.Python.microbit_display_showUntilScrollDone=function(a){a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"display.scroll(str("+a+"), wait=True, loop=False)\\n"};Blockly.Python.microbit_display_lightPixelAt=function(a){var b="off"===Blockly.Python.microbitValueOrField_(a,"STATE",["ledState"],"on")?0:9,c=Blockly.Python.microbitNumberCode_(a,"X",0);a=Blockly.Python.microbitNumberCode_(a,"Y",0);return"display.set_pixel(int("+c+"), int("+a+"), "+b+")\\n"};Blockly.Python.microbit_display_showOnPiexlbrightness=function(a){var b=Blockly.Python.microbitNumberCode_(a,"X",0),c=Blockly.Python.microbitNumberCode_(a,"Y",0);a=Blockly.Python.microbitNumberCode_(a,"BRT",9);return"display.set_pixel(int("+b+"), int("+c+"), "+a+")\\n"};Blockly.Python.microbit_wireless_sendWirelessMessage=function(a){Blockly.Python.imports_.radio="import radio";a=Blockly.Python.microbitTextCode_(a,"TEXT","");return"radio.send(str("+a+"))\\n"};Blockly.Python.microbit_wireless_setWirelessCommunicationChannel=function(a){Blockly.Python.imports_.radio="import radio";a=Blockly.Python.microbitValueOrField_(a,"CH",["channel"],"0");return"radio.config(channel=int("+a+"))\\n"};Blockly.Python.microbit_console_consolePrint=function(a){return"print("+Blockly.Python.microbitTextCode_(a,"TEXT","")+")\\n"};Blockly.Python.microbit_setDigitalOutput=Blockly.Python.microbit_pin_setDigitalOutput;Blockly.Python.microbit_setPwmOutput=Blockly.Python.microbit_pin_setPwmOutput;Blockly.Python.microbit_show=Blockly.Python.microbit_display_show;Blockly.Python.microbit_showUntilScrollDone=Blockly.Python.microbit_display_showUntilScrollDone;Blockly.Python.microbit_lightPixelAt=Blockly.Python.microbit_display_lightPixelAt;Blockly.Python.microbit_showOnPiexlbrightness=Blockly.Python.microbit_display_showOnPiexlbrightness;Blockly.Python.microbit_sendWirelessMessage=Blockly.Python.microbit_wireless_sendWirelessMessage;Blockly.Python.microbit_setWirelessCommunicationChannel=Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;Blockly.Python.microbit_consolePrint=Blockly.Python.microbit_console_consolePrint;Blockly.Python.pin_setDigitalOutput=Blockly.Python.microbit_pin_setDigitalOutput;Blockly.Python.pin_setPwmOutput=Blockly.Python.microbit_pin_setPwmOutput;Blockly.Python.display_show=Blockly.Python.microbit_display_show;Blockly.Python.display_showUntilScrollDone=Blockly.Python.microbit_display_showUntilScrollDone;Blockly.Python.display_lightPixelAt=Blockly.Python.microbit_display_lightPixelAt;Blockly.Python.display_showOnPiexlbrightness=Blockly.Python.microbit_display_showOnPiexlbrightness;Blockly.Python.wireless_sendWirelessMessage=Blockly.Python.microbit_wireless_sendWirelessMessage;Blockly.Python.wireless_setWirelessCommunicationChannel=Blockly.Python.microbit_wireless_setWirelessCommunicationChannel;Blockly.Python.console_consolePrint=Blockly.Python.microbit_console_consolePrint;\n';
+            fs.writeFileSync(compressedFile, text);
+        }
+        text = fs.readFileSync(compressedFile, 'utf8');
+        if (!text.includes('__dogoblockMicrobitEventFilteringPatch')) {
+            text += '\nBlockly.Python.__dogoblockMicrobitEventFilteringPatch=!0;Blockly.Python.microbitHasEventBody_=function(a){return!!(a&&a.nextConnection&&a.nextConnection.targetBlock())};Blockly.Python.microbitEventSuffix_=function(a){for(var b="";Blockly.Python.loops_[a+b];)b=""===b?1:b+1;return b};Blockly.Python.microbit_whenMicrobitBegin=function(a){if(!Blockly.Python.microbitHasEventBody_(a))return null;Blockly.Python.imports_.microbit="from microbit import *";return""};Blockly.Python.microbit_whenButtonPressed=function(a){if(!Blockly.Python.microbitHasEventBody_(a))return null;Blockly.Python.imports_.microbit="from microbit import *";var b=Blockly.Python.microbitValueOrField_(a,"KEY",["keys"],"a"),c="microbit_whenButtonPressed"+b,d=Blockly.Python.microbitEventSuffix_(c),e="on_button_"+b+d;Blockly.Python.loops_[c+d]="if button_"+b+".was_pressed():\\n"+Blockly.Python.INDENT+Blockly.Python.INDENT+e+"()";Blockly.Python.libraries_["def "+e]=Blockly.Python.microbitEventFunction_(a,e);return null};Blockly.Python.microbit_whenPinTouched=function(a){if(!Blockly.Python.microbitHasEventBody_(a))return null;Blockly.Python.imports_.microbit="from microbit import *";var b=Blockly.Python.microbitValueOrField_(a,"PIN",["touchPins"],"0"),c="microbit_whenPinTouched"+b,d=Blockly.Python.microbitEventSuffix_(c),e="on_pin"+b+d;Blockly.Python.loops_[c+d]="if pin"+b+".is_touched():\\n"+Blockly.Python.INDENT+Blockly.Python.INDENT+e+"()";Blockly.Python.libraries_["def "+e]=Blockly.Python.microbitEventFunction_(a,e);return null};Blockly.Python.microbit_whenGesture=function(a){if(!Blockly.Python.microbitHasEventBody_(a))return null;Blockly.Python.imports_.microbit="from microbit import *";var b=Blockly.Python.microbitValueOrField_(a,"STA",["gestrues"],"shake"),c=String(b).replace(/[^a-z0-9_]/gi,"_"),d="microbit_whenGesture"+c,e=Blockly.Python.microbitEventSuffix_(d),f="on_"+c+e;Blockly.Python.loops_[d+e]="if accelerometer.was_gesture(\\\'"+b+"\\\'):\\n"+Blockly.Python.INDENT+Blockly.Python.INDENT+f+"()";Blockly.Python.libraries_["def "+f]=Blockly.Python.microbitEventFunction_(a,f);return null};\n';
             fs.writeFileSync(compressedFile, text);
         }
         const compressedImagePatch = '\nBlockly.Python.microbitImageValue_=Blockly.Python.microbitImageValue_||function(a){' +
