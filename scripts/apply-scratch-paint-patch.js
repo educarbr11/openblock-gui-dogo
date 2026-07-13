@@ -648,6 +648,71 @@ const patchOpenBlockBlocksKeyReleased = () => {
 const patchOpenBlockBlocksMicrobitPythonEventsPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
+    const microbitV2InputGenerators = `
+
+Blockly.Python.__dogoblockMicrobitV2InputPatch = true;
+Blockly.Python.microbit_sensor_logoIsPressed = function() {
+  return ["pin_logo.is_touched()", Blockly.Python.ORDER_ATOMIC];
+};
+Blockly.Python.microbit_sensor_soundLevel = function() {
+  return ["microphone.sound_level()", Blockly.Python.ORDER_ATOMIC];
+};
+Blockly.Python.microbit_sensor_setSoundThreshold = function(block) {
+  var event = Blockly.Python.microbitValueOrField_(block, "EVENT", ["soundEvents"], "loud");
+  var value = Blockly.Python.microbitNumberCode_(block, "VALUE", 128);
+  var soundEvent = String(event).toLowerCase() === "quiet" ? "QUIET" : "LOUD";
+  return "microphone.set_threshold(SoundEvent." + soundEvent + ", int(" + value + "))\\n";
+};
+Blockly.Python.microbit_whenSound = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  var event = Blockly.Python.microbitValueOrField_(block, "EVENT", ["soundEvents"], "loud");
+  var soundEvent = String(event).toLowerCase() === "quiet" ? "QUIET" : "LOUD";
+  var loopKey = "microbit_whenSound" + soundEvent;
+  var suffix = Blockly.Python.microbitEventSuffix_(loopKey);
+  var functionName = "on_sound_" + String(event).toLowerCase() + suffix;
+  Blockly.Python.loops_[loopKey + suffix] =
+    "if microphone.was_event(SoundEvent." + soundEvent + "):\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + functionName + "()";
+  Blockly.Python.libraries_["def " + functionName] = Blockly.Python.microbitEventFunction_(block, functionName);
+  return null;
+};
+Blockly.Python.microbit_whenLogo = function(block) {
+  if (!Blockly.Python.microbitHasEventBody_(block)) return null;
+  Blockly.Python.imports_.microbit = "from microbit import *";
+  var event = Blockly.Python.microbitValueOrField_(block, "EVENT", ["logoEvents"], "pressed");
+  var loopKey = "microbit_whenLogo" + event;
+  var suffix = Blockly.Python.microbitEventSuffix_(loopKey);
+  var functionName = "on_logo_" + event + suffix;
+  var stateName = "_dogoblock_logo_" + event + suffix;
+  var currentName = stateName + "_current";
+  var expected = event === "released" ? "False" : "True";
+  Blockly.Python.variables_[stateName] = stateName + " = pin_logo.is_touched()";
+  Blockly.Python.loops_[loopKey + suffix] = "global " + stateName + "\\n" +
+    Blockly.Python.INDENT + currentName + " = pin_logo.is_touched()\\n" +
+    Blockly.Python.INDENT + "if " + currentName + " != " + stateName + ":\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + stateName + " = " + currentName + "\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + "if " + currentName + " == " + expected + ":\\n" +
+    Blockly.Python.INDENT + Blockly.Python.INDENT + Blockly.Python.INDENT + functionName + "()";
+  Blockly.Python.libraries_["def " + functionName] = Blockly.Python.microbitEventFunction_(block, functionName);
+  return null;
+};
+Blockly.Python.microbit_microbit_whenSound = Blockly.Python.microbit_whenSound;
+Blockly.Python.microbit_microbit_whenLogo = Blockly.Python.microbit_whenLogo;
+Blockly.Python.microbit_logoIsPressed = Blockly.Python.microbit_sensor_logoIsPressed;
+Blockly.Python.microbit_soundLevel = Blockly.Python.microbit_sensor_soundLevel;
+Blockly.Python.microbit_setSoundThreshold = Blockly.Python.microbit_sensor_setSoundThreshold;
+Blockly.Python.sensor_logoIsPressed = Blockly.Python.microbit_sensor_logoIsPressed;
+Blockly.Python.sensor_soundLevel = Blockly.Python.microbit_sensor_soundLevel;
+Blockly.Python.sensor_setSoundThreshold = Blockly.Python.microbit_sensor_setSoundThreshold;
+Blockly.Python.microbit_menu_soundEvents = function(block) {
+  return [Blockly.Python.microbitFieldValueFromNames_(block, ["soundEvents", "EVENT"], "loud"), Blockly.Python.ORDER_ATOMIC];
+};
+Blockly.Python.microbit_menu_logoEvents = function(block) {
+  return [Blockly.Python.microbitFieldValueFromNames_(block, ["logoEvents", "EVENT"], "pressed"), Blockly.Python.ORDER_ATOMIC];
+};
+`;
+
     const microbitGenerator = path.join(packageDir, 'generators', 'python', 'microbit.js');
     if (fs.existsSync(microbitGenerator)) {
         let text = fs.readFileSync(microbitGenerator, 'utf8');
@@ -912,6 +977,16 @@ Blockly.Python.microbit_whenGesture = function(block) {
 `;
             fs.writeFileSync(microbitGenerator, text);
         }
+        text = fs.readFileSync(microbitGenerator, 'utf8');
+        if (!text.includes('__dogoblockMicrobitV2InputPatch')) {
+            fs.writeFileSync(microbitGenerator, text + microbitV2InputGenerators);
+        }
+        text = fs.readFileSync(microbitGenerator, 'utf8');
+        if (!text.includes('microbit_microbit_whenLogo')) {
+            fs.appendFileSync(microbitGenerator,
+                '\nBlockly.Python.microbit_microbit_whenSound = Blockly.Python.microbit_whenSound;' +
+                '\nBlockly.Python.microbit_microbit_whenLogo = Blockly.Python.microbit_whenLogo;\n');
+        }
     }
 
     const compressedFile = path.join(packageDir, 'python_compressed.js');
@@ -962,6 +1037,16 @@ Blockly.Python.microbit_whenGesture = function(block) {
             }
             text = text.slice(0, patchIndex) + compressedImagePatch;
             fs.writeFileSync(compressedFile, text);
+        }
+        text = fs.readFileSync(compressedFile, 'utf8');
+        if (!text.includes('__dogoblockMicrobitV2InputPatch')) {
+            fs.writeFileSync(compressedFile, text + microbitV2InputGenerators);
+        }
+        text = fs.readFileSync(compressedFile, 'utf8');
+        if (!text.includes('microbit_microbit_whenLogo')) {
+            fs.appendFileSync(compressedFile,
+                '\nBlockly.Python.microbit_microbit_whenSound=Blockly.Python.microbit_whenSound;' +
+                'Blockly.Python.microbit_microbit_whenLogo=Blockly.Python.microbit_whenLogo;\n');
         }
     }
 
@@ -1724,6 +1809,13 @@ const microbitBleBlockTranslationsPtBr = {
     'microbit.sensor.lightLevel': 'nível de luz',
     'microbit.sensor.temperature': 'temperatura',
     'microbit.sensor.runningTime': 'tempo ligado',
+    'microbit.sensor.logoIsPressed': 'logotipo pressionado?',
+    'microbit.sensor.soundLevel': 'nível do som',
+    'microbit.sensor.setSoundThreshold': 'definir som [EVENT] no limite [VALUE]',
+    'microbit.soundEvent.loud': 'forte',
+    'microbit.soundEvent.quiet': 'baixo',
+    'microbit.logoEvent.pressed': 'pressionado',
+    'microbit.logoEvent.released': 'liberado',
     'microbit.category.wireless': 'Rádio',
     'microbit.wireless.openWirelessCommunication': 'iniciar rádio',
     'microbit.wireless.closeWirelessCommunication': 'parar rádio',
@@ -1737,6 +1829,8 @@ const microbitBleBlockTranslationsPtBr = {
     'microbit.event.whenButtonPressed': 'quando o botão [KEY] for pressionado',
     'microbit.event.whenPinTouched': 'quando o pino [PIN] for tocado',
     'microbit.event.whenGesture': 'quando o gesto for [STA]',
+    'microbit.event.whenSound': 'quando o som estiver [EVENT]',
+    'microbit.event.whenLogo': 'quando o logotipo for [EVENT]',
     'microbit.category.microbit': 'micro:bit v2'
 };
 

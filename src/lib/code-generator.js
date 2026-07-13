@@ -35,6 +35,9 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         microbit_lightPixelAt: 'microbit_display_lightPixelAt',
         microbit_showOnPiexlbrightness: 'microbit_display_showOnPiexlbrightness',
         microbit_buttonIsPressed: 'microbit_sensor_buttonIsPressed',
+        microbit_logoIsPressed: 'microbit_sensor_logoIsPressed',
+        microbit_soundLevel: 'microbit_sensor_soundLevel',
+        microbit_setSoundThreshold: 'microbit_sensor_setSoundThreshold',
         microbit_gestureIsX: 'microbit_sensor_gestureIsX',
         microbit_axisAcceleration: 'microbit_sensor_axisAcceleration',
         microbit_compassAngle: 'microbit_sensor_compassAngle',
@@ -65,6 +68,9 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         display_lightPixelAt: 'microbit_display_lightPixelAt',
         display_showOnPiexlbrightness: 'microbit_display_showOnPiexlbrightness',
         sensor_buttonIsPressed: 'microbit_sensor_buttonIsPressed',
+        sensor_logoIsPressed: 'microbit_sensor_logoIsPressed',
+        sensor_soundLevel: 'microbit_sensor_soundLevel',
+        sensor_setSoundThreshold: 'microbit_sensor_setSoundThreshold',
         sensor_gestureIsX: 'microbit_sensor_gestureIsX',
         sensor_axisAcceleration: 'microbit_sensor_axisAcceleration',
         sensor_lightLevel: 'microbit_sensor_lightLevel',
@@ -172,7 +178,11 @@ const installMicrobitPythonGenerators = scratchBlocks => {
                 'microbit_whenMicrobitBegin',
                 'microbit_whenButtonPressed',
                 'microbit_whenPinTouched',
-                'microbit_whenGesture'
+                'microbit_whenGesture',
+                'microbit_whenSound',
+                'microbit_whenLogo',
+                'microbit_microbit_whenSound',
+                'microbit_microbit_whenLogo'
             ].indexOf(topBlock.type) !== -1) {
                 return true;
             }
@@ -301,6 +311,25 @@ const installMicrobitPythonGenerators = scratchBlocks => {
             python.ORDER_ATOMIC
         ];
         python.__dogoblockMicrobitPinPatch = true;
+    }
+
+    if (!python.microbit_sensor_logoIsPressed) {
+        python.microbit_sensor_logoIsPressed = () => ['pin_logo.is_touched()', python.ORDER_ATOMIC];
+        python.microbit_sensor_soundLevel = () => ['microphone.sound_level()', python.ORDER_ATOMIC];
+        python.microbit_sensor_setSoundThreshold = block => {
+            const event = python.microbitValueOrField_(block, 'EVENT', ['soundEvents'], 'loud');
+            const value = python.microbitNumberCode_(block, 'VALUE', 128);
+            const soundEvent = String(event).toLowerCase() === 'quiet' ? 'QUIET' : 'LOUD';
+            return `microphone.set_threshold(SoundEvent.${soundEvent}, int(${value}))\n`;
+        };
+        python.microbit_menu_soundEvents = block => [
+            python.microbitFieldValueFromNames_(block, ['soundEvents', 'EVENT'], 'loud'),
+            python.ORDER_ATOMIC
+        ];
+        python.microbit_menu_logoEvents = block => [
+            python.microbitFieldValueFromNames_(block, ['logoEvents', 'EVENT'], 'pressed'),
+            python.ORDER_ATOMIC
+        ];
     }
 
     python.microbitImageValue_ = python.microbitImageValue_ || function (value) {
@@ -437,6 +466,44 @@ const installMicrobitPythonGenerators = scratchBlocks => {
         return null;
     };
 
+    python.microbit_whenSound = block => {
+        if (!python.microbitHasEventBody_(block)) return null;
+        python.imports_.microbit = 'from microbit import *';
+        const event = python.microbitValueOrField_(block, 'EVENT', ['soundEvents'], 'loud');
+        const soundEvent = String(event).toLowerCase() === 'quiet' ? 'QUIET' : 'LOUD';
+        const loopKey = `microbit_whenSound${soundEvent}`;
+        const suffix = python.microbitEventSuffix_(loopKey);
+        const functionName = `on_sound_${String(event).toLowerCase()}${suffix}`;
+        python.loops_[`${loopKey}${suffix}`] =
+            `if microphone.was_event(SoundEvent.${soundEvent}):\n` +
+            `${python.INDENT}${python.INDENT}${functionName}()`;
+        python.libraries_[`def ${functionName}`] = python.microbitEventFunction_(block, functionName);
+        return null;
+    };
+
+    python.microbit_whenLogo = block => {
+        if (!python.microbitHasEventBody_(block)) return null;
+        python.imports_.microbit = 'from microbit import *';
+        const event = python.microbitValueOrField_(block, 'EVENT', ['logoEvents'], 'pressed');
+        const loopKey = `microbit_whenLogo${event}`;
+        const suffix = python.microbitEventSuffix_(loopKey);
+        const functionName = `on_logo_${event}${suffix}`;
+        const stateName = `_dogoblock_logo_${event}${suffix}`;
+        const currentName = `${stateName}_current`;
+        const expected = event === 'released' ? 'False' : 'True';
+        python.variables_[stateName] = `${stateName} = pin_logo.is_touched()`;
+        python.loops_[`${loopKey}${suffix}`] = `global ${stateName}\n` +
+            `${python.INDENT}${currentName} = pin_logo.is_touched()\n` +
+            `${python.INDENT}if ${currentName} != ${stateName}:\n` +
+            `${python.INDENT}${python.INDENT}${stateName} = ${currentName}\n` +
+            `${python.INDENT}${python.INDENT}if ${currentName} == ${expected}:\n` +
+            `${python.INDENT}${python.INDENT}${python.INDENT}${functionName}()`;
+        python.libraries_[`def ${functionName}`] = python.microbitEventFunction_(block, functionName);
+        return null;
+    };
+    python.microbit_microbit_whenSound = python.microbit_whenSound;
+    python.microbit_microbit_whenLogo = python.microbit_whenLogo;
+
     // Keep projects created with the former Events-category micro:bit hats working.
     python.event_whenmicrobitbegin = python.microbit_whenMicrobitBegin;
     python.event_whenmicrobitbuttonpressed = block => {
@@ -500,6 +567,9 @@ const installMicrobitPythonGenerators = scratchBlocks => {
             'microbit_display_lightPixelAt',
             'microbit_display_showOnPiexlbrightness',
             'microbit_sensor_buttonIsPressed',
+            'microbit_sensor_logoIsPressed',
+            'microbit_sensor_soundLevel',
+            'microbit_sensor_setSoundThreshold',
             'microbit_sensor_gestureIsX',
             'microbit_sensor_axisAcceleration',
             'microbit_sensor_lightLevel',
