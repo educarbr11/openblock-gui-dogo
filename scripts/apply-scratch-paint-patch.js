@@ -1797,7 +1797,7 @@ const microbitBleBlockTranslationsPtBr = {
     'microbit.display.show': 'mostrar texto [TEXT]',
     'microbit.display.showUntilScrollDone': 'mostrar texto [TEXT] até terminar',
     'microbit.display.clearDisplay': 'limpar tela',
-    'microbit.display.lightPixelAt': '[STATE] LED em x [X] y [Y]',
+    'microbit.display.lightPixelAt': 'definir LED em x [X] y [Y] como [STATE]',
     'microbit.display.showOnPiexlbrightness': 'mostrar LED em x [X] y [Y] com brilho [BRT]',
     'microbit.category.sensor': 'Sensores',
     'microbit.sensor.buttonIsPressed': 'botão [KEY] pressionado?',
@@ -1924,6 +1924,135 @@ const writeJsonValues = (file, values) => {
     fs.writeFileSync(file, `${JSON.stringify(data, null, 4)}\n`);
 };
 
+const basicBlockTranslationsPtBr = Object.freeze({
+    CONTROL_REPEAT: 'repetir %1 vezes',
+    CONTROL_STOP: 'parar',
+    CONTROL_WAIT: 'esperar %1 seg',
+    CONTROL_WAITUNTIL: 'esperar até que %1',
+    CONTROL_REPEATUNTIL: 'repetir até que %1',
+    CONTROL_CREATECLONEOF: 'criar clone de %1',
+    CONTROL_DELETETHISCLONE: 'apagar este clone',
+    DATA_SETVARIABLETO: 'mudar %1 para %2',
+    DATA_CHANGEVARIABLEBY: 'adicionar %2 a %1',
+    DATA_SHOWVARIABLE: 'mostrar a variável %1',
+    DATA_HIDEVARIABLE: 'esconder a variável %1',
+    DATA_ADDTOLIST: 'adicionar %1 a %2',
+    DATA_DELETEOFLIST: 'apagar %1 de %2',
+    DATA_DELETEALLOFLIST: 'apagar todos os itens de %1',
+    DATA_INSERTATLIST: 'inserir %1 na posição %2 de %3',
+    DATA_REPLACEITEMOFLIST: 'substituir o item %1 de %2 por %3',
+    DATA_SHOWLIST: 'mostrar a lista %1',
+    DATA_HIDELIST: 'esconder a lista %1',
+    EVENT_BROADCAST: 'transmitir %1',
+    EVENT_BROADCASTANDWAIT: 'transmitir %1 e esperar',
+    LOOKS_SAYFORSECS: 'dizer %1 por %2 segundos',
+    LOOKS_SAY: 'dizer %1',
+    LOOKS_THINKFORSECS: 'pensar %1 por %2 segundos',
+    LOOKS_THINK: 'pensar %1',
+    LOOKS_SHOW: 'mostrar',
+    LOOKS_HIDE: 'esconder',
+    LOOKS_HIDEALLSPRITES: 'esconder todos os atores',
+    LOOKS_CHANGEEFFECTBY: 'mudar %2 no efeito %1',
+    LOOKS_SETEFFECTTO: 'definir o efeito %1 como %2',
+    LOOKS_CLEARGRAPHICEFFECTS: 'remover os efeitos gráficos',
+    LOOKS_CHANGESIZEBY: 'mudar o tamanho em %1',
+    LOOKS_SETSIZETO: 'definir o tamanho como %1 %',
+    LOOKS_CHANGESTRETCHBY: 'mudar o alongamento em %1',
+    LOOKS_SETSTRETCHTO: 'definir o alongamento como %1 %',
+    LOOKS_SWITCHCOSTUMETO: 'mudar para a fantasia %1',
+    LOOKS_SWITCHBACKDROPTO: 'mudar para o cenário %1',
+    LOOKS_GOTOFRONTBACK: 'ir para a camada %1',
+    LOOKS_GOFORWARDBACKWARDLAYERS: 'ir para %1 %2 camadas',
+    LOOKS_SWITCHBACKDROPTOANDWAIT: 'mudar para o cenário %1 e esperar',
+    MOTION_MOVESTEPS: 'mover %1 passos',
+    MOTION_TURNLEFT: 'girar %1 %2 graus',
+    MOTION_TURNRIGHT: 'girar %1 %2 graus',
+    MOTION_POINTINDIRECTION: 'apontar para a direção %1',
+    MOTION_POINTTOWARDS: 'apontar para %1',
+    MOTION_GOTO: 'ir para %1',
+    MOTION_GOTOXY: 'ir para x: %1 y: %2',
+    MOTION_GLIDESECSTOXY: 'deslizar por %1 segs. até x: %2 y: %3',
+    MOTION_GLIDETO: 'deslizar por %1 segs. até %2',
+    MOTION_CHANGEXBY: 'adicionar %1 a x',
+    MOTION_SETX: 'mudar x para %1',
+    MOTION_CHANGEYBY: 'adicionar %1 a y',
+    MOTION_SETY: 'mudar y para %1',
+    MOTION_IFONEDGEBOUNCE: 'se tocar na borda, voltar',
+    MOTION_SETROTATIONSTYLE: 'definir o estilo de rotação para %1',
+    PROCEDURES_DEFINITION: 'definir %1',
+    SENSING_ASKANDWAIT: 'perguntar %1 e esperar',
+    SENSING_SETDRAGMODE: 'definir modo de arrasto para %1',
+    SENSING_RESETTIMER: 'zerar o cronômetro',
+    SOUND_PLAY: 'tocar o som %1',
+    SOUND_PLAYUNTILDONE: 'tocar o som %1 até o fim',
+    SOUND_STOPALLSOUNDS: 'parar todos os sons',
+    SOUND_SETEFFECTO: 'mudar o efeito %1 para %2',
+    SOUND_CHANGEEFFECTBY: 'mudar %2 no efeito %1',
+    SOUND_CLEAREFFECTS: 'remover os efeitos sonoros',
+    SOUND_CHANGEVOLUMEBY: 'mudar o volume em %1',
+    SOUND_SETVOLUMETO: 'mudar o volume para %1%'
+});
+
+const patchOpenBlockL10nBasicBlocksPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'blocks', 'pt-br.json'),
+        basicBlockTranslationsPtBr
+    );
+
+    console.log(`Applied openblock-l10n basic block PT-BR translations: ${packageDir}`);
+};
+
+const patchOpenBlockL10nBasicBlocks = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-l10n'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
+    ].forEach(patchOpenBlockL10nBasicBlocksPackage);
+};
+
+const penAndMusicBlockTranslationsPtBr = Object.freeze({
+    'music.changeTempo': 'alterar o ritmo em [TEMPO]',
+    'music.midiPlayDrumForBeats': 'tocar o instrumento [DRUM] por [BEATS] batidas',
+    'music.midiSetInstrument': 'definir o instrumento como [INSTRUMENT]',
+    'music.playDrumForBeats': 'tocar o instrumento [DRUM] por [BEATS] batidas',
+    'music.playNoteForBeats': 'tocar a nota [NOTE] por [BEATS] batidas',
+    'music.restForBeats': 'pausar por [BEATS] batidas',
+    'music.setInstrument': 'definir o instrumento como [INSTRUMENT]',
+    'music.setTempo': 'definir o ritmo como [TEMPO]',
+    'pen.changeColorParam': 'adicionar [VALUE] [COLOR_PARAM] da caneta',
+    'pen.changeHue': 'adicionar [HUE] à cor da caneta',
+    'pen.changeShade': 'adicionar [SHADE] à tonalidade da caneta',
+    'pen.changeSize': 'adicionar [SIZE] ao tamanho da caneta',
+    'pen.clear': 'apagar tudo',
+    'pen.penDown': 'baixar a caneta',
+    'pen.penUp': 'levantar a caneta',
+    'pen.setColor': 'mudar a cor da caneta para [COLOR]',
+    'pen.setColorParam': 'mudar [COLOR_PARAM] da caneta para [VALUE]',
+    'pen.setHue': 'mudar a cor da caneta para [HUE]',
+    'pen.setShade': 'mudar a tonalidade da caneta para [SHADE]',
+    'pen.setSize': 'mudar o tamanho da caneta para [SIZE]',
+    'pen.stamp': 'carimbar'
+});
+
+const patchOpenBlockL10nPenAndMusicPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'extensions', 'pt-br.json'),
+        penAndMusicBlockTranslationsPtBr
+    );
+
+    console.log(`Applied openblock-l10n Pen and Music PT-BR translations: ${packageDir}`);
+};
+
+const patchOpenBlockL10nPenAndMusic = () => {
+    [
+        path.join(root, 'node_modules', 'openblock-l10n'),
+        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
+    ].forEach(patchOpenBlockL10nPenAndMusicPackage);
+};
+
 const patchOpenBlockL10nMicrobitPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
@@ -1933,6 +2062,14 @@ const patchOpenBlockL10nMicrobitPackage = packageDir => {
     );
     writeJsonValues(
         path.join(packageDir, 'editor', 'blocks', 'pt.json'),
+        microbitBleBlockTranslationsPt
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'extensions', 'pt-br.json'),
+        microbitBleBlockTranslationsPtBr
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'extensions', 'pt.json'),
         microbitBleBlockTranslationsPt
     );
     writeJsonValues(
@@ -2003,4 +2140,6 @@ patchOpenBlockVmWebpackHash();
 patchOpenBlockVmWebpackCreateHash();
 patchOpenBlockL10nKeyReleased();
 patchOpenBlockL10nLostConnectionBranding();
+patchOpenBlockL10nBasicBlocks();
+patchOpenBlockL10nPenAndMusic();
 patchOpenBlockL10nMicrobit();
