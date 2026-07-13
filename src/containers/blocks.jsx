@@ -97,6 +97,7 @@ class Blocks extends React.Component {
             'onBlockGlowOn',
             'onBlockGlowOff',
             'onProgramModeUpdate',
+            'scheduleProgramModeToolboxUpdate',
             'onTargetsUpdate',
             'onVisualReport',
             'onActivateColorPicker',
@@ -209,6 +210,7 @@ class Blocks extends React.Component {
             // Clear possible errors witch print in to code editor.
             this.props.onSetCodeEditorValue('');
             this.onProgramModeUpdate();
+            this.scheduleProgramModeToolboxUpdate(this.props.isRealtimeMode);
             this.scheduleCodeUpdate();
         }
 
@@ -257,6 +259,19 @@ class Blocks extends React.Component {
         this.workspace = null;
         clearTimeout(this.toolboxUpdateTimeout);
         clearTimeout(this.getXMLAndUpdateToolboxTimeout);
+        if (this.programModeToolboxFrame) {
+            window.cancelAnimationFrame(this.programModeToolboxFrame);
+        }
+        if (this.programModeToolboxTimeout) {
+            window.clearTimeout(this.programModeToolboxTimeout);
+        }
+        if (this.codeUpdateIdle) {
+            if (window.cancelIdleCallback) {
+                window.cancelIdleCallback(this.codeUpdateIdle);
+            } else {
+                window.clearTimeout(this.codeUpdateIdle);
+            }
+        }
     }
     requestToolboxUpdate () {
         clearTimeout(this.toolboxUpdateTimeout);
@@ -292,18 +307,56 @@ class Blocks extends React.Component {
             this.ScratchBlocks.ProgramMode.setProgramMode(this.ScratchBlocks.ProgramMode.UPLOAD);
         }
         this._programMode = this.props.isRealtimeMode;
-        const toolboxXML = this.getToolboxXML();
-        if (toolboxXML) {
-            this.props.updateToolboxState(toolboxXML);
+    }
+    scheduleProgramModeToolboxUpdate (expectedRealtimeMode) {
+        if (this.programModeToolboxFrame) {
+            window.cancelAnimationFrame(this.programModeToolboxFrame);
+            this.programModeToolboxFrame = null;
+        }
+        if (this.programModeToolboxTimeout) {
+            window.clearTimeout(this.programModeToolboxTimeout);
+            this.programModeToolboxTimeout = null;
+        }
+
+        const applyToolboxUpdate = () => {
+            this.programModeToolboxTimeout = null;
+            if (!this._isMounted || this.props.isRealtimeMode !== expectedRealtimeMode) return;
+            const toolboxXML = this.getToolboxXML();
+            if (toolboxXML) {
+                this.props.updateToolboxState(toolboxXML);
+            }
+        };
+        const scheduleAfterPaint = () => {
+            this.programModeToolboxFrame = null;
+            this.programModeToolboxTimeout = window.setTimeout(applyToolboxUpdate, 0);
+        };
+
+        if (window.requestAnimationFrame) {
+            this.programModeToolboxFrame = window.requestAnimationFrame(scheduleAfterPaint);
+        } else {
+            scheduleAfterPaint();
         }
     }
     scheduleCodeUpdate () {
-        if (this.props.isRealtimeMode === false && this.props.isCodeEditorLocked) {
-            window.setTimeout(() => {
-                if (this._isMounted && this.props.isRealtimeMode === false) {
-                    this.onCodeNeedUpdate();
-                }
-            }, 0);
+        if (this.props.isRealtimeMode !== false || !this.props.isCodeEditorLocked) return;
+        if (this.codeUpdateIdle) {
+            if (window.cancelIdleCallback) {
+                window.cancelIdleCallback(this.codeUpdateIdle);
+            } else {
+                window.clearTimeout(this.codeUpdateIdle);
+            }
+        }
+
+        const updateCode = () => {
+            this.codeUpdateIdle = null;
+            if (this._isMounted && this.props.isRealtimeMode === false) {
+                this.onCodeNeedUpdate();
+            }
+        };
+        if (window.requestIdleCallback) {
+            this.codeUpdateIdle = window.requestIdleCallback(updateCode, {timeout: 250});
+        } else {
+            this.codeUpdateIdle = window.setTimeout(updateCode, 0);
         }
     }
     updateToolbox () {

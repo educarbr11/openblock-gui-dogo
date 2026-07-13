@@ -90,7 +90,7 @@ const deviceData = [
             />
         ),
         programMode: ['realtime', 'upload'],
-        defaultProgramMode: 'upload',
+        defaultProgramMode: 'realtime',
         programLanguage: ['python'],
         tags: ['microbit'],
         helpLink: 'https://microbit.org/get-started/user-guide/overview/'

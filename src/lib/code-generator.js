@@ -12,6 +12,7 @@ const installMicrobitPythonGenerators = scratchBlocks => {
     if (!blockly.Python) return;
 
     const python = blockly.Python;
+    if (python.__dogoblockMicrobitGeneratorsInstalled) return;
 
     if (!python.__dogoblockHeaderPatch && typeof python.finish === 'function') {
         const originalFinish = python.finish;
@@ -623,6 +624,7 @@ const installMicrobitPythonGenerators = scratchBlocks => {
             python[doublePrefixedName] = python[name];
         }
     });
+    python.__dogoblockMicrobitGeneratorsInstalled = true;
 };
 
 installMicrobitPythonGenerators();
