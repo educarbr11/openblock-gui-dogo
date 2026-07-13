@@ -1797,7 +1797,7 @@ const microbitBleBlockTranslationsPtBr = {
     'microbit.display.show': 'mostrar texto [TEXT]',
     'microbit.display.showUntilScrollDone': 'mostrar texto [TEXT] até terminar',
     'microbit.display.clearDisplay': 'limpar tela',
-    'microbit.display.lightPixelAt': 'definir LED em x [X] y [Y] como [STATE]',
+    'microbit.display.lightPixelAt': 'definir LED em x [X] y [Y] para [STATE]',
     'microbit.display.showOnPiexlbrightness': 'mostrar LED em x [X] y [Y] com brilho [BRT]',
     'microbit.category.sensor': 'Sensores',
     'microbit.sensor.buttonIsPressed': 'botão [KEY] pressionado?',
@@ -1932,8 +1932,8 @@ const basicBlockTranslationsPtBr = Object.freeze({
     CONTROL_REPEATUNTIL: 'repetir até que %1',
     CONTROL_CREATECLONEOF: 'criar clone de %1',
     CONTROL_DELETETHISCLONE: 'apagar este clone',
-    DATA_SETVARIABLETO: 'mudar %1 para %2',
-    DATA_CHANGEVARIABLEBY: 'adicionar %2 a %1',
+    DATA_SETVARIABLETO: 'definir %1 para %2',
+    DATA_CHANGEVARIABLEBY: 'mudar %1 por %2',
     DATA_SHOWVARIABLE: 'mostrar a variável %1',
     DATA_HIDEVARIABLE: 'esconder a variável %1',
     DATA_ADDTOLIST: 'adicionar %1 a %2',
@@ -1952,14 +1952,16 @@ const basicBlockTranslationsPtBr = Object.freeze({
     LOOKS_SHOW: 'mostrar',
     LOOKS_HIDE: 'esconder',
     LOOKS_HIDEALLSPRITES: 'esconder todos os atores',
-    LOOKS_CHANGEEFFECTBY: 'mudar %2 no efeito %1',
-    LOOKS_SETEFFECTTO: 'definir o efeito %1 como %2',
+    LOOKS_CHANGEEFFECTBY: 'mudar o efeito %1 por %2',
+    LOOKS_SETEFFECTTO: 'definir o efeito %1 para %2',
     LOOKS_CLEARGRAPHICEFFECTS: 'remover os efeitos gráficos',
-    LOOKS_CHANGESIZEBY: 'mudar o tamanho em %1',
-    LOOKS_SETSIZETO: 'definir o tamanho como %1 %',
-    LOOKS_CHANGESTRETCHBY: 'mudar o alongamento em %1',
-    LOOKS_SETSTRETCHTO: 'definir o alongamento como %1 %',
-    LOOKS_SWITCHCOSTUMETO: 'mudar para a fantasia %1',
+    LOOKS_CHANGESIZEBY: 'mudar o tamanho por %1',
+    LOOKS_SETSIZETO: 'definir o tamanho para %1 %',
+    LOOKS_CHANGESTRETCHBY: 'mudar o alongamento por %1',
+    LOOKS_SETSTRETCHTO: 'definir o alongamento para %1 %',
+    LOOKS_SWITCHCOSTUMETO: 'mudar para o traje %1',
+    LOOKS_NEXTCOSTUME: 'próximo traje',
+    LOOKS_COSTUMENUMBERNAME: 'traje %1',
     LOOKS_SWITCHBACKDROPTO: 'mudar para o cenário %1',
     LOOKS_GOTOFRONTBACK: 'ir para a camada %1',
     LOOKS_GOFORWARDBACKWARDLAYERS: 'ir para %1 %2 camadas',
@@ -1973,24 +1975,41 @@ const basicBlockTranslationsPtBr = Object.freeze({
     MOTION_GOTOXY: 'ir para x: %1 y: %2',
     MOTION_GLIDESECSTOXY: 'deslizar por %1 segs. até x: %2 y: %3',
     MOTION_GLIDETO: 'deslizar por %1 segs. até %2',
-    MOTION_CHANGEXBY: 'adicionar %1 a x',
-    MOTION_SETX: 'mudar x para %1',
-    MOTION_CHANGEYBY: 'adicionar %1 a y',
-    MOTION_SETY: 'mudar y para %1',
+    MOTION_CHANGEXBY: 'mudar x por %1',
+    MOTION_SETX: 'definir x para %1',
+    MOTION_CHANGEYBY: 'mudar y por %1',
+    MOTION_SETY: 'definir y para %1',
     MOTION_IFONEDGEBOUNCE: 'se tocar na borda, voltar',
     MOTION_SETROTATIONSTYLE: 'definir o estilo de rotação para %1',
     PROCEDURES_DEFINITION: 'definir %1',
     SENSING_ASKANDWAIT: 'perguntar %1 e esperar',
     SENSING_SETDRAGMODE: 'definir modo de arrasto para %1',
     SENSING_RESETTIMER: 'zerar o cronômetro',
+    SENSING_OF_COSTUMENUMBER: 'n° do traje',
+    SENSING_OF_COSTUMENAME: 'nome do traje',
     SOUND_PLAY: 'tocar o som %1',
     SOUND_PLAYUNTILDONE: 'tocar o som %1 até o fim',
     SOUND_STOPALLSOUNDS: 'parar todos os sons',
-    SOUND_SETEFFECTO: 'mudar o efeito %1 para %2',
-    SOUND_CHANGEEFFECTBY: 'mudar %2 no efeito %1',
+    SOUND_SETEFFECTO: 'definir o efeito %1 para %2',
+    SOUND_CHANGEEFFECTBY: 'mudar o efeito %1 por %2',
     SOUND_CLEAREFFECTS: 'remover os efeitos sonoros',
-    SOUND_CHANGEVOLUMEBY: 'mudar o volume em %1',
-    SOUND_SETVOLUMETO: 'mudar o volume para %1%'
+    SOUND_CHANGEVOLUMEBY: 'mudar o volume por %1',
+    SOUND_SETVOLUMETO: 'definir o volume para %1%'
+});
+
+const costumeInterfaceTranslationsPtBr = Object.freeze({
+    'gui.backpack.costumeLabel': 'traje',
+    'gui.gui.costumesTab': 'Trajes',
+    'gui.menuBar.restoreCostume': 'Restaurar o Traje',
+    'gui.costumeLibrary.chooseACostume': 'Escolher Traje',
+    'gui.costumeTab.addCostumeFromLibrary': 'Escolher Traje',
+    'gui.costumeTab.addFileCostume': 'Carregar Traje',
+    'gui.howtos.imagine.step_imagineChangeCostumes': 'Mudar de Traje',
+    'gui.howtos.add-a-move-block.step_stepflySwitchLooks': 'Próximo Traje',
+    'gui.howtos.code-cartoon.step_codeCartoonChangeCostumes': 'Mudar de Traje',
+    'gui.opcodeLabels.costumename': 'nome do traje',
+    'gui.opcodeLabels.costumenumber': 'número do traje',
+    'gui.sharedMessages.costume': 'traje{index}'
 });
 
 const patchOpenBlockL10nBasicBlocksPackage = packageDir => {
@@ -2000,8 +2019,12 @@ const patchOpenBlockL10nBasicBlocksPackage = packageDir => {
         path.join(packageDir, 'editor', 'blocks', 'pt-br.json'),
         basicBlockTranslationsPtBr
     );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt-br.json'),
+        costumeInterfaceTranslationsPtBr
+    );
 
-    console.log(`Applied openblock-l10n basic block PT-BR translations: ${packageDir}`);
+    console.log(`Applied openblock-l10n basic block and costume PT-BR translations: ${packageDir}`);
 };
 
 const patchOpenBlockL10nBasicBlocks = () => {
@@ -2012,26 +2035,26 @@ const patchOpenBlockL10nBasicBlocks = () => {
 };
 
 const penAndMusicBlockTranslationsPtBr = Object.freeze({
-    'music.changeTempo': 'alterar o ritmo em [TEMPO]',
+    'music.changeTempo': 'mudar o ritmo por [TEMPO]',
     'music.midiPlayDrumForBeats': 'tocar o instrumento [DRUM] por [BEATS] batidas',
-    'music.midiSetInstrument': 'definir o instrumento como [INSTRUMENT]',
+    'music.midiSetInstrument': 'definir o instrumento para [INSTRUMENT]',
     'music.playDrumForBeats': 'tocar o instrumento [DRUM] por [BEATS] batidas',
     'music.playNoteForBeats': 'tocar a nota [NOTE] por [BEATS] batidas',
     'music.restForBeats': 'pausar por [BEATS] batidas',
-    'music.setInstrument': 'definir o instrumento como [INSTRUMENT]',
-    'music.setTempo': 'definir o ritmo como [TEMPO]',
-    'pen.changeColorParam': 'adicionar [VALUE] [COLOR_PARAM] da caneta',
-    'pen.changeHue': 'adicionar [HUE] à cor da caneta',
-    'pen.changeShade': 'adicionar [SHADE] à tonalidade da caneta',
-    'pen.changeSize': 'adicionar [SIZE] ao tamanho da caneta',
+    'music.setInstrument': 'definir o instrumento para [INSTRUMENT]',
+    'music.setTempo': 'definir o ritmo para [TEMPO]',
+    'pen.changeColorParam': 'mudar [COLOR_PARAM] da caneta por [VALUE]',
+    'pen.changeHue': 'mudar a cor da caneta por [HUE]',
+    'pen.changeShade': 'mudar a tonalidade da caneta por [SHADE]',
+    'pen.changeSize': 'mudar o tamanho da caneta por [SIZE]',
     'pen.clear': 'apagar tudo',
     'pen.penDown': 'baixar a caneta',
     'pen.penUp': 'levantar a caneta',
-    'pen.setColor': 'mudar a cor da caneta para [COLOR]',
-    'pen.setColorParam': 'mudar [COLOR_PARAM] da caneta para [VALUE]',
-    'pen.setHue': 'mudar a cor da caneta para [HUE]',
-    'pen.setShade': 'mudar a tonalidade da caneta para [SHADE]',
-    'pen.setSize': 'mudar o tamanho da caneta para [SIZE]',
+    'pen.setColor': 'definir a cor da caneta para [COLOR]',
+    'pen.setColorParam': 'definir [COLOR_PARAM] da caneta para [VALUE]',
+    'pen.setHue': 'definir a cor da caneta para [HUE]',
+    'pen.setShade': 'definir a tonalidade da caneta para [SHADE]',
+    'pen.setSize': 'definir o tamanho da caneta para [SIZE]',
     'pen.stamp': 'carimbar'
 });
 
