@@ -3,31 +3,40 @@ const path = require('path');
 const {spawnSync} = require('child_process');
 
 const root = path.resolve(__dirname, '..');
+const dependencyRoot = process.env.OPENBLOCK_PATCH_DEPENDENCIES_ROOT ?
+    path.resolve(process.env.OPENBLOCK_PATCH_DEPENDENCIES_ROOT) :
+    root;
+const translationsOnly = process.env.OPENBLOCK_PATCH_TRANSLATIONS_ONLY === '1';
+const dependencyPackageDirs = packageName => [
+    path.join(dependencyRoot, 'node_modules', packageName)
+].concat(dependencyRoot === root ? [
+    path.join(root, '.openblock-vm', 'node_modules', packageName)
+] : []);
 const patches = [
     {
         label: 'scratch-paint rotation center',
-        packageDir: path.join(root, 'node_modules', 'scratch-paint'),
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
         applyDirectory: 'node_modules/scratch-paint',
         patchFile: path.join(root, 'patches', 'scratch-paint-rotation-center.patch'),
-        markerFile: path.join(root, 'node_modules', 'scratch-paint', 'src', 'containers', 'paint-editor.jsx'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'paint-editor.jsx'),
         markerText: 'startRotationCenterPick'
     },
     {
         label: 'openblock-l10n Arduino begin translation',
-        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        packageDir: path.join(dependencyRoot, 'node_modules', 'openblock-l10n'),
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-arduino-begin-pt.patch'),
-        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
         markerText: '"EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar"',
         jsonUpdates: [
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt-br.json'),
                 values: {
                     EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar'
                 }
             },
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'blocks', 'pt.json'),
                 values: {
                     EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar'
                 }
@@ -36,20 +45,20 @@ const patches = [
     },
     {
         label: 'openblock-l10n paint rotation center translation',
-        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        packageDir: path.join(dependencyRoot, 'node_modules', 'openblock-l10n'),
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-paint-rotation-center-pt.patch'),
-        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
         markerText: '"paint.paintEditor.rotationCenter": "Centro"',
         jsonUpdates: [
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt-br.json'),
                 values: {
                     'paint.paintEditor.rotationCenter': 'Centro'
                 }
             },
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', 'pt.json'),
                 values: {
                     'paint.paintEditor.rotationCenter': 'Centro'
                 }
@@ -58,14 +67,14 @@ const patches = [
     },
     {
         label: 'openblock-l10n Web Serial connection translation',
-        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        packageDir: path.join(dependencyRoot, 'node_modules', 'openblock-l10n'),
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-web-serial-pt.patch'),
-        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
         markerText: '"gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB"',
         jsonUpdates: [
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
                 values: {
                     'gui.connection.type.label': 'Tipo de conexão',
                     'gui.connection.webSerial.notSecure': 'Web Serial exige HTTPS ou localhost.',
@@ -74,7 +83,7 @@ const patches = [
                 }
             },
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt.json'),
                 values: {
                     'gui.connection.type.label': 'Tipo de ligação',
                     'gui.connection.webSerial.notSecure': 'Web Serial requer HTTPS ou localhost.',
@@ -86,14 +95,14 @@ const patches = [
     },
     {
         label: 'openblock-l10n default project title translation',
-        packageDir: path.join(root, 'node_modules', 'openblock-l10n'),
+        packageDir: path.join(dependencyRoot, 'node_modules', 'openblock-l10n'),
         applyDirectory: 'node_modules/openblock-l10n',
         patchFile: path.join(root, 'patches', 'openblock-l10n-default-project-title-pt.patch'),
-        markerFile: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
         markerText: '"gui.gui.defaultProjectTitle": "Projeto DoGo Block"',
         jsonUpdates: [
             {
-                file: path.join(root, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+                file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
                 values: {
                     'gui.gui.defaultProjectTitle': 'Projeto DoGo Block'
                 }
@@ -448,7 +457,7 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
 
 const patchOpenBlockBlocksArduinoPins = () => {
     [
-        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-blocks'),
         path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
     ].forEach(patchOpenBlockBlocksArduinoPinsPackage);
 };
@@ -640,7 +649,7 @@ const patchOpenBlockBlocksKeyReleasedPackage = packageDir => {
 
 const patchOpenBlockBlocksKeyReleased = () => {
     [
-        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-blocks'),
         path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
     ].forEach(patchOpenBlockBlocksKeyReleasedPackage);
 };
@@ -1055,7 +1064,7 @@ Blockly.Python.microbit_whenGesture = function(block) {
 
 const patchOpenBlockBlocksMicrobitPythonEvents = () => {
     [
-        path.join(root, 'node_modules', 'openblock-blocks'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-blocks'),
         path.join(root, '.openblock-vm', 'node_modules', 'openblock-blocks')
     ].forEach(patchOpenBlockBlocksMicrobitPythonEventsPackage);
 };
@@ -1097,7 +1106,7 @@ const patchOpenBlockVmKeyReleasedPackage = packageDir => {
 
 const patchOpenBlockVmKeyReleased = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmKeyReleasedPackage);
 };
@@ -1131,7 +1140,7 @@ const patchOpenBlockVmArduinoNanoUploadPackage = packageDir => {
 
 const patchOpenBlockVmArduinoNanoUpload = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmArduinoNanoUploadPackage);
 };
@@ -1202,7 +1211,7 @@ const patchOpenBlockVmArduinoDiscoveryPackage = packageDir => {
 
 const patchOpenBlockVmArduinoDiscovery = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmArduinoDiscoveryPackage);
 };
@@ -1255,7 +1264,7 @@ const patchOpenBlockVmLinkPortPackage = packageDir => {
 
 const patchOpenBlockVmLinkPort = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmLinkPortPackage);
 };
@@ -1429,7 +1438,7 @@ const patchOpenBlockVmWebSerialUploadPackage = packageDir => {
 
 const patchOpenBlockVmWebSerialUpload = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmWebSerialUploadPackage);
 };
@@ -1461,7 +1470,7 @@ const patchOpenBlockVmCompiledArtifactUploadPackage = packageDir => {
 
 const patchOpenBlockVmCompiledArtifactUpload = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmCompiledArtifactUploadPackage);
 };
@@ -1589,7 +1598,7 @@ const patchOpenBlockVmMicrobitBleWatchdogPackage = packageDir => {
 
 const patchOpenBlockVmMicrobitBleWatchdog = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmMicrobitBleWatchdogPackage);
 };
@@ -1627,7 +1636,7 @@ const patchOpenBlockVmWebpackHashPackage = packageDir => {
 
 const patchOpenBlockVmWebpackHash = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmWebpackHashPackage);
 };
@@ -1658,7 +1667,7 @@ const patchOpenBlockVmWebpackCreateHashPackage = packageDir => {
 
 const patchOpenBlockVmWebpackCreateHash = () => {
     [
-        path.join(root, 'node_modules', 'openblock-vm'),
+        path.join(dependencyRoot, 'node_modules', 'openblock-vm'),
         path.join(root, '.openblock-vm')
     ].forEach(patchOpenBlockVmWebpackCreateHashPackage);
 };
@@ -1705,10 +1714,7 @@ const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
 };
 
 const patchOpenBlockL10nKeyReleased = () => {
-    [
-        path.join(root, 'node_modules', 'openblock-l10n'),
-        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
-    ].forEach(patchOpenBlockL10nKeyReleasedPackage);
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nKeyReleasedPackage);
 };
 
 const patchOpenBlockL10nLostConnectionBrandingPackage = packageDir => {
@@ -1731,10 +1737,7 @@ const patchOpenBlockL10nLostConnectionBrandingPackage = packageDir => {
 };
 
 const patchOpenBlockL10nLostConnectionBranding = () => {
-    [
-        path.join(root, 'node_modules', 'openblock-l10n'),
-        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
-    ].forEach(patchOpenBlockL10nLostConnectionBrandingPackage);
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nLostConnectionBrandingPackage);
 };
 
 const microbitBleBlockTranslationsPtBr = {
@@ -1943,6 +1946,7 @@ const basicBlockTranslationsPtBr = Object.freeze({
     DATA_REPLACEITEMOFLIST: 'substituir o item %1 de %2 por %3',
     DATA_SHOWLIST: 'mostrar a lista %1',
     DATA_HIDELIST: 'esconder a lista %1',
+    EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar',
     EVENT_BROADCAST: 'transmitir %1',
     EVENT_BROADCASTANDWAIT: 'transmitir %1 e esperar',
     LOOKS_SAYFORSECS: 'dizer %1 por %2 segundos',
@@ -2028,10 +2032,7 @@ const patchOpenBlockL10nBasicBlocksPackage = packageDir => {
 };
 
 const patchOpenBlockL10nBasicBlocks = () => {
-    [
-        path.join(root, 'node_modules', 'openblock-l10n'),
-        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
-    ].forEach(patchOpenBlockL10nBasicBlocksPackage);
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nBasicBlocksPackage);
 };
 
 const penAndMusicBlockTranslationsPtBr = Object.freeze({
@@ -2070,10 +2071,7 @@ const patchOpenBlockL10nPenAndMusicPackage = packageDir => {
 };
 
 const patchOpenBlockL10nPenAndMusic = () => {
-    [
-        path.join(root, 'node_modules', 'openblock-l10n'),
-        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
-    ].forEach(patchOpenBlockL10nPenAndMusicPackage);
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nPenAndMusicPackage);
 };
 
 const patchOpenBlockL10nMicrobitPackage = packageDir => {
@@ -2108,13 +2106,104 @@ const patchOpenBlockL10nMicrobitPackage = packageDir => {
 };
 
 const patchOpenBlockL10nMicrobit = () => {
-    [
-        path.join(root, 'node_modules', 'openblock-l10n'),
-        path.join(root, '.openblock-vm', 'node_modules', 'openblock-l10n')
-    ].forEach(patchOpenBlockL10nMicrobitPackage);
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nMicrobitPackage);
+};
+
+const syncOpenBlockBlocksLocalesPackage = packageDir => {
+    const scratchMessagesFile = path.join(packageDir, 'msg', 'scratch_msgs.js');
+    const l10nBlocksDir = path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'blocks');
+    if (!fs.existsSync(scratchMessagesFile) || !fs.existsSync(l10nBlocksDir)) return;
+
+    let source = fs.readFileSync(scratchMessagesFile, 'utf8');
+    ['pt-br', 'pt'].forEach(locale => {
+        const translationsFile = path.join(l10nBlocksDir, `${locale}.json`);
+        if (!fs.existsSync(translationsFile)) return;
+
+        const marker = `Blockly.ScratchMsgs.locales["${locale}"] =`;
+        const assignment = `${marker}\n${JSON.stringify(
+            JSON.parse(fs.readFileSync(translationsFile, 'utf8')),
+            null,
+            4
+        )};\n`;
+        const start = source.indexOf(marker);
+        if (start === -1) {
+            source = `${source.trimEnd()}\n${assignment}`;
+            return;
+        }
+
+        const next = source.indexOf('Blockly.ScratchMsgs.locales["', start + marker.length);
+        source = `${source.slice(0, start)}${assignment}${next === -1 ? '' : source.slice(next)}`;
+    });
+
+    fs.writeFileSync(scratchMessagesFile, source);
+    console.log(`Synchronized openblock-blocks PT locales: ${packageDir}`);
+};
+
+const syncOpenBlockBlocksLocales = () => {
+    dependencyPackageDirs('openblock-blocks').forEach(syncOpenBlockBlocksLocalesPackage);
+};
+
+const patchOpenBlockBlocksGeneratedCodeBrandingPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+
+    const files = [
+        path.join(packageDir, 'generators', 'arduino.js'),
+        path.join(packageDir, 'generators', 'python.js'),
+        path.join(packageDir, 'arduino_compressed.js'),
+        path.join(packageDir, 'python_compressed.js')
+    ];
+    files.forEach(file => {
+        if (!fs.existsSync(file)) return;
+        const before = fs.readFileSync(file, 'utf8');
+        const after = before
+            .replace(/\/\/ (?:generated by OpenBlock|gerado pelo DoGo Block)\\n/g,
+                '// generated by DoGo Block\\n')
+            .replace(/# (?:generated by OpenBlock|gerado pelo DoGo Block)\\n/g,
+                '# generated by DoGo Block\\n');
+        if (after !== before) fs.writeFileSync(file, after);
+    });
+
+    console.log(`Applied generated code DoGo Block branding: ${packageDir}`);
+};
+
+const patchOpenBlockBlocksGeneratedCodeBranding = () => {
+    dependencyPackageDirs('openblock-blocks').forEach(patchOpenBlockBlocksGeneratedCodeBrandingPackage);
+};
+
+const patchOpenBlockVmDefaultTextBrandingPackage = packageDir => {
+    const devicesDir = path.join(packageDir, 'src', 'devices');
+    if (!fs.existsSync(devicesDir)) return;
+
+    const visit = directory => {
+        fs.readdirSync(directory, {withFileTypes: true}).forEach(entry => {
+            const file = path.join(directory, entry.name);
+            if (entry.isDirectory()) {
+                visit(file);
+            } else if (entry.isFile() && entry.name.endsWith('.js')) {
+                const before = fs.readFileSync(file, 'utf8');
+                const after = before.replace(/defaultValue: 'Hello OpenBlock'/g, "defaultValue: 'DoGo Block'");
+                if (after !== before) fs.writeFileSync(file, after);
+            }
+        });
+    };
+    visit(devicesDir);
+    console.log(`Applied default block text DoGo Block branding: ${packageDir}`);
+};
+
+const patchOpenBlockVmDefaultTextBranding = () => {
+    const externalVmPath = process.env.OPENBLOCK_VM_PATH ?
+        [path.resolve(process.env.OPENBLOCK_VM_PATH)] :
+        [];
+    dependencyPackageDirs('openblock-vm')
+        .concat(dependencyRoot === root ? [path.join(root, '.openblock-vm')] : [])
+        .concat(externalVmPath)
+        .forEach(patchOpenBlockVmDefaultTextBrandingPackage);
 };
 
 for (const patch of patches) {
+    if (translationsOnly && !patch.jsonUpdates) {
+        continue;
+    }
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
         continue;
     }
@@ -2149,20 +2238,25 @@ for (const patch of patches) {
     console.log(`Applied ${patch.label} patch.`);
 }
 
-patchOpenBlockBlocksArduinoPins();
-patchOpenBlockBlocksKeyReleased();
-patchOpenBlockBlocksMicrobitPythonEvents();
-patchOpenBlockVmKeyReleased();
-patchOpenBlockVmArduinoNanoUpload();
-patchOpenBlockVmArduinoDiscovery();
-patchOpenBlockVmLinkPort();
-patchOpenBlockVmWebSerialUpload();
-patchOpenBlockVmCompiledArtifactUpload();
-patchOpenBlockVmMicrobitBleWatchdog();
-patchOpenBlockVmWebpackHash();
-patchOpenBlockVmWebpackCreateHash();
+if (!translationsOnly) {
+    patchOpenBlockBlocksArduinoPins();
+    patchOpenBlockBlocksKeyReleased();
+    patchOpenBlockBlocksMicrobitPythonEvents();
+    patchOpenBlockVmKeyReleased();
+    patchOpenBlockVmArduinoNanoUpload();
+    patchOpenBlockVmArduinoDiscovery();
+    patchOpenBlockVmLinkPort();
+    patchOpenBlockVmWebSerialUpload();
+    patchOpenBlockVmCompiledArtifactUpload();
+    patchOpenBlockVmMicrobitBleWatchdog();
+    patchOpenBlockVmWebpackHash();
+    patchOpenBlockVmWebpackCreateHash();
+}
 patchOpenBlockL10nKeyReleased();
 patchOpenBlockL10nLostConnectionBranding();
 patchOpenBlockL10nBasicBlocks();
 patchOpenBlockL10nPenAndMusic();
 patchOpenBlockL10nMicrobit();
+syncOpenBlockBlocksLocales();
+patchOpenBlockBlocksGeneratedCodeBranding();
+patchOpenBlockVmDefaultTextBranding();
