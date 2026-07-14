@@ -4806,7 +4806,7 @@ var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch)
 var hash_parser_hoc = __webpack_require__(291);
 
 // EXTERNAL MODULE: ./src/lib/log.js
-var log = __webpack_require__(59);
+var log = __webpack_require__(56);
 
 // CONCATENATED MODULE: ./src/playground/render-gui.jsx
 function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { render_gui_typeof = function _typeof(obj) { return typeof obj; }; } else { render_gui_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return render_gui_typeof(obj); }
