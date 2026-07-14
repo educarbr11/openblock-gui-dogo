@@ -7,6 +7,7 @@ const dependencyRoot = process.env.OPENBLOCK_PATCH_DEPENDENCIES_ROOT ?
     path.resolve(process.env.OPENBLOCK_PATCH_DEPENDENCIES_ROOT) :
     root;
 const translationsOnly = process.env.OPENBLOCK_PATCH_TRANSLATIONS_ONLY === '1';
+const dependenciesOnly = process.env.OPENBLOCK_PATCH_DEPENDENCIES_ONLY === '1';
 const dependencyPackageDirs = packageName => [
     path.join(dependencyRoot, 'node_modules', packageName)
 ].concat(dependencyRoot === root ? [
@@ -2201,7 +2202,7 @@ const patchOpenBlockVmDefaultTextBranding = () => {
 };
 
 for (const patch of patches) {
-    if (translationsOnly && !patch.jsonUpdates) {
+    if ((translationsOnly || dependenciesOnly) && !patch.jsonUpdates) {
         continue;
     }
     if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
@@ -2242,6 +2243,8 @@ if (!translationsOnly) {
     patchOpenBlockBlocksArduinoPins();
     patchOpenBlockBlocksKeyReleased();
     patchOpenBlockBlocksMicrobitPythonEvents();
+}
+if (!translationsOnly && !dependenciesOnly) {
     patchOpenBlockVmKeyReleased();
     patchOpenBlockVmArduinoNanoUpload();
     patchOpenBlockVmArduinoDiscovery();
