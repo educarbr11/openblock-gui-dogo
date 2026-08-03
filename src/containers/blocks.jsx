@@ -55,9 +55,19 @@ const DroppableBlocks = DropAreaHOC([
     DragConstants.BACKPACK_CODE
 ])(BlocksComponent);
 
-const ptBrScratchMessages = Object.assign({}, enBlockMessages, ptBrBlockMessages);
+const ptBrWorkspaceMessages = {
+    COPY: 'Copiar',
+    PASTE: 'Colar'
+};
 
 const registerScratchMessages = ScratchBlocks => {
+    const ptBrScratchMessages = Object.assign(
+        {},
+        enBlockMessages,
+        ScratchBlocks.ScratchMsgs.locales['pt-br'],
+        ptBrBlockMessages,
+        ptBrWorkspaceMessages
+    );
     ScratchBlocks.ScratchMsgs.locales.pt = ptBrScratchMessages;
     ScratchBlocks.ScratchMsgs.locales['pt-br'] = ptBrScratchMessages;
 };
