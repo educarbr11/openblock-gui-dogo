@@ -2005,6 +2005,12 @@ const basicBlockTranslationsPtBr = Object.freeze({
 const costumeInterfaceTranslationsPtBr = Object.freeze({
     'gui.backpack.costumeLabel': 'traje',
     'gui.gui.costumesTab': 'Trajes',
+    'gui.SpriteInfo.direction': 'Rotação',
+    'gui.SpriteInfo.draggable': 'Arrastável',
+    'gui.SpriteInfo.draggableOn': 'Permitir arrastar durante o jogo',
+    'gui.SpriteInfo.draggableOff': 'Não permitir arrastar durante o jogo',
+    'gui.SpriteInfo.draggableEnabled': 'Ativado',
+    'gui.SpriteInfo.draggableDisabled': 'Desativado',
     'gui.menuBar.restoreCostume': 'Restaurar o Traje',
     'gui.costumeLibrary.chooseACostume': 'Escolher Traje',
     'gui.costumeTab.addCostumeFromLibrary': 'Escolher Traje',
