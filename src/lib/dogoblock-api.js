@@ -68,6 +68,20 @@ const logout = () => {
 
 const me = () => request('/auth/me');
 
+const forgotPassword = email => request('/auth/forgot-password', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email}),
+    skipAuth: true
+});
+
+const resetPassword = (token, newPassword) => request('/auth/reset-password', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({token, newPassword}),
+    skipAuth: true
+});
+
 // ─── User Profile ────────────────────────────────────────────────────────────
 
 const getMyProfile = () => request('/users/me');
@@ -79,6 +93,8 @@ const updateMyProfile = profile => request('/users/me', {
 });
 
 const listFavoriteProjects = () => request('/users/me/favorites');
+
+const getPublicUserProfile = username => request(`/users/${username}`, {skipAuth: true});
 
 // ─── Projects ────────────────────────────────────────────────────────────────
 
@@ -145,6 +161,9 @@ const markNotificationRead = notificationId =>
 const markAllNotificationsRead = () =>
     request('/notifications/read-all', {method: 'PATCH'});
 
+const deleteNotification = notificationId =>
+    request(`/notifications/${notificationId}`, {method: 'DELETE'});
+
 const createNotificationsStream = token => {
     if (!token || typeof window === 'undefined' || typeof EventSource === 'undefined') {
         return null;
@@ -199,7 +218,10 @@ export {
     me,
     projectHost,
     register,
+    forgotPassword,
+    resetPassword,
     getMyProfile,
+    getPublicUserProfile,
     updateProjectVisibility,
     updateProjectDetails,
     uploadProjectCover,
@@ -217,6 +239,7 @@ export {
     getUnreadCount,
     markNotificationRead,
     markAllNotificationsRead,
+    deleteNotification,
     createNotificationsStream,
     createArduinoCompileJob,
     getArduinoCompileJob,

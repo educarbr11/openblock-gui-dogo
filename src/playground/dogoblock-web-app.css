@@ -2486,6 +2486,29 @@ span.pd-btn-visibility-private {
     margin-bottom: 0.25rem;
 }
 
+.pd-comment-item-author-link {
+    display: block;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #243f8f;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+
+.pd-comment-item-author-link:hover {
+    color: #7e55d8;
+    text-decoration-color: #7e55d8;
+}
+
 .pd-comment-item-text {
     margin: 0;
     font-size: 0.88rem;
@@ -2595,4 +2618,149 @@ span.pd-btn-visibility-private {
     border-radius: 0.5rem;
     background: #ffffff;
     position: relative;
+}
+/* ── Toast container ─────────────────────────────────────────────────────── */
+.toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.toast-container > * {
+    pointer-events: auto;
+}
+
+@media (max-width: 48rem) {
+    .toast-container {
+        bottom: 1rem;
+        right: 0.75rem;
+        left: 0.75rem;
+    }
+}
+
+/* ─── Forgot Password & Public Profile Styles ──────────────────────────────── */
+
+.forgot-password-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: -0.35rem 0 0.85rem;
+}
+
+.success-box {
+    padding: 1rem;
+    border-radius: 0.55rem;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.author-link {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.author-link:hover {
+    color: #243f8f;
+}
+
+.public-profile-page {
+    max-width: 64rem;
+}
+
+.public-profile-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.75rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.public-profile-avatar {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 50%;
+    background: #243f8f;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Bungee", "Montserrat", sans-serif;
+    font-size: 2.2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 0.4rem 0 #182b63;
+}
+
+.public-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.public-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.public-profile-name {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #243f8f;
+    line-height: 1.1;
+}
+
+.public-profile-username {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #7e55d8;
+}
+
+.public-profile-bio {
+    margin: 0.5rem 0 0;
+    color: #344473;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.public-profile-working {
+    margin: 0.25rem 0 0;
+    color: #56648e;
+    font-size: 0.9rem;
+}
+
+.public-profile-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #e0e7ff;
+}
+
+.public-profile-stat {
+    font-size: 0.92rem;
+    color: #344473;
+    font-weight: 700;
+}
+
+.public-profile-stat strong {
+    color: #243f8f;
+    font-size: 1.15rem;
 }
