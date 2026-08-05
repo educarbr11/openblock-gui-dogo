@@ -24,15 +24,17 @@ import {
 
 import GUI from '../containers/gui.jsx';
 import NotificationsBell from '../components/notifications/notifications-bell.jsx';
+import NotificationToast from '../components/notifications/notification-toast.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
 import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
-    createNotificationsStream,
+    deleteNotification,
     deleteProject,
     getUnreadCount,
     getMyProfile,
     getProjectDetails,
+    getPublicUserProfile,
     listFavoriteProjects,
     listNotifications,
     listProjects,
@@ -42,6 +44,8 @@ import {
     markAllNotificationsRead,
     markNotificationRead,
     register,
+    forgotPassword,
+    resetPassword,
     updateMyProfile,
     updateProjectVisibility,
     updateProjectDetails,
@@ -55,6 +59,7 @@ import {
     deleteComment,
     remixProject
 } from '../lib/dogoblock-api';
+import NotificationsManager from '../lib/notifications-manager';
 import {readAuthSession, writeAuthSession} from '../lib/auth-session';
 import {defaultProjectId} from '../reducers/project-state';
 import {loginSuccess, logout as logoutAction} from '../reducers/session';
@@ -63,6 +68,9 @@ import {setPlayer} from '../reducers/mode';
 import dogoblockLogo from '../../static/dogoblock_logo_full.svg';
 import heroIllustration from '../../static/hero-illustration.png';
 import styles from './dogoblock-web-app.css';
+
+const NOTIFICATIONS_PAGE_SIZE = 10;
+const TOAST_DISMISS_MS = 5000;
 
 const parseRoute = () => {
     const rawHash = window.location.hash.replace(/^#/, '');
@@ -76,7 +84,10 @@ const parseRoute = () => {
     if (!parts.length) return {name: 'home'};
     if (parts[0] === 'login') return {name: 'login', next: queryParams.get('next')};
     if (parts[0] === 'register') return {name: 'register', next: queryParams.get('next')};
+    if (parts[0] === 'forgot-password') return {name: 'forgotPassword'};
+    if (parts[0] === 'reset-password') return {name: 'resetPassword', token: queryParams.get('token')};
     if (parts[0] === 'profile') return {name: 'profile'};
+    if (parts[0] === 'user' && parts[1]) return {name: 'publicProfile', username: parts[1]};
     if (parts[0] === 'explore') return {name: 'explore'};
     if (parts[0] === 'editor') {
         return {
@@ -211,7 +222,11 @@ class DogoblockWebApp extends React.Component {
             searchQuery: '',
             notifications: [],
             notificationsLoading: false,
+            notificationsLoadingMore: false,
+            notificationsPage: 1,
+            notificationsHasMore: false,
             unreadCount: 0,
+            toastNotification: null,
             // project details page state
             pdComments: [],
             pdCommentsLoading: false,
@@ -227,7 +242,12 @@ class DogoblockWebApp extends React.Component {
             pdLiked: false,
             pdFavorited: false,
             pdLikeCount: 0,
-            pdStarCount: 0
+            pdStarCount: 0,
+            // forgot/reset password
+            forgotPasswordSuccess: false,
+            resetPasswordSuccess: false,
+            // public profile
+            publicProfile: null
         };
         this.handleHashChange = this.handleHashChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -253,8 +273,11 @@ class DogoblockWebApp extends React.Component {
         this.handleNavigateRegister = this.handleNavigateRegister.bind(this);
         this.handleRequestLoginToSave = this.handleRequestLoginToSave.bind(this);
         this.handleLoadNotifications = this.handleLoadNotifications.bind(this);
+        this.handleLoadMoreNotifications = this.handleLoadMoreNotifications.bind(this);
         this.handleMarkAllNotificationsRead = this.handleMarkAllNotificationsRead.bind(this);
         this.handleOpenNotification = this.handleOpenNotification.bind(this);
+        this.handleDeleteNotification = this.handleDeleteNotification.bind(this);
+        this.handleDismissToast = this.handleDismissToast.bind(this);
         this.handleProfileSubmit = this.handleProfileSubmit.bind(this);
         this.handleProfileTab = this.handleProfileTab.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -277,22 +300,46 @@ class DogoblockWebApp extends React.Component {
         this.renderHome = this.renderHome.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
         this.renderRegister = this.renderRegister.bind(this);
+        this.renderForgotPassword = this.renderForgotPassword.bind(this);
+        this.renderResetPassword = this.renderResetPassword.bind(this);
         this.renderProjects = this.renderProjects.bind(this);
         this.renderProfile = this.renderProfile.bind(this);
+        this.renderPublicProfile = this.renderPublicProfile.bind(this);
         this.renderProjectDetails = this.renderProjectDetails.bind(this);
         this.renderEditor = this.renderEditor.bind(this);
+        this.handleForgotPassword = this.handleForgotPassword.bind(this);
+        this.handleResetPassword = this.handleResetPassword.bind(this);
+        this.handleNavigateForgotPassword = this.handleNavigateForgotPassword.bind(this);
+        this.handleNavigatePublicProfile = this.handleNavigatePublicProfile.bind(this);
     }
 
     componentDidMount () {
         window.addEventListener('hashchange', this.handleHashChange);
         this.loadRouteData(this.state.route);
+        this._notificationsManager = new NotificationsManager();
+        this._notificationsManager.onNotification = notification => {
+            this.setState(prevState => ({
+                notifications: [
+                    notification,
+                    ...prevState.notifications.filter(item => item.id !== notification.id)
+                ].slice(0, NOTIFICATIONS_PAGE_SIZE)
+            }));
+            // Only show toast on non-editor screens
+            if (this.state.route.name !== 'editor') {
+                this.showToast(notification);
+            }
+        };
+        this._notificationsManager.onUnreadCount = count => {
+            this.setState({unreadCount: count});
+        };
         this.setupNotifications();
     }
 
     componentWillUnmount () {
         window.removeEventListener('hashchange', this.handleHashChange);
         if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
-        this.closeNotificationsStream();
+        if (this._toastTimer) clearTimeout(this._toastTimer);
+        if (this._notificationsManager) this._notificationsManager.disconnect();
         this.props.onSetPlayerOnly(false);
     }
 
@@ -368,6 +415,13 @@ class DogoblockWebApp extends React.Component {
             const loader = this.props.user && route.name === 'projects' ? listProjects : listPublicProjects;
             loader()
                 .then(projects => this.setState({projects, loading: false}))
+                .catch(error => this.setState({error: error.message, loading: false}));
+        }
+        if (route.name === 'publicProfile') {
+            const {username} = route;
+            this.setState({loading: true, error: null, publicProfile: null});
+            getPublicUserProfile(username)
+                .then(publicProfile => this.setState({publicProfile, loading: false, error: null}))
                 .catch(error => this.setState({error: error.message, loading: false}));
         }
         if (route.name === 'projectDetails') {
@@ -450,7 +504,9 @@ class DogoblockWebApp extends React.Component {
     }
 
     handleLogout () {
-        this.closeNotificationsStream();
+        if (this._notificationsManager) {
+            this._notificationsManager.disconnect();
+        }
         apiLogout();
         this.props.onLogout();
         this.setState({
@@ -462,12 +518,14 @@ class DogoblockWebApp extends React.Component {
     }
 
     setupNotifications () {
-        this.closeNotificationsStream();
+        if (this._notificationsManager) this._notificationsManager.disconnect();
         if (!this.props.user) {
             this.setState({
                 notifications: [],
                 unreadCount: 0,
-                notificationsLoading: false
+                notificationsLoading: false,
+                notificationsPage: 1,
+                notificationsHasMore: false
             });
             return;
         }
@@ -476,53 +534,60 @@ class DogoblockWebApp extends React.Component {
             .catch(() => { });
 
         const session = readAuthSession();
-        const stream = createNotificationsStream(session && session.accessToken);
-        if (!stream) return;
-
-        stream.addEventListener('notification', event => {
-            try {
-                const notification = JSON.parse(event.data);
-                this.setState(prevState => ({
-                    notifications: [
-                        notification,
-                        ...prevState.notifications.filter(item => item.id !== notification.id)
-                    ].slice(0, 10)
-                }));
-            } catch {
-                // Ignore malformed stream payloads.
-            }
-        });
-        stream.addEventListener('unread-count', event => {
-            try {
-                const data = JSON.parse(event.data);
-                this.setState({unreadCount: data.unreadCount || 0});
-            } catch {
-                // Ignore malformed stream payloads.
-            }
-        });
-        stream.onerror = () => { };
-        this.notificationsStream = stream;
+        if (this._notificationsManager && session && session.accessToken) {
+            this._notificationsManager.connect(session.accessToken);
+        }
     }
 
-    closeNotificationsStream () {
-        if (!this.notificationsStream) return;
-        this.notificationsStream.close();
-        this.notificationsStream = null;
+    showToast (notification) {
+        if (this._toastTimer) clearTimeout(this._toastTimer);
+        this.setState({toastNotification: notification});
+        this._toastTimer = setTimeout(() => {
+            this.setState({toastNotification: null});
+        }, TOAST_DISMISS_MS);
+    }
+
+    handleDismissToast () {
+        if (this._toastTimer) clearTimeout(this._toastTimer);
+        this.setState({toastNotification: null});
     }
 
     handleLoadNotifications () {
         if (!this.props.user) return;
-        this.setState({notificationsLoading: true});
-        listNotifications(1, 10)
+        this.setState({notificationsLoading: true, notificationsPage: 1});
+        listNotifications(1, NOTIFICATIONS_PAGE_SIZE)
             .then(result => this.setState({
                 notifications: result.notifications || [],
                 unreadCount: result.unreadCount || 0,
+                notificationsPage: 1,
+                notificationsHasMore: (result.notifications || []).length < (result.total || 0),
                 notificationsLoading: false
             }))
             .catch(error => this.setState({
                 error: error.message,
                 notificationsLoading: false
             }));
+    }
+
+    handleLoadMoreNotifications () {
+        if (!this.props.user || this.state.notificationsLoadingMore) return;
+        const nextPage = this.state.notificationsPage + 1;
+        this.setState({notificationsLoadingMore: true});
+        listNotifications(nextPage, NOTIFICATIONS_PAGE_SIZE)
+            .then(result => {
+                const newItems = result.notifications || [];
+                this.setState(prevState => ({
+                    notifications: [
+                        ...prevState.notifications,
+                        ...newItems.filter(n => !prevState.notifications.find(e => e.id === n.id))
+                    ],
+                    notificationsPage: nextPage,
+                    notificationsHasMore: newItems.length === NOTIFICATIONS_PAGE_SIZE &&
+                        (prevState.notifications.length + newItems.length) < (result.total || 0),
+                    notificationsLoadingMore: false
+                }));
+            })
+            .catch(error => this.setState({error: error.message, notificationsLoadingMore: false}));
     }
 
     handleOpenNotification (notification) {
@@ -546,6 +611,19 @@ class DogoblockWebApp extends React.Component {
             return;
         }
         navigateToProject();
+    }
+
+    handleDeleteNotification (notification) {
+        deleteNotification(notification.id)
+            .then(() => {
+                this.setState(prevState => ({
+                    notifications: prevState.notifications.filter(item => item.id !== notification.id),
+                    unreadCount: !notification.readAt
+                        ? Math.max(0, prevState.unreadCount - 1)
+                        : prevState.unreadCount
+                }));
+            })
+            .catch(error => this.setState({error: error.message}));
     }
 
     handleMarkAllNotificationsRead () {
@@ -711,6 +789,41 @@ class DogoblockWebApp extends React.Component {
 
     handleRequestLoginToSave () {
         navigate(loginRouteFor(currentRouteHash()));
+    }
+
+    handleNavigateForgotPassword () {
+        navigate('/forgot-password');
+    }
+
+    handleNavigatePublicProfile (usernameOrEvent) {
+        const username = typeof usernameOrEvent === 'string'
+            ? usernameOrEvent
+            : usernameOrEvent.currentTarget.dataset.username;
+        if (username) navigate(`/user/${username}`);
+    }
+
+    handleForgotPassword (event) {
+        event.preventDefault();
+        const form = new FormData(event.currentTarget);
+        this.setState({error: null, loading: true, forgotPasswordSuccess: false});
+        forgotPassword(form.get('email'))
+            .then(() => this.setState({forgotPasswordSuccess: true, loading: false}))
+            .catch(error => this.setState({error: error.message, loading: false}));
+    }
+
+    handleResetPassword (event) {
+        event.preventDefault();
+        const form = new FormData(event.currentTarget);
+        const password = form.get('password');
+        const confirm = form.get('confirm');
+        if (password !== confirm) {
+            this.setState({error: 'As senhas não coincidem.'});
+            return;
+        }
+        this.setState({error: null, loading: true, resetPasswordSuccess: false});
+        resetPassword(this.state.route.token, password)
+            .then(() => this.setState({resetPasswordSuccess: true, loading: false}))
+            .catch(error => this.setState({error: error.message, loading: false}));
     }
 
     handleSearchChange (event) {
@@ -993,11 +1106,15 @@ class DogoblockWebApp extends React.Component {
                             <React.Fragment>
                                 <NotificationsBell
                                     loading={this.state.notificationsLoading}
+                                    loadingMore={this.state.notificationsLoadingMore}
                                     notifications={this.state.notifications}
                                     unreadCount={this.state.unreadCount}
+                                    hasMore={this.state.notificationsHasMore}
                                     onMarkAllRead={this.handleMarkAllNotificationsRead}
                                     onOpen={this.handleLoadNotifications}
                                     onOpenNotification={this.handleOpenNotification}
+                                    onDeleteNotification={this.handleDeleteNotification}
+                                    onLoadMore={this.handleLoadMoreNotifications}
                                 />
                                 <button
                                     aria-label="Meu Perfil"
@@ -1209,6 +1326,15 @@ class DogoblockWebApp extends React.Component {
                                 type="password"
                             />
                         </label>
+                        <div className={styles.forgotPasswordRow}>
+                            <button
+                                className={styles.inlineButton}
+                                type="button"
+                                onClick={this.handleNavigateForgotPassword}
+                            >
+                                {'Esqueci minha senha'}
+                            </button>
+                        </div>
                         <button className={styles.primaryButton}>
                             <Icon><LogIn size={16} /></Icon>
                             {this.state.loading ? 'Entrando...' : 'Entrar'}
@@ -1702,7 +1828,18 @@ class DogoblockWebApp extends React.Component {
                         </div>
                         <div className={styles.pdTitleGroup}>
                             <h1 className={styles.pdTitle}>{title.toUpperCase()}</h1>
-                            <p className={styles.pdAuthor}>{`Por @${author}`}</p>
+                            <p className={styles.pdAuthor}>
+                                {'Por '}
+                                <button
+                                    className={styles.authorLink}
+                                    data-username={
+                                        (project.owner && project.owner.username) || author
+                                    }
+                                    onClick={this.handleNavigatePublicProfile}
+                                >
+                                    {`@${author}`}
+                                </button>
+                            </p>
                             {createdAt ? <p className={styles.pdDate}>{`Criado em ${createdAt}`}</p> : null}
                         </div>
                     </div>
@@ -1914,6 +2051,7 @@ class DogoblockWebApp extends React.Component {
                         <ul className={styles.pdCommentList}>
                             {pdComments.map(comment => {
                                 const commentAuthor = comment.username || comment.author || (comment.user && (comment.user.username || comment.user.name)) || 'Usuário';
+                                const commentUsername = (comment.user && comment.user.username) || comment.username || commentAuthor;
                                 const canDelete = user && (String(user.id) === String(comment.userId || (comment.user && comment.user.id)) || isOwner);
                                 const isReplying = pdReplyToId === String(comment.id);
                                 return (
@@ -1928,7 +2066,13 @@ class DogoblockWebApp extends React.Component {
                                             />
                                         </div>
                                         <div className={styles.pdCommentItemBody}>
-                                            <span className={styles.pdCommentItemAuthor}>{`@${commentAuthor}`}</span>
+                                            <button
+                                                className={styles.pdCommentItemAuthorLink}
+                                                data-username={commentUsername}
+                                                onClick={this.handleNavigatePublicProfile}
+                                            >
+                                                {`@${commentAuthor}`}
+                                            </button>
                                             <p className={styles.pdCommentItemText}>{comment.content}</p>
 
                                             {/* Reply button */}
@@ -1991,6 +2135,7 @@ class DogoblockWebApp extends React.Component {
                                                 <ul className={styles.pdReplyList}>
                                                     {comment.replies.map(reply => {
                                                         const replyAuthor = reply.username || reply.author || (reply.user && (reply.user.username || reply.user.name)) || 'Usuário';
+                                                        const replyUsername = (reply.user && reply.user.username) || reply.username || replyAuthor;
                                                         const canDeleteReply = user && (String(user.id) === String(reply.userId || (reply.user && reply.user.id)) || isOwner);
                                                         return (
                                                             <li
@@ -2004,7 +2149,13 @@ class DogoblockWebApp extends React.Component {
                                                                     />
                                                                 </div>
                                                                 <div className={styles.pdCommentItemBody}>
-                                                                    <span className={styles.pdCommentItemAuthor}>{`@${replyAuthor}`}</span>
+                                                                    <button
+                                                                        className={styles.pdCommentItemAuthorLink}
+                                                                        data-username={replyUsername}
+                                                                        onClick={this.handleNavigatePublicProfile}
+                                                                    >
+                                                                        {`@${replyAuthor}`}
+                                                                    </button>
                                                                     <p className={styles.pdCommentItemText}>{reply.content}</p>
                                                                 </div>
                                                                 {canDeleteReply ? (
@@ -2053,6 +2204,203 @@ class DogoblockWebApp extends React.Component {
     }
 
 
+    renderForgotPassword () {
+        const {forgotPasswordSuccess, loading, error} = this.state;
+        return (
+            <div className={styles.authSection}>
+                <div className={styles.authCardWrap}>
+                    <div className={styles.panel}>
+                        <h1>{'Recuperar Senha'}</h1>
+                        {forgotPasswordSuccess ? (
+                            <div className={styles.successBox}>
+                                <p>{'✓ E-mail enviado! Verifique sua caixa de entrada e siga as instruções para redefinir sua senha.'}</p>
+                                <button
+                                    className={styles.primaryButton}
+                                    style={{marginTop: '1rem', width: '100%'}}
+                                    onClick={this.handleNavigateLogin}
+                                >
+                                    {'Voltar para o Login'}
+                                </button>
+                            </div>
+                        ) : (
+                            <form onSubmit={this.handleForgotPassword}>
+                                <p className={styles.formHint} style={{marginTop: 0, marginBottom: '1rem'}}>
+                                    {'Digite seu e-mail cadastrado e enviaremos um link para redefinir sua senha.'}
+                                </p>
+                                {error ? <div className={styles.error}>{error}</div> : null}
+                                <label className={styles.field}>
+                                    {'Email'}
+                                    <input
+                                        required
+                                        name="email"
+                                        type="email"
+                                    />
+                                </label>
+                                <button
+                                    className={styles.primaryButton}
+                                    style={{width: '100%'}}
+                                >
+                                    {loading ? 'Enviando...' : 'Enviar link de recuperação'}
+                                </button>
+                                <p className={styles.formHint}>
+                                    <button
+                                        className={styles.inlineButton}
+                                        type="button"
+                                        onClick={this.handleNavigateLogin}
+                                    >
+                                        {'← Voltar para o login'}
+                                    </button>
+                                </p>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    renderResetPassword () {
+        const {resetPasswordSuccess, loading, error, route} = this.state;
+        const hasToken = Boolean(route.token);
+        return (
+            <div className={styles.authSection}>
+                <div className={styles.authCardWrap}>
+                    <div className={styles.panel}>
+                        <h1>{'Redefinir Senha'}</h1>
+                        {!hasToken ? (
+                            <div className={styles.error}>
+                                {'Link inválido ou expirado. Solicite um novo link de recuperação.'}
+                            </div>
+                        ) : resetPasswordSuccess ? (
+                            <div className={styles.successBox}>
+                                <p>{'✓ Senha redefinida com sucesso!'}</p>
+                                <button
+                                    className={styles.primaryButton}
+                                    style={{marginTop: '1rem', width: '100%'}}
+                                    onClick={this.handleNavigateLogin}
+                                >
+                                    {'Entrar na conta'}
+                                </button>
+                            </div>
+                        ) : (
+                            <form onSubmit={this.handleResetPassword}>
+                                {error ? <div className={styles.error}>{error}</div> : null}
+                                <label className={styles.field}>
+                                    {'Nova Senha'}
+                                    <input
+                                        required
+                                        autoFocus
+                                        minLength="8"
+                                        name="password"
+                                        type="password"
+                                    />
+                                </label>
+                                <label className={styles.field}>
+                                    {'Confirmar Nova Senha'}
+                                    <input
+                                        required
+                                        minLength="8"
+                                        name="confirm"
+                                        type="password"
+                                    />
+                                </label>
+                                <button
+                                    className={styles.primaryButton}
+                                    style={{width: '100%'}}
+                                >
+                                    {loading ? 'Salvando...' : 'Redefinir Senha'}
+                                </button>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    renderPublicProfile () {
+        const {publicProfile, loading, error} = this.state;
+
+        if (loading && !publicProfile) {
+            return (
+                <div className={styles.page}>
+                    <p>{'Carregando perfil...'}</p>
+                </div>
+            );
+        }
+
+        if (error && !publicProfile) {
+            return (
+                <div className={styles.page}>
+                    <div className={styles.error}>{error}</div>
+                </div>
+            );
+        }
+
+        if (!publicProfile) return null;
+
+        const projects = publicProfile.projects || [];
+
+        return (
+            <div className={`${styles.page} ${styles.publicProfilePage}`}>
+                {/* Header Card */}
+                <div className={`${styles.publicProfileHeader} ${styles.panel}`}>
+                    <div className={styles.publicProfileAvatar}>
+                        {publicProfile.avatarUrl ? (
+                            <img
+                                alt={publicProfile.username}
+                                src={publicProfile.avatarUrl}
+                            />
+                        ) : (
+                            <span>{getInitials(publicProfile)}</span>
+                        )}
+                    </div>
+                    <div className={styles.publicProfileInfo}>
+                        <h1 className={styles.publicProfileName}>
+                            {publicProfile.name || publicProfile.username}
+                        </h1>
+                        <span className={styles.publicProfileUsername}>
+                            {`@${publicProfile.username}`}
+                        </span>
+                        {publicProfile.bio ? (
+                            <p className={styles.publicProfileBio}>{publicProfile.bio}</p>
+                        ) : null}
+                        {publicProfile.workingOn ? (
+                            <p className={styles.publicProfileWorking}>
+                                <strong>{'Trabalhando em: '}</strong>
+                                {publicProfile.workingOn}
+                            </p>
+                        ) : null}
+                        <div className={styles.publicProfileStats}>
+                            <span className={styles.publicProfileStat}>
+                                <strong>{publicProfile.publicProjectCount || 0}</strong>
+                                {' Projetos'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Projects */}
+                <div className={styles.profileSection2}>
+                    <div className={styles.profileSectionHeader}>
+                        <h2 className={styles.profileSectionHeading}>
+                            {`PROJETOS (${projects.length})`}
+                        </h2>
+                    </div>
+                    <div className={styles.profileSectionBody}>
+                        {projects.length ? (
+                            this.renderProjectCards(projects, false)
+                        ) : (
+                            <div className={styles.emptyState}>
+                                {'Este usuário ainda não publicou projetos.'}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     renderEditor () {
         const route = this.state.route;
         const canPersist = Boolean(this.props.user);
@@ -2088,11 +2436,26 @@ class DogoblockWebApp extends React.Component {
                 {route.name === 'home' ? this.renderHome() : null}
                 {route.name === 'login' ? this.renderLogin() : null}
                 {route.name === 'register' ? this.renderRegister() : null}
+                {route.name === 'forgotPassword' ? this.renderForgotPassword() : null}
+                {route.name === 'resetPassword' ? this.renderResetPassword() : null}
                 {route.name === 'projects' || route.name === 'explore' ? this.renderProjects() : null}
                 {route.name === 'profile' ? this.renderProfile() : null}
+                {route.name === 'publicProfile' ? this.renderPublicProfile() : null}
                 {route.name === 'projectDetails' ? this.renderProjectDetails() : null}
                 {editor ? this.renderEditor() : null}
                 {editor ? null : this.renderFooter()}
+                {!editor && this.state.toastNotification ? (
+                    <div className={styles.toastContainer}>
+                        <NotificationToast
+                            notification={this.state.toastNotification}
+                            onClick={() => {
+                                this.handleDismissToast();
+                                this.handleOpenNotification(this.state.toastNotification);
+                            }}
+                            onDismiss={this.handleDismissToast}
+                        />
+                    </div>
+                ) : null}
             </div>
         );
     }
