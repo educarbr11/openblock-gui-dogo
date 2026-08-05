@@ -1,4 +1,5 @@
 const DEFAULT_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
+const DEFAULT_ASSET_HOST = process.env.DOGOBLOCK_ASSET_HOST || 'https://dogoblockcdn.dogomaker.com';
 
 const trimSlash = value => value.replace(/\/+$/, '');
 
@@ -10,7 +11,12 @@ const getApiHost = () => {
 };
 
 const getProjectHost = () => `${getApiHost()}/projects`;
-const getAssetHost = () => `${getApiHost()}/assets`;
+const getAssetHost = () => {
+    if (typeof window === 'undefined') return trimSlash(DEFAULT_ASSET_HOST);
+    const matches = window.location.search.match(/[?&]asset_host=([^&]*)/);
+    if (matches && matches[1]) return trimSlash(decodeURIComponent(matches[1]));
+    return trimSlash(DEFAULT_ASSET_HOST);
+};
 
 export {
     getApiHost,

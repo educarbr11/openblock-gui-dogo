@@ -23,17 +23,13 @@ import arduinoUnoR4WifiIconURL from './arduinoUnoR4Wifi/arduinoUnoR4Wifi.png';
 import arduinoUnoR4WifiConnectionIconURLL from './arduinoUnoR4Wifi/arduinoUnoR4Wifi-illustration.svg';
 import arduinoUnoR4WifiConnectionSmallIconURL from './arduinoUnoR4Wifi/arduinoUnoR4Wifi-small.svg';
 
-import microbitIconURL from './microbit/microbit.png';
-import microbitConnectionIconURLL from './microbit/microbit-illustration.svg';
-import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
-
-import microbitV2IconURL from './microbitV2/microbitV2.png';
-import microbitV2ConnectionIconURLL from './microbitV2/microbitV2-illustration.svg';
-import microbitV2ConnectionSmallIconURL from './microbitV2/microbitV2-small.svg';
-
 import esp32IconURL from './esp32/esp32.png';
 import esp32ConnectionIconURLL from './esp32/esp32-illustration.svg';
 import esp32ConnectionSmallIconURL from './esp32/esp32-small.svg';
+
+import microbitIconURL from './microbit/microbit.png';
+import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
+import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
 
 
 const deviceData = [
@@ -61,6 +57,43 @@ const deviceData = [
         programMode: ['realtime'],
         programLanguage: ['block'],
         tags: ['realtime']
+    },
+    {
+        name: 'micro:bit v2',
+        deviceId: 'microbitV2',
+        manufactor: 'micro:bit',
+        learnMore: 'https://microbit.org/get-started/user-guide/overview/',
+        type: DeviceType.microbit,
+        iconURL: microbitIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Use o micro:bit pelo DoGoBlock Link com cabo USB."
+                description="Description for the micro:bit device"
+                id="gui.device.microbitV2.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        bluetoothRequired: false,
+        serialportRequired: true,
+        defaultBaudRate: '115200',
+        internetConnectionRequired: false,
+        launchPeripheralConnectionFlow: false,
+        useAutoScan: false,
+        connectionIconURL: microbitConnectionIconURL,
+        connectionSmallIconURL: microbitConnectionSmallIconURL,
+        connectingMessage: (
+            <FormattedMessage
+                defaultMessage="Connecting"
+                description="Message to help people connect to their device."
+                id="gui.device.connectingMessage"
+            />
+        ),
+        programMode: ['realtime', 'upload'],
+        defaultProgramMode: 'realtime',
+        programLanguage: ['python'],
+        tags: ['microbit'],
+        helpLink: 'https://microbit.org/get-started/user-guide/overview/'
     },
     {
         name: 'Arduino Uno',
@@ -241,80 +274,6 @@ const deviceData = [
         programLanguage: ['block', 'c', 'cpp'],
         tags: ['arduino'],
         helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/esp32'
-    },
-    {
-        name: 'Micro:bit',
-        deviceId: 'microbit',
-        manufactor: 'microbit.org',
-        learnMore: 'https://tech.microbit.org/hardware',
-        type: DeviceType.microbit,
-        iconURL: microbitIconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="The pocket-sized computer transforming digital skills learning."
-                description="Description for the micro:bit device"
-                id="gui.device.microbit.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: false,
-        serialportRequired: true,
-        defaultBaudRate: '115200',
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: microbitConnectionIconURLL,
-        connectionSmallIconURL: microbitConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
-            />
-        ),
-        programMode: ['realtime', 'upload'],
-        defaultProgramMode: 'realtime',
-        programLanguage: ['block', 'microPython'],
-        tags: ['microPython'],
-        helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/microbit'
-    },
-    {
-        name: 'Micro:bit V2',
-        deviceId: 'microbitV2',
-        manufactor: 'microbit.org',
-        learnMore: 'https://tech.microbit.org/hardware/1-5-revision/',
-        type: DeviceType.microbit,
-        iconURL: microbitV2IconURL,
-        description: (
-            <FormattedMessage
-                defaultMessage="Upgraded processor, built-In speaker and microphone, touch sensitive logo."
-                description="Description for the micro:bit V2 device"
-                id="gui.device.microbitV2.description"
-            />
-        ),
-        featured: true,
-        disabled: false,
-        bluetoothRequired: false,
-        serialportRequired: true,
-        defaultBaudRate: '115200',
-        internetConnectionRequired: false,
-        launchPeripheralConnectionFlow: true,
-        useAutoScan: false,
-        connectionIconURL: microbitV2ConnectionIconURLL,
-        connectionSmallIconURL: microbitV2ConnectionSmallIconURL,
-        connectingMessage: (
-            <FormattedMessage
-                defaultMessage="Connecting"
-                description="Message to help people connect to their device."
-                id="gui.device.connectingMessage"
-            />
-        ),
-        programMode: ['realtime', 'upload'],
-        defaultProgramMode: 'realtime',
-        programLanguage: ['block', 'microPython'],
-        tags: ['microPython'],
-        helpLink: 'https://wiki.openblock.cc/general-hardware-guidelines/boards/microbit-v2'
     }
 ];
 
@@ -326,10 +285,7 @@ const allowedDeviceIds = new Set(deviceData.map(device => device.deviceId));
 const eventBlock = {
     [DeviceType.arduino]: '<block type="event_whenarduinobegin"/>',
     [DeviceType.microPython]: '<block type="event_whenmicropythonbegin"/>',
-    [DeviceType.microbit]: `<block type="event_whenmicrobitbegin"/>
-                                <block type="event_whenmicrobitbuttonpressed"/>
-                                <block type="event_whenmicrobitpinbeingtouched"/>
-                                <block type="event_whenmicrobitgesture"/>`
+    [DeviceType.microbit]: ''
 };
 
 /**

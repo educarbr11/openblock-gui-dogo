@@ -19,3 +19,5 @@ npm-*
 /locale
 .vercel
 /.openblock-vm
+
+.env

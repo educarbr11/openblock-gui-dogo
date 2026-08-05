@@ -11,6 +11,7 @@
 
 .body {
     background: $ui-white;
+    position: relative;
 }
 
 .label {
@@ -395,6 +396,12 @@
     align-items: center;
 }
 
+.connection-button,
+.connection-button:link,
+.connection-button:visited {
+    text-decoration: none;
+}
+
 .connection-button:disabled {
     background: $motion-transparent;
 }
@@ -464,6 +471,79 @@
 
 .instructions {
     text-align: center;
+}
+
+.microbit-firmware-manual {
+    width: 100%;
+    max-width: 390px;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background: $ui-white;
+    color: $text-primary;
+    text-align: left;
+}
+
+.microbit-firmware-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.microbit-firmware-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.microbit-firmware-steps {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.72rem;
+    line-height: 1.35;
+}
+
+.microbit-firmware-steps li + li {
+    margin-top: 0.2rem;
+}
+
+.microbit-firmware-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+}
+
+.microbit-firmware-download {
+    display: inline-flex;
+    margin: 0;
+}
+
+.microbit-firmware-manual-button {
+    background: $pen-primary;
+}
+
+.microbit-firmware-close {
+    margin: 0.75rem 0 0;
+    background: $ui-black-transparent;
+    color: $text-primary;
+}
+
+.microbit-firmware-secondary-link {
+    color: $motion-primary;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.microbit-firmware-secondary-link:hover {
+    text-decoration: underline;
 }
 
 .dots-row {

@@ -27,6 +27,7 @@ import NotificationsBell from '../components/notifications/notifications-bell.js
 import NotificationToast from '../components/notifications/notification-toast.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
+import analytics from '../lib/analytics';
 import {getAssetHost, getProjectHost} from '../lib/dogoblock-api-config';
 import {
     deleteNotification,
@@ -106,6 +107,14 @@ const navigate = hash => {
 };
 
 const noop = () => { };
+
+const trackEvent = (action, label) => {
+    analytics.event({
+        category: 'dogoblock-web',
+        action,
+        label
+    });
+};
 
 const currentRouteHash = () => window.location.hash.replace(/^#/, '') || '/';
 
@@ -480,10 +489,14 @@ class DogoblockWebApp extends React.Component {
             password: form.get('password')
         })
             .then(session => {
+                trackEvent('login success', 'email');
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => {
+                trackEvent('login error', 'email');
+                this.setState({error: error.message, loading: false});
+            });
     }
 
     handleRegister (event) {
@@ -497,16 +510,19 @@ class DogoblockWebApp extends React.Component {
             password: form.get('password')
         })
             .then(session => {
+                trackEvent('register success', 'email');
                 this.props.onLoginSuccess(session);
                 navigate(this.state.route.next || '/projects');
             })
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .catch(error => {
+                trackEvent('register error', 'email');
+                this.setState({error: error.message, loading: false});
+            });
     }
 
     handleLogout () {
-        if (this._notificationsManager) {
-            this._notificationsManager.disconnect();
-        }
+        trackEvent('logout', 'header');
+        this.closeNotificationsStream();
         apiLogout();
         this.props.onLogout();
         this.setState({
@@ -641,17 +657,21 @@ class DogoblockWebApp extends React.Component {
     handleImportProject () {
         const importRoute = `/editor?import=${Date.now()}`;
         if (!this.props.user) {
+            trackEvent('import project requires login', 'anonymous');
             navigate(loginRouteFor(importRoute));
             return;
         }
+        trackEvent('import project', 'authenticated');
         navigate(importRoute);
     }
 
     handleNewProject () {
         if (!this.props.user) {
+            trackEvent('new project requires login', 'anonymous');
             navigate(loginRouteFor('/editor'));
             return;
         }
+        trackEvent('new project', 'authenticated');
         navigate('/editor');
     }
 
@@ -694,8 +714,14 @@ class DogoblockWebApp extends React.Component {
         if (!window.confirm('Excluir este projeto? Esta acao nao pode ser desfeita.')) return; // eslint-disable-line no-alert
         this.setState({loading: true, error: null});
         deleteProject(id)
-            .then(() => navigate('/projects'))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .then(() => {
+                trackEvent('delete project success', 'details');
+                navigate('/projects');
+            })
+            .catch(error => {
+                trackEvent('delete project error', 'details');
+                this.setState({error: error.message, loading: false});
+            });
     }
 
     handleDeleteProjectFromCard (event) {
@@ -715,12 +741,18 @@ class DogoblockWebApp extends React.Component {
                 favoriteProjects: prevState.favoriteProjects.filter(project => project.id !== id),
                 loading: false,
                 error: null
-            })))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            }), () => trackEvent('delete project success', 'card')))
+            .catch(error => {
+                trackEvent('delete project error', 'card');
+                this.setState({error: error.message, loading: false});
+            });
     }
 
     handleProjectCreated (projectId) {
-        if (projectId && projectId !== defaultProjectId) navigate(`/editor/${projectId}`);
+        if (projectId && projectId !== defaultProjectId) {
+            trackEvent('project created', 'editor');
+            navigate(`/editor/${projectId}`);
+        }
     }
 
     handleOpenCurrentProject () {
@@ -755,8 +787,14 @@ class DogoblockWebApp extends React.Component {
         this.setState({loading: true, error: null});
         updateProjectVisibility(project.id, visibility)
             .then(() => getProjectDetails(project.id))
-            .then(projectDetails => this.setState({projectDetails, loading: false, error: null}))
-            .catch(error => this.setState({error: error.message, loading: false}));
+            .then(projectDetails => {
+                trackEvent('update project visibility success', visibility);
+                this.setState({projectDetails, loading: false, error: null});
+            })
+            .catch(error => {
+                trackEvent('update project visibility error', visibility);
+                this.setState({error: error.message, loading: false});
+            });
     }
 
     handleNavigateHome () {
@@ -788,6 +826,7 @@ class DogoblockWebApp extends React.Component {
     }
 
     handleRequestLoginToSave () {
+        trackEvent('save project requires login', 'anonymous');
         navigate(loginRouteFor(currentRouteHash()));
     }
 
@@ -848,7 +887,9 @@ class DogoblockWebApp extends React.Component {
             pdLikeCount: prevState.pdLikeCount + (wasLiked ? -1 : 1)
         }));
         const action = wasLiked ? unlikeProject : likeProject;
-        action(project.id).catch(() => {
+        action(project.id).then(() => {
+            trackEvent(wasLiked ? 'unlike project' : 'like project', 'project details');
+        }).catch(() => {
             // rollback on error
             this.setState(prevState => ({
                 pdLiked: wasLiked,
@@ -869,7 +910,9 @@ class DogoblockWebApp extends React.Component {
             pdStarCount: prevState.pdStarCount + (wasFavorited ? -1 : 1)
         }));
         const action = wasFavorited ? unfavoriteProject : favoriteProject;
-        action(project.id).catch(() => {
+        action(project.id).then(() => {
+            trackEvent(wasFavorited ? 'unfavorite project' : 'favorite project', 'project details');
+        }).catch(() => {
             this.setState(prevState => ({
                 pdFavorited: wasFavorited,
                 pdStarCount: prevState.pdStarCount + (wasFavorited ? 1 : -1)
@@ -887,10 +930,12 @@ class DogoblockWebApp extends React.Component {
         this.setState({pdRemixing: true, error: null});
         remixProject(project.id)
             .then(result => {
+                trackEvent('remix project success', 'project details');
                 this.setState({pdRemixing: false});
                 navigate(`/editor/${result.id}`);
             })
             .catch(err => {
+                trackEvent('remix project error', 'project details');
                 this.setState({pdRemixing: false, error: err.message || 'Erro ao replicar projeto'});
             });
     }
@@ -940,13 +985,17 @@ class DogoblockWebApp extends React.Component {
         this.setState({pdCommentsLoading: true});
         postComment(project.id, content)
             .then(comment => {
+                trackEvent('comment project success', 'project details');
                 this.setState(prevState => ({
                     pdComments: [comment, ...prevState.pdComments],
                     pdCommentText: '',
                     pdCommentsLoading: false
                 }));
             })
-            .catch(err => this.setState({pdCommentsLoading: false, error: err.message}));
+            .catch(err => {
+                trackEvent('comment project error', 'project details');
+                this.setState({pdCommentsLoading: false, error: err.message});
+            });
     }
 
     handlePdCommentCancel () {
@@ -990,6 +1039,7 @@ class DogoblockWebApp extends React.Component {
         this.setState({pdReplyLoading: true});
         postComment(project.id, content, pdReplyToId)
             .then(reply => {
+                trackEvent('reply comment success', 'project details');
                 this.setState(prevState => ({
                     pdComments: prevState.pdComments.map(c => {
                         if (String(c.id) !== String(pdReplyToId)) return c;
@@ -1000,7 +1050,10 @@ class DogoblockWebApp extends React.Component {
                     pdReplyLoading: false
                 }));
             })
-            .catch(err => this.setState({pdReplyLoading: false, error: err.message}));
+            .catch(err => {
+                trackEvent('reply comment error', 'project details');
+                this.setState({pdReplyLoading: false, error: err.message});
+            });
     }
 
     handlePdDeleteReply (event) {

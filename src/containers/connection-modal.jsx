@@ -138,9 +138,9 @@ class ConnectionModal extends React.Component {
     }
     getWebBluetoothDebugInfo () {
         if (this.isMicrobitBleConnection()) {
-            return 'Web Bluetooth is temporarily disabled for micro:bit Bluetooth.';
+            return 'Web Bluetooth está desativado temporariamente para o micro:bit Bluetooth.';
         }
-        return 'Web Bluetooth is not available for this device.';
+        return 'Web Bluetooth não está disponível para este dispositivo.';
     }
     getWebSerialStatus () {
         if (!this.isArduinoWebSerialConnection()) {

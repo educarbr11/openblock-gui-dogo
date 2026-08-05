@@ -30,6 +30,7 @@ class TargetPane extends React.Component {
         bindAll(this, [
             'handleActivateBlocksTab',
             'handleBlockDragEnd',
+            'handleChangeSpriteDraggable',
             'handleChangeSpriteRotationStyle',
             'handleChangeSpriteDirection',
             'handleChangeSpriteName',
@@ -58,6 +59,9 @@ class TargetPane extends React.Component {
     }
     handleChangeSpriteDirection (direction) {
         this.props.vm.postSpriteInfo({direction});
+    }
+    handleChangeSpriteDraggable (draggable) {
+        this.props.vm.postSpriteInfo({draggable});
     }
     handleChangeSpriteRotationStyle (rotationStyle) {
         this.props.vm.postSpriteInfo({rotationStyle});
@@ -259,6 +263,7 @@ class TargetPane extends React.Component {
                 fileInputRef={this.setFileInput}
                 onActivateBlocksTab={this.handleActivateBlocksTab}
                 onChangeSpriteDirection={this.handleChangeSpriteDirection}
+                onChangeSpriteDraggable={this.handleChangeSpriteDraggable}
                 onChangeSpriteName={this.handleChangeSpriteName}
                 onChangeSpriteRotationStyle={this.handleChangeSpriteRotationStyle}
                 onChangeSpriteSize={this.handleChangeSpriteSize}
