@@ -52,7 +52,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(120);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(114);
-/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(232);
+/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(214);
 /* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(411);
 /* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(412);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(969);
@@ -865,7 +865,7 @@ var es = __webpack_require__(82);
 var index_es = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/lib/app-state-hoc.jsx + 1 modules
-var app_state_hoc = __webpack_require__(232);
+var app_state_hoc = __webpack_require__(214);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(0);
@@ -923,7 +923,7 @@ var copy = __webpack_require__(2121);
 var code_xml = __webpack_require__(2109);
 
 // EXTERNAL MODULE: ./src/containers/gui.jsx + 300 modules
-var gui = __webpack_require__(211);
+var gui = __webpack_require__(199);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
 var icons_reply = __webpack_require__(2094);
@@ -1290,7 +1290,7 @@ notifications_bell_NotificationsBell.defaultProps = {
 };
 /* harmony default export */ var notifications_notifications_bell = (notifications_bell_NotificationsBell);
 // EXTERNAL MODULE: ./src/components/notifications/notification-toast.css
-var notification_toast = __webpack_require__(223);
+var notification_toast = __webpack_require__(224);
 var notification_toast_default = /*#__PURE__*/__webpack_require__.n(notification_toast);
 
 // CONCATENATED MODULE: ./src/components/notifications/notification-toast.jsx
@@ -2766,7 +2766,7 @@ var message_box = __webpack_require__(155);
 var analytics = __webpack_require__(114);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api-config.js
-var dogoblock_api_config = __webpack_require__(215);
+var dogoblock_api_config = __webpack_require__(191);
 
 // CONCATENATED MODULE: ./src/lib/notifications-manager.js
 function notifications_manager_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5585,6 +5585,7 @@ function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol =
 
 
 
+
 var render_gui_onClickCheckUpdate = function onClickCheckUpdate() {
   Object(log["a" /* default */])('User click check update');
 };
@@ -5671,7 +5672,9 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
   // ability to compose reducers.
 
   var WrappedGui = Object(es["d" /* compose */])(app_state_hoc["a" /* default */], hash_parser_hoc["a" /* default */])(gui["a" /* default */]);
+  var WrappedStandaloneGui = Object(app_state_hoc["a" /* default */])(gui["a" /* default */]);
   var WrappedDogoblockWebApp = Object(app_state_hoc["a" /* default */])(playground_dogoblock_web_app);
+  var isTauriLight = "false" === 'true';
   var scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
   var simulateScratchDesktop;
 
@@ -5693,28 +5696,42 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
     };
   }
 
-  react_dom_default.a.render( // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-  simulateScratchDesktop ? /*#__PURE__*/react_default.a.createElement(WrappedGui, {
-    canEditTitle: true,
-    isScratchDesktop: true,
-    onClickAbout: onClickAbout,
-    showTelemetryModal: true,
-    canSave: false,
-    onTelemetryModalCancel: render_gui_handleTelemetryModalCancel,
-    onTelemetryModalOptIn: render_gui_handleTelemetryModalOptIn,
-    onTelemetryModalOptOut: render_gui_handleTelemetryModalOptOut,
-    onAbortUpdate: render_gui_onAbortUpdate,
-    onClickCheckUpdate: render_gui_onClickCheckUpdate,
-    onClickUpdate: render_gui_onClickUpdate,
-    onClickClearCache: render_gui_onClickClearCache,
-    onClickInstallDriver: render_gui_onClickInstallDriver,
-    onShowMessageBox: render_gui_handleShowMessageBox
-  }) : /*#__PURE__*/react_default.a.createElement(WrappedDogoblockWebApp, null), appTarget);
+  var app;
+
+  if (isTauriLight) {
+    app = /*#__PURE__*/react_default.a.createElement(WrappedStandaloneGui, {
+      canEditTitle: true,
+      assetHost: Object(dogoblock_api_config["b" /* getAssetHost */])(),
+      canSave: false,
+      onShowMessageBox: render_gui_handleShowMessageBox
+    });
+  } else if (simulateScratchDesktop) {
+    app = /*#__PURE__*/react_default.a.createElement(WrappedGui, {
+      canEditTitle: true,
+      isScratchDesktop: true,
+      onClickAbout: onClickAbout,
+      showTelemetryModal: true,
+      canSave: false,
+      onTelemetryModalCancel: render_gui_handleTelemetryModalCancel,
+      onTelemetryModalOptIn: render_gui_handleTelemetryModalOptIn,
+      onTelemetryModalOptOut: render_gui_handleTelemetryModalOptOut,
+      onAbortUpdate: render_gui_onAbortUpdate,
+      onClickCheckUpdate: render_gui_onClickCheckUpdate,
+      onClickUpdate: render_gui_onClickUpdate,
+      onClickClearCache: render_gui_onClickClearCache,
+      onClickInstallDriver: render_gui_onClickInstallDriver,
+      onShowMessageBox: render_gui_handleShowMessageBox
+    });
+  } else {
+    app = /*#__PURE__*/react_default.a.createElement(WrappedDogoblockWebApp, null);
+  }
+
+  react_dom_default.a.render(app, appTarget);
 });
 
 /***/ }),
 
-/***/ 223:
+/***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
 
