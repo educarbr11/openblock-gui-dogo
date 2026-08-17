@@ -14,6 +14,7 @@
     "i18n:src": "rimraf ./translations/messages/src && babel src > tmp.js && rimraf tmp.js && build-i18n-src ./translations/messages/src ./translations/",
     "postinstall": "node scripts/apply-scratch-paint-patch.js",
     "start": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack-dev-server --open --host 127.0.0.1",
+    "start:mobile": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack-dev-server --host 0.0.0.0",
     "test": "npm run test:lint && npm run test:unit && npm run build && npm run test:integration",
     "test:integration": "jest --runInBand test[\\\\/]integration",
     "test:lint": "eslint . --ext .js,.jsx --fix",

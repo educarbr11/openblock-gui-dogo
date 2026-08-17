@@ -7,6 +7,7 @@ import AppStateHOC from '../lib/app-state-hoc.jsx';
 import DogoblockWebApp from './dogoblock-web-app.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
+import {getAssetHost} from '../lib/dogoblock-api-config';
 import log from '../lib/log.js';
 import MessageBoxType from '../lib/message-box.js';
 
@@ -100,7 +101,9 @@ export default appTarget => {
         AppStateHOC,
         HashParserHOC
     )(GUI);
+    const WrappedStandaloneGui = AppStateHOC(GUI);
     const WrappedDogoblockWebApp = AppStateHOC(DogoblockWebApp);
+    const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 
     const scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
     let simulateScratchDesktop;
@@ -120,9 +123,18 @@ export default appTarget => {
         window.onbeforeunload = () => true;
     }
 
-    ReactDOM.render(
-        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-        simulateScratchDesktop ?
+    let app;
+    if (isTauriLight) {
+        app = (
+            <WrappedStandaloneGui
+                canEditTitle
+                assetHost={getAssetHost()}
+                canSave={false}
+                onShowMessageBox={handleShowMessageBox}
+            />
+        );
+    } else if (simulateScratchDesktop) {
+        app = (
             <WrappedGui
                 canEditTitle
                 isScratchDesktop
@@ -138,7 +150,11 @@ export default appTarget => {
                 onClickClearCache={onClickClearCache}
                 onClickInstallDriver={onClickInstallDriver}
                 onShowMessageBox={handleShowMessageBox}
-            /> :
-            <WrappedDogoblockWebApp />,
-        appTarget);
+            />
+        );
+    } else {
+        app = <WrappedDogoblockWebApp />;
+    }
+
+    ReactDOM.render(app, appTarget);
 };
