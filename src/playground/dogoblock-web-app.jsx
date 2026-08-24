@@ -25,6 +25,7 @@ import {
 import GUI from '../containers/gui.jsx';
 import NotificationsBell from '../components/notifications/notifications-bell.jsx';
 import NotificationToast from '../components/notifications/notification-toast.jsx';
+import LegalPage from '../components/legal-page/legal-page.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
 import MessageBoxType from '../lib/message-box.js';
 import analytics from '../lib/analytics';
@@ -87,6 +88,8 @@ const parseRoute = () => {
     if (parts[0] === 'register') return {name: 'register', next: queryParams.get('next')};
     if (parts[0] === 'forgot-password') return {name: 'forgotPassword'};
     if (parts[0] === 'reset-password') return {name: 'resetPassword', token: queryParams.get('token')};
+    if (parts[0] === 'termos-de-uso' || parts[0] === 'terms') return {name: 'terms'};
+    if (parts[0] === 'politica-de-privacidade' || parts[0] === 'privacy') return {name: 'privacy'};
     if (parts[0] === 'profile') return {name: 'profile'};
     if (parts[0] === 'user' && parts[1]) return {name: 'publicProfile', username: parts[1]};
     if (parts[0] === 'explore') return {name: 'explore'};
@@ -1306,9 +1309,7 @@ class DogoblockWebApp extends React.Component {
                     <div className={styles.footerLinks}>
                         <strong>{'LINKS'}</strong>
                         <a
-                            href="#"
-                            rel="noopener noreferrer"
-                            target="_blank"
+                            href="#/"
                         >{'Home'}</a>
                         <a
                             href="https://app.portaldogomaker.com.br"
@@ -1324,14 +1325,10 @@ class DogoblockWebApp extends React.Component {
                     <div className={styles.footerLei}>
                         <strong>{'LEI'}</strong>
                         <a
-                            href="#"
-                            rel="noopener noreferrer"
-                            target="_blank"
+                            href="#/termos-de-uso"
                         >{'Termos de Uso'}</a>
                         <a
-                            href="#"
-                            rel="noopener noreferrer"
-                            target="_blank"
+                            href="#/politica-de-privacidade"
                         >{'Política de Privacidade'}</a>
                     </div>
                     <div className={styles.footerContact}>
@@ -1455,6 +1452,28 @@ class DogoblockWebApp extends React.Component {
                                 name="password"
                                 type="password"
                             />
+                        </label>
+                        <label className={styles.legalConsent}>
+                            <input
+                                required
+                                name="legalConsent"
+                                type="checkbox"
+                            />
+                            <span>
+                                {'Li e concordo com os '}
+                                <a
+                                    href="#/termos-de-uso"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >{'Termos de Uso'}</a>
+                                {' e a '}
+                                <a
+                                    href="#/politica-de-privacidade"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >{'Política de Privacidade'}</a>
+                                {'. Declaro ter 18 anos ou autorização do meu responsável legal.'}
+                            </span>
                         </label>
                         <button className={styles.primaryButton}>
                             <Icon><UserPlus size={16} /></Icon>
@@ -2491,6 +2510,8 @@ class DogoblockWebApp extends React.Component {
                 {route.name === 'register' ? this.renderRegister() : null}
                 {route.name === 'forgotPassword' ? this.renderForgotPassword() : null}
                 {route.name === 'resetPassword' ? this.renderResetPassword() : null}
+                {route.name === 'terms' ? <LegalPage type="terms" /> : null}
+                {route.name === 'privacy' ? <LegalPage type="privacy" /> : null}
                 {route.name === 'projects' || route.name === 'explore' ? this.renderProjects() : null}
                 {route.name === 'profile' ? this.renderProfile() : null}
                 {route.name === 'publicProfile' ? this.renderPublicProfile() : null}
