@@ -112,6 +112,50 @@
     opacity: 0.5;
 }
 
+.hand-detector-group {
+    display: flex;
+    margin-right: 0.35rem;
+}
+
+.hand-detector-button {
+    position: relative;
+    display: inline-flex;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0;
+    color: #475569;
+    background: $ui-white;
+    cursor: pointer;
+}
+
+.hand-detector-button:first-child {
+    border-radius: $form-radius 0 0 $form-radius;
+}
+
+.hand-detector-button:last-child {
+    border-left: 0;
+    border-radius: 0 $form-radius $form-radius 0;
+}
+
+.hand-detector-active {
+    color: #047857;
+    background: #ecfdf5;
+}
+
+.hand-detector-active span {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+}
+
 @media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
     .stage-menu-wrapper {
         height: 2rem;
@@ -134,5 +178,10 @@
 
     .device-realtime-connection-wrapper {
         margin-left: 0.15rem;
+    }
+
+    .hand-detector-button {
+        width: 1.55rem;
+        height: 1.55rem;
     }
 }

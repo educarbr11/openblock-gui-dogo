@@ -38,6 +38,7 @@ import UpdateModal from '../../containers/update-modal.jsx';
 import MachineLearningModal from '../../containers/machine-learning-modal.jsx';
 import MachineLearningResult from '../../containers/machine-learning-result.jsx';
 import HandPoseDetectionResult from '../../containers/hand-pose-detection-result.jsx';
+import HandGestureTrainer from '../../containers/hand-gesture-trainer.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -96,6 +97,7 @@ const GUIComponent = props => {
         isCreating,
         isFullScreen,
         handPoseDetectionResultVisible,
+        handPoseGestureTrainerVisible,
         isPlayerOnly,
         isRtl,
         isShared,
@@ -267,6 +269,9 @@ const GUIComponent = props => {
                         ) : null}
                         {handPoseDetectionResultVisible ? (
                             <HandPoseDetectionResult vm={vm} />
+                        ) : null}
+                        {handPoseGestureTrainerVisible ? (
+                            <HandGestureTrainer vm={vm} />
                         ) : null}
                         <MenuBar
                             accountNavOpen={accountNavOpen}
@@ -523,6 +528,7 @@ GUIComponent.propTypes = {
     costumesTabVisible: PropTypes.bool,
     enableCommunity: PropTypes.bool,
     handPoseDetectionResultVisible: PropTypes.bool,
+    handPoseGestureTrainerVisible: PropTypes.bool,
     intl: intlShape.isRequired,
     isCreating: PropTypes.bool,
     isFullScreen: PropTypes.bool,

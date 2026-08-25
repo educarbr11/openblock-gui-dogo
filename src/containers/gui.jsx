@@ -24,6 +24,7 @@ import {
     closeBackdropLibrary,
     closeTelemetryModal,
     openHandPoseDetectionResult,
+    openHandPoseGestureTrainer,
     openMachineLearningResult,
     openMachineLearningTrainer,
     openExtensionLibrary
@@ -43,6 +44,7 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
+import {getHandPoseDetectionSession} from '../lib/hand-pose-detection/session';
 
 class GUI extends React.Component {
     componentDidMount () {
@@ -52,6 +54,8 @@ class GUI extends React.Component {
         this.props.vm.addListener('MACHINE_LEARNING_OPEN_TRAINER', this.props.onOpenMachineLearningTrainer);
         this.props.vm.addListener('MACHINE_LEARNING_OPEN_RESULT', this.props.onOpenMachineLearningResult);
         this.props.vm.addListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
+        this.props.vm.addListener('HAND_POSE_DETECTION_OPEN_TRAINER', this.props.onOpenHandPoseGestureTrainer);
+        getHandPoseDetectionSession(this.props.vm);
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -70,6 +74,7 @@ class GUI extends React.Component {
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_TRAINER', this.props.onOpenMachineLearningTrainer);
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_RESULT', this.props.onOpenMachineLearningResult);
         this.props.vm.removeListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
+        this.props.vm.removeListener('HAND_POSE_DETECTION_OPEN_TRAINER', this.props.onOpenHandPoseGestureTrainer);
     }
     render () {
         if (this.props.isError) {
@@ -123,6 +128,7 @@ GUI.propTypes = {
     isShowingProject: PropTypes.bool,
     loadingStateVisible: PropTypes.bool,
     handPoseDetectionResultVisible: PropTypes.bool,
+    handPoseGestureTrainerVisible: PropTypes.bool,
     machineLearningTrainerVisible: PropTypes.bool,
     machineLearningResultVisible: PropTypes.bool,
     canPromptLoginToSave: PropTypes.bool,
@@ -131,6 +137,7 @@ GUI.propTypes = {
     onOpenMachineLearningTrainer: PropTypes.func,
     onOpenMachineLearningResult: PropTypes.func,
     onOpenHandPoseDetectionResult: PropTypes.func,
+    onOpenHandPoseGestureTrainer: PropTypes.func,
     onRequestLoginToSave: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onStorageInit: PropTypes.func,
@@ -171,6 +178,7 @@ const mapStateToProps = state => {
         isRtl: state.locales.isRtl,
         isShowingProject: getIsShowingProject(loadingState),
         handPoseDetectionResultVisible: state.scratchGui.modals.handPoseDetectionResult,
+        handPoseGestureTrainerVisible: state.scratchGui.modals.handPoseGestureTrainer,
         loadingStateVisible: state.scratchGui.modals.loadingProject,
         machineLearningResultVisible: state.scratchGui.modals.machineLearningResult,
         machineLearningTrainerVisible: state.scratchGui.modals.machineLearningTrainer,
@@ -193,6 +201,7 @@ const mapDispatchToProps = dispatch => ({
     onOpenMachineLearningTrainer: () => dispatch(openMachineLearningTrainer()),
     onOpenMachineLearningResult: () => dispatch(openMachineLearningResult()),
     onOpenHandPoseDetectionResult: () => dispatch(openHandPoseDetectionResult()),
+    onOpenHandPoseGestureTrainer: () => dispatch(openHandPoseGestureTrainer()),
     onActivateTab: tab => dispatch(activateTab(tab)),
     onActivateBlocksTab: () => dispatch(activateTab(BLOCKS_TAB_INDEX)),
     onActivateCostumesTab: () => dispatch(activateTab(COSTUMES_TAB_INDEX)),
