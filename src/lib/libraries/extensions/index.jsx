@@ -13,10 +13,10 @@ import videoSensingInsetIconURL from './videoSensing/video-sensing-small.svg';
 import text2speechIconURL from './text2speech/text2speech.png';
 import text2speechInsetIconURL from './text2speech/text2speech-small.svg';
 
-import machineLearningIconURL from './machineLearning/machine-learning.svg';
-import machineLearningInsetIconURL from './machineLearning/machine-learning-small.svg';
-import handPoseDetectionIconURL from './handPoseDetection/hand-pose-detection.svg';
-import handPoseDetectionInsetIconURL from './handPoseDetection/hand-pose-detection-small.svg';
+import machineLearningIconURL from './machineLearning/machine-learning.png';
+import machineLearningInsetIconURL from './machineLearning/icon-machine-learning-small.svg';
+import handPoseDetectionIconURL from './handPoseDetection/hand-detection.png';
+import handPoseDetectionInsetIconURL from './handPoseDetection/icon-hand-detection-small.svg';
 
 export default [
     {

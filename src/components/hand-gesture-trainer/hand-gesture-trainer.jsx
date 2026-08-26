@@ -1,6 +1,17 @@
 /* eslint-disable react/no-multi-comp */
 import classNames from 'classnames';
-import {Check, ChevronLeft, ChevronRight, Plus, RotateCcw, Trash2} from 'lucide-react';
+import {
+    Camera,
+    Check,
+    ChevronLeft,
+    ChevronRight,
+    Hand,
+    ListChecks,
+    Plus,
+    RotateCcw,
+    ShieldCheck,
+    Trash2
+} from 'lucide-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
@@ -89,6 +100,7 @@ class ClassProgress extends React.Component {
                 className={classNames(styles.progressRow, {
                     [styles.progressRowActive]: this.props.active
                 })}
+                type="button"
                 onClick={this.handleSelect}
             >
                 <span className={styles.progressName}>{this.props.item.name}</span>
@@ -141,6 +153,7 @@ class GestureClassRow extends React.Component {
                     <button
                         className={styles.iconButton}
                         title="Remover gesto"
+                        type="button"
                         onClick={this.handleRemove}
                     >
                         <Trash2 size={18} />
@@ -215,7 +228,13 @@ class HandGestureTrainer extends React.Component {
         const {intl} = this.props;
         return (
             <div className={styles.classesStep}>
-                <p className={styles.intro}>{intl.formatMessage(messages.classIntro)}</p>
+                <div className={styles.sectionHeading}>
+                    <span className={styles.sectionIcon}><Hand size={19} /></span>
+                    <div>
+                        <h3>{intl.formatMessage(messages.stepClasses)}</h3>
+                        <span>{intl.formatMessage(messages.classIntro)}</span>
+                    </div>
+                </div>
                 <div className={styles.classList}>
                     {this.props.classes.map(item => (
                         <GestureClassRow
@@ -228,8 +247,9 @@ class HandGestureTrainer extends React.Component {
                     ))}
                 </div>
                 <button
-                    className={styles.secondaryButton}
+                    className={styles.addButton}
                     disabled={!this.props.canAddGesture}
+                    type="button"
                     onClick={this.props.onAddGesture}
                 >
                     <Plus size={18} />
@@ -241,9 +261,17 @@ class HandGestureTrainer extends React.Component {
 
     renderCapture () {
         const {intl} = this.props;
+        const activeClass = this.props.classes.find(item => item.id === this.props.activeClassId);
         return (
             <div className={styles.captureLayout}>
                 <div className={styles.cameraColumn}>
+                    <div className={styles.sectionHeading}>
+                        <span className={styles.sectionIcon}><Camera size={19} /></span>
+                        <div>
+                            <h3>{intl.formatMessage(messages.stepCapture)}</h3>
+                            <span>{activeClass ? activeClass.name : intl.formatMessage(messages.captureHint)}</span>
+                        </div>
+                    </div>
                     <CameraView
                         error={this.props.error}
                         feedback={this.props.feedback}
@@ -257,6 +285,7 @@ class HandGestureTrainer extends React.Component {
                             [styles.captureButtonActive]: this.props.capturing
                         })}
                         disabled={this.props.loading || Boolean(this.props.error)}
+                        type="button"
                         onKeyDown={this.handleCaptureKeyDown}
                         onKeyUp={this.handleCaptureKeyUp}
                         onPointerCancel={this.props.onStopCapture}
@@ -268,15 +297,24 @@ class HandGestureTrainer extends React.Component {
                     </button>
                     <p className={styles.hint}>{intl.formatMessage(messages.captureHint)}</p>
                 </div>
-                <div className={styles.progressList}>
-                    {this.props.classes.map(item => (
-                        <ClassProgress
-                            active={item.id === this.props.activeClassId}
-                            item={item}
-                            key={item.id}
-                            onSelect={this.props.onSelectClass}
-                        />
-                    ))}
+                <div className={styles.trainingPanel}>
+                    <div className={styles.sectionHeading}>
+                        <span className={styles.sectionIcon}><ListChecks size={19} /></span>
+                        <div>
+                            <h3>{intl.formatMessage(messages.stepClasses)}</h3>
+                            <span>{intl.formatMessage(messages.notReady)}</span>
+                        </div>
+                    </div>
+                    <div className={styles.progressList}>
+                        {this.props.classes.map(item => (
+                            <ClassProgress
+                                active={item.id === this.props.activeClassId}
+                                item={item}
+                                key={item.id}
+                                onSelect={this.props.onSelectClass}
+                            />
+                        ))}
+                    </div>
                     <div className={styles.privacy}>{intl.formatMessage(messages.cameraPrivacy)}</div>
                 </div>
             </div>
@@ -289,16 +327,33 @@ class HandGestureTrainer extends React.Component {
         const uncertain = prediction.classId === 'other' || topConfidence < 80;
         return (
             <div className={styles.testLayout}>
-                <CameraView
-                    error={this.props.error}
-                    feedback={this.props.feedback}
-                    loading={this.props.loading}
-                    loadingText={intl.formatMessage(messages.loading)}
-                    onCanvasRef={this.props.onCanvasRef}
-                    onVideoRef={this.props.onVideoRef}
-                />
+                <div className={styles.cameraColumn}>
+                    <div className={styles.sectionHeading}>
+                        <span className={styles.sectionIcon}><Camera size={19} /></span>
+                        <div>
+                            <h3>{intl.formatMessage(messages.stepTest)}</h3>
+                            <span>{intl.formatMessage(messages.lowConfidence)}</span>
+                        </div>
+                    </div>
+                    <CameraView
+                        error={this.props.error}
+                        feedback={this.props.feedback}
+                        loading={this.props.loading}
+                        loadingText={intl.formatMessage(messages.loading)}
+                        onCanvasRef={this.props.onCanvasRef}
+                        onVideoRef={this.props.onVideoRef}
+                    />
+                </div>
                 <div className={styles.testPanel}>
-                    <span className={styles.eyebrow}>{intl.formatMessage(messages.result)}</span>
+                    <div className={styles.sectionHeading}>
+                        <span className={styles.sectionIcon}><ShieldCheck size={19} /></span>
+                        <div>
+                            <h3>{intl.formatMessage(messages.result)}</h3>
+                            <span>
+                                {intl.formatMessage(this.props.modelReady ? messages.ready : messages.notReady)}
+                            </span>
+                        </div>
+                    </div>
                     <strong className={styles.recognizedResult}>
                         {prediction.label || intl.formatMessage(messages.noResult)}
                     </strong>
@@ -335,6 +390,7 @@ class HandGestureTrainer extends React.Component {
             <Modal
                 className={styles.modalContent}
                 contentLabel={intl.formatMessage(messages.title)}
+                headerClassName={styles.modalHeader}
                 id="hand-gesture-trainer"
                 onRequestClose={this.props.onCancel}
             >
@@ -348,32 +404,46 @@ class HandGestureTrainer extends React.Component {
                     {step === 3 ? this.renderTest() : null}
                 </div>
                 <div className={styles.footer}>
-                    {step > 1 ? (
-                        <button
-                            className={styles.secondaryButton}
-                            onClick={this.props.onBack}
-                        >
-                            <ChevronLeft size={18} />
-                            {step === 3 ? intl.formatMessage(messages.addExamples) : intl.formatMessage(messages.back)}
-                        </button>
-                    ) : <span />}
-                    {step === 3 ? (
-                        <button
-                            className={styles.secondaryButton}
-                            onClick={this.props.onResetTraining}
-                        >
-                            <RotateCcw size={18} />
-                            {intl.formatMessage(messages.reset)}
-                        </button>
-                    ) : null}
-                    <button
-                        className={styles.primaryButton}
-                        disabled={step === 3 && !this.props.modelReady}
-                        onClick={step === 3 ? this.props.onUseModel : this.props.onNext}
+                    <div
+                        className={classNames(styles.modelStatus, {
+                            [styles.modelStatusReady]: this.props.modelReady
+                        })}
                     >
-                        {intl.formatMessage(step === 3 ? messages.useModel : messages.continue)}
-                        {step < 3 ? <ChevronRight size={18} /> : <Check size={18} />}
-                    </button>
+                        {this.props.modelReady ? <Check size={17} /> : null}
+                        <span>{intl.formatMessage(this.props.modelReady ? messages.ready : messages.notReady)}</span>
+                    </div>
+                    <div className={styles.footerActions}>
+                        {step > 1 ? (
+                            <button
+                                className={styles.secondaryButton}
+                                type="button"
+                                onClick={this.props.onBack}
+                            >
+                                <ChevronLeft size={18} />
+                                {step === 3 ?
+                                    intl.formatMessage(messages.addExamples) : intl.formatMessage(messages.back)}
+                            </button>
+                        ) : null}
+                        {step === 3 ? (
+                            <button
+                                className={styles.secondaryButton}
+                                type="button"
+                                onClick={this.props.onResetTraining}
+                            >
+                                <RotateCcw size={18} />
+                                {intl.formatMessage(messages.reset)}
+                            </button>
+                        ) : null}
+                        <button
+                            className={styles.primaryButton}
+                            disabled={step === 3 && !this.props.modelReady}
+                            type="button"
+                            onClick={step === 3 ? this.props.onUseModel : this.props.onNext}
+                        >
+                            {intl.formatMessage(step === 3 ? messages.useModel : messages.continue)}
+                            {step < 3 ? <ChevronRight size={18} /> : <Check size={18} />}
+                        </button>
+                    </div>
                 </div>
             </Modal>
         );
