@@ -1,5 +1,10 @@
 import loadHandPoseDetection from './load-model';
-import {canonicalLandmarkVector, KEYPOINT_NAMES, recognizeNativeGesture} from './features';
+import {
+    canonicalLandmarkVector,
+    correctHandednessForUnmirroredInput,
+    KEYPOINT_NAMES,
+    recognizeNativeGesture
+} from './features';
 
 const MODEL_VERSION = 1;
 const FEATURE_VERSION = 'canonical-landmarks-v1';
@@ -419,7 +424,7 @@ class HandPoseDetectionSession {
         const worldPoints = hand.keypoints3D || [];
         return {
             index: index + 1,
-            handedness: String(hand.handedness || '').toLowerCase(),
+            handedness: correctHandednessForUnmirroredInput(hand.handedness),
             score: typeof hand.score === 'number' ? hand.score : 0,
             keypoints: imagePoints.map((point, pointIndex) => Object.assign({}, point, {
                 name: point.name || KEYPOINT_NAMES[pointIndex],

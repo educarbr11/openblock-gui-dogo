@@ -9,6 +9,13 @@ const KEYPOINT_NAMES = [
 
 const EPSILON = 1e-6;
 
+const correctHandednessForUnmirroredInput = handedness => {
+    const normalized = String(handedness || '').toLowerCase();
+    if (normalized === 'left') return 'right';
+    if (normalized === 'right') return 'left';
+    return normalized;
+};
+
 const subtract = (a, b) => ({
     x: (a.x || 0) - (b.x || 0),
     y: (a.y || 0) - (b.y || 0),
@@ -135,5 +142,6 @@ const recognizeNativeGesture = hand => {
 export {
     KEYPOINT_NAMES,
     canonicalLandmarkVector,
+    correctHandednessForUnmirroredInput,
     recognizeNativeGesture
 };

@@ -1,4 +1,8 @@
-import {canonicalLandmarkVector, KEYPOINT_NAMES} from '../../src/lib/hand-pose-detection/features';
+import {
+    canonicalLandmarkVector,
+    correctHandednessForUnmirroredInput,
+    KEYPOINT_NAMES
+} from '../../src/lib/hand-pose-detection/features';
 
 const coordinates = [
     [0, 0, 0],
@@ -55,5 +59,16 @@ describe('canonical hand landmarks', () => {
         const right = canonicalLandmarkVector(makeHand(point => point, 'right'));
         const left = canonicalLandmarkVector(makeHand(point => [-point[0], point[1], point[2]], 'left'));
         expectVectorsClose(left, right);
+    });
+});
+
+describe('detected hand side', () => {
+    test('corrects MediaPipe handedness for the unmirrored camera input', () => {
+        expect(correctHandednessForUnmirroredInput('Left')).toBe('right');
+        expect(correctHandednessForUnmirroredInput('Right')).toBe('left');
+    });
+
+    test('keeps an unavailable hand side empty', () => {
+        expect(correctHandednessForUnmirroredInput()).toBe('');
     });
 });
