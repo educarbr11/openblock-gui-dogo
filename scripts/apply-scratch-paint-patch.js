@@ -2207,6 +2207,177 @@ const patchOpenBlockVmDefaultTextBranding = () => {
         .forEach(patchOpenBlockVmDefaultTextBrandingPackage);
 };
 
+const patchOpenBlockVmVideoSensingLifecyclePackage = packageDir => {
+    const managerFile = path.join(packageDir, 'src', 'extension-support', 'extension-manager.js');
+    const videoSensingFile = path.join(packageDir, 'src', 'extensions', 'scratch3_video_sensing', 'index.js');
+    if (!fs.existsSync(managerFile) || !fs.existsSync(videoSensingFile)) return;
+
+    let managerSource = fs.readFileSync(managerFile, 'utf8');
+    if (!managerSource.includes('this._loadedExtensionInstances = new Map();')) {
+        const loadedExtensionsMarker = '        this._loadedExtensions = new Map();';
+        if (!managerSource.includes(loadedExtensionsMarker)) {
+            throw new Error(`Could not patch extension lifecycle map: ${managerFile}`);
+        }
+        managerSource = managerSource.replace(
+            loadedExtensionsMarker,
+            `${loadedExtensionsMarker}\n\n` +
+            '        /** Internal extension instances which may own disposable resources. */\n' +
+            '        this._loadedExtensionInstances = new Map();'
+        );
+
+        const syncLoadMarker =
+            '        this._loadedExtensions.set(extensionId, serviceName);\n' +
+            '        this.runtime.addScratchExtension(extensionId);';
+        const asyncLoadMarker =
+            '            this._loadedExtensions.set(extensionURL, serviceName);\n' +
+            '            this.runtime.addScratchExtension(extensionURL);';
+        if (!managerSource.includes(syncLoadMarker) || !managerSource.includes(asyncLoadMarker)) {
+            throw new Error(`Could not patch extension lifecycle registration: ${managerFile}`);
+        }
+        managerSource = managerSource
+            .replace(
+                syncLoadMarker,
+                '        this._loadedExtensions.set(extensionId, serviceName);\n' +
+                '        this._loadedExtensionInstances.set(extensionId, extensionInstance);\n' +
+                '        this.runtime.addScratchExtension(extensionId);'
+            )
+            .replace(
+                asyncLoadMarker,
+                '            this._loadedExtensions.set(extensionURL, serviceName);\n' +
+                '            this._loadedExtensionInstances.set(extensionURL, extensionInstance);\n' +
+                '            this.runtime.addScratchExtension(extensionURL);'
+            );
+
+        const unloadMarker =
+            '    unloadExtension (extensionURL) {\n' +
+            '        this._loadedExtensions.delete(extensionURL);\n' +
+            '        this.runtime.removeScratchExtension(extensionURL);\n' +
+            '    }';
+        const clearMarker =
+            '    clearExtensions () {\n' +
+            '        this._loadedExtensions.clear();\n' +
+            '        this.runtime.clearScratchExtension();\n' +
+            '    }';
+        if (!managerSource.includes(unloadMarker) || !managerSource.includes(clearMarker)) {
+            throw new Error(`Could not patch extension lifecycle cleanup: ${managerFile}`);
+        }
+        managerSource = managerSource
+            .replace(
+                unloadMarker,
+                '    unloadExtension (extensionURL) {\n' +
+                '        this._disposeExtension(extensionURL);\n' +
+                '        this._loadedExtensions.delete(extensionURL);\n' +
+                '        this.runtime.removeScratchExtension(extensionURL);\n' +
+                '    }'
+            )
+            .replace(
+                clearMarker,
+                '    clearExtensions () {\n' +
+                '        Array.from(this._loadedExtensionInstances.keys()).forEach(extensionId => {\n' +
+                '            this._disposeExtension(extensionId);\n' +
+                '        });\n' +
+                '        this._loadedExtensions.clear();\n' +
+                '        this.runtime.clearScratchExtension();\n' +
+                '    }\n\n' +
+                '    _disposeExtension (extensionId) {\n' +
+                '        const extensionInstance = this._loadedExtensionInstances.get(extensionId);\n' +
+                '        this._loadedExtensionInstances.delete(extensionId);\n' +
+                "        if (!extensionInstance || typeof extensionInstance.dispose !== 'function') return;\n\n" +
+                '        try {\n' +
+                '            extensionInstance.dispose();\n' +
+                '        } catch (error) {\n' +
+                '            log.warn(`Could not dispose extension ${extensionId}: ${error.message || error}`);\n' +
+                '        }\n' +
+                '    }'
+            );
+        fs.writeFileSync(managerFile, managerSource);
+    }
+
+    let videoSource = fs.readFileSync(videoSensingFile, 'utf8');
+    if (!videoSource.includes('dispose () {')) {
+        const installMarker = '        this.firstInstall = true;\n\n        if (this.runtime.ioDevices) {';
+        const projectListenerMarker =
+            '            this.runtime.on(Runtime.PROJECT_LOADED, this.updateVideoDisplay.bind(this));';
+        const runListenerMarker = '            this.runtime.on(Runtime.PROJECT_RUN_START, this.reset.bind(this));';
+        const loopMarker =
+            '    _loop () {\n' +
+            '        setTimeout(this._loop.bind(this), ' +
+            'Math.max(this.runtime.currentStepTime, Scratch3VideoSensingBlocks.INTERVAL));';
+        if (
+            !videoSource.includes(installMarker) ||
+            !videoSource.includes(projectListenerMarker) ||
+            !videoSource.includes(runListenerMarker) ||
+            !videoSource.includes(loopMarker)
+        ) {
+            throw new Error(`Could not patch video sensing lifecycle: ${videoSensingFile}`);
+        }
+        videoSource = videoSource
+            .replace(
+                installMarker,
+                '        this.firstInstall = true;\n\n' +
+                '        this._disposed = false;\n' +
+                '        this._loopTimeout = null;\n' +
+                '        this._boundLoop = this._loop.bind(this);\n' +
+                '        this._boundUpdateVideoDisplay = this.updateVideoDisplay.bind(this);\n' +
+                '        this._boundReset = this.reset.bind(this);\n\n' +
+                '        if (this.runtime.ioDevices) {'
+            )
+            .replace(
+                projectListenerMarker,
+                '            this.runtime.on(Runtime.PROJECT_LOADED, this._boundUpdateVideoDisplay);'
+            )
+            .replace(
+                runListenerMarker,
+                '            this.runtime.on(Runtime.PROJECT_RUN_START, this._boundReset);'
+            )
+            .replace(
+                loopMarker,
+                '    _loop () {\n' +
+                '        if (this._disposed) return;\n\n' +
+                '        this._loopTimeout = setTimeout(\n' +
+                '            this._boundLoop,\n' +
+                '            Math.max(this.runtime.currentStepTime, Scratch3VideoSensingBlocks.INTERVAL)\n' +
+                '        );'
+            );
+
+        const classEndMarker = '\n}\n\nmodule.exports = Scratch3VideoSensingBlocks;';
+        if (!videoSource.includes(classEndMarker)) {
+            throw new Error(`Could not append video sensing dispose lifecycle: ${videoSensingFile}`);
+        }
+        videoSource = videoSource.replace(
+            classEndMarker,
+            '\n\n    dispose () {\n' +
+            '        if (this._disposed) return;\n' +
+            '        this._disposed = true;\n\n' +
+            '        if (this._loopTimeout !== null) {\n' +
+            '            clearTimeout(this._loopTimeout);\n' +
+            '            this._loopTimeout = null;\n' +
+            '        }\n\n' +
+            '        this.runtime.removeListener(Runtime.PROJECT_LOADED, this._boundUpdateVideoDisplay);\n' +
+            '        this.runtime.removeListener(Runtime.PROJECT_RUN_START, this._boundReset);\n' +
+            '        this.globalVideoState = VideoState.OFF;\n' +
+            '        if (this.runtime.ioDevices && this.runtime.ioDevices.video) {\n' +
+            '            this.runtime.ioDevices.video.disableVideo();\n' +
+            '        }\n' +
+            '        this.reset();\n' +
+            '    }' + classEndMarker
+        );
+        fs.writeFileSync(videoSensingFile, videoSource);
+    }
+
+    console.log(`Applied openblock-vm video sensing lifecycle patch: ${packageDir}`);
+};
+
+const patchOpenBlockVmVideoSensingLifecycle = () => {
+    const externalVmPath = process.env.OPENBLOCK_VM_PATH ?
+        [path.resolve(process.env.OPENBLOCK_VM_PATH)] :
+        [];
+    dependencyPackageDirs('openblock-vm')
+        .concat(dependencyRoot === root ? [path.join(root, '.openblock-vm')] : [])
+        .concat(externalVmPath)
+        .forEach(patchOpenBlockVmVideoSensingLifecyclePackage);
+};
+
 for (const patch of patches) {
     if ((translationsOnly || dependenciesOnly) && !patch.jsonUpdates) {
         continue;
@@ -2260,6 +2431,7 @@ if (!translationsOnly && !dependenciesOnly) {
     patchOpenBlockVmMicrobitBleWatchdog();
     patchOpenBlockVmWebpackHash();
     patchOpenBlockVmWebpackCreateHash();
+    patchOpenBlockVmVideoSensingLifecycle();
 }
 patchOpenBlockL10nKeyReleased();
 patchOpenBlockL10nLostConnectionBranding();
