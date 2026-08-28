@@ -121,83 +121,101 @@
     "sounds": [],
     "blocks": {}
     },
-   {
-    "name": "blue bit",
-    "tags": [
-        "dogomaker",
-        "blue bit",
-        "robo",
-        "android."
-    ],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-       {
-        "assetId": "04688b82900df9364793b3e21fdbbaf5",
-        "name": "blue-andando-01-1",
-        "bitmapResolution": 1,
-        "md5ext": "04688b82900df9364793b3e21fdbbaf5.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 58,
-        "rotationCenterY": 120
-        },
-        {
-        "assetId": "c0f9236edcef66bc28253b40857c335b",
-        "name": "blue-andando-02-1",
-        "bitmapResolution": 1,
-        "md5ext": "c0f9236edcef66bc28253b40857c335b.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 54,
-        "rotationCenterY": 120
-        },
-        {
-        "assetId": "da4bb572e80cc08141b2f9d0a156d8fa",
-        "name": "blue-andando-03-1",
-        "bitmapResolution": 1,
-        "md5ext": "da4bb572e80cc08141b2f9d0a156d8fa.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 58,
-        "rotationCenterY": 120
-        },
-        {
-        "assetId": "8cf2889132c6c536c2960e951fac17a8",
-        "name": "blue-andando-04-1",
-        "bitmapResolution": 1,
-        "md5ext": "8cf2889132c6c536c2960e951fac17a8.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 54,
-        "rotationCenterY": 120
-        },
-        {
-        "assetId": "1a921caa44b897aa7d23880e5980e431",
-        "name": "bluebitfalando-01",
-        "bitmapResolution": 1,
-        "md5ext": "1a921caa44b897aa7d23880e5980e431.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 56,
-        "rotationCenterY": 121
-        },
-        {
-        "assetId": "71c07db8b6b7cff4ed64d30572194583",
-        "name": "bluebitfalando-02",
-        "bitmapResolution": 1,
-        "md5ext": "71c07db8b6b7cff4ed64d30572194583.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 56,
-        "rotationCenterY": 120
-        },
-        {
-        "assetId": "44cd70c54f1484a6fb8497c7f4336edc",
-        "name": "bluebitfalando-03",
-        "bitmapResolution": 1,
-        "md5ext": "44cd70c54f1484a6fb8497c7f4336edc.svg",
-        "dataFormat": "svg",
-        "rotationCenterX": 56,
-        "rotationCenterY": 121
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
+    {
+        "name": "Blue Bit Andando",
+        "tags": [
+            "dogomaker",
+            "blue bit",
+            "robô",
+            "androide",
+            "andando",
+            "caminhando"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "assetId": "04688b82900df9364793b3e21fdbbaf5",
+                "name": "blue-andando-01-1",
+                "bitmapResolution": 1,
+                "md5ext": "04688b82900df9364793b3e21fdbbaf5.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 58,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "c0f9236edcef66bc28253b40857c335b",
+                "name": "blue-andando-02-1",
+                "bitmapResolution": 1,
+                "md5ext": "c0f9236edcef66bc28253b40857c335b.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 54,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "da4bb572e80cc08141b2f9d0a156d8fa",
+                "name": "blue-andando-03-1",
+                "bitmapResolution": 1,
+                "md5ext": "da4bb572e80cc08141b2f9d0a156d8fa.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 58,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "8cf2889132c6c536c2960e951fac17a8",
+                "name": "blue-andando-04-1",
+                "bitmapResolution": 1,
+                "md5ext": "8cf2889132c6c536c2960e951fac17a8.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 54,
+                "rotationCenterY": 120
+            }
+        ],
+        "sounds": [],
+        "blocks": {}
+    },
+    {
+        "name": "Blue Bit Falando",
+        "tags": [
+            "dogomaker",
+            "blue bit",
+            "robô",
+            "androide",
+            "falando"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "assetId": "1a921caa44b897aa7d23880e5980e431",
+                "name": "bluebitfalando-01",
+                "bitmapResolution": 1,
+                "md5ext": "1a921caa44b897aa7d23880e5980e431.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 121
+            },
+            {
+                "assetId": "71c07db8b6b7cff4ed64d30572194583",
+                "name": "bluebitfalando-02",
+                "bitmapResolution": 1,
+                "md5ext": "71c07db8b6b7cff4ed64d30572194583.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "44cd70c54f1484a6fb8497c7f4336edc",
+                "name": "bluebitfalando-03",
+                "bitmapResolution": 1,
+                "md5ext": "44cd70c54f1484a6fb8497c7f4336edc.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 121
+            }
+        ],
+        "sounds": [],
+        "blocks": {}
     },
     {
     "name": "dogo",

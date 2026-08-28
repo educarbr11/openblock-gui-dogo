@@ -1991,6 +1991,7 @@ const writeJsonValues = (file, values) => {
 };
 
 const basicBlockTranslationsPtBr = Object.freeze({
+    CONTROL_FOREVER: 'fazer sempre',
     CONTROL_REPEAT: 'repetir %1 vezes',
     CONTROL_STOP: 'parar',
     CONTROL_WAIT: 'esperar %1 seg',
