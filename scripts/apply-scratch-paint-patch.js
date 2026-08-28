@@ -291,6 +291,50 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
 };
 `;
 
+    const serialReadDataGenerators = `
+
+Blockly.Arduino.provideSerialReadDataFunction_ = function() {
+  Blockly.Arduino.customFunctions_['dogoblock_serial_read_data'] =
+    'String dogoblockSerialReadData(Stream &serialPort) {\\n' +
+    '  String data = "";\\n' +
+    '  while (serialPort.available() > 0) {\\n' +
+    '    data += (char)serialPort.read();\\n' +
+    '  }\\n' +
+    '  return data;\\n' +
+    '}\\n';
+};
+
+Blockly.Arduino['arduino_serial_serialReadData'] = function() {
+  Blockly.Arduino.setups_['setup_serial_begin'] =
+    Blockly.Arduino.setups_['setup_serial_begin'] || 'Serial.begin(9600);';
+  Blockly.Arduino.provideSerialReadDataFunction_();
+  return ['dogoblockSerialReadData(Serial)', Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
+  return ['Serial.read()', Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['arduino_serial_multiSerialReadData'] = function(block) {
+  var arg0 = block.getFieldValue('NO') || '0';
+  if (arg0 === '0') {
+    arg0 = '';
+  }
+  var serialName = 'Serial' + arg0;
+  var setupKey = 'setup_serial' + arg0 + '_begin';
+  Blockly.Arduino.setups_[setupKey] = Blockly.Arduino.setups_[setupKey] || serialName + '.begin(9600);';
+  Blockly.Arduino.provideSerialReadDataFunction_();
+  return ['dogoblockSerialReadData(' + serialName + ')', Blockly.Arduino.ORDER_ATOMIC];
+};
+`;
+
+    const serialReadAByteGenerator = `
+
+Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
+  return ['Serial.read()', Blockly.Arduino.ORDER_ATOMIC];
+};
+`;
+
     const sourceReplacements = [
         [
             "goog.require('Blockly.Arduino');\n\n\nBlockly.Arduino['arduino_pin_setPinMode']",
@@ -347,6 +391,18 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
             if (serialStart !== -1 && serialEnd !== -1) {
                 after = after.slice(0, serialStart) + serialAutoBeginGenerator + '\n' + after.slice(serialEnd);
             }
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes('dogoblockSerialReadData')
+        ) {
+            after += serialReadDataGenerators;
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes('arduino_serial_serialReadAByte')
+        ) {
+            after += serialReadAByteGenerator;
         }
         if (after !== before) {
             fs.writeFileSync(file, after);
@@ -447,6 +503,12 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
                 'Blockly.Arduino.arduino_serial_serialPrint=function(a){var b=Blockly.Arduino.valueToCode(a,"VALUE",Blockly.Arduino.ORDER_UNARY_POSTFIX)||"";return"warp"===(a.getFieldValue("EOL")||"warp")?"Serial.println("+b+");\\n":"Serial.print("+b+");\\n"};',
                 'Blockly.Arduino.arduino_serial_serialPrint=function(a){var b=Blockly.Arduino.valueToCode(a,"VALUE",Blockly.Arduino.ORDER_UNARY_POSTFIX)||"";Blockly.Arduino.setups_.setup_serial_begin=Blockly.Arduino.setups_.setup_serial_begin||"Serial.begin(9600);";return"warp"===(a.getFieldValue("EOL")||"warp")?"Serial.println("+b+");\\n":"Serial.print("+b+");\\n"};'
             );
+    }
+    if (!after.includes('dogoblockSerialReadData')) {
+        after += serialReadDataGenerators;
+    }
+    if (!after.includes('arduino_serial_serialReadAByte')) {
+        after += serialReadAByteGenerator;
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);
