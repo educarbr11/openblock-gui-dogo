@@ -118,10 +118,18 @@ const reducer = function (state, action) {
 
     switch (action.type) {
     case DONE_CREATING_NEW:
-        // We need to set project id since we just created new project on the server.
-        // No need to load, we should have data already in vm.
+        // A save requested by "New" must continue to the default project after persisting the current one.
         if (state.loadingState === LoadingState.CREATING_NEW ||
             state.loadingState === LoadingState.MANUAL_UPDATING) {
+            if (state.pendingCreateNewProject) {
+                return Object.assign({}, state, {
+                    loadingState: LoadingState.FETCHING_NEW_DEFAULT,
+                    projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
+                    pendingCreateNewProject: true
+                });
+            }
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
                 projectId: action.projectId,
@@ -350,6 +358,12 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.SHOWING_WITH_ID) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.UPDATING_BEFORE_NEW,
+                pendingCreateNewProject: true
+            });
+        }
+        if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
+            return Object.assign({}, state, {
+                loadingState: LoadingState.CREATING_NEW,
                 pendingCreateNewProject: true
             });
         }

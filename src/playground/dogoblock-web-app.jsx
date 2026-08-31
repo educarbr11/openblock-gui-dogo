@@ -752,10 +752,19 @@ class DogoblockWebApp extends React.Component {
     }
 
     handleProjectCreated (projectId) {
-        if (projectId && projectId !== defaultProjectId) {
-            trackEvent('project created', 'editor');
-            navigate(`/editor/${projectId}`);
+        if (!projectId || this.state.route.name !== 'editor') return;
+
+        const normalizedProjectId = projectId.toString();
+        const routeProjectId = (this.state.route.projectId || defaultProjectId).toString();
+        if (normalizedProjectId === routeProjectId) return;
+
+        if (normalizedProjectId === defaultProjectId) {
+            navigate('/editor');
+            return;
         }
+
+        trackEvent('project created', 'editor');
+        navigate(`/editor/${normalizedProjectId}`);
     }
 
     handleOpenCurrentProject () {
