@@ -4183,10 +4183,18 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleProjectCreated",
     value: function handleProjectCreated(projectId) {
-      if (projectId && projectId !== project_state["f" /* defaultProjectId */]) {
-        dogoblock_web_app_trackEvent('project created', 'editor');
-        dogoblock_web_app_navigate("/editor/".concat(projectId));
+      if (!projectId || this.state.route.name !== 'editor') return;
+      var normalizedProjectId = projectId.toString();
+      var routeProjectId = (this.state.route.projectId || project_state["f" /* defaultProjectId */]).toString();
+      if (normalizedProjectId === routeProjectId) return;
+
+      if (normalizedProjectId === project_state["f" /* defaultProjectId */]) {
+        dogoblock_web_app_navigate('/editor');
+        return;
       }
+
+      dogoblock_web_app_trackEvent('project created', 'editor');
+      dogoblock_web_app_navigate("/editor/".concat(normalizedProjectId));
     }
   }, {
     key: "handleOpenCurrentProject",
