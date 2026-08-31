@@ -242,6 +242,7 @@ const deviceData = [
     {
         name: 'ESP32',
         deviceId: 'arduinoEsp32',
+        desktopResourcePackId: 'esp32',
         manufactor: 'espressif',
         learnMore: 'https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/index.html',
         type: DeviceType.arduino,

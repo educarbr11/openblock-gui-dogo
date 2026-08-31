@@ -1803,6 +1803,50 @@ const patchOpenBlockL10nLostConnectionBranding = () => {
     dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nLostConnectionBrandingPackage);
 };
 
+const resourcePackTranslationsPtBr = {
+    'gui.resourcePack.title': 'Suporte ESP32',
+    'gui.resourcePack.installTitle': 'Instalar suporte ESP32',
+    'gui.resourcePack.updateTitle': 'Atualizar suporte ESP32',
+    'gui.resourcePack.description': 'Este pacote opcional adiciona as ferramentas necessárias para compilar e ' +
+        'enviar programas para placas ESP32 e ESP32-S3. Depois da instalação, funciona sem internet.',
+    'gui.resourcePack.downloadSize': 'Download',
+    'gui.resourcePack.installedSize': 'Espaço em disco',
+    'gui.resourcePack.version': 'Versão',
+    'gui.resourcePack.downloading': 'Baixando suporte ESP32...',
+    'gui.resourcePack.extracting': 'Extraindo arquivos...',
+    'gui.resourcePack.validating': 'Validando a instalação...',
+    'gui.resourcePack.progressHint': 'Mantenha o DoGoBlock aberto até a instalação terminar.',
+    'gui.resourcePack.unsupported': 'O suporte ESP32 não está disponível para este sistema.',
+    'gui.resourcePack.cancel': 'Cancelar',
+    'gui.resourcePack.notNow': 'Agora não',
+    'gui.resourcePack.useInstalled': 'Usar versão instalada',
+    'gui.resourcePack.retry': 'Tentar novamente',
+    'gui.resourcePack.update': 'Atualizar',
+    'gui.resourcePack.install': 'Instalar',
+    'gui.resourcePack.cardInstalled': 'Instalado',
+    'gui.resourcePack.cardUpdate': 'Atualização disponível',
+    'gui.resourcePack.cardUnavailable': 'Indisponível',
+    'gui.resourcePack.cardOptional': 'Download opcional',
+    'gui.resourcePack.remove': 'Remover suporte ESP32'
+};
+
+const patchOpenBlockL10nResourcePackPackage = packageDir => {
+    if (!fs.existsSync(packageDir)) return;
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt-br.json'),
+        resourcePackTranslationsPtBr
+    );
+    writeJsonValues(
+        path.join(packageDir, 'editor', 'interface', 'pt.json'),
+        resourcePackTranslationsPtBr
+    );
+    console.log(`Applied openblock-l10n resource pack translations: ${packageDir}`);
+};
+
+const patchOpenBlockL10nResourcePack = () => {
+    dependencyPackageDirs('openblock-l10n').forEach(patchOpenBlockL10nResourcePackPackage);
+};
+
 const microbitBleBlockTranslationsPtBr = {
     'microbit.buttonsMenu.any': 'qualquer',
     'microbit.gesturesMenu.moved': 'movido',
@@ -2498,6 +2542,7 @@ if (!translationsOnly && !dependenciesOnly) {
 }
 patchOpenBlockL10nKeyReleased();
 patchOpenBlockL10nLostConnectionBranding();
+patchOpenBlockL10nResourcePack();
 patchOpenBlockL10nBasicBlocks();
 patchOpenBlockL10nPenAndMusic();
 patchOpenBlockL10nMicrobit();

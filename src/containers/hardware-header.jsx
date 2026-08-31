@@ -29,6 +29,7 @@ class HardwareHeader extends React.Component {
         super(props);
         bindAll(this, [
             'handleUpload',
+            'handleUploadAfterResourceCheck',
             'handleArduinoCompilerUpload',
             'handleMicrobitCompilerUpload'
         ]);
@@ -83,20 +84,33 @@ class HardwareHeader extends React.Component {
     }
 
     handleUpload () {
+        if (this.isEsp32ResourceDevice() && this.props.onEnsureResourcePack) {
+            this.props.onEnsureResourcePack('esp32')
+                .then(this.handleUploadAfterResourceCheck)
+                .catch(() => {});
+            return;
+        }
+        this.handleUploadAfterResourceCheck();
+    }
+
+    handleUploadAfterResourceCheck () {
         const isMicrobitUpload = this.isMicrobitCompilerDevice();
         if (this.props.peripheralName || isMicrobitUpload) {
             const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
             if (blocklyBlockCanvas.childNodes.length === 0) {
                 this.props.onWorkspaceIsEmpty();
             } else {
-                this.props.onOpenUploadProgress();
-                if (!isScratchDesktop() && isMicrobitUpload) {
-                    window.setTimeout(this.handleMicrobitCompilerUpload, 0);
-                } else if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
-                    window.setTimeout(this.handleArduinoCompilerUpload, 0);
-                } else {
-                    this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
-                }
+                const startUpload = () => {
+                    this.props.onOpenUploadProgress();
+                    if (!isScratchDesktop() && isMicrobitUpload) {
+                        window.setTimeout(this.handleMicrobitCompilerUpload, 0);
+                    } else if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
+                        window.setTimeout(this.handleArduinoCompilerUpload, 0);
+                    } else {
+                        this.props.vm.uploadToPeripheral(this.props.deviceId, this.props.codeEditorValue);
+                    }
+                };
+                startUpload();
             }
         } else {
             this.props.onNoPeripheralIsConnected();
@@ -132,6 +146,10 @@ class HardwareHeader extends React.Component {
         return ['microbit', 'microbitV2'].indexOf(this.getRealDeviceId()) !== -1;
     }
 
+    isEsp32ResourceDevice () {
+        return ['arduinoEsp32', 'arduinoEsp32S3'].indexOf(this.getRealDeviceId()) !== -1;
+    }
+
     getRealDeviceId () {
         const deviceId = this.props.deviceId || '';
         return deviceId.indexOf('_') === -1 ? deviceId : deviceId.split('_')[1];
@@ -151,7 +169,8 @@ class HardwareHeader extends React.Component {
                 /^TypeError:/.test(code) ||
                 /^Error:/.test(code)) {
             throw new Error(
-                'Nao foi possivel gerar o codigo Arduino. Verifique se todos os blocos usados possuem suporte no modo programacao.'
+                'Nao foi possivel gerar o codigo Arduino. Verifique se todos os blocos usados possuem suporte ' +
+                'no modo programacao.'
             );
         }
         if (!/\bvoid\s+setup\s*\(/.test(code) && !/\bvoid\s+loop\s*\(/.test(code)) {
@@ -327,6 +346,7 @@ HardwareHeader.propTypes = {
     connectionType: PropTypes.string,
     deviceId: PropTypes.string,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
+    onEnsureResourcePack: PropTypes.func,
     onOpenUploadProgress: PropTypes.func,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
     peripheralName: PropTypes.string,

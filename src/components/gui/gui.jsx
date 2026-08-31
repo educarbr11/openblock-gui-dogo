@@ -123,11 +123,14 @@ const GUIComponent = props => {
         onClickUpdate,
         onClickClearCache,
         onClickInstallDriver,
+        onEnsureResourcePack,
         onExtensionButtonClick,
+        onGetResourcePackStatus,
         onProjectTelemetryEvent,
         onRequestCloseBackdropLibrary,
         onRequestCloseCostumeLibrary,
         onRequestCloseTelemetryModal,
+        onRemoveResourcePack,
         onSeeCommunity,
         onShare,
         onShowPrivacyPolicy,
@@ -399,6 +402,9 @@ const GUIComponent = props => {
                                                     }}
                                                     stageSize={stageSize}
                                                     vm={vm}
+                                                    onEnsureResourcePack={onEnsureResourcePack}
+                                                    onGetResourcePackStatus={onGetResourcePackStatus}
+                                                    onRemoveResourcePack={onRemoveResourcePack}
                                                     onShowMessageBox={onShowMessageBox}
                                                 />
                                             </Box>
@@ -491,6 +497,7 @@ const GUIComponent = props => {
                                 <HardwareHeader
                                     vm={vm}
                                     stageSize={stageSize}
+                                    onEnsureResourcePack={onEnsureResourcePack}
                                 />) : null
                             }
                         </Box>
@@ -549,13 +556,16 @@ GUIComponent.propTypes = {
     onClickUpdate: PropTypes.func,
     onClickClearCache: PropTypes.func,
     onClickInstallDriver: PropTypes.func,
+    onEnsureResourcePack: PropTypes.func,
     onCloseAccountNav: PropTypes.func,
     onExtensionButtonClick: PropTypes.func,
+    onGetResourcePackStatus: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
     onRequestCloseBackdropLibrary: PropTypes.func,
     onRequestCloseCostumeLibrary: PropTypes.func,
     onRequestCloseTelemetryModal: PropTypes.func,
+    onRemoveResourcePack: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
     onShowPrivacyPolicy: PropTypes.func,

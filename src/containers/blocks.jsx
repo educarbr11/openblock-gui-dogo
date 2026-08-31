@@ -891,6 +891,9 @@ class Blocks extends React.Component {
             onDeviceSelected,
             onOpenConnectionModal,
             onOpenSoundRecorder,
+            onEnsureResourcePack,
+            onGetResourcePackStatus,
+            onRemoveResourcePack,
             onToolboxWillUpdate,
             onToolboxDidUpdate,
             updateToolboxState,
@@ -933,6 +936,9 @@ class Blocks extends React.Component {
                     <DeviceLibrary
                         vm={vm}
                         onDeviceSelected={this.handleDeviceSelected}
+                        onEnsureResourcePack={onEnsureResourcePack}
+                        onGetResourcePackStatus={onGetResourcePackStatus}
+                        onRemoveResourcePack={onRemoveResourcePack}
                         onRequestClose={onRequestCloseDeviceLibrary}
                     />
                 ) : null}
@@ -983,6 +989,8 @@ Blocks.propTypes = {
     onActivateCustomProcedures: PropTypes.func,
     onCodeEditorIsUnlocked: PropTypes.func,
     onDeviceSelected: PropTypes.func,
+    onEnsureResourcePack: PropTypes.func,
+    onGetResourcePackStatus: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
     onSetConnectionModalDeviceId: PropTypes.func,
     onOpenSoundRecorder: PropTypes.func,
@@ -991,6 +999,7 @@ Blocks.propTypes = {
     onRequestCloseCustomProcedures: PropTypes.func,
     onRequestCloseExtensionLibrary: PropTypes.func,
     onRequestCloseDeviceLibrary: PropTypes.func,
+    onRemoveResourcePack: PropTypes.func,
     options: PropTypes.shape({
         media: PropTypes.string,
         zoom: PropTypes.shape({
