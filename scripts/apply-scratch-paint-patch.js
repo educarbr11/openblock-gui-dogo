@@ -293,23 +293,10 @@ Blockly.Arduino['arduino_serial_serialPrint'] = function(block) {
 
     const serialReadDataGenerators = `
 
-Blockly.Arduino.provideSerialReadDataFunction_ = function() {
-  Blockly.Arduino.customFunctions_['dogoblock_serial_read_data'] =
-    'String dogoblockSerialReadData(Stream &serialPort) {\\n' +
-    '  String data = "";\\n' +
-    '  while (serialPort.available() > 0) {\\n' +
-    '    data += (char)serialPort.read();\\n' +
-    '  }\\n' +
-    '  data.trim();\\n' +
-    '  return data;\\n' +
-    '}\\n';
-};
-
 Blockly.Arduino['arduino_serial_serialReadData'] = function() {
   Blockly.Arduino.setups_['setup_serial_begin'] =
     Blockly.Arduino.setups_['setup_serial_begin'] || 'Serial.begin(9600);';
-  Blockly.Arduino.provideSerialReadDataFunction_();
-  return ['dogoblockSerialReadData(Serial)', Blockly.Arduino.ORDER_ATOMIC];
+  return ['Serial.read()', Blockly.Arduino.ORDER_ATOMIC];
 };
 
 Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
@@ -324,9 +311,10 @@ Blockly.Arduino['arduino_serial_multiSerialReadData'] = function(block) {
   var serialName = 'Serial' + arg0;
   var setupKey = 'setup_serial' + arg0 + '_begin';
   Blockly.Arduino.setups_[setupKey] = Blockly.Arduino.setups_[setupKey] || serialName + '.begin(9600);';
-  Blockly.Arduino.provideSerialReadDataFunction_();
-  return ['dogoblockSerialReadData(' + serialName + ')', Blockly.Arduino.ORDER_ATOMIC];
+  return [serialName + '.read()', Blockly.Arduino.ORDER_ATOMIC];
 };
+
+Blockly.Arduino.__dogoblockSerialReadByteSemantics = true;
 `;
 
     const serialReadAByteGenerator = `
@@ -336,43 +324,23 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
 };
 `;
 
-    const serialStringVariableBundlePatch = `
+    const serialNumericVariableBundlePatch = `
 
 (function() {
-  if (Blockly.Arduino.__dogoblockSerialStringVariables) {
+  if (Blockly.Arduino.__dogoblockSerialNumericVariables) {
     return;
   }
   var originalInit = Blockly.Arduino.init;
-  Blockly.Arduino.getSerialStringVariableIds_ = function(workspace) {
-    var stringVariableIds = Object.create(null);
-    var blocks = workspace.getAllBlocks();
-    for (var i = 0; i < blocks.length; i++) {
-      var block = blocks[i];
-      if (block.type !== 'data_setvariableto' || !Blockly.Arduino.check_(block)) {
-        continue;
-      }
-      var valueBlock = block.getInputTargetBlock('VALUE');
-      if (valueBlock && (valueBlock.type === 'arduino_serial_serialReadData' ||
-          valueBlock.type === 'arduino_serial_multiSerialReadData')) {
-        stringVariableIds[block.getFieldValue('VARIABLE')] = true;
-      }
-    }
-    return stringVariableIds;
-  };
   Blockly.Arduino.init = function(workspace) {
     originalInit.call(Blockly.Arduino, workspace);
     var variables = Blockly.Variables.allVariables(workspace);
-    var serialStringVariableIds = Blockly.Arduino.getSerialStringVariableIds_(workspace);
     var definitions = [];
     for (var i = 0; i < variables.length; i++) {
       var variableName = Blockly.Arduino.variableDB_.getName(
           variables[i].name, Blockly.Variables.NAME_TYPE);
-      var variableId = variables[i].getId ? variables[i].getId() : variables[i].id_;
       if (variables[i].type === Blockly.LIST_VARIABLE_TYPE) {
         Blockly.Arduino.includes_['simplelist'] = '#include <SimpleList.h>';
         definitions[i] = 'SimpleList<String> ' + variableName + ';';
-      } else if (serialStringVariableIds[variableId]) {
-        definitions[i] = 'String ' + variableName + ';';
       } else {
         definitions[i] = 'float ' + variableName + ';';
       }
@@ -381,8 +349,49 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
       Blockly.Arduino.definitions_['variables'] = definitions.join('\\n');
     }
   };
-  Blockly.Arduino.__dogoblockSerialStringVariables = true;
+  Blockly.Arduino.__dogoblockSerialNumericVariables = true;
 }());
+`;
+
+    const serialCharacterComparisonGenerator = `
+
+Blockly.Arduino['operator_compare'] = function(block) {
+  var oplist = {
+    'operator_gt': ' > ',
+    'operator_equals': ' == ',
+    'operator_lt': ' < '
+  };
+  var order = block.type === 'operator_equals' ?
+    Blockly.Arduino.ORDER_EQUALITY : Blockly.Arduino.ORDER_RELATIONAL;
+  var arg0 = Blockly.Arduino.valueToCode(block, 'OPERAND1', order);
+  var arg1 = Blockly.Arduino.valueToCode(block, 'OPERAND2', order);
+  var normalizeExplicitCharacter = function(arg) {
+    if (arg.length === 5 && arg.charAt(0) === '"' && arg.charAt(1) === "'" &&
+        arg.charAt(3) === "'" && arg.charAt(4) === '"') {
+      return arg.slice(1, -1);
+    }
+    return arg;
+  };
+  var normalizeOperand = function(arg) {
+    arg = normalizeExplicitCharacter(arg);
+    if (parseFloat(arg.slice(1, -1)) == arg.slice(1, -1)) {
+      return parseFloat(arg.slice(1, -1)).toString();
+    }
+    if (arg === '""') {
+      return '0';
+    }
+    if (arg.charAt(0) === '"' && arg.charAt(arg.length - 1) === '"') {
+      return arg.length === 3 ? arg.replace(/"/g, "'") : 'String(' + arg + ')';
+    }
+    return arg;
+  };
+  var code = normalizeOperand(arg0) + oplist[block.type] + normalizeOperand(arg1);
+  return [code, order];
+};
+Blockly.Arduino['operator_gt'] = Blockly.Arduino['operator_compare'];
+Blockly.Arduino['operator_equals'] = Blockly.Arduino['operator_compare'];
+Blockly.Arduino['operator_lt'] = Blockly.Arduino['operator_compare'];
+Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
 `;
 
     const sourceReplacements = [
@@ -406,11 +415,8 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
     if (fs.existsSync(rootGeneratorFile)) {
         const before = fs.readFileSync(rootGeneratorFile, 'utf8');
         let after = before;
-        if (
-            !after.includes('serialStringVariableIds[variableId]') &&
-            !after.includes('__dogoblockSerialStringVariables')
-        ) {
-            after += serialStringVariableBundlePatch;
+        if (!after.includes('__dogoblockSerialNumericVariables')) {
+            after += serialNumericVariableBundlePatch;
         }
         if (after !== before) {
             fs.writeFileSync(rootGeneratorFile, after);
@@ -459,7 +465,7 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
         }
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
-            !after.includes('dogoblockSerialReadData')
+            !after.includes('__dogoblockSerialReadByteSemantics')
         ) {
             after += serialReadDataGenerators;
         }
@@ -469,17 +475,22 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
         ) {
             after += serialReadAByteGenerator;
         }
-        if (file.endsWith(path.join('generators', 'arduino', 'arduino.js'))) {
-            after = after.split(
-                "    '  }\\n' +\n    '  return data;\\n' +"
-            ).join(
-                "    '  }\\n' +\n    '  data.trim();\\n' +\n    '  return data;\\n' +"
-            );
-        }
         if (after !== before) {
             fs.writeFileSync(file, after);
         }
     });
+
+    const operatorGeneratorFile = path.join(packageDir, 'generators', 'arduino', 'operator.js');
+    if (fs.existsSync(operatorGeneratorFile)) {
+        const before = fs.readFileSync(operatorGeneratorFile, 'utf8');
+        let after = before;
+        if (!after.includes('__dogoblockSerialCharacterComparison')) {
+            after += serialCharacterComparisonGenerator;
+        }
+        if (after !== before) {
+            fs.writeFileSync(operatorGeneratorFile, after);
+        }
+    }
 
     const compressedFile = path.join(packageDir, 'arduino_compressed.js');
     if (!fs.existsSync(compressedFile)) return;
@@ -576,21 +587,21 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
                 'Blockly.Arduino.arduino_serial_serialPrint=function(a){var b=Blockly.Arduino.valueToCode(a,"VALUE",Blockly.Arduino.ORDER_UNARY_POSTFIX)||"";Blockly.Arduino.setups_.setup_serial_begin=Blockly.Arduino.setups_.setup_serial_begin||"Serial.begin(9600);";return"warp"===(a.getFieldValue("EOL")||"warp")?"Serial.println("+b+");\\n":"Serial.print("+b+");\\n"};'
             );
     }
-    if (!after.includes('dogoblockSerialReadData')) {
+    if (!after.includes('__dogoblockSerialReadByteSemantics')) {
         after += serialReadDataGenerators;
     }
     if (!after.includes('arduino_serial_serialReadAByte')) {
         after += serialReadAByteGenerator;
     }
-    after = after.split(
-        "    '  }\\n' +\n    '  return data;\\n' +"
-    ).join(
-        "    '  }\\n' +\n    '  data.trim();\\n' +\n    '  return data;\\n' +"
-    );
-    if (!after.includes('getSerialStringVariableIds_')) {
-        after += serialStringVariableBundlePatch;
+    if (!after.includes('__dogoblockSerialNumericVariables')) {
+        after += serialNumericVariableBundlePatch;
     }
-    if (!after.includes('getSerialStringVariableIds_') || !after.includes('data.trim();')) {
+    if (!after.includes('__dogoblockSerialCharacterComparison')) {
+        after += serialCharacterComparisonGenerator;
+    }
+    if (!after.includes('__dogoblockSerialReadByteSemantics') ||
+        !after.includes('__dogoblockSerialNumericVariables') ||
+        !after.includes('__dogoblockSerialCharacterComparison')) {
         throw new Error('Arduino serial data patch validation failed: ' + compressedFile);
     }
     if (after !== before) {
