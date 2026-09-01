@@ -300,6 +300,7 @@ Blockly.Arduino.provideSerialReadDataFunction_ = function() {
     '  while (serialPort.available() > 0) {\\n' +
     '    data += (char)serialPort.read();\\n' +
     '  }\\n' +
+    '  data.trim();\\n' +
     '  return data;\\n' +
     '}\\n';
 };
@@ -335,6 +336,55 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
 };
 `;
 
+    const serialStringVariableBundlePatch = `
+
+(function() {
+  if (Blockly.Arduino.__dogoblockSerialStringVariables) {
+    return;
+  }
+  var originalInit = Blockly.Arduino.init;
+  Blockly.Arduino.getSerialStringVariableIds_ = function(workspace) {
+    var stringVariableIds = Object.create(null);
+    var blocks = workspace.getAllBlocks();
+    for (var i = 0; i < blocks.length; i++) {
+      var block = blocks[i];
+      if (block.type !== 'data_setvariableto' || !Blockly.Arduino.check_(block)) {
+        continue;
+      }
+      var valueBlock = block.getInputTargetBlock('VALUE');
+      if (valueBlock && (valueBlock.type === 'arduino_serial_serialReadData' ||
+          valueBlock.type === 'arduino_serial_multiSerialReadData')) {
+        stringVariableIds[block.getFieldValue('VARIABLE')] = true;
+      }
+    }
+    return stringVariableIds;
+  };
+  Blockly.Arduino.init = function(workspace) {
+    originalInit.call(Blockly.Arduino, workspace);
+    var variables = Blockly.Variables.allVariables(workspace);
+    var serialStringVariableIds = Blockly.Arduino.getSerialStringVariableIds_(workspace);
+    var definitions = [];
+    for (var i = 0; i < variables.length; i++) {
+      var variableName = Blockly.Arduino.variableDB_.getName(
+          variables[i].name, Blockly.Variables.NAME_TYPE);
+      var variableId = variables[i].getId ? variables[i].getId() : variables[i].id_;
+      if (variables[i].type === Blockly.LIST_VARIABLE_TYPE) {
+        Blockly.Arduino.includes_['simplelist'] = '#include <SimpleList.h>';
+        definitions[i] = 'SimpleList<String> ' + variableName + ';';
+      } else if (serialStringVariableIds[variableId]) {
+        definitions[i] = 'String ' + variableName + ';';
+      } else {
+        definitions[i] = 'float ' + variableName + ';';
+      }
+    }
+    if (variables.length > 0) {
+      Blockly.Arduino.definitions_['variables'] = definitions.join('\\n');
+    }
+  };
+  Blockly.Arduino.__dogoblockSerialStringVariables = true;
+}());
+`;
+
     const sourceReplacements = [
         [
             "goog.require('Blockly.Arduino');\n\n\nBlockly.Arduino['arduino_pin_setPinMode']",
@@ -351,6 +401,21 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
         path.join(packageDir, 'generators', 'arduino', 'esp8266.js'),
         path.join(packageDir, 'generators', 'arduino', 'k210.js')
     ];
+
+    const rootGeneratorFile = path.join(packageDir, 'generators', 'arduino.js');
+    if (fs.existsSync(rootGeneratorFile)) {
+        const before = fs.readFileSync(rootGeneratorFile, 'utf8');
+        let after = before;
+        if (
+            !after.includes('serialStringVariableIds[variableId]') &&
+            !after.includes('__dogoblockSerialStringVariables')
+        ) {
+            after += serialStringVariableBundlePatch;
+        }
+        if (after !== before) {
+            fs.writeFileSync(rootGeneratorFile, after);
+        }
+    }
 
     sourceFiles.forEach(file => {
         if (!fs.existsSync(file)) return;
@@ -403,6 +468,13 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
             !after.includes('arduino_serial_serialReadAByte')
         ) {
             after += serialReadAByteGenerator;
+        }
+        if (file.endsWith(path.join('generators', 'arduino', 'arduino.js'))) {
+            after = after.split(
+                "    '  }\\n' +\n    '  return data;\\n' +"
+            ).join(
+                "    '  }\\n' +\n    '  data.trim();\\n' +\n    '  return data;\\n' +"
+            );
         }
         if (after !== before) {
             fs.writeFileSync(file, after);
@@ -509,6 +581,17 @@ Blockly.Arduino['arduino_serial_serialReadAByte'] = function() {
     }
     if (!after.includes('arduino_serial_serialReadAByte')) {
         after += serialReadAByteGenerator;
+    }
+    after = after.split(
+        "    '  }\\n' +\n    '  return data;\\n' +"
+    ).join(
+        "    '  }\\n' +\n    '  data.trim();\\n' +\n    '  return data;\\n' +"
+    );
+    if (!after.includes('getSerialStringVariableIds_')) {
+        after += serialStringVariableBundlePatch;
+    }
+    if (!after.includes('getSerialStringVariableIds_') || !after.includes('data.trim();')) {
+        throw new Error('Arduino serial data patch validation failed: ' + compressedFile);
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);
