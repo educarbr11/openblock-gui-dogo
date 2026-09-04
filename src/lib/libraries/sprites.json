@@ -1,5 +1,257 @@
 [
     {
+    "name": "professor fred",
+    "tags": [
+        "professor",
+        "dogo",
+        "aula",
+        "escola"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "a0f4689e8446f2982b9be2ce6d1a89b6",
+        "name": "prof-explicando-01a",
+        "bitmapResolution": 1,
+        "md5ext": "a0f4689e8446f2982b9be2ce6d1a89b6.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 48,
+        "rotationCenterY": 161
+        },
+        {
+        "assetId": "09aaa4ed4330f91b24c98f3f557ffbb4",
+        "name": "prof-explicando-02a",
+        "bitmapResolution": 1,
+        "md5ext": "09aaa4ed4330f91b24c98f3f557ffbb4.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 64,
+        "rotationCenterY": 161
+        },
+        {
+        "assetId": "016fa3f07621281df06ffae2fc8c7e34",
+        "name": "prof-explicando-03a",
+        "bitmapResolution": 1,
+        "md5ext": "016fa3f07621281df06ffae2fc8c7e34.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 62,
+        "rotationCenterY": 161
+        },
+        {
+        "assetId": "091af1f958e56feac5cc54d5712630ec",
+        "name": "prof-explicando-01b",
+        "bitmapResolution": 1,
+        "md5ext": "091af1f958e56feac5cc54d5712630ec.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 48,
+        "rotationCenterY": 161
+        },
+        {
+        "assetId": "aea27e9cd660771e0a0fc8be648d5386",
+        "name": "prof-explicando-02b",
+        "bitmapResolution": 1,
+        "md5ext": "aea27e9cd660771e0a0fc8be648d5386.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 64,
+        "rotationCenterY": 161
+        },
+        {
+        "assetId": "a10e456f1a2fbb2a3bdcea833466551a",
+        "name": "prof-explicando-03b",
+        "bitmapResolution": 1,
+        "md5ext": "a10e456f1a2fbb2a3bdcea833466551a.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 62,
+        "rotationCenterY": 161
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+    "name": "bia",
+    "tags": [
+        "dogo",
+        "hq",
+        "bia",
+        "menina",
+        "skate",
+        "esporte"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "115f073b2bd76fea4226db5c4fa23f0b",
+        "name": "bia01a",
+        "bitmapResolution": 1,
+        "md5ext": "115f073b2bd76fea4226db5c4fa23f0b.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 68,
+        "rotationCenterY": 140
+        },
+        {
+        "assetId": "aa1bbf2a96611d131979ee5c9228d99c",
+        "name": "bia02a",
+        "bitmapResolution": 1,
+        "md5ext": "aa1bbf2a96611d131979ee5c9228d99c.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 68,
+        "rotationCenterY": 136
+        },
+        {
+        "assetId": "d91e39a6b3dcd247b729633d2fdd719c",
+        "name": "bia03a",
+        "bitmapResolution": 1,
+        "md5ext": "d91e39a6b3dcd247b729633d2fdd719c.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 77,
+        "rotationCenterY": 137
+        },
+        {
+        "assetId": "e30b78ab15abd71fd33cc80f090d4c0b",
+        "name": "bia04a",
+        "bitmapResolution": 1,
+        "md5ext": "e30b78ab15abd71fd33cc80f090d4c0b.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 103,
+        "rotationCenterY": 115
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+    {
+        "name": "Blue Bit Andando",
+        "tags": [
+            "dogomaker",
+            "blue bit",
+            "robô",
+            "androide",
+            "andando",
+            "caminhando"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "assetId": "04688b82900df9364793b3e21fdbbaf5",
+                "name": "blue-andando-01-1",
+                "bitmapResolution": 1,
+                "md5ext": "04688b82900df9364793b3e21fdbbaf5.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 58,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "c0f9236edcef66bc28253b40857c335b",
+                "name": "blue-andando-02-1",
+                "bitmapResolution": 1,
+                "md5ext": "c0f9236edcef66bc28253b40857c335b.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 54,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "da4bb572e80cc08141b2f9d0a156d8fa",
+                "name": "blue-andando-03-1",
+                "bitmapResolution": 1,
+                "md5ext": "da4bb572e80cc08141b2f9d0a156d8fa.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 58,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "8cf2889132c6c536c2960e951fac17a8",
+                "name": "blue-andando-04-1",
+                "bitmapResolution": 1,
+                "md5ext": "8cf2889132c6c536c2960e951fac17a8.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 54,
+                "rotationCenterY": 120
+            }
+        ],
+        "sounds": [],
+        "blocks": {}
+    },
+    {
+        "name": "Blue Bit Falando",
+        "tags": [
+            "dogomaker",
+            "blue bit",
+            "robô",
+            "androide",
+            "falando"
+        ],
+        "isStage": false,
+        "variables": {},
+        "costumes": [
+            {
+                "assetId": "1a921caa44b897aa7d23880e5980e431",
+                "name": "bluebitfalando-01",
+                "bitmapResolution": 1,
+                "md5ext": "1a921caa44b897aa7d23880e5980e431.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 121
+            },
+            {
+                "assetId": "71c07db8b6b7cff4ed64d30572194583",
+                "name": "bluebitfalando-02",
+                "bitmapResolution": 1,
+                "md5ext": "71c07db8b6b7cff4ed64d30572194583.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 120
+            },
+            {
+                "assetId": "44cd70c54f1484a6fb8497c7f4336edc",
+                "name": "bluebitfalando-03",
+                "bitmapResolution": 1,
+                "md5ext": "44cd70c54f1484a6fb8497c7f4336edc.svg",
+                "dataFormat": "svg",
+                "rotationCenterX": 56,
+                "rotationCenterY": 121
+            }
+        ],
+        "sounds": [],
+        "blocks": {}
+    },
+    {
+    "name": "dogo",
+    "tags": [
+        "animal",
+        "dogo",
+        "dog",
+        "cachorro"
+    ],
+    "isStage": false,
+    "variables": {},
+    "costumes": [
+        {
+        "assetId": "4e1f30695438a5a2ed2e7d07abd3406d",
+        "name": "dogocaminhando-01",
+        "bitmapResolution": 1,
+        "md5ext": "4e1f30695438a5a2ed2e7d07abd3406d.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 65,
+        "rotationCenterY": 75
+        },
+        {
+        "assetId": "67d2b21f7bf69ff04d3470725ab2db31",
+        "name": "dogocaminhando-02",
+        "bitmapResolution": 1,
+        "md5ext": "67d2b21f7bf69ff04d3470725ab2db31.svg",
+        "dataFormat": "svg",
+        "rotationCenterX": 65,
+        "rotationCenterY": 75
+        }
+    ],
+    "sounds": [],
+    "blocks": {}
+    },
+
+    {
         "name": "Abby",
         "tags": [
             "people",
@@ -58,69 +310,6 @@
             }
         ],
         "blocks": {}
-    },
-    {
-    "name": "Blue Bit",
-    "tags": ["custom", "personagem", "dogomaker", "dogo", "dogo maker"],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "c0f9a316ae5f1fdb91cc274f50dabebd",
-        "name": "blue-bit",
-        "bitmapResolution": 2,
-        "md5ext": "c0f9a316ae5f1fdb91cc274f50dabebd.png",
-        "dataFormat": "png",
-        "rotationCenterX": 200,
-        "rotationCenterY": 300
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
-    },
-    {
-    "name": "selo",
-    "tags": [
-        "dogo",
-        "maker"
-    ],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "61624d3239c80bcf4e32d2a48b3946b3",
-        "name": "selo-bncc",
-        "bitmapResolution": 2,
-        "md5ext": "61624d3239c80bcf4e32d2a48b3946b3.png",
-        "dataFormat": "png",
-        "rotationCenterX": 992,
-        "rotationCenterY": 1185
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
-    },
-    {
-    "name": "dogo",
-    "tags": [
-        "dogo",
-        "maker"
-    ],
-    "isStage": false,
-    "variables": {},
-    "costumes": [
-        {
-        "assetId": "0eb8087b51b13f719b748fe0c955216e",
-        "name": "dogo",
-        "bitmapResolution": 2,
-        "md5ext": "0eb8087b51b13f719b748fe0c955216e.png",
-        "dataFormat": "png",
-        "rotationCenterX": 19,
-        "rotationCenterY": 25
-        }
-    ],
-    "sounds": [],
-    "blocks": {}
     },
     {
   "name": "astronauta",

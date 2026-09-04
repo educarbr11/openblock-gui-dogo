@@ -37,11 +37,12 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: center;
-    flex-grow: 1;
+    flex: 0 1 auto;
+    min-width: 0;
 }
 
 .main-menu .menu-bar-item {
-    padding: 0 0.75rem;
+    padding: 0 0.55rem;
 }
 
 .main-menu span{
@@ -54,7 +55,9 @@
     justify-content: center;
     flex-wrap: nowrap;
     align-items: center;
-    flex-grow: 1;
+    flex: 1 1 18rem;
+    min-width: 10rem;
+    max-width: 34rem;
 }
 
 .file-menu .menu-bar-item {
@@ -67,11 +70,12 @@
     justify-content: flex-end;
     flex-wrap: nowrap;
     align-items: center;
-    flex-grow: 1;
+    flex: 0 1 auto;
+    min-width: 0;
 }
 
 .tail-menu .menu-bar-item {
-    padding: 0 0.75rem;
+    padding: 0 0.55rem;
 }
 
 .tail-menu span{
@@ -113,6 +117,7 @@
 .language-menu {
     box-sizing: border-box;
     display: inline-flex;
+    flex: 0 0 $language-selector-width;
     width: $language-selector-width;
 }
 
@@ -145,8 +150,60 @@
 
 .title-field-growable {
     flex-grow: 1;
-    width: 2rem;
-    min-width: 6rem;
+    width: 100%;
+    min-width: 8rem;
+    max-width: 28rem;
+}
+
+.title-menu-item {
+    flex: 1 1 12rem;
+    min-width: 8rem;
+    max-width: 30rem;
+    overflow: hidden;
+}
+
+.save-menu-item {
+    flex: 0 0 auto;
+    width: 2.25rem;
+    justify-content: center;
+}
+
+.save-project-button {
+    flex: 0 auto;
+    height: 2rem;
+    margin-left: 0.35rem;
+    padding: 0 .6rem !important;
+    border-radius: 0.5rem;
+    background: #075ed0;
+    color: $ui-white;
+    font-weight: 700;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.save-project-button:hover {
+    background: #e91f1f;
+}
+
+.save-project-button-icon {
+    width: 1rem;
+    height: 1rem;
+    filter: brightness(0) invert(1);
+}
+
+.cover-input {
+    display: none;
+}
+
+.project-cover-menu-item {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    font-size: 0.78rem;
+}
+
+.project-cover-pending {
+    background-color: $ui-black-transparent;
 }
 
 .menu-bar-item.language-menu {
@@ -169,7 +226,7 @@
 }
 
 .divider {
-    margin: 0 .5rem;
+    margin: 0 .25rem;
     height: 34px;
     vertical-align: middle;
 }
@@ -200,6 +257,63 @@
     height: 1rem;
 }
 
+.mobile-landscape {
+    height: 2.25rem;
+    font-size: 0.68rem;
+    overflow: hidden;
+}
+
+.mobile-landscape .menu-bar-item {
+    height: 2.25rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.mobile-landscape .main-menu .menu-bar-item,
+.mobile-landscape .tail-menu .menu-bar-item {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+}
+
+.mobile-landscape .file-menu {
+    flex-basis: 12rem;
+    min-width: 6rem;
+}
+
+.mobile-landscape .title-menu-item {
+    min-width: 5rem;
+}
+
+.mobile-landscape .title-field-growable {
+    min-width: 5rem;
+}
+
+.mobile-landscape .openblock-logo {
+    height: 1.25rem;
+}
+
+.mobile-landscape .screen-shot-logo {
+    height: 1.35rem;
+}
+
+.mobile-landscape .language-icon {
+    height: 1.2rem;
+}
+
+.mobile-landscape .upload-firmware-logo {
+    height: 1rem;
+}
+
+.mobile-landscape .divider {
+    height: 1.55rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+}
+
+.mobile-landscape .menu-bar-button {
+    height: 1.65rem;
+}
+
 .help-icon {
     height: 20px;
 }
@@ -228,6 +342,7 @@
 
 .device-icon {
     height: 20px;
+    flex: 0 0 auto;
 }
 
 .save-icon {
@@ -302,13 +417,36 @@
 }
 
 .program-mode-group {
-    padding-right: 2rem;
-    padding-left: 2rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    max-width: 11rem;
 }
 
 .program-mode-group span{
     margin-left: 0;
     margin-right: 0.7rem;
+}
+
+.essential-menu-item {
+    min-width: 0;
+    max-width: 12rem;
+}
+
+.essential-label,
+.program-mode-label {
+    display: inline-block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.essential-label {
+    max-width: 9rem;
+}
+
+.program-mode-label {
+    max-width: 6.5rem;
 }
 
 .program-mode-switch {
@@ -323,4 +461,3 @@
   vertical-align: middle;
   padding-right: 2rem;
 }
-

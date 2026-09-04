@@ -44,15 +44,27 @@ const ConnectionModalComponent = props => (
 );
 
 ConnectionModalComponent.propTypes = {
+    connectionType: PropTypes.string,
     connectingMessage: PropTypes.node.isRequired,
     connectionSmallIconURL: PropTypes.string,
     connectionTipIconURL: PropTypes.string,
+    firmwareUploadRequired: PropTypes.bool,
+    isChromeOS: PropTypes.bool,
     name: PropTypes.node,
     onCancel: PropTypes.func.isRequired,
+    onConnectionTypeChange: PropTypes.func,
     onHelp: PropTypes.func.isRequired,
+    onUploadFirmware: PropTypes.func,
     phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired,
     title: PropTypes.string.isRequired,
-    useAutoScan: PropTypes.bool.isRequired
+    useAutoScan: PropTypes.bool.isRequired,
+    webBluetoothConnectionSupported: PropTypes.bool,
+    webBluetoothConnectionVisible: PropTypes.bool,
+    webBluetoothDebugInfo: PropTypes.string,
+    webBluetoothStatus: PropTypes.string,
+    webSerialConnectionSupported: PropTypes.bool,
+    webSerialConnectionVisible: PropTypes.bool,
+    webSerialStatus: PropTypes.string
 };
 
 ConnectionModalComponent.defaultProps = {

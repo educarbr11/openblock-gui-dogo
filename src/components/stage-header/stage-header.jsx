@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {Camera, CameraOff} from 'lucide-react';
 import {connect} from 'react-redux';
 import VM from 'openblock-vm';
 
@@ -18,7 +19,7 @@ import unFullScreenIcon from './icon--unfullscreen.svg';
 
 import signalIcon from './icon--signal.svg';
 
-import openblockLogo from '../menu-bar/openblock-logo.svg';
+import openblockLogo from '../../../static/dogoblock_logo_full.svg';
 import styles from './stage-header.css';
 
 const messages = defineMessages({
@@ -46,6 +47,16 @@ const messages = defineMessages({
         defaultMessage: 'Full Screen Control',
         description: 'Button to enter/exit full screen mode',
         id: 'gui.stageHeader.fullscreenControl'
+    },
+    handDetectorActive: {
+        defaultMessage: 'Hand detector active',
+        description: 'Stage header active hand detector indicator',
+        id: 'gui.stageHeader.handDetectorActive'
+    },
+    stopHandDetector: {
+        defaultMessage: 'Stop hand detector',
+        description: 'Stage header button to stop hand detection',
+        id: 'gui.stageHeader.stopHandDetector'
     }
 });
 
@@ -53,11 +64,14 @@ const StageHeaderComponent = function (props) {
     const {
         isFullScreen,
         isPlayerOnly,
+        handDetectorRunning,
+        onOpenHandDetector,
         onKeyPress,
         onSetStageLarge,
         onSetStageSmall,
         onSetStageFull,
         onSetStageUnFull,
+        onStopHandDetector,
         realtimeConnection,
         showBranding,
         stageSizeMode,
@@ -76,7 +90,7 @@ const StageHeaderComponent = function (props) {
                     target="_blank"
                 >
                     <img
-                        alt="OpenBlock"
+                        alt="DoGoBlock"
                         src={openblockLogo}
                     />
                 </a>
@@ -166,6 +180,25 @@ const StageHeaderComponent = function (props) {
                             hidden={!props.deviceId}
                         />
                     </Box>
+                    {handDetectorRunning ? (
+                        <div className={styles.handDetectorGroup}>
+                            <Button
+                                className={classNames(styles.handDetectorButton, styles.handDetectorActive)}
+                                title={props.intl.formatMessage(messages.handDetectorActive)}
+                                onClick={onOpenHandDetector}
+                            >
+                                <Camera size={17} />
+                                <span />
+                            </Button>
+                            <Button
+                                className={styles.handDetectorButton}
+                                title={props.intl.formatMessage(messages.stopHandDetector)}
+                                onClick={onStopHandDetector}
+                            >
+                                <CameraOff size={17} />
+                            </Button>
+                        </div>
+                    ) : null}
                     <div className={styles.stageSizeRow}>
                         {stageControls}
                         <div>
@@ -200,14 +233,17 @@ const mapStateToProps = state => ({
 
 StageHeaderComponent.propTypes = {
     deviceId: PropTypes.string,
+    handDetectorRunning: PropTypes.bool,
     intl: intlShape,
     isFullScreen: PropTypes.bool.isRequired,
     isPlayerOnly: PropTypes.bool.isRequired,
     onKeyPress: PropTypes.func.isRequired,
+    onOpenHandDetector: PropTypes.func.isRequired,
     onSetStageFull: PropTypes.func.isRequired,
     onSetStageLarge: PropTypes.func.isRequired,
     onSetStageSmall: PropTypes.func.isRequired,
     onSetStageUnFull: PropTypes.func.isRequired,
+    onStopHandDetector: PropTypes.func.isRequired,
     realtimeConnection: PropTypes.bool.isRequired,
     showBranding: PropTypes.bool.isRequired,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),

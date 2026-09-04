@@ -17,6 +17,7 @@ import monitorLayoutReducer, {monitorLayoutInitialState} from './monitor-layout'
 import projectChangedReducer, {projectChangedInitialState} from './project-changed';
 import projectStateReducer, {projectStateInitialState} from './project-state';
 import projectTitleReducer, {projectTitleInitialState} from './project-title';
+import projectCoverReducer, {projectCoverInitialState} from './project-cover';
 import fontsLoadedReducer, {fontsLoadedInitialState} from './fonts-loaded';
 import restoreDeletionReducer, {restoreDeletionInitialState} from './restore-deletion';
 import stageSizeReducer, {stageSizeInitialState} from './stage-size';
@@ -33,6 +34,7 @@ import deviceReducer, {deviceInitialState} from './device';
 import deviceDataReducer, {deviceDataInitialState} from './device-data';
 import hardwareConsoleReducer, {hardwareConsoleInitialState} from './hardware-console';
 import updateReducer, {updateInitialState} from './update';
+import projectInteractionsReducer, {projectInteractionsInitialState} from './project-interactions';
 
 import decks from '../lib/libraries/decks/index.jsx';
 
@@ -62,6 +64,7 @@ const guiInitialState = {
     projectChanged: projectChangedInitialState,
     projectState: projectStateInitialState,
     projectTitle: projectTitleInitialState,
+    projectCover: projectCoverInitialState,
     fontsLoaded: fontsLoadedInitialState,
     restoreDeletion: restoreDeletionInitialState,
     targets: targetsInitialState,
@@ -71,7 +74,8 @@ const guiInitialState = {
     vmStatus: vmStatusInitialState,
     workspaceMetrics: workspaceMetricsInitialState,
     programMode: programModeInitialState,
-    update: updateInitialState
+    update: updateInitialState,
+    projectInteractions: projectInteractionsInitialState
 };
 
 const initPlayer = function (currentState) {
@@ -167,6 +171,7 @@ const guiReducer = combineReducers({
     projectChanged: projectChangedReducer,
     projectState: projectStateReducer,
     projectTitle: projectTitleReducer,
+    projectCover: projectCoverReducer,
     fontsLoaded: fontsLoadedReducer,
     restoreDeletion: restoreDeletionReducer,
     targets: targetReducer,
@@ -176,7 +181,8 @@ const guiReducer = combineReducers({
     vmStatus: vmStatusReducer,
     workspaceMetrics: workspaceMetricsReducer,
     programMode: programModeReducer,
-    update: updateReducer
+    update: updateReducer,
+    projectInteractions: projectInteractionsReducer
 });
 
 export {

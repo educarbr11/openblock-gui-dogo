@@ -19,6 +19,10 @@ OpenBlock Online: [https://openblockcc.github.io/openblock-gui/develop/](https:/
 
 Visit the wiki: [https://wiki.openblock.cc](https://wiki.openblock.cc)
 
+## Dogoblock assets
+
+- [Fluxo de preparação, upload e cadastro de sprites](./docs/sprite-assets.md)
+
 ## Join chat
 
 - Gitter: [https://gitter.im/openblockcc/community](https://gitter.im/openblockcc/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)

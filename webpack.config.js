@@ -1,4 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
+const crypto = require('crypto');
+const fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 
@@ -13,8 +15,52 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
-const STATIC_PATH = process.env.STATIC_PATH || '/static';
+const createHash = crypto.createHash;
+crypto.createHash = algorithm => createHash(algorithm === 'md4' ? 'sha256' : algorithm);
+
+const loadDotEnv = () => {
+    const envPath = path.resolve(__dirname, '.env');
+    if (!fs.existsSync(envPath)) return;
+    fs.readFileSync(envPath, 'utf8')
+        .split(/\r?\n/)
+        .forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) return;
+            const separatorIndex = trimmed.indexOf('=');
+            if (separatorIndex === -1) return;
+            const key = trimmed.slice(0, separatorIndex).trim();
+            const value = trimmed.slice(separatorIndex + 1).trim()
+                .replace(/^['"]|['"]$/g, '');
+            if (key && typeof process.env[key] === 'undefined') {
+                process.env[key] = value;
+            }
+        });
+};
+
+loadDotEnv();
+
+const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production' : 'development');
+const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
+const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
+const envDefinitions = {
+    'process.env.NODE_ENV': JSON.stringify(BUILD_NODE_ENV),
+    'process.env.DEBUG': Boolean(process.env.DEBUG),
+    'process.env.GA_ID': JSON.stringify(process.env.GA_ID || ''),
+    'process.env.GA_DEBUG': JSON.stringify(process.env.GA_DEBUG || 'false'),
+    'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
+    'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
+    'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
+};
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
+const workspaceRoot = path.resolve(__dirname, '..');
+const localOpenBlockVMPath = process.env.OPENBLOCK_VM_PATH ?
+    path.resolve(process.env.OPENBLOCK_VM_PATH) :
+    path.resolve(__dirname, '..', 'openblock-vm');
+const hasLocalOpenBlockVM = require('fs').existsSync(path.join(localOpenBlockVMPath, 'package.json'));
+const openBlockVMPath = hasLocalOpenBlockVM ?
+    localOpenBlockVMPath :
+    path.resolve(__dirname, 'node_modules', 'openblock-vm');
 const WATCH_IGNORED = [
     path.resolve(__dirname, 'build'),
     path.resolve(__dirname, 'dist'),
@@ -22,7 +68,7 @@ const WATCH_IGNORED = [
 ];
 
 const base = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode: BUILD_NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
@@ -42,7 +88,12 @@ const base = {
         hashFunction: 'sha256'
     },
     resolve: {
-        symlinks: false
+        symlinks: false,
+        alias: {
+            ...(hasLocalOpenBlockVM ? {
+                'openblock-vm': localOpenBlockVMPath
+            } : {})
+        }
     },
     module: {
         rules: [{
@@ -50,6 +101,7 @@ const base = {
             loader: 'babel-loader',
             include: [
                 path.resolve(__dirname, 'src'),
+                ...(hasLocalOpenBlockVM ? [path.join(localOpenBlockVMPath, 'src')] : []),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
@@ -63,7 +115,8 @@ const base = {
                     '@babel/plugin-transform-async-to-generator',
                     '@babel/plugin-proposal-object-rest-spread',
                     ['react-intl', {
-                        messagesDir: './translations/messages/'
+                        messagesDir: './translations/messages/',
+                        workspaceRoot
                     }]],
                 presets: ['@babel/preset-env', '@babel/preset-react']
             }
@@ -155,34 +208,30 @@ module.exports = [
             }
         },
         plugins: base.plugins.concat([
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
-                'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
-            }),
+            new webpack.DefinePlugin(envDefinitions),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
-                title: 'OpenBlock',
+                title: 'DoGoBlock',
                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'blocksonly'],
                 template: 'src/playground/index.ejs',
                 filename: 'blocks-only.html',
-                title: 'OpenBlock GUI: Blocks Only Example'
+                title: 'DoGoBlock GUI: Blocks Only Example'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'compatibilitytesting'],
                 template: 'src/playground/index.ejs',
                 filename: 'compatibility-testing.html',
-                title: 'OpenBlock GUI: Compatibility Testing'
+                title: 'DoGoBlock GUI: Compatibility Testing'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'player'],
                 template: 'src/playground/index.ejs',
                 filename: 'player.html',
-                title: 'OpenBlock GUI: Player Example'
+                title: 'DoGoBlock GUI: Player Example'
             }),
             new CopyWebpackPlugin([{
                 from: 'static',
@@ -199,7 +248,7 @@ module.exports = [
             }]),
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
-                context: 'node_modules/openblock-vm/dist/web'
+                context: path.join(openBlockVMPath, 'dist', 'web')
             }])
         ])
     })
@@ -233,13 +282,14 @@ module.exports = [
                 ])
             },
             plugins: base.plugins.concat([
+                new webpack.DefinePlugin(envDefinitions),
                 new CopyWebpackPlugin([{
                     from: 'node_modules/openblock-blocks/media',
                     to: 'static/blocks-media'
                 }]),
                 new CopyWebpackPlugin([{
                     from: 'extension-worker.{js,js.map}',
-                    context: 'node_modules/openblock-vm/dist/web'
+                    context: path.join(openBlockVMPath, 'dist', 'web')
                 }]),
                 // Include library JSON files for scratch-desktop to use for downloading
                 new CopyWebpackPlugin([{

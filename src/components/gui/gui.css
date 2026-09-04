@@ -338,3 +338,113 @@ $fade-out-distance: 15px;
     padding-right: 0;
     overflow: hidden;
 }
+
+.mobile-landscape {
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mobile-landscape .body-wrapper {
+    height: calc(100% - 2.25rem);
+}
+
+.mobile-landscape .flex-wrapper {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mobile-landscape .editor-wrapper {
+    flex-basis: 0;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.mobile-landscape .tabs,
+.mobile-landscape .tab-panel,
+.mobile-landscape .blocks-wrapper {
+    min-height: 0;
+}
+
+.mobile-landscape .tab-list {
+    height: 2rem;
+    width: 13.5rem;
+}
+
+.mobile-landscape .tab {
+    min-width: 0;
+    padding: 0 0.55rem;
+    font-size: 0;
+}
+
+.mobile-landscape .tab img {
+    width: 1.05rem;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.mobile-landscape .stage-and-target-wrapper {
+    flex-shrink: 0;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.mobile-landscape .show-stage {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.mobile-landscape .target-wrapper {
+    flex-grow: 0;
+    flex-basis: 6.4rem;
+    min-height: 0;
+    max-height: 6.4rem;
+    padding-top: 0.25rem;
+}
+
+.mobile-landscape .mobile-stage-tab-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-grow: 1;
+    min-height: 0;
+    width: 100%;
+    padding: 0.25rem;
+    gap: 0.35rem;
+    overflow: hidden;
+}
+
+.mobile-landscape .mobile-stage-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
+}
+
+.mobile-landscape .mobile-target-wrapper {
+    display: flex;
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.mobile-landscape .extension-button-container {
+    width: 3rem;
+    height: 2.6rem;
+}
+
+.mobile-landscape .extension-button-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+}
+
+.mobile-landscape .watermark {
+    display: none;
+}
+
+.mobile-landscape .alerts-container {
+    margin-top: 2.25rem;
+}

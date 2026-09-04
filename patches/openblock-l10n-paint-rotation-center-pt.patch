@@ -1,0 +1,22 @@
+diff --git a/editor/paint-editor/pt-br.json b/editor/paint-editor/pt-br.json
+--- a/editor/paint-editor/pt-br.json
++++ b/editor/paint-editor/pt-br.json
+@@ -15,6 +15,7 @@
+     "paint.paintEditor.front": "Frente",
+     "paint.paintEditor.back": "Atrás",
+     "paint.paintEditor.more": "Mais",
++    "paint.paintEditor.rotationCenter": "Centro",
+     "paint.modeTools.brushSize": "Tamanho",
+     "paint.modeTools.eraserSize": "Tamanho da borracha",
+     "paint.modeTools.copy": "Copiar",
+diff --git a/editor/paint-editor/pt.json b/editor/paint-editor/pt.json
+--- a/editor/paint-editor/pt.json
++++ b/editor/paint-editor/pt.json
+@@ -15,6 +15,7 @@
+     "paint.paintEditor.front": "Para a Frente",
+     "paint.paintEditor.back": "Para Trás",
+     "paint.paintEditor.more": "Mais",
++    "paint.paintEditor.rotationCenter": "Centro",
+     "paint.modeTools.brushSize": "Tamanho",
+     "paint.modeTools.eraserSize": "Tamanho da borracha",
+     "paint.modeTools.copy": "Copiar",
