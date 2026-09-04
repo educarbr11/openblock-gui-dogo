@@ -748,10 +748,10 @@ const patchOpenBlockBlocksKeyReleasedPackage = packageDir => {
                 '"EVENT_WHENKEYPRESSED": "when %1 key pressed",\n    "EVENT_WHENKEYRELEASED": "when %1 key released",'
             );
         }
-        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta"')) {
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando soltar a tecla %1"')) {
             text = text.replace(
-                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",',
-                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",\n    "EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta",'
+                '"EVENT_WHENKEYPRESSED": "quando pressionar a tecla %1",',
+                '"EVENT_WHENKEYPRESSED": "quando pressionar a tecla %1",\n    "EVENT_WHENKEYRELEASED": "quando soltar a tecla %1",'
             );
         }
         fs.writeFileSync(scratchMsgsFile, text);
@@ -792,10 +792,10 @@ const patchOpenBlockBlocksKeyReleasedPackage = packageDir => {
                 '\\"EVENT_WHENKEYPRESSED\\": \\"when %1 key pressed\\",\\n    \\"EVENT_WHENKEYRELEASED\\": \\"when %1 key released\\",'
             );
         }
-        if (!text.includes('\\"EVENT_WHENKEYRELEASED\\": \\"quando a tecla %1 for solta\\"')) {
+        if (!text.includes('\\"EVENT_WHENKEYRELEASED\\": \\"quando soltar a tecla %1\\"')) {
             text = text.replace(
-                '\\"EVENT_WHENKEYPRESSED\\": \\"quando a tecla %1 for pressionada\\",',
-                '\\"EVENT_WHENKEYPRESSED\\": \\"quando a tecla %1 for pressionada\\",\\n    \\"EVENT_WHENKEYRELEASED\\": \\"quando a tecla %1 for solta\\",'
+                '\\"EVENT_WHENKEYPRESSED\\": \\"quando pressionar a tecla %1\\",',
+                '\\"EVENT_WHENKEYPRESSED\\": \\"quando pressionar a tecla %1\\",\\n    \\"EVENT_WHENKEYRELEASED\\": \\"quando soltar a tecla %1\\",'
             );
         }
         fs.writeFileSync(distFile, text);
@@ -1833,7 +1833,7 @@ const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
     if (!fs.existsSync(packageDir)) return;
 
     [
-        ['pt-br.json', 'quando a tecla %1 for solta'],
+        ['pt-br.json', 'quando soltar a tecla %1'],
         ['pt.json', 'Quando alguém soltar a tecla %1']
     ].forEach(([fileName, value]) => {
         const file = path.join(packageDir, 'editor', 'blocks', fileName);
@@ -1852,10 +1852,10 @@ const patchOpenBlockL10nKeyReleasedPackage = packageDir => {
                 '"EVENT_WHENKEYPRESSED": "when %1 key pressed",\n    "EVENT_WHENKEYRELEASED": "when %1 key released",'
             );
         }
-        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta"')) {
+        if (!text.includes('"EVENT_WHENKEYRELEASED": "quando soltar a tecla %1"')) {
             text = text.replace(
-                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",',
-                '"EVENT_WHENKEYPRESSED": "quando a tecla %1 for pressionada",\n    "EVENT_WHENKEYRELEASED": "quando a tecla %1 for solta",'
+                '"EVENT_WHENKEYPRESSED": "quando pressionar a tecla %1",',
+                '"EVENT_WHENKEYPRESSED": "quando pressionar a tecla %1",\n    "EVENT_WHENKEYRELEASED": "quando soltar a tecla %1",'
             );
         }
         if (!text.includes('"EVENT_WHENKEYRELEASED": "Quando alguém soltar a tecla %1"')) {
@@ -2149,6 +2149,9 @@ const basicBlockTranslationsPtBr = Object.freeze({
     DATA_SHOWLIST: 'mostrar a lista %1',
     DATA_HIDELIST: 'esconder a lista %1',
     EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar',
+    EVENT_WHENFLAGCLICKED: 'quando clicar na %1',
+    EVENT_WHENTHISSPRITECLICKED: 'quando clicar nesse ator',
+    EVENT_WHENKEYPRESSED: 'quando pressionar a tecla %1',
     EVENT_BROADCAST: 'transmitir %1',
     EVENT_BROADCASTANDWAIT: 'transmitir %1 e esperar',
     LOOKS_SAYFORSECS: 'dizer %1 por %2 segundos',
