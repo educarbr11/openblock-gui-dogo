@@ -2149,7 +2149,7 @@ const basicBlockTranslationsPtBr = Object.freeze({
     DATA_SHOWLIST: 'mostrar a lista %1',
     DATA_HIDELIST: 'esconder a lista %1',
     EVENT_WHENARDUINOBEGIN: 'quando o Arduino iniciar',
-    EVENT_WHENFLAGCLICKED: 'quando clicar na %1',
+    EVENT_WHENFLAGCLICKED: 'quando clicar em %1',
     EVENT_WHENTHISSPRITECLICKED: 'quando clicar nesse ator',
     EVENT_WHENKEYPRESSED: 'quando pressionar a tecla %1',
     EVENT_BROADCAST: 'transmitir %1',
