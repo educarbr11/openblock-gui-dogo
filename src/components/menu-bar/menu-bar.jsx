@@ -29,6 +29,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import {isScratchDesktop} from '../../lib/isScratchDesktop';
+import uploadArduinoRealtimeFirmware from '../../lib/upload-arduino-realtime-firmware';
 import {UPDATE_MODAL_STATE} from '../../lib/update-state.js';
 
 import {
@@ -89,14 +90,15 @@ import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 import aboutIcon from './icon--about.svg';
 import saveIcon from './icon--save.svg';
+import downloadIcon from './icon--download.svg';
 // import linkSocketIcon from './icon--link-socket.svg';
 // import communityIcon from './icon--community.svg';
 import wikiIcon from './icon--wiki.svg';
 import fileIcon from './icon--file.svg';
 import editIcon from './icon--edit.svg';
 
-import openblockLogo from './openblock-logo.svg';
-import openblockLogoSmall from './openblock-logo-small.svg';
+import openblockLogo from '../../../static/dogoblock_logo_full.svg';
+import openblockLogoSmall from '../../../static/dogoblock_logo_icon.svg';
 
 import sharedMessages from '../../lib/shared-messages';
 
@@ -111,6 +113,8 @@ import settingIcon from './icon--setting.svg';
 import uploadFirmwareIcon from './icon--upload-firmware.svg';
 import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
+import {setProjectChanged} from '../../reducers/project-changed';
+import {setPendingProjectCover} from '../../reducers/project-cover';
 
 const ariaMessages = defineMessages({
     language: {
@@ -229,11 +233,15 @@ class MenuBar extends React.Component {
             'handleProgramModeUpdate',
             'handleScreenshot',
             'handleCheckUpdate',
-            'handleClearCache'
+            'handleClearCache',
+            'handleOpenProjectPage',
+            'handleClickProjectCover',
+            'handleProjectCoverSelected'
         ]);
         this.state = {
             isOverflow: false
         };
+        this.projectCoverInput = React.createRef();
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -252,6 +260,14 @@ class MenuBar extends React.Component {
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.props.onDisconnect);
         this.props.vm.removeListener('PROGRAM_MODE_UPDATE', this.handleProgramModeUpdate);
         window.removeEventListener('resize', this.handleWindowsResize);
+        if (this.programModeSwitchFrame) {
+            window.cancelAnimationFrame(this.programModeSwitchFrame);
+            this.programModeSwitchFrame = null;
+        }
+        if (this.programModeSwitchTimeout) {
+            window.clearTimeout(this.programModeSwitchTimeout);
+            this.programModeSwitchTimeout = null;
+        }
     }
     handleWindowsResize () {
         this.setState({isOverflow: false});
@@ -292,12 +308,36 @@ class MenuBar extends React.Component {
         this.props.onRequestCloseFile();
     }
     handleClickSave () {
-        this.props.onClickSave();
+        if (this.props.canSave) {
+            this.props.onClickSave();
+        } else if (this.props.canPromptLoginToSave) {
+            this.props.onRequestLoginToSave();
+        }
         this.props.onRequestCloseFile();
     }
     handleClickSaveAsCopy () {
         this.props.onClickSaveAsCopy();
         this.props.onRequestCloseFile();
+    }
+    handleClickProjectCover () {
+        if (this.projectCoverInput.current) {
+            this.projectCoverInput.current.click();
+        }
+    }
+    handleProjectCoverSelected (event) {
+        const file = event.target.files && event.target.files[0];
+        event.target.value = '';
+        if (!file) return;
+        if (!file.type || !/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) {
+            window.alert('Selecione uma imagem PNG, JPG, WEBP ou GIF para a capa.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            window.alert('A capa deve ter no máximo 5MB.');
+            return;
+        }
+        this.props.onSetPendingProjectCover(file, URL.createObjectURL(file));
+        this.props.onProjectChanged();
     }
     handleClickSeeCommunity (waitForUpdate) {
         if (this.props.shouldSaveBeforeTransition()) {
@@ -329,7 +369,11 @@ class MenuBar extends React.Component {
     handleKeyPress (event) {
         const modifier = bowser.mac ? event.metaKey : event.ctrlKey;
         if (modifier && event.key === 's') {
-            this.props.onClickSave();
+            if (this.props.canSave) {
+                this.props.onClickSave();
+            } else if (this.props.canPromptLoginToSave) {
+                this.props.onRequestLoginToSave();
+            }
             event.preventDefault();
         }
     }
@@ -391,17 +435,17 @@ class MenuBar extends React.Component {
         }
     }
     handleSelectDeviceMouseUp () {
-        const blocklyBlockCanvas = document.querySelector('.blocklyWorkspace .blocklyBlockCanvas');
-        if (blocklyBlockCanvas.childNodes.length === 0) {
-            this.props.onOpenDeviceLibrary();
-        } else {
-            this.props.onWorkspaceIsNotEmpty();
-        }
+        this.props.onOpenDeviceLibrary();
     }
     handleProgramModeSwitchOnChange () {
-        if (this.props.isRealtimeMode) {
-            this.props.vm.runtime.setRealtimeMode(false);
-        } else {
+        if (this.programModeSwitchPending) {
+            return;
+        }
+
+        const nextRealtimeMode = !this.props.isRealtimeMode;
+        this.programModeSwitchPending = true;
+
+        if (nextRealtimeMode) {
             /**
              * The realtime stage framwork didn't support STAGE_SIZE_MODES.hide,
              * so if the mode is hide switch to large mode.
@@ -409,7 +453,24 @@ class MenuBar extends React.Component {
             if (this.props.stageSizeMode === STAGE_SIZE_MODES.hide) {
                 this.props.onSetStageLarge();
             }
-            this.props.vm.runtime.setRealtimeMode(true);
+        }
+
+        const applyModeSwitch = () => {
+            this.programModeSwitchFrame = null;
+            this.programModeSwitchTimeout = window.setTimeout(() => {
+                this.programModeSwitchTimeout = null;
+                try {
+                    this.props.vm.runtime.setRealtimeMode(nextRealtimeMode);
+                } finally {
+                    this.programModeSwitchPending = false;
+                }
+            }, 0);
+        };
+
+        if (window.requestAnimationFrame) {
+            this.programModeSwitchFrame = window.requestAnimationFrame(applyModeSwitch);
+        } else {
+            applyModeSwitch();
         }
     }
     handleProgramModeUpdate (data) {
@@ -421,6 +482,15 @@ class MenuBar extends React.Component {
     }
     handleUploadFirmware () {
         if (this.props.deviceId) {
+            if (uploadArduinoRealtimeFirmware({
+                vm: this.props.vm,
+                deviceId: this.props.deviceId,
+                connectionType: this.props.connectionType,
+                onOpenUploadProgress: this.props.onOpenUploadProgress,
+                onSetRealtimeConnection: this.props.onSetRealtimeConnection
+            })) {
+                return;
+            }
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onSetRealtimeConnection(false);
             this.props.onOpenUploadProgress();
@@ -457,6 +527,11 @@ class MenuBar extends React.Component {
         );
         if (readyClearCache) {
             this.props.onClickClearCache();
+        }
+    }
+    handleOpenProjectPage () {
+        if (this.props.projectId && this.props.projectId !== '0') {
+            window.location.hash = `/projects/${this.props.projectId}`;
         }
     }
     buildAboutMenu (onClickAbout) {
@@ -555,217 +630,233 @@ class MenuBar extends React.Component {
         );
         // Show the About button only if we have a handler for it (like in the desktop app)
         const aboutButton = this.buildAboutMenu(this.props.onClickAbout);
-        const compactHeader = this.state.isOverflow || this.props.locale === 'pt-br';
+        const compactBranding = this.state.isOverflow;
+        const compactSecondaryActions = this.state.isOverflow;
+        const showEssentialLabels = true;
+        const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
         return (
-            <Box
-                className={classNames(
-                    this.props.className,
-                    styles.menuBar
-                )}
-                componentRef={this.containerRef}
-            >
-                <div className={styles.mainMenu}>
-                    <div className={classNames(styles.menuBarItem)}>
-                        <img
-                            alt="OpenBlock"
-                            className={classNames(styles.openblockLogo, {
-                                [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
-                            })}
-                            draggable={false}
-                            src={compactHeader ? this.props.logoSmall : this.props.logo}
-                            onClick={this.props.onClickLogo}
-                        />
-                    </div>
-                    {(this.props.canChangeLanguage) && (<div
-                        className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
-                    >
-                        <div>
+            <React.Fragment>
+                <Box
+                    className={classNames(
+                        this.props.className,
+                        styles.menuBar,
+                        this.props.mobileLandscape ? styles.mobileLandscape : null
+                    )}
+                    componentRef={this.containerRef}
+                >
+                    <div className={styles.mainMenu}>
+                        <div className={classNames(styles.menuBarItem)}>
                             <img
-                                className={styles.languageIcon}
-                                src={languageIcon}
-                            />
-                            <img
-                                className={styles.languageCaret}
-                                src={dropdownCaret}
+                                alt="DoGoBlock"
+                                className={classNames(styles.openblockLogo, {
+                                    [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
+                                })}
+                                draggable={false}
+                                src={compactBranding ? this.props.logoSmall : this.props.logo}
+                                onClick={this.props.onClickLogo}
                             />
                         </div>
-                        <LanguageSelector label={this.props.intl.formatMessage(ariaMessages.language)} />
-                    </div>)}
-                    {(this.props.canManageFiles) && (
-                        <div
-                            className={classNames(styles.menuBarItem, styles.hoverable, {
-                                [styles.active]: this.props.fileMenuOpen
-                            })}
-                            onMouseUp={this.props.onClickFile}
+                        {(this.props.canChangeLanguage) && (<div
+                            className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
                         >
-                            {compactHeader ? (
+                            <div>
                                 <img
-                                    className={styles.fileIcon}
-                                    src={fileIcon}
-                                />) :
-                                <FormattedMessage
-                                    defaultMessage="File"
-                                    description="Text for file dropdown menu"
-                                    id="gui.menuBar.file"
-                                />}
+                                    className={styles.languageIcon}
+                                    src={languageIcon}
+                                />
+                                <img
+                                    className={styles.languageCaret}
+                                    src={dropdownCaret}
+                                />
+                            </div>
+                            <LanguageSelector label={this.props.intl.formatMessage(ariaMessages.language)} />
+                        </div>)}
+                        {(this.props.canManageFiles) && (
+                            <div
+                                className={classNames(styles.menuBarItem, styles.hoverable, {
+                                    [styles.active]: this.props.fileMenuOpen
+                                })}
+                                onMouseUp={this.props.onClickFile}
+                            >
+                                {compactSecondaryActions ? (
+                                    <img
+                                        className={styles.fileIcon}
+                                        src={fileIcon}
+                                    />) :
+                                    <FormattedMessage
+                                        defaultMessage="File"
+                                        description="Text for file dropdown menu"
+                                        id="gui.menuBar.file"
+                                    />}
+                                <MenuBarMenu
+                                    className={classNames(styles.menuBarMenu)}
+                                    open={this.props.fileMenuOpen}
+                                    place={this.props.isRtl ? 'left' : 'right'}
+                                    onRequestClose={this.props.onRequestCloseFile}
+                                >
+                                    <MenuSection>
+                                        <MenuItem
+                                            isRtl={this.props.isRtl}
+                                            onClick={this.handleClickNew}
+                                        >
+                                            {newProjectMessage}
+                                        </MenuItem>
+                                    </MenuSection>
+                                    {(this.props.canSave || this.props.canPromptLoginToSave ||
+                                    this.props.canCreateCopy || this.props.canRemix) && (
+                                        <MenuSection>
+                                            {(this.props.canSave || this.props.canPromptLoginToSave) && (
+                                                <MenuItem onClick={this.handleClickSave}>
+                                                    {saveNowMessage}
+                                                </MenuItem>
+                                            )}
+                                            {this.props.canCreateCopy && (
+                                                <MenuItem onClick={this.handleClickSaveAsCopy}>
+                                                    {createCopyMessage}
+                                                </MenuItem>
+                                            )}
+                                            {this.props.canRemix && (
+                                                <MenuItem onClick={this.handleClickRemix}>
+                                                    {remixMessage}
+                                                </MenuItem>
+                                            )}
+                                        </MenuSection>
+                                    )}
+                                    <MenuSection>
+                                        <MenuItem
+                                            onClick={this.props.onStartSelectingFileUpload}
+                                        >
+                                            {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
+                                        </MenuItem>
+                                        <SB3Downloader>{(className, downloadProjectCallback) => (
+                                            <MenuItem
+                                                className={className}
+                                                onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
+                                            >
+                                                <FormattedMessage
+                                                    defaultMessage="Save to your computer"
+                                                    description="Menu bar item for downloading a project to your computer" // eslint-disable-line max-len
+                                                    id="gui.menuBar.downloadToComputer"
+                                                />
+                                            </MenuItem>
+                                        )}</SB3Downloader>
+                                    </MenuSection>
+                                </MenuBarMenu>
+                            </div>
+                        )}
+                        <div
+                            className={classNames(styles.menuBarItem,
+                                this.props.isRealtimeMode ? styles.hoverable : styles.disabled,
+                                {[styles.active]: this.props.editMenuOpen
+                                })}
+                            onMouseUp={this.props.isRealtimeMode ? this.props.onClickEdit : null}
+                        >
+                            <div className={classNames(styles.editMenu)} >
+                                {compactSecondaryActions ? (
+                                    <img
+                                        className={styles.editIcon}
+                                        src={editIcon}
+                                    />) :
+                                    <FormattedMessage
+                                        defaultMessage="Edit"
+                                        description="Text for edit dropdown menu"
+                                        id="gui.menuBar.edit"
+                                    />}
+                            </div>
                             <MenuBarMenu
                                 className={classNames(styles.menuBarMenu)}
-                                open={this.props.fileMenuOpen}
+                                open={this.props.editMenuOpen}
                                 place={this.props.isRtl ? 'left' : 'right'}
-                                onRequestClose={this.props.onRequestCloseFile}
+                                onRequestClose={this.props.onRequestCloseEdit}
                             >
-                                <MenuSection>
+                                <DeletionRestorer>{(handleRestore, {restorable, deletedItem}) => (
                                     <MenuItem
-                                        isRtl={this.props.isRtl}
-                                        onClick={this.handleClickNew}
+                                        className={classNames({[styles.disabled]: !restorable})}
+                                        onClick={this.handleRestoreOption(handleRestore)}
                                     >
-                                        {newProjectMessage}
+                                        {this.restoreOptionMessage(deletedItem)}
                                     </MenuItem>
-                                </MenuSection>
-                                {(this.props.canSave || this.props.canCreateCopy || this.props.canRemix) && (
-                                    <MenuSection>
-                                        {this.props.canSave && (
-                                            <MenuItem onClick={this.handleClickSave}>
-                                                {saveNowMessage}
-                                            </MenuItem>
-                                        )}
-                                        {this.props.canCreateCopy && (
-                                            <MenuItem onClick={this.handleClickSaveAsCopy}>
-                                                {createCopyMessage}
-                                            </MenuItem>
-                                        )}
-                                        {this.props.canRemix && (
-                                            <MenuItem onClick={this.handleClickRemix}>
-                                                {remixMessage}
-                                            </MenuItem>
-                                        )}
-                                    </MenuSection>
-                                )}
+                                )}</DeletionRestorer>
                                 <MenuSection>
-                                    <MenuItem
-                                        onClick={this.props.onStartSelectingFileUpload}
-                                    >
-                                        {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
-                                    </MenuItem>
-                                    <SB3Downloader>{(className, downloadProjectCallback) => (
-                                        <MenuItem
-                                            className={className}
-                                            onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
-                                        >
-                                            <FormattedMessage
-                                                defaultMessage="Save to your computer"
-                                                description="Menu bar item for downloading a project to your computer" // eslint-disable-line max-len
-                                                id="gui.menuBar.downloadToComputer"
-                                            />
+                                    <TurboMode>{(toggleTurboMode, {turboMode}) => (
+                                        <MenuItem onClick={toggleTurboMode}>
+                                            {turboMode ? (
+                                                <FormattedMessage
+                                                    defaultMessage="Turn off Turbo Mode"
+                                                    description="Menu bar item for turning off turbo mode"
+                                                    id="gui.menuBar.turboModeOff"
+                                                />
+                                            ) : (
+                                                <FormattedMessage
+                                                    defaultMessage="Turn on Turbo Mode"
+                                                    description="Menu bar item for turning on turbo mode"
+                                                    id="gui.menuBar.turboModeOn"
+                                                />
+                                            )}
                                         </MenuItem>
-                                    )}</SB3Downloader>
+                                    )}</TurboMode>
                                 </MenuSection>
                             </MenuBarMenu>
                         </div>
-                    )}
-                    <div
-                        className={classNames(styles.menuBarItem,
-                            this.props.isRealtimeMode ? styles.hoverable : styles.disabled,
-                            {[styles.active]: this.props.editMenuOpen
-                            })}
-                        onMouseUp={this.props.isRealtimeMode ? this.props.onClickEdit : null}
-                    >
-                        <div className={classNames(styles.editMenu)} >
-                            {compactHeader ? (
-                                <img
-                                    className={styles.editIcon}
-                                    src={editIcon}
-                                />) :
-                                <FormattedMessage
-                                    defaultMessage="Edit"
-                                    description="Text for edit dropdown menu"
-                                    id="gui.menuBar.edit"
-                                />}
-                        </div>
-                        <MenuBarMenu
-                            className={classNames(styles.menuBarMenu)}
-                            open={this.props.editMenuOpen}
-                            place={this.props.isRtl ? 'left' : 'right'}
-                            onRequestClose={this.props.onRequestCloseEdit}
-                        >
-                            <DeletionRestorer>{(handleRestore, {restorable, deletedItem}) => (
-                                <MenuItem
-                                    className={classNames({[styles.disabled]: !restorable})}
-                                    onClick={this.handleRestoreOption(handleRestore)}
+                        {isTauriLight ? null : (
+                            <React.Fragment>
+                                <Divider className={classNames(styles.divider)} />
+                                <div
+                                    className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
+                                    onMouseUp={this.handleSelectDeviceMouseUp}
                                 >
-                                    {this.restoreOptionMessage(deletedItem)}
-                                </MenuItem>
-                            )}</DeletionRestorer>
-                            <MenuSection>
-                                <TurboMode>{(toggleTurboMode, {turboMode}) => (
-                                    <MenuItem onClick={toggleTurboMode}>
-                                        {turboMode ? (
+                                    <img
+                                        className={styles.deviceIcon}
+                                        src={deviceIcon}
+                                    />
+                                    {
+                                        this.props.deviceName ? (
+                                            showEssentialLabels ? <span className={styles.essentialLabel}>
+                                                {this.props.deviceName}
+                                            </span> : null
+                                        ) : (showEssentialLabels ? <span className={styles.essentialLabel}>
                                             <FormattedMessage
-                                                defaultMessage="Turn off Turbo Mode"
-                                                description="Menu bar item for turning off turbo mode"
-                                                id="gui.menuBar.turboModeOff"
+                                                defaultMessage="No device selected"
+                                                description="Text for menubar no device select button"
+                                                id="gui.menuBar.noDeviceSelected"
                                             />
-                                        ) : (
-                                            <FormattedMessage
-                                                defaultMessage="Turn on Turbo Mode"
-                                                description="Menu bar item for turning on turbo mode"
-                                                id="gui.menuBar.turboModeOn"
-                                            />
+                                        </span> : null
                                         )}
-                                    </MenuItem>
-                                )}</TurboMode>
-                            </MenuSection>
-                        </MenuBarMenu>
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onMouseUp={this.handleSelectDeviceMouseUp}
-                    >
-                        <img
-                            className={styles.deviceIcon}
-                            src={deviceIcon}
-                        />
-                        {
-                            this.props.deviceName ? (
-                                compactHeader ? null : <span>
-                                    {this.props.deviceName}
-                                </span>
-                            ) : (compactHeader ? null : <FormattedMessage
-                                defaultMessage="No device selected"
-                                description="Text for menubar no device select button"
-                                id="gui.menuBar.noDeviceSelected"
-                            />
-                            )}
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onMouseUp={this.handleConnectionMouseUp}
-                    >
-                        {this.props.peripheralName ? (
-                            <React.Fragment>
-                                <img
-                                    className={styles.connectedIcon}
-                                    src={connectedIcon}
-                                />
-                                {compactHeader ? null : this.props.peripheralName}
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <img
-                                    className={styles.unconnectedIcon}
-                                    src={unconnectedIcon}
-                                />
-                                {compactHeader ? null : <FormattedMessage
-                                    defaultMessage="Unconnected"
-                                    description="Text for menubar unconnected button"
-                                    id="gui.menuBar.noConnection"
-                                />}
+                                </div>
+                                <Divider className={classNames(styles.divider)} />
+                                <div
+                                    className={classNames(styles.menuBarItem, styles.hoverable, styles.essentialMenuItem)}
+                                    onMouseUp={this.handleConnectionMouseUp}
+                                >
+                                    {this.props.peripheralName ? (
+                                        <React.Fragment>
+                                            <img
+                                                className={styles.connectedIcon}
+                                                src={connectedIcon}
+                                            />
+                                            {showEssentialLabels ? <span className={styles.essentialLabel}>
+                                                {this.props.peripheralName}
+                                            </span> : null}
+                                        </React.Fragment>
+                                    ) : (
+                                        <React.Fragment>
+                                            <img
+                                                className={styles.unconnectedIcon}
+                                                src={unconnectedIcon}
+                                            />
+                                            {showEssentialLabels ? <span className={styles.essentialLabel}>
+                                                <FormattedMessage
+                                                    defaultMessage="Unconnected"
+                                                    description="Text for menubar unconnected button"
+                                                    id="gui.menuBar.noConnection"
+                                                />
+                                            </span> : null}
+                                        </React.Fragment>
+                                    )}
+                                </div>
                             </React.Fragment>
                         )}
-                    </div>
-                    {/* <div
+                        {/* <div
                         className={classNames(styles.menuBarItem)}
                     >
                         <img
@@ -773,11 +864,10 @@ class MenuBar extends React.Component {
                             src={linkSocketIcon}
                         />
                     </div>*/}
-                </div>
-                {compactHeader ? null :
-                    (<div className={styles.fileMenu}>
+                    </div>
+                    <div className={styles.fileMenu}>
                         {this.props.canEditTitle ? (
-                            <div className={classNames(styles.menuBarItem, styles.growable)}>
+                            <div className={classNames(styles.menuBarItem, styles.growable, styles.titleMenuItem)}>
                                 <MenuBarItemTooltip
                                     enable
                                     id="title-field"
@@ -796,22 +886,44 @@ class MenuBar extends React.Component {
                                 username={this.props.authorUsername}
                             />
                         ) : null)}
+                        {(this.props.canSave || this.props.canPromptLoginToSave) && (
+                            <div
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable,
+                                    styles.saveProjectButton
+                                )}
+                                title={this.props.canSave ?
+                                    'Salvar projeto' :
+                                    'Entrar ou cadastrar para salvar o projeto'}
+                                onClick={this.handleClickSave}
+                            >
+                                <img
+                                    alt=""
+                                    className={styles.saveProjectButtonIcon}
+                                    draggable={false}
+                                    src={saveIcon}
+                                />
+                                <span>Salvar projeto</span>
+                            </div>
+                        )}
                         {(this.props.canManageFiles) && (
                             <SB3Downloader>{(className, downloadProjectCallback) => (
                                 <div
-                                    className={classNames(styles.menuBarItem, styles.hoverable)}
+                                    className={classNames(styles.menuBarItem, styles.hoverable, styles.saveMenuItem)}
                                     onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
+                                    title="Baixar projeto para o computador"
                                 >
                                     <img
                                         className={styles.saveIcon}
-                                        src={saveIcon}
+                                        src={downloadIcon}
                                     />
                                 </div>
                             )}</SB3Downloader>
                         )}
-                    </div>)}
-                <div className={styles.tailMenu}>
-                    {/* <div
+                    </div>
+                    <div className={styles.tailMenu}>
+                        {/* <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.community)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={this.handleClickOpenCommunity}
@@ -822,7 +934,7 @@ class MenuBar extends React.Component {
                         />
                         {this.state.isOverflow ? null : <FormattedMessage {...ariaMessages.community} />}
                     </div>*/}
-                    <div
+                        {/* <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.wiki)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={this.handleClickOpenWiki}
@@ -831,9 +943,9 @@ class MenuBar extends React.Component {
                             className={styles.wikiIcon}
                             src={wikiIcon}
                         />
-                        {compactHeader ? null : <FormattedMessage {...ariaMessages.wiki} />}
-                    </div>
-                    <div
+                        {compactSecondaryActions ? null : <FormattedMessage {...ariaMessages.wiki} />}
+                    </div> */}
+                        {/* <div
                         aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
                         className={classNames(styles.menuBarItem, styles.hoverable)}
                         onClick={this.props.onOpenTipLibrary}
@@ -842,109 +954,154 @@ class MenuBar extends React.Component {
                             className={styles.helpIcon}
                             src={helpIcon}
                         />
-                        {compactHeader ? null : <FormattedMessage {...ariaMessages.tutorials} />}
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, styles.hoverable)}
-                        onMouseUp={this.handleScreenshot}
-                    >
-                        <img
-                            alt="Screenshot"
-                            className={classNames(styles.screenShotLogo)}
-                            draggable={false}
-                            src={screenshotIcon}
-                        />
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div
-                        className={classNames(styles.menuBarItem, this.props.isRealtimeMode &&
-                            this.props.peripheralName ? styles.hoverable : styles.disabled)}
-                        onMouseUp={this.props.isRealtimeMode && this.props.peripheralName ?
-                            this.handleUploadFirmware : null}
-                    >
-                        <img
-                            alt="UploadFirmware"
-                            className={classNames(styles.uploadFirmwareLogo)}
-                            draggable={false}
-                            src={uploadFirmwareIcon}
-                        />
-                        {compactHeader ? null : <FormattedMessage
-                            defaultMessage="Upload Firmware"
-                            description="Button to upload the realtime firmware"
-                            id="gui.menuBar.uploadFirmware"
-                        />}
-                    </div>
-                    <Divider className={classNames(styles.divider)} />
-                    <div className={classNames(styles.menuBarItem, styles.programModeGroup)}>
-                        {compactHeader ? null : <FormattedMessage
-                            defaultMessage="Program Mode"
-                            description="Button to switch to upload mode"
-                            id="gui.menu-bar.programMode"
-                        />}
-                        <Switch
-                            className={styles.programModeSwitch}
-                            onChange={this.handleProgramModeSwitchOnChange}
-                            checked={!this.props.isRealtimeMode}
-                            disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
-                            height={25}
-                            width={45}
-                            onColor={this.props.isToolboxUpdating ||
-                                !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
-                            offColor={this.props.isToolboxUpdating ||
-                                !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                        />
-                    </div>
-                    {isScratchDesktop() ? (
+                        {compactSecondaryActions ? null : <FormattedMessage {...ariaMessages.tutorials} />}
+                    </div> */}
+                        <Divider className={classNames(styles.divider)} />
+                        {this.props.canSave && (
+                            <React.Fragment>
+                                <input
+                                    ref={this.projectCoverInput}
+                                    accept="image/png,image/jpeg,image/webp,image/gif"
+                                    className={styles.coverInput}
+                                    type="file"
+                                    onChange={this.handleProjectCoverSelected}
+                                />
+                                <div
+                                    className={classNames(
+                                        styles.menuBarItem,
+                                        styles.hoverable,
+                                        styles.projectCoverMenuItem,
+                                        this.props.pendingProjectCoverPreview ? styles.projectCoverPending : null
+                                    )}
+                                    title={this.props.pendingProjectCoverPreview ?
+                                        'Capa selecionada. Salve o projeto para enviar.' :
+                                        'Alterar capa do projeto'}
+                                    onMouseUp={this.handleClickProjectCover}
+                                >
+                                    <span>{this.props.pendingProjectCoverPreview ? '✓ Capa' : 'Capa'}</span>
+                                </div>
+                            </React.Fragment>
+                        )}
+                        {this.props.projectId && this.props.projectId !== '0' && (
+                            <div
+                                className={classNames(styles.menuBarItem, styles.hoverable)}
+                                title="Página do Projeto"
+                                onMouseUp={this.handleOpenProjectPage}
+                                style={{padding: '0 12px', fontWeight: 'bold'}}
+                            >
+                                <span>ℹ️ Página do Projeto</span>
+                            </div>
+                        )}
                         <div
-                            className={classNames(styles.menuBarItem, styles.hoverable, {
-                                [styles.active]: this.props.settingMenuOpen
-                            })}
-                            onMouseUp={this.props.onClickSetting}
+                            className={classNames(styles.menuBarItem, styles.hoverable)}
+                            onMouseUp={this.handleScreenshot}
                         >
                             <img
-                                className={styles.settingIcon}
-                                src={settingIcon}
+                                alt="Screenshot"
+                                className={classNames(styles.screenShotLogo)}
+                                draggable={false}
+                                src={screenshotIcon}
                             />
-                            <MenuBarMenu
-                                className={classNames(styles.menuBarMenu)}
-                                open={this.props.settingMenuOpen}
-                                place={this.props.isRtl ? 'right' : 'left'}
-                                onRequestClose={this.props.onRequestCloseSetting}
-                            >
-                                <MenuSection>
-                                    <MenuItem
-                                        isRtl={this.props.isRtl}
-                                        onClick={this.handleCheckUpdate}
-                                    >
-                                        {checkUpdate}
-                                    </MenuItem>
-                                    <MenuItem
-                                        isRtl={this.props.isRtl}
-                                        onClick={this.handleClearCache}
-                                    >
-                                        {clearCache}
-                                    </MenuItem>
-                                </MenuSection>
-                                <MenuSection>
-                                    <MenuItem
-                                        isRtl={this.props.isRtl}
-                                        onClick={this.props.onClickInstallDriver}
-                                    >
-                                        {installDriver}
-                                    </MenuItem>
-                                </MenuSection>
-                                <MenuSection>
-                                    {typeof this.props.onClickAbout === 'object' ? aboutButton : null}
-                                </MenuSection>
-                            </MenuBarMenu>
                         </div>
-                    ) : null}
-                </div>
-                { (typeof this.props.onClickAbout === 'function') ? aboutButton : null}
-            </Box>
+                        {isTauriLight ? null : (
+                            <React.Fragment>
+                                <Divider className={classNames(styles.divider)} />
+                                <div
+                                    className={classNames(styles.menuBarItem, this.props.deviceId &&
+                                    this.props.peripheralName ? styles.hoverable : styles.disabled)}
+                                    onMouseUp={this.props.deviceId && this.props.peripheralName ?
+                                        this.handleUploadFirmware : null}
+                                >
+                                    <img
+                                        alt="UploadFirmware"
+                                        className={classNames(styles.uploadFirmwareLogo)}
+                                        draggable={false}
+                                        src={uploadFirmwareIcon}
+                                    />
+                                    {compactSecondaryActions ? null : <FormattedMessage
+                                        defaultMessage="Upload Firmware"
+                                        description="Button to upload the realtime firmware"
+                                        id="gui.menuBar.uploadFirmware"
+                                    />}
+                                </div>
+                                <Divider className={classNames(styles.divider)} />
+                                <div
+                                    className={classNames(styles.menuBarItem, styles.programModeGroup,
+                                        styles.essentialMenuItem)}
+                                >
+                                    {showEssentialLabels ? <span className={styles.programModeLabel}>
+                                        <FormattedMessage
+                                            defaultMessage="Program Mode"
+                                            description="Button to switch to upload mode"
+                                            id="gui.menu-bar.programMode"
+                                        />
+                                    </span> : null}
+                                    <Switch
+                                        className={styles.programModeSwitch}
+                                        onChange={this.handleProgramModeSwitchOnChange}
+                                        checked={!this.props.isRealtimeMode}
+                                        disabled={this.props.isToolboxUpdating || !this.props.isSupportSwitchMode}
+                                        height={25}
+                                        width={45}
+                                        onColor={this.props.isToolboxUpdating ||
+                                        !this.props.isSupportSwitchMode ? '#888888' : '#008800'}
+                                        offColor={this.props.isToolboxUpdating ||
+                                        !this.props.isSupportSwitchMode ? '#888888' : '#FF8C1A'}
+                                        uncheckedIcon={false}
+                                        checkedIcon={false}
+                                    />
+                                </div>
+                            </React.Fragment>
+                        )}
+                        {isScratchDesktop() ? (
+                            <div
+                                className={classNames(styles.menuBarItem, styles.hoverable, {
+                                    [styles.active]: this.props.settingMenuOpen
+                                })}
+                                onMouseUp={this.props.onClickSetting}
+                            >
+                                <img
+                                    className={styles.settingIcon}
+                                    src={settingIcon}
+                                />
+                                <MenuBarMenu
+                                    className={classNames(styles.menuBarMenu)}
+                                    open={this.props.settingMenuOpen}
+                                    place={this.props.isRtl ? 'right' : 'left'}
+                                    onRequestClose={this.props.onRequestCloseSetting}
+                                >
+                                    <MenuSection>
+                                        <MenuItem
+                                            isRtl={this.props.isRtl}
+                                            onClick={this.handleCheckUpdate}
+                                        >
+                                            {checkUpdate}
+                                        </MenuItem>
+                                        <MenuItem
+                                            isRtl={this.props.isRtl}
+                                            onClick={this.handleClearCache}
+                                        >
+                                            {clearCache}
+                                        </MenuItem>
+                                    </MenuSection>
+                                    <MenuSection>
+                                        <MenuItem
+                                            isRtl={this.props.isRtl}
+                                            onClick={this.props.onClickInstallDriver}
+                                        >
+                                            {installDriver}
+                                        </MenuItem>
+                                    </MenuSection>
+                                    <MenuSection>
+                                        {typeof this.props.onClickAbout === 'object' ? aboutButton : null}
+                                    </MenuSection>
+                                </MenuBarMenu>
+                            </div>
+                        ) : null}
+                    </div>
+                    { (typeof this.props.onClickAbout === 'function') ? aboutButton : null}
+                </Box>
+            </React.Fragment>
         );
     }
 }
@@ -961,6 +1118,7 @@ MenuBar.propTypes = {
     canCreateNew: PropTypes.bool,
     canEditTitle: PropTypes.bool,
     canManageFiles: PropTypes.bool,
+    canPromptLoginToSave: PropTypes.bool,
     canRemix: PropTypes.bool,
     canSave: PropTypes.bool,
     canShare: PropTypes.bool,
@@ -982,8 +1140,10 @@ MenuBar.propTypes = {
     languageMenuOpen: PropTypes.bool,
     locale: PropTypes.string.isRequired,
     loginMenuOpen: PropTypes.bool,
+    projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     logo: PropTypes.string,
     logoSmall: PropTypes.string,
+    mobileLandscape: PropTypes.bool,
     onClickAbout: PropTypes.oneOfType([
         PropTypes.func, // button mode: call this callback when the About button is clicked
         PropTypes.arrayOf( // menu mode: list of items in the About menu
@@ -1020,6 +1180,7 @@ MenuBar.propTypes = {
     onRequestCloseSetting: PropTypes.func,
     onRequestCloseLanguage: PropTypes.func,
     onRequestCloseLogin: PropTypes.func,
+    onRequestLoginToSave: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
     onStartSelectingFileUpload: PropTypes.func,
@@ -1043,17 +1204,21 @@ MenuBar.propTypes = {
     peripheralName: PropTypes.string,
     onDisconnect: PropTypes.func.isRequired,
     onWorkspaceIsEmpty: PropTypes.func.isRequired,
-    onWorkspaceIsNotEmpty: PropTypes.func.isRequired,
     onOpenDeviceLibrary: PropTypes.func,
+    onProjectChanged: PropTypes.func,
+    onSetPendingProjectCover: PropTypes.func,
     onSetStageLarge: PropTypes.func.isRequired,
     deviceId: PropTypes.string,
     deviceName: PropTypes.string,
+    connectionType: PropTypes.string,
+    pendingProjectCoverPreview: PropTypes.string,
     onDeviceIsEmpty: PropTypes.func
 };
 
 MenuBar.defaultProps = {
     logo: openblockLogo,
     logoSmall: openblockLogoSmall,
+    onRequestLoginToSave: () => {},
     onShare: () => {}
 };
 
@@ -1061,6 +1226,7 @@ const mapStateToProps = (state, ownProps) => {
     const loadingState = state.scratchGui.projectState.loadingState;
     const user = state.session && state.session.session && state.session.session.user;
     return {
+        projectId: state.scratchGui.projectState.projectId,
         aboutMenuOpen: aboutMenuOpen(state),
         accountMenuOpen: accountMenuOpen(state),
         fileMenuOpen: fileMenuOpen(state),
@@ -1084,8 +1250,10 @@ const mapStateToProps = (state, ownProps) => {
         stageSizeMode: state.scratchGui.stageSize.stageSize,
         vm: state.scratchGui.vm,
         peripheralName: state.scratchGui.connectionModal.peripheralName,
+        connectionType: state.scratchGui.connectionModal.connectionType,
         deviceId: state.scratchGui.device.deviceId,
-        deviceName: state.scratchGui.device.deviceName
+        deviceName: state.scratchGui.device.deviceName,
+        pendingProjectCoverPreview: state.scratchGui.projectCover.previewUrl
     };
 };
 
@@ -1110,6 +1278,8 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
+    onProjectChanged: () => dispatch(setProjectChanged()),
+    onSetPendingProjectCover: (file, previewUrl) => dispatch(setPendingProjectCover(file, previewUrl)),
     onSeeCommunity: () => dispatch(setPlayer(true)),
     onSetUploadMode: () => {
         dispatch(setUploadMode());
@@ -1130,7 +1300,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onNoPeripheralIsConnected: () => showAlertWithTimeout(dispatch, 'connectAPeripheralFirst'),
     onWorkspaceIsEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsEmpty'),
-    onWorkspaceIsNotEmpty: () => showAlertWithTimeout(dispatch, 'workspaceIsNotEmpty'),
     onOpenDeviceLibrary: () => dispatch(openDeviceLibrary()),
     onDeviceIsEmpty: () => showAlertWithTimeout(dispatch, 'selectADeviceFirst')
 });

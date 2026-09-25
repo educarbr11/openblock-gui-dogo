@@ -20,3 +20,21 @@
 [dir="rtl"] .stage-selector-wrapper {
     margin-right: calc($space / 2);
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .target-pane {
+        min-height: 0;
+    }
+
+    .stage-selector-wrapper {
+        flex-basis: 3.3rem;
+    }
+
+    [dir="ltr"] .stage-selector-wrapper {
+        margin-left: 0.2rem;
+    }
+
+    [dir="rtl"] .stage-selector-wrapper {
+        margin-right: 0.2rem;
+    }
+}

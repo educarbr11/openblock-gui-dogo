@@ -14,7 +14,8 @@ class HandPoseDetectionResult extends React.Component {
         bindAll(this, [
             'handleSessionUpdate',
             'handleVideoRef',
-            'handleCanvasRef'
+            'handleCanvasRef',
+            'handleStop'
         ]);
         this.session = getHandPoseDetectionSession(props.vm);
         this.video = null;
@@ -46,6 +47,11 @@ class HandPoseDetectionResult extends React.Component {
         this.session.setCanvas(canvas);
     }
 
+    handleStop () {
+        this.session.stop();
+        this.props.onClose();
+    }
+
     render () {
         return (
             <HandPoseDetectionResultComponent
@@ -54,6 +60,7 @@ class HandPoseDetectionResult extends React.Component {
                 result={this.state.result}
                 onCanvasRef={this.handleCanvasRef}
                 onClose={this.props.onClose}
+                onStop={this.handleStop}
                 onVideoRef={this.handleVideoRef}
             />
         );

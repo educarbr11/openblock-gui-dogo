@@ -12,6 +12,7 @@ import {closeUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
 
 import UploadProgressComponent, {PHASES} from '../components/upload-progress/upload-progress.jsx';
+import extensionData from '../lib/libraries/extensions/index.jsx';
 
 const messages = defineMessages({
     uploadErrorMessage: {
@@ -26,7 +27,7 @@ const messages = defineMessages({
     }
 });
 
-const UPLOAD_TIMEOUT_TIME = 60 * 1000; // 60s
+const UPLOAD_TIMEOUT_TIME = 180 * 1000; // 180s
 const AUTO_CLOSE_TIME = 3 * 1000; // 3s
 
 class UploadProgress extends React.Component {
@@ -45,7 +46,8 @@ class UploadProgress extends React.Component {
             'handleStopAutoClose'
         ]);
         this.state = {
-            extension: this.props.deviceData.find(dev => dev.deviceId === props.deviceId),
+            extension: this.props.deviceData.concat(extensionData)
+                .find(dev => (dev.deviceId || dev.extensionId) === props.deviceId),
             phase: PHASES.uploading,
             peripheralName: null,
             abortEnabled: false,
@@ -131,7 +133,9 @@ class UploadProgress extends React.Component {
             clearTimeout(this.uploadTimeout);
         }
     }
-    handleUploadSuccess (aborted) {
+    handleUploadSuccess (uploadResult) {
+        const aborted = uploadResult && typeof uploadResult === 'object' ?
+            uploadResult.aborted : uploadResult;
         // if be aborted, don't show success alert.
         if (aborted) {
             this.setState({
@@ -208,7 +212,7 @@ UploadProgress.propTypes = {
 
 const mapStateToProps = state => ({
     deviceData: state.scratchGui.deviceData.deviceData,
-    deviceId: state.scratchGui.device.deviceId
+    deviceId: state.scratchGui.connectionModal.deviceId || state.scratchGui.device.deviceId
 });
 
 const mapDispatchToProps = dispatch => ({

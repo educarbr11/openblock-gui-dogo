@@ -51,17 +51,42 @@ class DeviceLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleRemoveResourcePack',
             'handleItemSelect',
+            'refreshResourcePackStatuses',
             'requestLoadDevice'
         ]);
+        this.state = {
+            resourcePackStatuses: {}
+        };
     }
     componentDidMount () {
         this.props.vm.extensionManager.getDeviceList().then(data => {
-            this.props.onSetDeviceData(makeDeviceLibrary(data));
+            const devices = makeDeviceLibrary(data);
+            this.props.onSetDeviceData(devices);
+            this.refreshResourcePackStatuses(devices);
         })
             .catch(() => {
-                this.props.onSetDeviceData(makeDeviceLibrary());
+                const devices = makeDeviceLibrary();
+                this.props.onSetDeviceData(devices);
+                this.refreshResourcePackStatuses(devices);
             });
+    }
+
+    refreshResourcePackStatuses (devices = this.props.deviceData) {
+        if (!this.props.onGetResourcePackStatus) return;
+        const packIds = devices.map(device => device.desktopResourcePackId).filter(Boolean)
+            .filter((packId, index, all) => all.indexOf(packId) === index);
+        Promise.all(packIds.map(packId => this.props.onGetResourcePackStatus(packId)
+            .then(status => ({packId, status}))))
+            .then(results => {
+                const resourcePackStatuses = {};
+                results.forEach(result => {
+                    resourcePackStatuses[result.packId] = result.status;
+                });
+                this.setState({resourcePackStatuses});
+            })
+            .catch(() => {});
     }
 
     requestLoadDevice (device) {
@@ -94,13 +119,33 @@ class DeviceLibrary extends React.PureComponent {
     }
 
     handleItemSelect (item) {
-        this.requestLoadDevice(item);
-        this.props.onRequestClose();
+        const selectDevice = () => {
+            this.requestLoadDevice(item);
+            this.props.onRequestClose();
+        };
+        if (item.desktopResourcePackId && this.props.onEnsureResourcePack) {
+            this.props.onEnsureResourcePack(item.desktopResourcePackId)
+                .then(selectDevice)
+                .catch(() => this.refreshResourcePackStatuses());
+            return;
+        }
+        selectDevice();
+    }
+
+    handleRemoveResourcePack (packId) {
+        if (!this.props.onRemoveResourcePack) return;
+        this.props.onRemoveResourcePack(packId)
+            .then(() => this.refreshResourcePackStatuses())
+            .catch(() => this.refreshResourcePackStatuses());
     }
 
     render () {
         const deviceLibraryThumbnailData = this.props.deviceData.map(device => ({
             rawURL: device.iconURL || deviceIcon,
+            resourcePackStatus: device.desktopResourcePackId ?
+                this.state.resourcePackStatuses[device.desktopResourcePackId] : null,
+            handleRemoveResourcePack: device.desktopResourcePackId && this.props.onRemoveResourcePack ?
+                () => this.handleRemoveResourcePack(device.desktopResourcePackId) : null,
             ...device
         }));
 
@@ -122,6 +167,9 @@ DeviceLibrary.propTypes = {
     deviceData: PropTypes.instanceOf(Array).isRequired,
     intl: intlShape.isRequired,
     onDeviceSelected: PropTypes.func,
+    onEnsureResourcePack: PropTypes.func,
+    onGetResourcePackStatus: PropTypes.func,
+    onRemoveResourcePack: PropTypes.func,
     onRequestClose: PropTypes.func,
     onSetDeviceData: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types

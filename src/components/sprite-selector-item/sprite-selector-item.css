@@ -121,3 +121,43 @@
 [dir="rtl"] .number {
     right: 0.15rem;
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .sprite-selector-item {
+        border-width: 1px;
+        border-radius: 0.25rem;
+        font-size: 0.6rem;
+    }
+
+    .sprite-selector-item.is-selected,
+    .sprite-selector-item:hover {
+        border-width: 1px;
+    }
+
+    .sprite-image {
+        max-width: 24px;
+        max-height: 24px;
+    }
+
+    .sprite-info {
+        padding: 0.1rem;
+        font-size: 0.5rem;
+    }
+
+    .sprite-details {
+        display: none;
+    }
+
+    .delete-button {
+        top: -0.35rem;
+        transform: scale(0.75);
+    }
+
+    [dir="ltr"] .delete-button {
+        right: -0.35rem;
+    }
+
+    [dir="rtl"] .delete-button {
+        left: -0.35rem;
+    }
+}

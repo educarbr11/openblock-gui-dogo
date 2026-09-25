@@ -9,25 +9,43 @@ import {setFullScreen} from '../reducers/mode';
 import {connect} from 'react-redux';
 
 import StageHeaderComponent from '../components/stage-header/stage-header.jsx';
+import {getHandPoseDetectionSession} from '../lib/hand-pose-detection/session';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class StageHeader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleKeyPress'
+            'handleHandDetectorState',
+            'handleKeyPress',
+            'handleOpenHandDetector',
+            'handleStopHandDetector'
         ]);
+        this.state = {handDetectorRunning: false};
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
+        this.props.vm.addListener('HAND_POSE_DETECTION_STATE_CHANGED', this.handleHandDetectorState);
+        this.handDetectionSession = getHandPoseDetectionSession(this.props.vm);
+        this.handleHandDetectorState(this.handDetectionSession.state);
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
+        this.props.vm.removeListener('HAND_POSE_DETECTION_STATE_CHANGED', this.handleHandDetectorState);
     }
     handleKeyPress (event) {
         if (event.key === 'Escape' && this.props.isFullScreen) {
             this.props.onSetStageUnFull(false);
         }
+    }
+    handleHandDetectorState (state) {
+        this.setState({handDetectorRunning: Boolean(state && state.running)});
+    }
+    handleOpenHandDetector () {
+        this.props.vm.openHandPoseDetectionResult();
+    }
+    handleStopHandDetector () {
+        this.handDetectionSession.stop();
     }
     render () {
         const {
@@ -36,7 +54,10 @@ class StageHeader extends React.Component {
         return (
             <StageHeaderComponent
                 {...props}
+                handDetectorRunning={this.state.handDetectorRunning}
                 onKeyPress={this.handleKeyPress}
+                onOpenHandDetector={this.handleOpenHandDetector}
+                onStopHandDetector={this.handleStopHandDetector}
             />
         );
     }

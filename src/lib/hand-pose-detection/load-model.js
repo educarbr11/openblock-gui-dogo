@@ -4,6 +4,7 @@ const MEDIAPIPE_VERSION = '0.4.1675469240';
 
 const scripts = [
     getMlVendorPath('tfjs/4.22.0/tf.min.js'),
+    getMlVendorPath('knn-classifier/1.2.6/knn-classifier.min.js'),
     getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}/hands.js`),
     getMlVendorPath('hand-pose-detection/2.0.0/hand-pose-detection.min.js')
 ];
@@ -56,12 +57,14 @@ const loadHandPoseDetection = () => {
             (promise, src) => promise.then(() => loadScript(src)),
             Promise.resolve()
         ).then(() => {
-            if (!window.tf || !window.handPoseDetection || !window.Hands) {
+            if (!window.tf || !window.knnClassifier || !window.handPoseDetection || !window.Hands) {
                 throw new Error('Hand pose detection libraries were not available after loading.');
             }
             return {
                 handPoseDetection: window.handPoseDetection,
+                knnClassifier: window.knnClassifier,
                 solutionPath,
+                tf: window.tf,
                 runWithBrowserEnvironment
             };
         });

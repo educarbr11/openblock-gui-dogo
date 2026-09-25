@@ -23,7 +23,7 @@ class MachineLearningSession {
         const saved = this.vm.getMachineLearningModel && this.vm.getMachineLearningModel();
         const classifier = saved && saved.imageClassifier;
         const labels = classifier && Array.isArray(classifier.labels) && classifier.labels.length ?
-            classifier.labels : ['class 1', 'class 2'];
+            classifier.labels : ['Treino 1', 'Treino 2'];
         return {
             activeClass: labels[0],
             classes: labels.map(label => ({
@@ -80,7 +80,7 @@ class MachineLearningSession {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             this._setState({
                 loading: false,
-                error: 'Camera is not available in this browser.'
+                error: 'A câmera não está disponível neste navegador.'
             });
             return Promise.resolve();
         }
@@ -120,10 +120,27 @@ class MachineLearningSession {
             .catch(error => {
                 this._setState({
                     loading: false,
-                    error: error && error.message ? error.message : 'Unable to load camera or machine learning model.'
+                    error: this._cameraErrorMessage(error)
                 });
             });
         return this.startPromise;
+    }
+
+    _cameraErrorMessage (error) {
+        const errorName = error && error.name;
+        if (errorName === 'NotAllowedError' || errorName === 'SecurityError') {
+            return 'Permissão da câmera negada. Autorize o acesso à câmera e tente novamente.';
+        }
+        if (errorName === 'NotFoundError' || errorName === 'DevicesNotFoundError') {
+            return 'Nenhuma câmera foi encontrada neste dispositivo.';
+        }
+        if (errorName === 'NotReadableError' || errorName === 'TrackStartError') {
+            return 'A câmera está sendo usada por outro aplicativo ou não pôde ser iniciada.';
+        }
+        if (errorName === 'OverconstrainedError' || errorName === 'ConstraintNotSatisfiedError') {
+            return 'A câmera disponível não atende aos requisitos do treinamento.';
+        }
+        return 'Não foi possível carregar a câmera ou o modelo de aprendizagem de máquina.';
     }
 
     stop () {
@@ -150,10 +167,10 @@ class MachineLearningSession {
     addClass () {
         const labels = this.state.classes.map(item => item.label);
         let index = this.state.classes.length + 1;
-        let label = `class ${index}`;
+        let label = `Treino ${index}`;
         while (labels.indexOf(label) > -1) {
             index++;
-            label = `class ${index}`;
+            label = `Treino ${index}`;
         }
         this._setState({
             activeClass: label,

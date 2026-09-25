@@ -142,7 +142,7 @@ const alerts = [
     },
     {
         alertId: 'saveSuccess',
-        alertType: AlertTypes.INLINE,
+        alertType: AlertTypes.STANDARD,
         clearList: ['saveSuccess', 'saving', 'savingError'],
         content: (
             <FormattedMessage
@@ -157,7 +157,7 @@ const alerts = [
     },
     {
         alertId: 'saving',
-        alertType: AlertTypes.INLINE,
+        alertType: AlertTypes.STANDARD,
         clearList: ['saveSuccess', 'saving', 'savingError'],
         content: (
             <FormattedMessage

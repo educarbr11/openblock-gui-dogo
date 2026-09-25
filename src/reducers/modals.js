@@ -17,6 +17,7 @@ const MODAL_UPDATE = 'updateModal';
 const MODAL_MACHINE_LEARNING_TRAINER = 'machineLearningTrainer';
 const MODAL_MACHINE_LEARNING_RESULT = 'machineLearningResult';
 const MODAL_HAND_POSE_DETECTION_RESULT = 'handPoseDetectionResult';
+const MODAL_HAND_POSE_GESTURE_TRAINER = 'handPoseGestureTrainer';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
@@ -34,7 +35,8 @@ const initialState = {
     [MODAL_UPDATE]: false,
     [MODAL_MACHINE_LEARNING_TRAINER]: false,
     [MODAL_MACHINE_LEARNING_RESULT]: false,
-    [MODAL_HAND_POSE_DETECTION_RESULT]: false
+    [MODAL_HAND_POSE_DETECTION_RESULT]: false,
+    [MODAL_HAND_POSE_GESTURE_TRAINER]: false
 };
 
 const reducer = function (state, action) {
@@ -112,6 +114,9 @@ const openMachineLearningResult = function () {
 const openHandPoseDetectionResult = function () {
     return openModal(MODAL_HAND_POSE_DETECTION_RESULT);
 };
+const openHandPoseGestureTrainer = function () {
+    return openModal(MODAL_HAND_POSE_GESTURE_TRAINER);
+};
 const closeBackdropLibrary = function () {
     return closeModal(MODAL_BACKDROP_LIBRARY);
 };
@@ -160,6 +165,9 @@ const closeMachineLearningResult = function () {
 const closeHandPoseDetectionResult = function () {
     return closeModal(MODAL_HAND_POSE_DETECTION_RESULT);
 };
+const closeHandPoseGestureTrainer = function () {
+    return closeModal(MODAL_HAND_POSE_GESTURE_TRAINER);
+};
 export {
     reducer as default,
     initialState as modalsInitialState,
@@ -179,6 +187,7 @@ export {
     openMachineLearningTrainer,
     openMachineLearningResult,
     openHandPoseDetectionResult,
+    openHandPoseGestureTrainer,
     closeBackdropLibrary,
     closeConnectionModal,
     closeCostumeLibrary,
@@ -194,5 +203,6 @@ export {
     closeUpdateModal,
     closeMachineLearningTrainer,
     closeMachineLearningResult,
-    closeHandPoseDetectionResult
+    closeHandPoseDetectionResult,
+    closeHandPoseGestureTrainer
 };
