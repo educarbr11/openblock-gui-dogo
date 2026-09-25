@@ -53,8 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(116);
 /* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(215);
-/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(414);
-/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(415);
+/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(415);
+/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(416);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(972);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
 // Polyfills
@@ -3169,13 +3169,13 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
 var auth_session = __webpack_require__(145);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
-var reducers_session = __webpack_require__(375);
+var reducers_session = __webpack_require__(376);
 
 // EXTERNAL MODULE: ./src/reducers/mode.js
 var mode = __webpack_require__(180);
 
 // EXTERNAL MODULE: ./static/dogoblock_logo_full.svg
-var dogoblock_logo_full = __webpack_require__(326);
+var dogoblock_logo_full = __webpack_require__(327);
 var dogoblock_logo_full_default = /*#__PURE__*/__webpack_require__.n(dogoblock_logo_full);
 
 // EXTERNAL MODULE: ./static/hero-illustration.png
@@ -5862,7 +5862,7 @@ var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch)
 
 /* harmony default export */ var playground_dogoblock_web_app = (Object(react_redux_es["b" /* connect */])(dogoblock_web_app_mapStateToProps, dogoblock_web_app_mapDispatchToProps)(dogoblock_web_app_DogoblockWebApp));
 // EXTERNAL MODULE: ./src/lib/hash-parser-hoc.jsx
-var hash_parser_hoc = __webpack_require__(294);
+var hash_parser_hoc = __webpack_require__(295);
 
 // EXTERNAL MODULE: ./src/lib/log.js
 var log = __webpack_require__(59);
