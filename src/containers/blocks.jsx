@@ -22,7 +22,11 @@ import {BLOCKS_DEFAULT_SCALE, STAGE_DISPLAY_SIZES} from '../lib/layout-constants
 import DropAreaHOC from '../lib/drop-area-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
 import defineDynamicBlock from '../lib/define-dynamic-block';
-import {getGeneratorNameFromDeviceType, installMicrobitPythonGenerators} from '../lib/code-generator';
+import {
+    getGeneratorNameFromDeviceType,
+    installArduinoTempoGenerators,
+    installMicrobitPythonGenerators
+} from '../lib/code-generator';
 
 import {connect} from 'react-redux';
 import {updateToolbox, setIsUpdating} from '../reducers/toolbox';
@@ -790,7 +794,9 @@ class Blocks extends React.Component {
         let generatorName;
         try {
             generatorName = getGeneratorNameFromDeviceType(this.props.deviceType);
-            if (generatorName === 'Python') {
+            if (generatorName === 'Arduino') {
+                installArduinoTempoGenerators(this.ScratchBlocks);
+            } else if (generatorName === 'Python') {
                 installMicrobitPythonGenerators(this.ScratchBlocks);
             }
             code = this.ScratchBlocks[generatorName].workspaceToCode(this.workspace);

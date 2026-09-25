@@ -224,12 +224,19 @@ Blockly.Arduino['arduino_pin_playToneForSeconds'] = function(block) {
   return code;
 };
 
+Blockly.Arduino['arduino_pin_setTempo'] = function(block) {
+  var tempo = Blockly.Arduino.valueToCode(block, 'TEMPO', Blockly.Arduino.ORDER_ATOMIC) || '60';
+  Blockly.Arduino.definitions_['dogoblock_tempo'] = 'float dogoblockTempoBpm = 60.0;';
+  return 'dogoblockTempoBpm = constrain((float)(' + tempo + '), 20.0f, 500.0f);\\n';
+};
+
 Blockly.Arduino['arduino_pin_playToneForBeat'] = function(block) {
   var pin = Blockly.Arduino.pinToCode_(block, 'PIN', '9');
   var note = Blockly.Arduino.valueToCode(block, 'NOTE', Blockly.Arduino.ORDER_ATOMIC) || '262';
   var beat = Blockly.Arduino.valueToCode(block, 'BEAT', Blockly.Arduino.ORDER_ATOMIC) || '0.5';
+  Blockly.Arduino.definitions_['dogoblock_tempo'] = 'float dogoblockTempoBpm = 60.0;';
   var code = 'tone(' + pin + ', ' + note + ');\\n';
-  code += 'delay((unsigned long)((' + beat + ') * 500));\\n';
+  code += 'delay((unsigned long)((' + beat + ') * (60000.0 / dogoblockTempoBpm)));\\n';
   code += 'noTone(' + pin + ');\\n';
   return code;
 };
@@ -449,7 +456,7 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
         }
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
-            !after.includes("arduino_pin_playToneForSeconds")
+            !after.includes("arduino_pin_setTempo")
         ) {
             after += buzzerUltrasonicGenerators;
         }
@@ -573,7 +580,7 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
     if (!after.includes("dogoblockDigitalWrite")) {
         after += digitalOutputGenerator;
     }
-    if (!after.includes("arduino_pin_playToneForSeconds")) {
+    if (!after.includes("arduino_pin_setTempo")) {
         after += buzzerUltrasonicGenerators;
     }
     if (!after.includes("setup_serial_begin")) {
@@ -603,6 +610,9 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
         !after.includes('__dogoblockSerialNumericVariables') ||
         !after.includes('__dogoblockSerialCharacterComparison')) {
         throw new Error('Arduino serial data patch validation failed: ' + compressedFile);
+    }
+    if (!after.includes('arduino_pin_setTempo') || !after.includes('dogoblockTempoBpm')) {
+        throw new Error('Arduino tempo generator patch validation failed: ' + compressedFile);
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);
@@ -2254,7 +2264,7 @@ const penAndMusicBlockTranslationsPtBr = Object.freeze({
     'music.playNoteForBeats': 'tocar a nota [NOTE] por [BEATS] batidas',
     'music.restForBeats': 'pausar por [BEATS] batidas',
     'music.setInstrument': 'definir o instrumento para [INSTRUMENT]',
-    'music.setTempo': 'definir o ritmo para [TEMPO]',
+    'music.setTempo': 'definir ritmo em [TEMPO] bpm',
     'pen.changeColorParam': 'mudar [COLOR_PARAM] da caneta por [VALUE]',
     'pen.changeHue': 'mudar a cor da caneta por [HUE]',
     'pen.changeShade': 'mudar a tonalidade da caneta por [SHADE]',

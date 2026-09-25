@@ -3,6 +3,40 @@ import Blockly from 'openblock-blocks/python_compressed';
 
 import {DeviceType} from './device';
 
+const installArduinoTempoGenerators = scratchBlocks => {
+    const blockly = scratchBlocks || (typeof window !== 'undefined' && window.Blockly) || Blockly;
+    if (!blockly) return;
+    if (!blockly.Arduino && Blockly && Blockly.Arduino) {
+        blockly.Arduino = Blockly.Arduino;
+    }
+    if (!blockly.Arduino) return;
+
+    const arduino = blockly.Arduino;
+    if (arduino.__dogoblockTempoGeneratorsInstalled &&
+        typeof arduino.arduino_pin_setTempo === 'function' &&
+        typeof arduino.arduino_pin_playToneForBeat === 'function') return;
+
+    arduino.arduino_pin_setTempo = block => {
+        const tempo = arduino.valueToCode(block, 'TEMPO', arduino.ORDER_ATOMIC) || '60';
+        arduino.definitions_.dogoblock_tempo = 'float dogoblockTempoBpm = 60.0;';
+        return `dogoblockTempoBpm = constrain((float)(${tempo}), 20.0f, 500.0f);\n`;
+    };
+
+    arduino.arduino_pin_playToneForBeat = block => {
+        const pin = arduino.pinToCode_ ?
+            arduino.pinToCode_(block, 'PIN', '9') :
+            (arduino.valueToCode(block, 'PIN', arduino.ORDER_ATOMIC) || block.getFieldValue('PIN') || '9');
+        const note = arduino.valueToCode(block, 'NOTE', arduino.ORDER_ATOMIC) || '262';
+        const beat = arduino.valueToCode(block, 'BEAT', arduino.ORDER_ATOMIC) || '0.5';
+        arduino.definitions_.dogoblock_tempo = 'float dogoblockTempoBpm = 60.0;';
+        return `tone(${pin}, ${note});\n` +
+            `delay((unsigned long)((${beat}) * (60000.0 / dogoblockTempoBpm)));\n` +
+            `noTone(${pin});\n`;
+    };
+
+    arduino.__dogoblockTempoGeneratorsInstalled = true;
+};
+
 const installMicrobitPythonGenerators = scratchBlocks => {
     const blockly = scratchBlocks || (typeof window !== 'undefined' && window.Blockly) || Blockly;
     if (!blockly) return;
@@ -627,6 +661,7 @@ const installMicrobitPythonGenerators = scratchBlocks => {
     python.__dogoblockMicrobitGeneratorsInstalled = true;
 };
 
+installArduinoTempoGenerators();
 installMicrobitPythonGenerators();
 
 const getGeneratorNameFromDeviceType = deviceType => {
@@ -641,6 +676,7 @@ const getGeneratorNameFromDeviceType = deviceType => {
 };
 
 export {
+    installArduinoTempoGenerators,
     installMicrobitPythonGenerators,
     getGeneratorNameFromDeviceType
 };
