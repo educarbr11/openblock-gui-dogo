@@ -196,6 +196,14 @@ Blockly.Arduino['arduino_pin_setDigitalOutput'] = function(block) {
 Blockly.Arduino.__dogoblockDigitalWriteSetupOnly = true;
 `;
 
+    const digitalPinsMenuGenerator = `
+
+Blockly.Arduino['arduino_pin_menu_digitalPins'] = function(block) {
+  var code = Blockly.Arduino.fieldValueFromNames_(block, ['digitalPins', 'PIN'], '0');
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+`;
+
     const buzzerUltrasonicGenerators = `
 
 Blockly.Arduino['arduino_pin_menu_note'] = function(block) {
@@ -456,6 +464,12 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
         }
         if (
             file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
+            !after.includes("arduino_pin_menu_digitalPins")
+        ) {
+            after += digitalPinsMenuGenerator;
+        }
+        if (
+            file.endsWith(path.join('generators', 'arduino', 'arduino.js')) &&
             !after.includes("arduino_pin_setTempo")
         ) {
             after += buzzerUltrasonicGenerators;
@@ -580,6 +594,9 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
     if (!after.includes("dogoblockDigitalWrite")) {
         after += digitalOutputGenerator;
     }
+    if (!after.includes("arduino_pin_menu_digitalPins")) {
+        after += digitalPinsMenuGenerator;
+    }
     if (!after.includes("arduino_pin_setTempo")) {
         after += buzzerUltrasonicGenerators;
     }
@@ -613,6 +630,9 @@ Blockly.Arduino.__dogoblockSerialCharacterComparison = true;
     }
     if (!after.includes('arduino_pin_setTempo') || !after.includes('dogoblockTempoBpm')) {
         throw new Error('Arduino tempo generator patch validation failed: ' + compressedFile);
+    }
+    if (!after.includes('arduino_pin_menu_digitalPins')) {
+        throw new Error('Arduino digital pins menu generator patch validation failed: ' + compressedFile);
     }
     if (after !== before) {
         fs.writeFileSync(compressedFile, after);

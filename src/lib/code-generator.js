@@ -12,6 +12,12 @@ const installArduinoTempoGenerators = scratchBlocks => {
     if (!blockly.Arduino) return;
 
     const arduino = blockly.Arduino;
+    if (typeof arduino.arduino_pin_menu_digitalPins !== 'function') {
+        arduino.arduino_pin_menu_digitalPins = block => [
+            block.getFieldValue('digitalPins') || block.getFieldValue('PIN') || '0',
+            arduino.ORDER_ATOMIC
+        ];
+    }
     if (arduino.__dogoblockTempoGeneratorsInstalled &&
         typeof arduino.arduino_pin_setTempo === 'function' &&
         typeof arduino.arduino_pin_playToneForBeat === 'function') return;
