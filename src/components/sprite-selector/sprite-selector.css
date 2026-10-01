@@ -125,3 +125,42 @@
     background: black;
     filter: opacity(15%) brightness(0%);
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .sprite-selector {
+        margin-right: 0.2rem;
+        border-top-right-radius: 0.25rem;
+        border-top-left-radius: 0.25rem;
+    }
+
+    .sprite-wrapper {
+        width: 3rem;
+        min-width: 2.8rem;
+        max-width: 3rem;
+        min-height: 2.8rem;
+        margin: 0.15rem;
+    }
+
+    .scroll-wrapper {
+        height: calc(100% - 2.4rem);
+    }
+
+    .items-wrapper {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.2rem;
+    }
+
+    .add-button {
+        bottom: 0.35rem;
+    }
+
+    [dir="ltr"] .add-button {
+        right: 0.4rem;
+    }
+
+    [dir="rtl"] .add-button {
+        left: 0.4rem;
+    }
+}

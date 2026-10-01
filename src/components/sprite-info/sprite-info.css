@@ -20,6 +20,12 @@
     margin-bottom: 0.5rem;
 }
 
+.row-secondary {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
 .label { opacity: 0.8; }
 
 .group {
@@ -66,6 +72,37 @@
 }
 .radio.is-disabled {
     cursor: default;
+}
+
+.draggable-radio {
+    transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.draggable-on.is-active {
+    background-color: $motion-primary;
+    border-color: $motion-primary;
+    box-shadow: 0 0 0 2px $motion-light-transparent;
+}
+
+.draggable-on.is-active .icon {
+    filter: brightness(0) invert(1);
+}
+
+.draggable-off.is-active {
+    background-color: $ui-tertiary;
+    border-color: $text-primary-transparent;
+}
+
+.draggable-status {
+    margin-left: 0.4rem;
+    color: $text-primary-transparent;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.draggable-status-enabled {
+    color: $motion-primary;
 }
 
 .radio-first {
@@ -136,4 +173,44 @@
 
 .sprite-input {
     width: 8rem;
+}
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .sprite-info {
+        padding: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        font-size: 0.625rem;
+    }
+
+    .row-primary {
+        margin-bottom: 0.15rem;
+    }
+
+    .row {
+        align-items: center;
+    }
+
+    .column span,
+    .label {
+        display: none;
+    }
+
+    .icon-wrapper {
+        width: 1.35rem;
+        height: 1.35rem;
+        padding: 0.25rem;
+    }
+
+    .rotation-select {
+        height: 1.35rem;
+    }
+
+    .larger-input input {
+        width: 2.5rem;
+    }
+
+    .sprite-input {
+        width: 4.5rem;
+    }
 }

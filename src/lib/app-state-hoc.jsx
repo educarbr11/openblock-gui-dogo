@@ -5,6 +5,7 @@ import {createStore, combineReducers, compose} from 'redux';
 import ConnectedIntlProvider from './connected-intl-provider.jsx';
 
 import localesReducer, {initLocale, localesInitialState} from '../reducers/locales';
+import sessionReducer, {sessionInitialState} from '../reducers/session';
 
 import {setPlayer, setFullScreen} from '../reducers/mode.js';
 
@@ -68,11 +69,13 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 }
                 reducers = {
                     locales: localesReducer,
+                    session: sessionReducer,
                     scratchGui: guiReducer,
                     scratchPaint: ScratchPaintReducer
                 };
                 initialState = {
                     locales: initializedLocales,
+                    session: sessionInitialState,
                     scratchGui: initializedGui
                 };
                 enhancer = composeEnhancers(guiMiddleware);
