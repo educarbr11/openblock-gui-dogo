@@ -167,7 +167,6 @@ module.exports = Transform;
 /***/ (function(module, exports, __webpack_require__) {
 
 var minilog = __webpack_require__(8);
-
 minilog.enable();
 module.exports = minilog('vm');
 
@@ -201,49 +200,36 @@ module.exports = color;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) { n[e] = r[e]; } return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0) { ; } } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /* eslint-env worker */
+
 var ArgumentType = __webpack_require__(4);
-
 var BlockType = __webpack_require__(5);
-
 var dispatch = __webpack_require__(6);
-
 var TargetType = __webpack_require__(18);
-
 var ExtensionWorker = /*#__PURE__*/function () {
   function ExtensionWorker() {
     var _this = this;
-
     _classCallCheck(this, ExtensionWorker);
-
     this.nextExtensionId = 0;
     this.initialRegistrations = [];
     dispatch.waitForConnection.then(function () {
       dispatch.call('extensions', 'allocateWorker').then(function (x) {
         var _x = _slicedToArray(x, 2),
-            id = _x[0],
-            extension = _x[1];
-
+          id = _x[0],
+          extension = _x[1];
         _this.workerId = id;
-
         try {
           importScripts(extension);
           var initialRegistrations = _this.initialRegistrations;
@@ -258,7 +244,6 @@ var ExtensionWorker = /*#__PURE__*/function () {
     });
     this.extensions = [];
   }
-
   _createClass(ExtensionWorker, [{
     key: "register",
     value: function register(extensionObject) {
@@ -268,27 +253,23 @@ var ExtensionWorker = /*#__PURE__*/function () {
       var promise = dispatch.setService(serviceName, extensionObject).then(function () {
         return dispatch.call('extensions', 'registerExtensionService', serviceName);
       });
-
       if (this.initialRegistrations) {
         this.initialRegistrations.push(promise);
       }
-
       return promise;
     }
   }]);
-
   return ExtensionWorker;
 }();
-
 var workerGlobal = self;
 workerGlobal.Scratch = workerGlobal.Scratch || {};
 workerGlobal.Scratch.ArgumentType = ArgumentType;
 workerGlobal.Scratch.BlockType = BlockType;
 workerGlobal.Scratch.TargetType = TargetType;
+
 /**
  * Expose only specific parts of the worker to extensions.
  */
-
 var extensionWorker = new ExtensionWorker();
 workerGlobal.Scratch.extensions = {
   register: extensionWorker.register.bind(extensionWorker)
@@ -307,112 +288,90 @@ var ArgumentType = {
    * Numeric value with angle picker
    */
   ANGLE: 'angle',
-
   /**
    * Boolean value with hexagonal placeholder
    */
   BOOLEAN: 'Boolean',
-
   /**
    * Numeric value with color picker
    */
   COLOR: 'color',
-
   /**
    * Numeric value with angle picker, value from 0 ~ 180
    */
   HALF_ANGLE: 'half_angle',
-
   /**
    * Inline image on block (as part of the label)
    */
   IMAGE: 'image',
-
   /**
    * Numeric value with text field
    */
   NUMBER: 'number',
-
   /**
    * Intger numeric value with text field
    */
   INTEGER_NUMBER: 'intger_number',
-
   /**
    * Positive numeric value with text field
    */
   POSITIVE_NUMBER: 'positive_number',
-
   /**
    * Whole numeric value with text field
    */
   WHOLE_NUMBER: 'whole_number',
-
   /**
    * Numeric value with slider field. from -127 to 127 integer value
    */
   INT8_NUMBER: 'int8_number',
-
   /**
    * Numeric value with slider field. from 0 to 255 integer value
    */
   UINT8_NUMBER: 'uint8_number',
-
   /**
    * Numeric value with slider field. from -255 to 255 integer value
    */
   INT9_NUMBER: 'int9_number',
-
   /**
    * Numeric value with slider field. from 0 to 1023 integer value
    */
   UINT10_NUMBER: 'uint10_number',
-
   /**
    * Numeric value with slider field. from -1023 to 1023 integer value
    */
   INT11_NUMBER: 'int11_number',
-
   /**
    * Numeric value with slider field. from 0 to 65535 integer value
    */
   UINT16_NUMBER: 'uint16_number',
-
   /**
    * Numeric value with slider field. from 0 to 100 value integer value
    */
   INTOTO100_NUMBER: 'int0to100_number',
-
   /**
    * Numeric value with slider field. from 0 to 100 value
    */
   OTO100_NUMBER: '0to100_number',
-
   /**
    * Numeric value with slider field. from -100 to 100 value integer value
    */
   INTN100TO100_NUMBER: 'intn100to100_number',
-
   /**
    * Numeric value with slider field. from -100 to 100 value
    */
   N100TO100_NUMBER: 'n100to100_number',
-
   /**
    * String value with text field
    */
   STRING: 'string',
-
   /**
    * String value with matrix field
    */
   MATRIX: 'matrix',
-
   /**
    * String value with matrix field
    */
   MATRIX8X12: 'matrix8x12',
-
   /**
    * MIDI note number with note picker (piano) field
    */
@@ -433,40 +392,33 @@ var BlockType = {
    * Boolean reporter with hexagonal shape
    */
   BOOLEAN: 'Boolean',
-
   /**
    * A button (not an actual block) for some special action, like making a variable
    */
   BUTTON: 'button',
-
   /**
    * Command block
    */
   COMMAND: 'command',
-
   /**
    * Specialized command block which may or may not run a child branch
    * The thread continues with the next block whether or not a child branch ran.
    */
   CONDITIONAL: 'conditional',
-
   /**
    * Specialized hat block with no implementation function
    * This stack only runs if the corresponding event is emitted by other code.
    */
   EVENT: 'event',
-
   /**
    * Hat block which conditionally starts a block stack
    */
   HAT: 'hat',
-
   /**
    * Specialized command block which may or may not run a child branch
    * If a child branch runs, the thread evaluates the loop block again.
    */
   LOOP: 'loop',
-
   /**
    * General reporter with numeric or string value
    */
@@ -478,31 +430,22 @@ module.exports = BlockType;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _createSuper(t) { var r = _isNativeReflectConstruct(); return function () { var e, o = _getPrototypeOf(t); if (r) { var s = _getPrototypeOf(this).constructor; e = Reflect.construct(o, arguments, s); } else e = o.apply(this, arguments); return _possibleConstructorReturn(this, e); }; }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 var SharedDispatch = __webpack_require__(7);
-
 var log = __webpack_require__(1);
+
 /**
  * This class provides a Worker with the means to participate in the message dispatch system managed by CentralDispatch.
  * From any context in the messaging system, the dispatcher's "call" method can call any method on any "service"
@@ -510,29 +453,24 @@ var log = __webpack_require__(1);
  * worker boundaries as needed.
  * @see {CentralDispatch}
  */
-
-
 var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
   _inherits(WorkerDispatch, _SharedDispatch);
-
   var _super = _createSuper(WorkerDispatch);
-
   function WorkerDispatch() {
     var _this;
-
     _classCallCheck(this, WorkerDispatch);
-
     _this = _super.call(this);
+
     /**
      * This promise will be resolved when we have successfully connected to central dispatch.
      * @type {Promise}
      * @see {waitForConnection}
      * @private
      */
-
     _this._connectionPromise = new Promise(function (resolve) {
       _this._onConnect = resolve;
     });
+
     /**
      * Map of service name to local service provider.
      * If a service is not listed here, it is assumed to be provided by another context (another Worker or the main
@@ -540,16 +478,14 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
      * @see {setService}
      * @type {object}
      */
-
     _this.services = {};
     _this._onMessage = _this._onMessage.bind(_assertThisInitialized(_this), self);
-
     if (typeof self !== 'undefined') {
       self.onmessage = _this._onMessage;
     }
-
     return _this;
   }
+
   /**
    * @returns {Promise} a promise which will resolve upon connection to central dispatch. If you need to make a call
    * immediately on "startup" you can attach a 'then' to this promise.
@@ -558,13 +494,12 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
    *          dispatch.call('myService', 'hello');
    *      })
    */
-
-
   _createClass(WorkerDispatch, [{
     key: "waitForConnection",
     get: function get() {
       return this._connectionPromise;
     }
+
     /**
      * Set a local object as the global provider of the specified service.
      * WARNING: Any method on the provider can be called from any worker within the dispatch system.
@@ -572,21 +507,19 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
      * @param {object} provider - a local object which provides this service.
      * @returns {Promise} - a promise which will resolve once the service is registered.
      */
-
   }, {
     key: "setService",
     value: function setService(service, provider) {
       var _this2 = this;
-
       if (this.services.hasOwnProperty(service)) {
         log.warn("Worker dispatch replacing existing service provider for ".concat(service));
       }
-
       this.services[service] = provider;
       return this.waitForConnection.then(function () {
         return _this2._remoteCall(self, 'dispatch', 'setService', service);
       });
     }
+
     /**
      * Fetch the service provider object for a particular service name.
      * @override
@@ -594,7 +527,6 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
      * @returns {{provider:(object|Worker), isRemote:boolean}} - the means to contact the service, if found
      * @protected
      */
-
   }, {
     key: "_getServiceProvider",
     value: function _getServiceProvider(service) {
@@ -605,6 +537,7 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
         isRemote: !provider
       };
     }
+
     /**
      * Handle a call message sent to the dispatch service itself
      * @override
@@ -613,17 +546,14 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
      * @returns {Promise|undefined} - a promise for the results of this operation, if appropriate
      * @protected
      */
-
   }, {
     key: "_onDispatchMessage",
     value: function _onDispatchMessage(worker, message) {
       var promise;
-
       switch (message.method) {
         case 'handshake':
           promise = this._onConnect();
           break;
-
         case 'terminate':
           // Don't close until next tick, after sending confirmation back
           setTimeout(function () {
@@ -631,51 +561,38 @@ var WorkerDispatch = /*#__PURE__*/function (_SharedDispatch) {
           }, 0);
           promise = Promise.resolve();
           break;
-
         default:
           log.error("Worker dispatch received message for unknown method: ".concat(message.method));
       }
-
       return promise;
     }
   }]);
-
   return WorkerDispatch;
 }(SharedDispatch);
-
 module.exports = new WorkerDispatch();
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) { n[e] = r[e]; } return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0) { ; } } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var log = __webpack_require__(1);
+
 /**
  * @typedef {object} DispatchCallMessage - a message to the dispatch system representing a service method call
  * @property {*} responseId - send a response message with this response ID. See {@link DispatchResponseMessage}
@@ -700,12 +617,9 @@ var log = __webpack_require__(1);
  * The SharedDispatch class is responsible for dispatch features shared by
  * {@link CentralDispatch} and {@link WorkerDispatch}.
  */
-
-
 var SharedDispatch = /*#__PURE__*/function () {
   function SharedDispatch() {
     _classCallCheck(this, SharedDispatch);
-
     /**
      * List of callback registrations for promises waiting for a response from a call to a service on another
      * worker. A callback registration is an array of [resolve,reject] Promise functions.
@@ -713,13 +627,14 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @type {Array.<Function[]>}
      */
     this.callbacks = [];
+
     /**
      * The next response ID to be used.
      * @type {int}
      */
-
     this.nextResponseId = 0;
   }
+
   /**
    * Call a particular method on a particular service, regardless of whether that service is provided locally or on
    * a worker. If the service is provided by a worker, the `args` will be copied using the Structured Clone
@@ -734,17 +649,15 @@ var SharedDispatch = /*#__PURE__*/function () {
    * @param {*} [args] - the arguments to be copied to the method, if any.
    * @returns {Promise} - a promise for the return value of the service method.
    */
-
-
   _createClass(SharedDispatch, [{
     key: "call",
     value: function call(service, method) {
       for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         args[_key - 2] = arguments[_key];
       }
-
       return this.transferCall.apply(this, [service, method, null].concat(args));
     }
+
     /**
      * Call a particular method on a particular service, regardless of whether that service is provided locally or on
      * a worker. If the service is provided by a worker, the `args` will be copied using the Structured Clone
@@ -760,45 +673,41 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @param {*} [args] - the arguments to be copied to the method, if any.
      * @returns {Promise} - a promise for the return value of the service method.
      */
-
   }, {
     key: "transferCall",
     value: function transferCall(service, method, transfer) {
       try {
         var _this$_getServiceProv = this._getServiceProvider(service),
-            provider = _this$_getServiceProv.provider,
-            isRemote = _this$_getServiceProv.isRemote;
-
+          provider = _this$_getServiceProv.provider,
+          isRemote = _this$_getServiceProv.isRemote;
         if (provider) {
           for (var _len2 = arguments.length, args = new Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
             args[_key2 - 3] = arguments[_key2];
           }
-
           if (isRemote) {
             return this._remoteTransferCall.apply(this, [provider, service, method, transfer].concat(args));
           }
-
           var result = provider[method].apply(provider, args);
           return Promise.resolve(result);
         }
-
         return Promise.reject(new Error("Service not found: ".concat(service)));
       } catch (e) {
         return Promise.reject(e);
       }
     }
+
     /**
      * Check if a particular service lives on another worker.
      * @param {string} service - the service to check.
      * @returns {boolean} - true if the service is remote (calls must cross a Worker boundary), false otherwise.
      * @private
      */
-
   }, {
     key: "_isRemoteService",
     value: function _isRemoteService(service) {
       return this._getServiceProvider(service).isRemote;
     }
+
     /**
      * Like {@link call}, but force the call to be posted through a particular communication channel.
      * @param {object} provider - send the call through this object's `postMessage` function.
@@ -807,16 +716,15 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @param {*} [args] - the arguments to be copied to the method, if any.
      * @returns {Promise} - a promise for the return value of the service method.
      */
-
   }, {
     key: "_remoteCall",
     value: function _remoteCall(provider, service, method) {
       for (var _len3 = arguments.length, args = new Array(_len3 > 3 ? _len3 - 3 : 0), _key3 = 3; _key3 < _len3; _key3++) {
         args[_key3 - 3] = arguments[_key3];
       }
-
       return this._remoteTransferCall.apply(this, [provider, service, method, null].concat(args));
     }
+
     /**
      * Like {@link transferCall}, but force the call to be posted through a particular communication channel.
      * @param {object} provider - send the call through this object's `postMessage` function.
@@ -826,25 +734,20 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @param {*} [args] - the arguments to be copied to the method, if any.
      * @returns {Promise} - a promise for the return value of the service method.
      */
-
   }, {
     key: "_remoteTransferCall",
     value: function _remoteTransferCall(provider, service, method, transfer) {
       var _this = this;
-
       for (var _len4 = arguments.length, args = new Array(_len4 > 4 ? _len4 - 4 : 0), _key4 = 4; _key4 < _len4; _key4++) {
         args[_key4 - 4] = arguments[_key4];
       }
-
       return new Promise(function (resolve, reject) {
         var responseId = _this._storeCallbacks(resolve, reject);
+
         /** @TODO: remove this hack! this is just here so we don't try to send `util` to a worker */
-
-
         if (args.length > 0 && typeof args[args.length - 1].yield === 'function') {
           args.pop();
         }
-
         if (transfer) {
           provider.postMessage({
             service: service,
@@ -862,6 +765,7 @@ var SharedDispatch = /*#__PURE__*/function () {
         }
       });
     }
+
     /**
      * Store callback functions pending a response message.
      * @param {Function} resolve - function to call if the service method returns.
@@ -869,7 +773,6 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @returns {*} - a unique response ID for this set of callbacks. See {@link _deliverResponse}.
      * @protected
      */
-
   }, {
     key: "_storeCallbacks",
     value: function _storeCallbacks(resolve, reject) {
@@ -877,23 +780,21 @@ var SharedDispatch = /*#__PURE__*/function () {
       this.callbacks[responseId] = [resolve, reject];
       return responseId;
     }
+
     /**
      * Deliver call response from a worker. This should only be called as the result of a message from a worker.
      * @param {int} responseId - the response ID of the callback set to call.
      * @param {DispatchResponseMessage} message - the message containing the response value(s).
      * @protected
      */
-
   }, {
     key: "_deliverResponse",
     value: function _deliverResponse(responseId, message) {
       try {
         var _this$callbacks$respo = _slicedToArray(this.callbacks[responseId], 2),
-            resolve = _this$callbacks$respo[0],
-            reject = _this$callbacks$respo[1];
-
+          resolve = _this$callbacks$respo[0],
+          reject = _this$callbacks$respo[1];
         delete this.callbacks[responseId];
-
         if (message.error) {
           reject(message.error);
         } else {
@@ -903,13 +804,13 @@ var SharedDispatch = /*#__PURE__*/function () {
         log.error("Dispatch callback failed: ".concat(JSON.stringify(e)));
       }
     }
+
     /**
      * Handle a message event received from a connected worker.
      * @param {Worker} worker - the worker which sent the message, or the global object if running in a worker.
      * @param {MessageEvent} event - the message event to be handled.
      * @protected
      */
-
   }, {
     key: "_onMessage",
     value: function _onMessage(worker, event) {
@@ -917,7 +818,6 @@ var SharedDispatch = /*#__PURE__*/function () {
       var message = event.data;
       message.args = message.args || [];
       var promise;
-
       if (message.service) {
         if (message.service === 'dispatch') {
           promise = this._onDispatchMessage(worker, message);
@@ -929,7 +829,6 @@ var SharedDispatch = /*#__PURE__*/function () {
       } else {
         this._deliverResponse(message.responseId, message);
       }
-
       if (promise) {
         if (typeof message.responseId === 'undefined') {
           log.error("Dispatch message missing required response ID: ".concat(JSON.stringify(event)));
@@ -948,6 +847,7 @@ var SharedDispatch = /*#__PURE__*/function () {
         }
       }
     }
+
     /**
      * Fetch the service provider object for a particular service name.
      * @abstract
@@ -955,12 +855,12 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @returns {{provider:(object|Worker), isRemote:boolean}} - the means to contact the service, if found
      * @protected
      */
-
   }, {
     key: "_getServiceProvider",
     value: function _getServiceProvider(service) {
       throw new Error("Could not get provider for ".concat(service, ": _getServiceProvider not implemented"));
     }
+
     /**
      * Handle a call message sent to the dispatch service itself
      * @abstract
@@ -969,17 +869,14 @@ var SharedDispatch = /*#__PURE__*/function () {
      * @returns {Promise|undefined} - a promise for the results of this operation, if appropriate
      * @private
      */
-
   }, {
     key: "_onDispatchMessage",
     value: function _onDispatchMessage(worker, message) {
       throw new Error("Unimplemented dispatch message handler cannot handle ".concat(message.method, " method"));
     }
   }]);
-
   return SharedDispatch;
 }();
-
 module.exports = SharedDispatch;
 
 /***/ }),
@@ -1426,7 +1323,6 @@ var TargetType = {
    * Rendered target which can move, change costumes, etc.
    */
   SPRITE: 'sprite',
-
   /**
    * Rendered target which cannot move but can change backdrops
    */
@@ -1436,4 +1332,3 @@ module.exports = TargetType;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=extension-worker.js.map

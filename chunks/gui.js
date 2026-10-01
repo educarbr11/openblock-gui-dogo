@@ -1,11 +1,11 @@
 var GUI =
 (window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([[7],{
 
-/***/ 104:
+/***/ 1018:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2061);
+var content = __webpack_require__(1719);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -27,36 +27,63 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1224:
+/***/ 111:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(2109);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(22)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ 1270:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "static/assets/4c6a5e88d07eebfe480ecb247d793925.png";
 
 /***/ }),
 
-/***/ 1230:
+/***/ 1278:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1231);
+/* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1279);
 /* harmony import */ var es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_object_assign_auto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1233);
+/* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1281);
 /* harmony import */ var core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_array_includes__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1245);
+/* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1293);
 /* harmony import */ var core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_fn_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1262);
+/* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1310);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(123);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(131);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(116);
-/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(215);
-/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(415);
-/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(416);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(972);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_analytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(124);
+/* harmony import */ var _lib_sentry__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(284);
+/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(234);
+/* harmony import */ var _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(450);
+/* harmony import */ var _lib_supported_browser__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(451);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1018);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_11__);
 // Polyfills
 
 
@@ -71,11 +98,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+Object(_lib_sentry__WEBPACK_IMPORTED_MODULE_7__[/* initializeSentry */ "b"])();
 var getAnalyticsPage = function getAnalyticsPage() {
   var hashPath = window.location.hash.replace(/^#/, '') || '/';
   return "/community/web".concat(hashPath.startsWith('/') ? hashPath : "/".concat(hashPath));
 };
-
 Object(_lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* initialAnalytics */ "b"])();
 _lib_analytics__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"].send({
   hitType: 'pageview',
@@ -90,30 +117,25 @@ window.addEventListener('hashchange', function () {
   });
 });
 var appTarget = document.createElement('div');
-appTarget.className = _index_css__WEBPACK_IMPORTED_MODULE_10___default.a.app;
+appTarget.className = _index_css__WEBPACK_IMPORTED_MODULE_11___default.a.app;
 document.body.appendChild(appTarget);
-
-if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"])()) {
+if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"])()) {
   // require needed here to avoid importing unsupported browser-crashing code
   // at the top level
-  __webpack_require__(2079).default(appTarget);
+  __webpack_require__(2127).default(appTarget);
 } else {
-  _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"].setAppElement(appTarget);
-  var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], true
-  /* localesOnly */
-  );
-
-  var handleBack = function handleBack() {}; // eslint-disable-next-line react/jsx-no-bind
-
-
-  react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(WrappedBrowserModalComponent, {
+  _components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"].setAppElement(appTarget);
+  var WrappedBrowserModalComponent = Object(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"])(_components_browser_modal_browser_modal_jsx__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"], true /* localesOnly */);
+  var handleBack = function handleBack() {};
+  // eslint-disable-next-line react/jsx-no-bind
+  react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(WrappedBrowserModalComponent, {
     onBack: handleBack
   }), appTarget);
 }
 
 /***/ }),
 
-/***/ 1264:
+/***/ 1312:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -124,7 +146,7 @@ if (Object(_lib_supported_browser__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2065);
+var content = __webpack_require__(2113);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -146,7 +168,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1672:
+/***/ 1719:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -163,7 +185,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2061:
+/***/ 2109:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -171,7 +193,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".notifications-bell_wrap_2Gb76 {\n    position: relative;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n\n/* ── Bell button ──────────────────────────────────────────────────────── */\n\n.notifications-bell_bell-button_3oITE {\n    position: relative;\n    min-width: 2.2rem;\n    min-height: 2.2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 999px;\n    color: #ffffff;\n    background: rgba(255, 255, 255, 0.12);\n    cursor: pointer;\n    -webkit-transition: background 0.15s;\n    -o-transition: background 0.15s;\n    transition: background 0.15s;\n}\n\n.notifications-bell_bell-button_3oITE:hover,\n.notifications-bell_bell-button_3oITE:focus {\n    background: rgba(255, 255, 255, 0.22);\n    outline: none;\n}\n\n.notifications-bell_bell-icon_3P5Oj {\n    width: 1.05rem;\n    height: 1.05rem;\n    stroke-width: 2.6;\n    -webkit-transition: -webkit-transform 0.15s;\n    transition: -webkit-transform 0.15s;\n    -o-transition: transform 0.15s;\n    transition: transform 0.15s;\n    transition: transform 0.15s, -webkit-transform 0.15s;\n}\n\n/* ── Shake animation ──────────────────────────────────────────────────── */\n\n.notifications-bell_bell-shake_3toDR {\n    -webkit-animation: notifications-bell_bell-shake_3toDR 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;\n            animation: notifications-bell_bell-shake_3toDR 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;\n    -webkit-transform-origin: top center;\n        -ms-transform-origin: top center;\n            transform-origin: top center;\n}\n\n@-webkit-keyframes notifications-bell_bell-shake_3toDR {\n    0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n    15%  { -webkit-transform: rotate(18deg); transform: rotate(18deg); }\n    30%  { -webkit-transform: rotate(-16deg); transform: rotate(-16deg); }\n    45%  { -webkit-transform: rotate(12deg); transform: rotate(12deg); }\n    60%  { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }\n    75%  { -webkit-transform: rotate(6deg); transform: rotate(6deg); }\n    90%  { -webkit-transform: rotate(-4deg); transform: rotate(-4deg); }\n    100% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n}\n\n@keyframes notifications-bell_bell-shake_3toDR {\n    0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n    15%  { -webkit-transform: rotate(18deg); transform: rotate(18deg); }\n    30%  { -webkit-transform: rotate(-16deg); transform: rotate(-16deg); }\n    45%  { -webkit-transform: rotate(12deg); transform: rotate(12deg); }\n    60%  { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }\n    75%  { -webkit-transform: rotate(6deg); transform: rotate(6deg); }\n    90%  { -webkit-transform: rotate(-4deg); transform: rotate(-4deg); }\n    100% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n}\n\n/* ── Badge ────────────────────────────────────────────────────────────── */\n\n.notifications-bell_badge_1o5qe {\n    position: absolute;\n    top: -0.25rem;\n    right: -0.2rem;\n    min-width: 1rem;\n    height: 1rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #243f8f;\n    border-radius: 999px;\n    padding: 0 0.18rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.52rem;\n    line-height: 1;\n    -webkit-animation: notifications-bell_badge-pop_3YlRb 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notifications-bell_badge-pop_3YlRb 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n\n@-webkit-keyframes notifications-bell_badge-pop_3YlRb {\n    from { -webkit-transform: scale(0.4); transform: scale(0.4); opacity: 0; }\n    to   { -webkit-transform: scale(1); transform: scale(1);   opacity: 1; }\n}\n\n@keyframes notifications-bell_badge-pop_3YlRb {\n    from { -webkit-transform: scale(0.4); transform: scale(0.4); opacity: 0; }\n    to   { -webkit-transform: scale(1); transform: scale(1);   opacity: 1; }\n}\n\n/* ── Dropdown ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_dropdown_2ae_J {\n    position: absolute;\n    top: calc(100% + 0.65rem);\n    right: 0;\n    z-index: 1000;\n    width: min(22rem, calc(100vw - 1rem));\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.85rem;\n    color: #182b63;\n    background: #ffffff;\n    -webkit-box-shadow: 0.4rem 0.45rem 0 rgba(24, 43, 99, 0.18);\n            box-shadow: 0.4rem 0.45rem 0 rgba(24, 43, 99, 0.18);\n    -webkit-animation: notifications-bell_dropdown-in_bj8P7 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notifications-bell_dropdown-in_bj8P7 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n\n@-webkit-keyframes notifications-bell_dropdown-in_bj8P7 {\n    from { opacity: 0; -webkit-transform: translateY(-0.4rem) scale(0.97); transform: translateY(-0.4rem) scale(0.97); }\n    to   { opacity: 1; -webkit-transform: translateY(0) scale(1); transform: translateY(0) scale(1); }\n}\n\n@keyframes notifications-bell_dropdown-in_bj8P7 {\n    from { opacity: 0; -webkit-transform: translateY(-0.4rem) scale(0.97); transform: translateY(-0.4rem) scale(0.97); }\n    to   { opacity: 1; -webkit-transform: translateY(0) scale(1); transform: translateY(0) scale(1); }\n}\n\n.notifications-bell_dropdown-header_1YQG6 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n    padding: 0.8rem;\n    background: #eaf2ff;\n}\n\n.notifications-bell_dropdown-title_24Sfo {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.78rem;\n    font-weight: 400;\n}\n\n.notifications-bell_read-all-button_2Twre {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    border: 0;\n    border-radius: 0.4rem;\n    padding: 0.42rem 0.55rem;\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.1rem #c6d6ff;\n            box-shadow: inset 0 0 0 0.1rem #c6d6ff;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 800;\n    cursor: pointer;\n    -webkit-transition: background 0.12s, -webkit-box-shadow 0.12s;\n    transition: background 0.12s, -webkit-box-shadow 0.12s;\n    -o-transition: background 0.12s, box-shadow 0.12s;\n    transition: background 0.12s, box-shadow 0.12s;\n    transition: background 0.12s, box-shadow 0.12s, -webkit-box-shadow 0.12s;\n}\n\n.notifications-bell_read-all-button_2Twre:hover:not(:disabled) {\n    background: #f0f4ff;\n    -webkit-box-shadow: inset 0 0 0 0.1rem #8099d9;\n            box-shadow: inset 0 0 0 0.1rem #8099d9;\n}\n\n.notifications-bell_read-all-button_2Twre:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.notifications-bell_read-all-icon_2ThKc,\n.notifications-bell_item-icon_3BmDd,\n.notifications-bell_load-more-icon_2DJBp {\n    width: 0.85rem;\n    height: 0.85rem;\n    stroke-width: 2.6;\n}\n\n/* ── List ─────────────────────────────────────────────────────────────── */\n\n.notifications-bell_list_kcgAh {\n    max-height: 24rem;\n    overflow-y: auto;\n}\n\n/* ── Item ─────────────────────────────────────────────────────────────── */\n\n.notifications-bell_item_IWcJ6 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    border-top: 0.08rem solid #d7e0f5;\n    background: #ffffff;\n    -webkit-animation: notifications-bell_item-in_2lgiW 0.2s ease both;\n            animation: notifications-bell_item-in_2lgiW 0.2s ease both;\n}\n\n@-webkit-keyframes notifications-bell_item-in_2lgiW {\n    from { opacity: 0; -webkit-transform: translateY(-0.3rem); transform: translateY(-0.3rem); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n@keyframes notifications-bell_item-in_2lgiW {\n    from { opacity: 0; -webkit-transform: translateY(-0.3rem); transform: translateY(-0.3rem); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n.notifications-bell_item-unread_Ph7eH {\n    background: #fff8e7;\n}\n\n.notifications-bell_item-main_nJoht {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: grid;\n    grid-template-columns: auto minmax(0, 1fr) auto;\n    gap: 0.65rem;\n    padding: 0.7rem 0.5rem 0.7rem 0.8rem;\n    border: 0;\n    color: inherit;\n    background: transparent;\n    text-align: left;\n    cursor: pointer;\n}\n\n.notifications-bell_item-main_nJoht:hover,\n.notifications-bell_item-main_nJoht:focus {\n    background: #f6f9ff;\n    outline: none;\n}\n\n.notifications-bell_item-unread_Ph7eH .notifications-bell_item-main_nJoht:hover,\n.notifications-bell_item-unread_Ph7eH .notifications-bell_item-main_nJoht:focus {\n    background: #fff3cc;\n}\n\n/* ── Delete button ────────────────────────────────────────────────────── */\n\n.notifications-bell_delete-btn_3zHD6 {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 0.6rem;\n    border: 0;\n    border-left: 0.08rem solid #e8eef8;\n    background: transparent;\n    color: #b0bad8;\n    cursor: pointer;\n    opacity: 0;\n    -webkit-transition: opacity 0.12s, color 0.12s, background 0.12s;\n    -o-transition: opacity 0.12s, color 0.12s, background 0.12s;\n    transition: opacity 0.12s, color 0.12s, background 0.12s;\n}\n\n.notifications-bell_item_IWcJ6:hover .notifications-bell_delete-btn_3zHD6,\n.notifications-bell_item_IWcJ6:focus-within .notifications-bell_delete-btn_3zHD6 {\n    opacity: 1;\n}\n\n.notifications-bell_delete-btn_3zHD6:hover {\n    background: #fff0f0;\n    color: #d93838;\n}\n\n.notifications-bell_delete-btn-icon_OWac4 {\n    width: 0.8rem;\n    height: 0.8rem;\n    stroke-width: 2.6;\n}\n\n/* ── Avatar ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_avatar_2SaaP {\n    width: 2.15rem;\n    height: 2.15rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n}\n\n.notifications-bell_avatar_2SaaP img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n/* ── Item body ──────────────────────────────────────────────────────── */\n\n.notifications-bell_item-body_2lOVb {\n    min-width: 0;\n}\n\n.notifications-bell_message_2YmvN {\n    margin: 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n    line-height: 1.35;\n}\n\n.notifications-bell_actor_iFRfs {\n    color: #243f8f;\n    font-weight: 900;\n}\n\n.notifications-bell_project_1u-DJ {\n    margin: 0.25rem 0 0;\n    overflow: hidden;\n    color: #56648e;\n    font-size: 0.72rem;\n    font-weight: 700;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.notifications-bell_date_3WZ9n {\n    margin: 0.28rem 0 0;\n    color: #7280a8;\n    font-size: 0.68rem;\n    font-weight: 700;\n}\n\n.notifications-bell_unread-dot_Kc_ji {\n    width: 0.58rem;\n    height: 0.58rem;\n    -webkit-align-self: start;\n        -ms-flex-item-align: start;\n            align-self: start;\n    border-radius: 999px;\n    background: #ff2b2b;\n}\n\n/* ── Empty / loading ────────────────────────────────────────────────── */\n\n.notifications-bell_empty_1HBoX,\n.notifications-bell_loading_Zw28E {\n    padding: 1.25rem;\n    color: #56648e;\n    font-size: 0.86rem;\n    font-weight: 800;\n    text-align: center;\n}\n\n/* ── Load more ──────────────────────────────────────────────────────── */\n\n.notifications-bell_load-more-wrap_1lg2a {\n    border-top: 0.08rem solid #d7e0f5;\n    padding: 0.45rem 0.8rem;\n    background: #f6f9ff;\n}\n\n.notifications-bell_load-more-button_rJIdR {\n    width: 100%;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.3rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0.4rem;\n    color: #243f8f;\n    background: transparent;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 800;\n    cursor: pointer;\n    -webkit-transition: background 0.12s;\n    -o-transition: background 0.12s;\n    transition: background 0.12s;\n}\n\n.notifications-bell_load-more-button_rJIdR:hover:not(:disabled) {\n    background: #e5edff;\n}\n\n.notifications-bell_load-more-button_rJIdR:disabled {\n    opacity: 0.55;\n    cursor: default;\n}\n\n/* ── Footer ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_footer_2pZPQ {\n    border-top: 0.08rem solid #d7e0f5;\n    padding: 0.65rem 0.8rem;\n    color: #7280a8;\n    background: #f6f9ff;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n}\n\n/* ── Responsive ─────────────────────────────────────────────────────── */\n\n@media (max-width: 48rem) {\n    .notifications-bell_dropdown_2ae_J {\n        right: -4rem;\n    }\n}\n", ""]);
+exports.push([module.i, ".notifications-bell_wrap_2Gb76 {\n    position: relative;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n\n/* ── Bell button ──────────────────────────────────────────────────────── */\n\n.notifications-bell_bell-button_3oITE {\n    position: relative;\n    min-width: 2.2rem;\n    min-height: 2.2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 999px;\n    color: #ffffff;\n    background: rgba(255, 255, 255, 0.12);\n    cursor: pointer;\n    -webkit-transition: background 0.15s;\n    transition: background 0.15s;\n}\n\n.notifications-bell_bell-button_3oITE:hover,\n.notifications-bell_bell-button_3oITE:focus {\n    background: rgba(255, 255, 255, 0.22);\n    outline: none;\n}\n\n.notifications-bell_bell-icon_3P5Oj {\n    width: 1.05rem;\n    height: 1.05rem;\n    stroke-width: 2.6;\n    -webkit-transition: -webkit-transform 0.15s;\n    transition: -webkit-transform 0.15s;\n    transition: transform 0.15s;\n    transition: transform 0.15s, -webkit-transform 0.15s;\n}\n\n/* ── Shake animation ──────────────────────────────────────────────────── */\n\n.notifications-bell_bell-shake_3toDR {\n    -webkit-animation: notifications-bell_bell-shake_3toDR 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;\n            animation: notifications-bell_bell-shake_3toDR 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;\n    -webkit-transform-origin: top center;\n        -ms-transform-origin: top center;\n            transform-origin: top center;\n}\n\n@-webkit-keyframes notifications-bell_bell-shake_3toDR {\n    0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n    15%  { -webkit-transform: rotate(18deg); transform: rotate(18deg); }\n    30%  { -webkit-transform: rotate(-16deg); transform: rotate(-16deg); }\n    45%  { -webkit-transform: rotate(12deg); transform: rotate(12deg); }\n    60%  { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }\n    75%  { -webkit-transform: rotate(6deg); transform: rotate(6deg); }\n    90%  { -webkit-transform: rotate(-4deg); transform: rotate(-4deg); }\n    100% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n}\n\n@keyframes notifications-bell_bell-shake_3toDR {\n    0%   { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n    15%  { -webkit-transform: rotate(18deg); transform: rotate(18deg); }\n    30%  { -webkit-transform: rotate(-16deg); transform: rotate(-16deg); }\n    45%  { -webkit-transform: rotate(12deg); transform: rotate(12deg); }\n    60%  { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }\n    75%  { -webkit-transform: rotate(6deg); transform: rotate(6deg); }\n    90%  { -webkit-transform: rotate(-4deg); transform: rotate(-4deg); }\n    100% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }\n}\n\n/* ── Badge ────────────────────────────────────────────────────────────── */\n\n.notifications-bell_badge_1o5qe {\n    position: absolute;\n    top: -0.25rem;\n    right: -0.2rem;\n    min-width: 1rem;\n    height: 1rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #243f8f;\n    border-radius: 999px;\n    padding: 0 0.18rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.52rem;\n    line-height: 1;\n    -webkit-animation: notifications-bell_badge-pop_3YlRb 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notifications-bell_badge-pop_3YlRb 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n\n@-webkit-keyframes notifications-bell_badge-pop_3YlRb {\n    from { -webkit-transform: scale(0.4); transform: scale(0.4); opacity: 0; }\n    to   { -webkit-transform: scale(1); transform: scale(1);   opacity: 1; }\n}\n\n@keyframes notifications-bell_badge-pop_3YlRb {\n    from { -webkit-transform: scale(0.4); transform: scale(0.4); opacity: 0; }\n    to   { -webkit-transform: scale(1); transform: scale(1);   opacity: 1; }\n}\n\n/* ── Dropdown ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_dropdown_2ae_J {\n    position: absolute;\n    top: calc(100% + 0.65rem);\n    right: 0;\n    z-index: 1000;\n    width: min(22rem, calc(100vw - 1rem));\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.85rem;\n    color: #182b63;\n    background: #ffffff;\n    -webkit-box-shadow: 0.4rem 0.45rem 0 rgba(24, 43, 99, 0.18);\n            box-shadow: 0.4rem 0.45rem 0 rgba(24, 43, 99, 0.18);\n    -webkit-animation: notifications-bell_dropdown-in_bj8P7 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notifications-bell_dropdown-in_bj8P7 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n\n@-webkit-keyframes notifications-bell_dropdown-in_bj8P7 {\n    from { opacity: 0; -webkit-transform: translateY(-0.4rem) scale(0.97); transform: translateY(-0.4rem) scale(0.97); }\n    to   { opacity: 1; -webkit-transform: translateY(0) scale(1); transform: translateY(0) scale(1); }\n}\n\n@keyframes notifications-bell_dropdown-in_bj8P7 {\n    from { opacity: 0; -webkit-transform: translateY(-0.4rem) scale(0.97); transform: translateY(-0.4rem) scale(0.97); }\n    to   { opacity: 1; -webkit-transform: translateY(0) scale(1); transform: translateY(0) scale(1); }\n}\n\n.notifications-bell_dropdown-header_1YQG6 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n    padding: 0.8rem;\n    background: #eaf2ff;\n}\n\n.notifications-bell_dropdown-title_24Sfo {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.78rem;\n    font-weight: 400;\n}\n\n.notifications-bell_read-all-button_2Twre {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    border: 0;\n    border-radius: 0.4rem;\n    padding: 0.42rem 0.55rem;\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.1rem #c6d6ff;\n            box-shadow: inset 0 0 0 0.1rem #c6d6ff;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 800;\n    cursor: pointer;\n    -webkit-transition: background 0.12s, -webkit-box-shadow 0.12s;\n    transition: background 0.12s, -webkit-box-shadow 0.12s;\n    transition: background 0.12s, box-shadow 0.12s;\n    transition: background 0.12s, box-shadow 0.12s, -webkit-box-shadow 0.12s;\n}\n\n.notifications-bell_read-all-button_2Twre:hover:not(:disabled) {\n    background: #f0f4ff;\n    -webkit-box-shadow: inset 0 0 0 0.1rem #8099d9;\n            box-shadow: inset 0 0 0 0.1rem #8099d9;\n}\n\n.notifications-bell_read-all-button_2Twre:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.notifications-bell_read-all-icon_2ThKc,\n.notifications-bell_item-icon_3BmDd,\n.notifications-bell_load-more-icon_2DJBp {\n    width: 0.85rem;\n    height: 0.85rem;\n    stroke-width: 2.6;\n}\n\n/* ── List ─────────────────────────────────────────────────────────────── */\n\n.notifications-bell_list_kcgAh {\n    max-height: 24rem;\n    overflow-y: auto;\n}\n\n/* ── Item ─────────────────────────────────────────────────────────────── */\n\n.notifications-bell_item_IWcJ6 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    border-top: 0.08rem solid #d7e0f5;\n    background: #ffffff;\n    -webkit-animation: notifications-bell_item-in_2lgiW 0.2s ease both;\n            animation: notifications-bell_item-in_2lgiW 0.2s ease both;\n}\n\n@-webkit-keyframes notifications-bell_item-in_2lgiW {\n    from { opacity: 0; -webkit-transform: translateY(-0.3rem); transform: translateY(-0.3rem); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n@keyframes notifications-bell_item-in_2lgiW {\n    from { opacity: 0; -webkit-transform: translateY(-0.3rem); transform: translateY(-0.3rem); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n.notifications-bell_item-unread_Ph7eH {\n    background: #fff8e7;\n}\n\n.notifications-bell_item-main_nJoht {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: grid;\n    grid-template-columns: auto minmax(0, 1fr) auto;\n    gap: 0.65rem;\n    padding: 0.7rem 0.5rem 0.7rem 0.8rem;\n    border: 0;\n    color: inherit;\n    background: transparent;\n    text-align: left;\n    cursor: pointer;\n}\n\n.notifications-bell_item-main_nJoht:hover,\n.notifications-bell_item-main_nJoht:focus {\n    background: #f6f9ff;\n    outline: none;\n}\n\n.notifications-bell_item-unread_Ph7eH .notifications-bell_item-main_nJoht:hover,\n.notifications-bell_item-unread_Ph7eH .notifications-bell_item-main_nJoht:focus {\n    background: #fff3cc;\n}\n\n/* ── Delete button ────────────────────────────────────────────────────── */\n\n.notifications-bell_delete-btn_3zHD6 {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 0.6rem;\n    border: 0;\n    border-left: 0.08rem solid #e8eef8;\n    background: transparent;\n    color: #b0bad8;\n    cursor: pointer;\n    opacity: 0;\n    -webkit-transition: opacity 0.12s, color 0.12s, background 0.12s;\n    transition: opacity 0.12s, color 0.12s, background 0.12s;\n}\n\n.notifications-bell_item_IWcJ6:hover .notifications-bell_delete-btn_3zHD6,\n.notifications-bell_item_IWcJ6:focus-within .notifications-bell_delete-btn_3zHD6 {\n    opacity: 1;\n}\n\n.notifications-bell_delete-btn_3zHD6:hover {\n    background: #fff0f0;\n    color: #d93838;\n}\n\n.notifications-bell_delete-btn-icon_OWac4 {\n    width: 0.8rem;\n    height: 0.8rem;\n    stroke-width: 2.6;\n}\n\n/* ── Avatar ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_avatar_2SaaP {\n    width: 2.15rem;\n    height: 2.15rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n}\n\n.notifications-bell_avatar_2SaaP img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n/* ── Item body ──────────────────────────────────────────────────────── */\n\n.notifications-bell_item-body_2lOVb {\n    min-width: 0;\n}\n\n.notifications-bell_message_2YmvN {\n    margin: 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n    line-height: 1.35;\n}\n\n.notifications-bell_actor_iFRfs {\n    color: #243f8f;\n    font-weight: 900;\n}\n\n.notifications-bell_project_1u-DJ {\n    margin: 0.25rem 0 0;\n    overflow: hidden;\n    color: #56648e;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.notifications-bell_date_3WZ9n {\n    margin: 0.28rem 0 0;\n    color: #7280a8;\n    font-size: 0.68rem;\n    font-weight: 700;\n}\n\n.notifications-bell_unread-dot_Kc_ji {\n    width: 0.58rem;\n    height: 0.58rem;\n    -webkit-align-self: start;\n        -ms-flex-item-align: start;\n            align-self: start;\n    border-radius: 999px;\n    background: #ff2b2b;\n}\n\n/* ── Empty / loading ────────────────────────────────────────────────── */\n\n.notifications-bell_empty_1HBoX,\n.notifications-bell_loading_Zw28E {\n    padding: 1.25rem;\n    color: #56648e;\n    font-size: 0.86rem;\n    font-weight: 800;\n    text-align: center;\n}\n\n/* ── Load more ──────────────────────────────────────────────────────── */\n\n.notifications-bell_load-more-wrap_1lg2a {\n    border-top: 0.08rem solid #d7e0f5;\n    padding: 0.45rem 0.8rem;\n    background: #f6f9ff;\n}\n\n.notifications-bell_load-more-button_rJIdR {\n    width: 100%;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.3rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0.4rem;\n    color: #243f8f;\n    background: transparent;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 800;\n    cursor: pointer;\n    -webkit-transition: background 0.12s;\n    transition: background 0.12s;\n}\n\n.notifications-bell_load-more-button_rJIdR:hover:not(:disabled) {\n    background: #e5edff;\n}\n\n.notifications-bell_load-more-button_rJIdR:disabled {\n    opacity: 0.55;\n    cursor: default;\n}\n\n/* ── Footer ─────────────────────────────────────────────────────────── */\n\n.notifications-bell_footer_2pZPQ {\n    border-top: 0.08rem solid #d7e0f5;\n    padding: 0.65rem 0.8rem;\n    color: #7280a8;\n    background: #f6f9ff;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n}\n\n/* ── Responsive ─────────────────────────────────────────────────────── */\n\n@media (max-width: 48rem) {\n    .notifications-bell_dropdown_2ae_J {\n        right: -4rem;\n    }\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -232,7 +254,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2062:
+/***/ 2110:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -240,7 +262,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "/* ── Toast container ────────────────────────────────────────────────────── */\n.notification-toast_toast_3t5-8 {\n    position: relative;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0;\n    overflow: hidden;\n    width: min(22rem, calc(100vw - 2rem));\n    border: 0.15rem solid rgba(36, 63, 143, 0.18);\n    border-radius: 1rem;\n    background: rgba(255, 255, 255, 0.92);\n    -webkit-box-shadow:\n        0 0.5rem 2rem rgba(24, 43, 99, 0.18),\n        0 0.1rem 0.4rem rgba(24, 43, 99, 0.1);\n            box-shadow:\n        0 0.5rem 2rem rgba(24, 43, 99, 0.18),\n        0 0.1rem 0.4rem rgba(24, 43, 99, 0.1);\n    backdrop-filter: blur(12px);\n    -webkit-backdrop-filter: blur(12px);\n    -webkit-animation: notification-toast_toast-in_1lRea 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notification-toast_toast-in_1lRea 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n.notification-toast_toast_3t5-8.notification-toast_toast-out_LGIyu {\n    -webkit-animation: notification-toast_toast-out_LGIyu 0.28s ease-in both;\n            animation: notification-toast_toast-out_LGIyu 0.28s ease-in both;\n}\n/* ── Toast body (clickable area) ──────────────────────────────────────── */\n.notification-toast_toast-body_1hxjp {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.7rem;\n    padding: 0.75rem 0.6rem 0.75rem 0.8rem;\n    border: 0;\n    background: transparent;\n    text-align: left;\n    cursor: pointer;\n}\n.notification-toast_toast-body_1hxjp:hover {\n    background: rgba(36, 63, 143, 0.04);\n}\n/* ── Avatar ─────────────────────────────────────────────────────────── */\n.notification-toast_toast-avatar_oFeUP {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    width: 2.1rem;\n    height: 2.1rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border-radius: 0.5rem;\n    color: #fff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n}\n.notification-toast_toast-avatar_oFeUP img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n/* ── Content ────────────────────────────────────────────────────────── */\n.notification-toast_toast-content_--F1_ {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.4rem;\n}\n.notification-toast_toast-icon-wrap_K925M {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    margin-top: 0.06rem;\n    color: #243f8f;\n}\n.notification-toast_toast-icon_1ZhHv {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.5;\n}\n.notification-toast_toast-text_1ZbvV {\n    min-width: 0;\n    color: #344473;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 700;\n    line-height: 1.35;\n    overflow: hidden;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n}\n.notification-toast_toast-actor_3YZcs {\n    color: #243f8f;\n    font-weight: 900;\n}\n/* ── Close button ───────────────────────────────────────────────────── */\n.notification-toast_toast-close_2DkFH {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 0.65rem;\n    border: 0;\n    border-left: 0.08rem solid rgba(36, 63, 143, 0.1);\n    background: transparent;\n    color: #7280a8;\n    cursor: pointer;\n    -webkit-transition: color 0.15s, background 0.15s;\n    -o-transition: color 0.15s, background 0.15s;\n    transition: color 0.15s, background 0.15s;\n}\n.notification-toast_toast-close_2DkFH:hover {\n    background: rgba(36, 63, 143, 0.06);\n    color: #243f8f;\n}\n.notification-toast_toast-close-icon_-lReU {\n    width: 0.85rem;\n    height: 0.85rem;\n    stroke-width: 2.5;\n}\n/* ── Progress bar ───────────────────────────────────────────────────── */\n.notification-toast_toast-progress_2tyeZ {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    height: 0.2rem;\n    width: 100%;\n    background: -webkit-gradient(linear, left top, right top, from(#243f8f), to(#7e55d8));\n    background: -o-linear-gradient(left, #243f8f, #7e55d8);\n    background: linear-gradient(90deg, #243f8f, #7e55d8);\n    -webkit-transform-origin: left;\n        -ms-transform-origin: left;\n            transform-origin: left;\n    -webkit-animation: notification-toast_toast-progress_2tyeZ 5s linear forwards;\n            animation: notification-toast_toast-progress_2tyeZ 5s linear forwards;\n}\n/* ── Keyframes ──────────────────────────────────────────────────────── */\n@-webkit-keyframes notification-toast_toast-in_1lRea {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n    }\n}\n@keyframes notification-toast_toast-in_1lRea {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n    }\n}\n@-webkit-keyframes notification-toast_toast-out_LGIyu {\n    from {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n        max-height: 6rem;\n        margin-bottom: 0.5rem;\n    }\n    to {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n        max-height: 0;\n        margin-bottom: 0;\n    }\n}\n@keyframes notification-toast_toast-out_LGIyu {\n    from {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n        max-height: 6rem;\n        margin-bottom: 0.5rem;\n    }\n    to {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n        max-height: 0;\n        margin-bottom: 0;\n    }\n}\n@-webkit-keyframes notification-toast_toast-progress_2tyeZ {\n    from { -webkit-transform: scaleX(1); transform: scaleX(1); }\n    to   { -webkit-transform: scaleX(0); transform: scaleX(0); }\n}\n@keyframes notification-toast_toast-progress_2tyeZ {\n    from { -webkit-transform: scaleX(1); transform: scaleX(1); }\n    to   { -webkit-transform: scaleX(0); transform: scaleX(0); }\n}\n", ""]);
+exports.push([module.i, "/* ── Toast container ────────────────────────────────────────────────────── */\n.notification-toast_toast_3t5-8 {\n    position: relative;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0;\n    overflow: hidden;\n    width: min(22rem, calc(100vw - 2rem));\n    border: 0.15rem solid rgba(36, 63, 143, 0.18);\n    border-radius: 1rem;\n    background: rgba(255, 255, 255, 0.92);\n    -webkit-box-shadow:\n        0 0.5rem 2rem rgba(24, 43, 99, 0.18),\n        0 0.1rem 0.4rem rgba(24, 43, 99, 0.1);\n            box-shadow:\n        0 0.5rem 2rem rgba(24, 43, 99, 0.18),\n        0 0.1rem 0.4rem rgba(24, 43, 99, 0.1);\n    backdrop-filter: blur(12px);\n    -webkit-backdrop-filter: blur(12px);\n    -webkit-animation: notification-toast_toast-in_1lRea 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n            animation: notification-toast_toast-in_1lRea 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;\n}\n.notification-toast_toast_3t5-8.notification-toast_toast-out_LGIyu {\n    -webkit-animation: notification-toast_toast-out_LGIyu 0.28s ease-in both;\n            animation: notification-toast_toast-out_LGIyu 0.28s ease-in both;\n}\n/* ── Toast body (clickable area) ──────────────────────────────────────── */\n.notification-toast_toast-body_1hxjp {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.7rem;\n    padding: 0.75rem 0.6rem 0.75rem 0.8rem;\n    border: 0;\n    background: transparent;\n    text-align: left;\n    cursor: pointer;\n}\n.notification-toast_toast-body_1hxjp:hover {\n    background: rgba(36, 63, 143, 0.04);\n}\n/* ── Avatar ─────────────────────────────────────────────────────────── */\n.notification-toast_toast-avatar_oFeUP {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    width: 2.1rem;\n    height: 2.1rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border-radius: 0.5rem;\n    color: #fff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n}\n.notification-toast_toast-avatar_oFeUP img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n/* ── Content ────────────────────────────────────────────────────────── */\n.notification-toast_toast-content_--F1_ {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.4rem;\n}\n.notification-toast_toast-icon-wrap_K925M {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    margin-top: 0.06rem;\n    color: #243f8f;\n}\n.notification-toast_toast-icon_1ZhHv {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.5;\n}\n.notification-toast_toast-text_1ZbvV {\n    min-width: 0;\n    color: #344473;\n    font-family: \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 700;\n    line-height: 1.35;\n    overflow: hidden;\n    display: -webkit-box;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n}\n.notification-toast_toast-actor_3YZcs {\n    color: #243f8f;\n    font-weight: 900;\n}\n/* ── Close button ───────────────────────────────────────────────────── */\n.notification-toast_toast-close_2DkFH {\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 0.65rem;\n    border: 0;\n    border-left: 0.08rem solid rgba(36, 63, 143, 0.1);\n    background: transparent;\n    color: #7280a8;\n    cursor: pointer;\n    -webkit-transition: color 0.15s, background 0.15s;\n    transition: color 0.15s, background 0.15s;\n}\n.notification-toast_toast-close_2DkFH:hover {\n    background: rgba(36, 63, 143, 0.06);\n    color: #243f8f;\n}\n.notification-toast_toast-close-icon_-lReU {\n    width: 0.85rem;\n    height: 0.85rem;\n    stroke-width: 2.5;\n}\n/* ── Progress bar ───────────────────────────────────────────────────── */\n.notification-toast_toast-progress_2tyeZ {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    height: 0.2rem;\n    width: 100%;\n    background: -webkit-gradient(linear, left top, right top, from(#243f8f), to(#7e55d8));\n    background: linear-gradient(90deg, #243f8f, #7e55d8);\n    -webkit-transform-origin: left;\n        -ms-transform-origin: left;\n            transform-origin: left;\n    -webkit-animation: notification-toast_toast-progress_2tyeZ 5s linear forwards;\n            animation: notification-toast_toast-progress_2tyeZ 5s linear forwards;\n}\n/* ── Keyframes ──────────────────────────────────────────────────────── */\n@-webkit-keyframes notification-toast_toast-in_1lRea {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n    }\n}\n@keyframes notification-toast_toast-in_1lRea {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n    }\n}\n@-webkit-keyframes notification-toast_toast-out_LGIyu {\n    from {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n        max-height: 6rem;\n        margin-bottom: 0.5rem;\n    }\n    to {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n        max-height: 0;\n        margin-bottom: 0;\n    }\n}\n@keyframes notification-toast_toast-out_LGIyu {\n    from {\n        opacity: 1;\n        -webkit-transform: translateX(0) scale(1);\n                transform: translateX(0) scale(1);\n        max-height: 6rem;\n        margin-bottom: 0.5rem;\n    }\n    to {\n        opacity: 0;\n        -webkit-transform: translateX(2rem) scale(0.95);\n                transform: translateX(2rem) scale(0.95);\n        max-height: 0;\n        margin-bottom: 0;\n    }\n}\n@-webkit-keyframes notification-toast_toast-progress_2tyeZ {\n    from { -webkit-transform: scaleX(1); transform: scaleX(1); }\n    to   { -webkit-transform: scaleX(0); transform: scaleX(0); }\n}\n@keyframes notification-toast_toast-progress_2tyeZ {\n    from { -webkit-transform: scaleX(1); transform: scaleX(1); }\n    to   { -webkit-transform: scaleX(0); transform: scaleX(0); }\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -273,7 +295,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2063:
+/***/ 2111:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -303,7 +325,7 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2064:
+/***/ 2112:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(21)(false);
@@ -311,7 +333,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".project-page_page_1Wbb7 {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.project-page_panel_2Q9q6 {\n    width: 100%;\n}\n\n.project-page_header_3kFLm {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_thumbnail_2k3iF,\n.project-page_thumbnailPlaceholder_3SgYt {\n    width: 5.25rem;\n    height: 5.25rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.75rem;\n    background: #d8e4ff;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.project-page_thumbnail_2k3iF {\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_thumbnailWrap_36kdU {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    gap: 0.45rem;\n}\n\n.project-page_coverInput_B94Bd {\n    display: none;\n}\n\n.project-page_coverButton_Fa8rm,\n.project-page_titleEditButton_1fEXY {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.3rem;\n    border: 0;\n    border-radius: 0.42rem;\n    padding: 0.45rem 0.65rem;\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.18rem 0 #182b63;\n            box-shadow: 0 0.18rem 0 #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.55rem;\n    line-height: 1;\n    cursor: pointer;\n}\n\n.project-page_coverButton_Fa8rm:disabled {\n    cursor: default;\n    opacity: 0.65;\n}\n\n.project-page_thumbnailPlaceholder_3SgYt {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #d800ff;\n    background:\n        -o-radial-gradient(82% 12%, circle, #ff8a1d 0 12%, transparent 13%),\n        -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.6rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.project-page_meta_2vh4S {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n}\n\n.project-page_title_1ioNB {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.project-page_titleRow_lshee {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.7rem;\n    min-width: 0;\n}\n\n.project-page_titleEditButton_1fEXY {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.18rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.18rem 0 #c6d6ff;\n}\n\n.project-page_titleEditRow_SzVYH {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n}\n\n.project-page_titleInput_11LDv {\n    min-width: min(26rem, 100%);\n    border: 0.13rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0.5rem 0.65rem;\n    color: #243f8f;\n    background: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.25rem;\n    line-height: 1.1;\n    outline: none;\n}\n\n.project-page_titleInput_11LDv:focus {\n    border-color: #7e55d8;\n    -webkit-box-shadow: 0 0 0 0.2rem rgba(126, 85, 216, 0.15);\n            box-shadow: 0 0 0 0.2rem rgba(126, 85, 216, 0.15);\n}\n\n.project-page_authorRow_hCaxE {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-top: 0.35rem;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.project-page_avatar_1IJtx,\n.project-page_commentAvatar_VbgXq {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n}\n\n.project-page_avatar_1IJtx {\n    width: 1.85rem;\n    height: 1.85rem;\n    border-radius: 0.5rem;\n    font-size: 0.78rem;\n}\n\n.project-page_authorName_2ztee strong {\n    color: #7e55d8;\n}\n\n.project-page_dateLine_1vSTc {\n    margin-top: 0.35rem;\n    color: #56648e;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.project-page_visibilityBadge_1tzjs {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    margin-top: 0.7rem;\n    border-radius: 999px;\n    padding: 0.3rem 0.75rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.58rem;\n    font-weight: 400;\n    line-height: 1;\n    text-transform: uppercase;\n}\n\n.project-page_badgeIcon_2mjY2,\n.project-page_buttonIcon_1X05D,\n.project-page_metricIcon_21pgh,\n.project-page_lowerHeaderIcon_nAxp7 {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    stroke-width: 2.5;\n}\n\n.project-page_badgeIcon_2mjY2 {\n    width: 0.78rem;\n    height: 0.78rem;\n}\n\n.project-page_buttonIcon_1X05D {\n    width: 1rem;\n    height: 1rem;\n}\n\n.project-page_metricIcon_21pgh,\n.project-page_lowerHeaderIcon_nAxp7 {\n    width: 1.05rem;\n    height: 1.05rem;\n}\n\n.project-page_badgePublic_3hLam {\n    color: #0d6a2d;\n    background: #dff8e7;\n}\n\n.project-page_badgeUnlisted_1afrX {\n    color: #835600;\n    background: #fff1c6;\n}\n\n.project-page_badgePrivate_3RUiz {\n    color: #8d1111;\n    background: #ffe0e0;\n}\n\n.project-page_actionBar_DZpl2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n    margin: 1.1rem 0 1.35rem;\n}\n\n.project-page_statBtn_2hEla,\n.project-page_remixBtn_-D20-,\n.project-page_editorLink_11Wot {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.35rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-decoration: none;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.project-page_statBtn_2hEla {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.project-page_editorLink_11Wot,\n.project-page_remixBtn_-D20- {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.project-page_statBtn_2hEla:hover:not(:disabled),\n.project-page_remixBtn_-D20-:hover:not(:disabled),\n.project-page_editorLink_11Wot:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.project-page_statBtn_2hEla:active:not(:disabled),\n.project-page_remixBtn_-D20-:active:not(:disabled),\n.project-page_editorLink_11Wot:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.project-page_statBtn_2hEla:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.project-page_statBtnLiked_1KFkd {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.project-page_statBtnFavorited_2nsH0 {\n    color: #182b63;\n    background: #ffd84d;\n    -webkit-box-shadow: 0 0.2rem 0 #d6a900;\n            box-shadow: 0 0.2rem 0 #d6a900;\n}\n\n.project-page_deleteProjectBtn_1_P5H {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.project-page_viewStat_1nEPM {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.3rem;\n    color: #56648e;\n    font-size: 1rem;\n    font-weight: 800;\n}\n\n.project-page_tabs_hgF9n {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_tab_1DiCC {\n    min-height: 2.1rem;\n    border: 0;\n    border-radius: 999px;\n    padding: 0 0.95rem;\n    color: #243f8f;\n    background: #e7efff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    cursor: pointer;\n}\n\n.project-page_tabActive_1hzjj {\n    color: #ffffff;\n    background: #ff7a1a;\n}\n\n.project-page_body_C8AKw {\n    display: grid;\n    gap: 1rem;\n}\n\n.project-page_mainGrid_1I9rQ {\n    display: grid;\n    grid-template-columns: minmax(22rem, 32rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.project-page_playerColumn_iZODB,\n.project-page_infoColumn_t5rZ6 {\n    min-width: 0;\n}\n\n.project-page_playerFrame_2rQly {\n    width: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: auto;\n    border-radius: 0.8rem;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.project-page_playerFrame_2rQly > img {\n    width: 100%;\n    display: block;\n}\n\n.project-page_playerFrame_2rQly [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.project-page_playerFallback_10Pka {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.project-page_lowerBand_1kVWh {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.project-page_lowerHeader_2fXDr {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_lowerHeader_2fXDr h2 {\n    margin: 0;\n    color: #243f8f;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.project-page_lowerHeader_2fXDr span {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.project-page_remixPlaceholder_bhMmA {\n    height: 9.4rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    color: #d800ff;\n    background: #d8e4ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.project-page_remixPlaceholder_bhMmA img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_section_2WswC,\n.project-page_commentBubble_1zoUg,\n.project-page_commentInput_3W8bO,\n.project-page_loginPrompt_3uGQJ,\n.project-page_noComments_lfEVZ {\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    background: #eaf2ff;\n}\n\n.project-page_section_2WswC {\n    margin-bottom: 1rem;\n    padding: 1rem;\n}\n\n.project-page_sectionTitle_3FVsa {\n    margin: 0 0 0.65rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.project-page_sectionText_rXaIH,\n.project-page_emptyText_2HTQR {\n    margin: 0;\n    color: #344473;\n    font-size: 1rem;\n    font-weight: 600;\n    line-height: 1.5;\n    white-space: pre-wrap;\n    word-break: break-word;\n}\n\n.project-page_emptyText_2HTQR {\n    color: #7280a8;\n}\n\n.project-page_editBar_2hbQJ {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.55rem;\n    margin-bottom: 1rem;\n    color: #56648e;\n    font-weight: 800;\n}\n\n.project-page_visibilitySelect_3a5Bg,\n.project-page_editArea_3SHT2,\n.project-page_commentInputField_2IaoT,\n.project-page_replyInputField_3d7f_ {\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    color: #182b63;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 700;\n    outline: none;\n}\n\n.project-page_visibilitySelect_3a5Bg {\n    min-height: 2.35rem;\n    padding: 0 0.7rem;\n}\n\n.project-page_editArea_3SHT2,\n.project-page_commentInputField_2IaoT,\n.project-page_replyInputField_3d7f_ {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    padding: 0.75rem;\n    font-size: 0.95rem;\n    line-height: 1.45;\n    resize: vertical;\n}\n\n.project-page_visibilitySelect_3a5Bg:focus,\n.project-page_editArea_3SHT2:focus,\n.project-page_commentInputField_2IaoT:focus,\n.project-page_replyInputField_3d7f_:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.project-page_saveRow_1Htd2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n    margin-top: 0.75rem;\n}\n\n.project-page_editBtn_2P_Oq,\n.project-page_saveBtn_2UXdt,\n.project-page_cancelBtn_16Ezz,\n.project-page_loadMoreBtn_2hGBH,\n.project-page_commentSubmitBtn_34U5K,\n.project-page_commentReplyBtn_1maxA,\n.project-page_replyCancelBtn_3d2ZC,\n.project-page_replySubmitBtn_1k3mB {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.35rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n\n.project-page_editBtn_2P_Oq,\n.project-page_cancelBtn_16Ezz,\n.project-page_loadMoreBtn_2hGBH,\n.project-page_commentReplyBtn_1maxA,\n.project-page_replyCancelBtn_3d2ZC {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.project-page_saveBtn_2UXdt,\n.project-page_commentSubmitBtn_34U5K,\n.project-page_replySubmitBtn_1k3mB {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.project-page_editBtn_2P_Oq {\n    margin-top: 0.75rem;\n}\n\n.project-page_commentInput_3W8bO {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) auto;\n    gap: 0.65rem;\n    margin-bottom: 1rem;\n    padding: 0.75rem;\n}\n\n.project-page_commentSubmitBtn_34U5K {\n    -webkit-align-self: end;\n        -ms-flex-item-align: end;\n            align-self: end;\n    min-width: 2.65rem;\n    padding: 0 0.7rem;\n}\n\n.project-page_commentList_1RCq7 {\n    display: grid;\n    gap: 0.85rem;\n}\n\n.project-page_comment_1GL26 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.65rem;\n}\n\n.project-page_commentReply_1XENR {\n    margin-top: 0.75rem;\n    gap: 0.5rem;\n}\n\n.project-page_commentReply_1XENR .project-page_commentAvatar_VbgXq {\n    width: 1.8rem;\n    height: 1.8rem;\n    border-radius: 0.5rem;\n    font-size: 0.65rem;\n}\n\n.project-page_commentAvatar_VbgXq {\n    width: 2.35rem;\n    height: 2.35rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    border-radius: 0.65rem;\n    font-size: 0.8rem;\n}\n\n.project-page_commentAvatar_VbgXq img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_commentBubble_1zoUg {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    padding: 0.8rem;\n}\n\n.project-page_commentHeader_3R5J5 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n    margin-bottom: 0.4rem;\n}\n\n.project-page_commentAuthor_2v59M {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.project-page_commentDate_24PA1 {\n    color: #56648e;\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.project-page_commentDeleteBtn_3h4Eb {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-left: auto;\n    border: 0;\n    border-radius: 0.35rem;\n    color: #8d1111;\n    background: #ffe0e0;\n    cursor: pointer;\n}\n\n.project-page_commentContent_14yaH {\n    color: #344473;\n    font-size: 0.95rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n    word-break: break-word;\n}\n\n.project-page_commentLink_lzqAC {\n    color: #243f8f;\n    font-weight: 800;\n    text-decoration: underline;\n    text-decoration-thickness: 0.12rem;\n    text-underline-offset: 0.16rem;\n}\n\n.project-page_commentLink_lzqAC:hover,\n.project-page_commentLink_lzqAC:focus {\n    color: #7e55d8;\n}\n\n.project-page_commentActions_3JW2k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-top: 0.55rem;\n}\n\n.project-page_commentReplyBtn_1maxA {\n    min-height: 1.75rem;\n    padding: 0 0.6rem;\n    font-size: 0.52rem;\n}\n\n.project-page_replyInput_22svb {\n    margin-top: 0.75rem;\n    border-top: 0.12rem solid #d7e0f5;\n    padding-top: 0.75rem;\n}\n\n.project-page_replyInputField_3d7f_ {\n    min-height: 4.25rem;\n    font-size: 0.9rem;\n}\n\n.project-page_replyActions_q0-4D {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n    margin-top: 0.55rem;\n}\n\n.project-page_replyCancelBtn_3d2ZC,\n.project-page_replySubmitBtn_1k3mB {\n    min-height: 1.9rem;\n    padding: 0 0.7rem;\n    font-size: 0.55rem;\n}\n\n.project-page_replySubmitBtn_1k3mB:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.project-page_replyList_1KEKp {\n    margin-top: 0.8rem;\n    border-left: 0.18rem solid #c6d6ff;\n    padding-left: 0.75rem;\n}\n\n.project-page_replyList_1KEKp .project-page_commentBubble_1zoUg {\n    padding: 0.65rem;\n    background: #ffffff;\n}\n\n.project-page_loginPrompt_3uGQJ,\n.project-page_noComments_lfEVZ {\n    padding: 1rem;\n    color: #56648e;\n    font-weight: 800;\n    text-align: center;\n}\n\n.project-page_loadMoreBtn_2hGBH {\n    width: 100%;\n    margin-top: 1rem;\n}\n\n.project-page_remixBadge_u69PK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #7e55d8;\n    font-weight: 800;\n    text-decoration: none;\n}\n\n.project-page_loadingWrap_HicOB {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 1rem;\n    min-height: 16rem;\n    color: #56648e;\n    font-weight: 800;\n}\n\n.project-page_spinner_2e7Qd {\n    width: 2.35rem;\n    height: 2.35rem;\n    border: 0.25rem solid #d8e4ff;\n    border-top-color: #243f8f;\n    border-radius: 999px;\n    -webkit-animation: project-page_spin_2zBiE 0.8s linear infinite;\n            animation: project-page_spin_2zBiE 0.8s linear infinite;\n}\n\n@-webkit-keyframes project-page_spin_2zBiE {\n    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }\n}\n\n@keyframes project-page_spin_2zBiE {\n    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }\n}\n\n@media (max-width: 640px) {\n    .project-page_header_3kFLm {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .project-page_title_1ioNB {\n        white-space: normal;\n    }\n\n    .project-page_commentInput_3W8bO {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 900px) {\n    .project-page_mainGrid_1I9rQ,\n    .project-page_lowerBand_1kVWh {\n        grid-template-columns: 1fr;\n    }\n\n    .project-page_lowerBand_1kVWh {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n}\n", ""]);
+exports.push([module.i, ".project-page_page_1Wbb7 {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.project-page_panel_2Q9q6 {\n    width: 100%;\n}\n\n.project-page_header_3kFLm {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_thumbnail_2k3iF,\n.project-page_thumbnailPlaceholder_3SgYt {\n    width: 5.25rem;\n    height: 5.25rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.75rem;\n    background: #d8e4ff;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.project-page_thumbnail_2k3iF {\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_thumbnailWrap_36kdU {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    gap: 0.45rem;\n}\n\n.project-page_coverInput_B94Bd {\n    display: none;\n}\n\n.project-page_coverButton_Fa8rm,\n.project-page_titleEditButton_1fEXY {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.3rem;\n    border: 0;\n    border-radius: 0.42rem;\n    padding: 0.45rem 0.65rem;\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.18rem 0 #182b63;\n            box-shadow: 0 0.18rem 0 #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.55rem;\n    line-height: 1;\n    cursor: pointer;\n}\n\n.project-page_coverButton_Fa8rm:disabled {\n    cursor: default;\n    opacity: 0.65;\n}\n\n.project-page_thumbnailPlaceholder_3SgYt {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #d800ff;\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.6rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.project-page_meta_2vh4S {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n}\n\n.project-page_title_1ioNB {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.project-page_titleRow_lshee {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.7rem;\n    min-width: 0;\n}\n\n.project-page_titleEditButton_1fEXY {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.18rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.18rem 0 #c6d6ff;\n}\n\n.project-page_titleEditRow_SzVYH {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n}\n\n.project-page_titleInput_11LDv {\n    min-width: min(26rem, 100%);\n    border: 0.13rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0.5rem 0.65rem;\n    color: #243f8f;\n    background: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.25rem;\n    line-height: 1.1;\n    outline: none;\n}\n\n.project-page_titleInput_11LDv:focus {\n    border-color: #7e55d8;\n    -webkit-box-shadow: 0 0 0 0.2rem rgba(126, 85, 216, 0.15);\n            box-shadow: 0 0 0 0.2rem rgba(126, 85, 216, 0.15);\n}\n\n.project-page_authorRow_hCaxE {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-top: 0.35rem;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.project-page_avatar_1IJtx,\n.project-page_commentAvatar_VbgXq {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n}\n\n.project-page_avatar_1IJtx {\n    width: 1.85rem;\n    height: 1.85rem;\n    border-radius: 0.5rem;\n    font-size: 0.78rem;\n}\n\n.project-page_authorName_2ztee strong {\n    color: #7e55d8;\n}\n\n.project-page_dateLine_1vSTc {\n    margin-top: 0.35rem;\n    color: #56648e;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.project-page_visibilityBadge_1tzjs {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    margin-top: 0.7rem;\n    border-radius: 999px;\n    padding: 0.3rem 0.75rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.58rem;\n    font-weight: 400;\n    line-height: 1;\n    text-transform: uppercase;\n}\n\n.project-page_badgeIcon_2mjY2,\n.project-page_buttonIcon_1X05D,\n.project-page_metricIcon_21pgh,\n.project-page_lowerHeaderIcon_nAxp7 {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    stroke-width: 2.5;\n}\n\n.project-page_badgeIcon_2mjY2 {\n    width: 0.78rem;\n    height: 0.78rem;\n}\n\n.project-page_buttonIcon_1X05D {\n    width: 1rem;\n    height: 1rem;\n}\n\n.project-page_metricIcon_21pgh,\n.project-page_lowerHeaderIcon_nAxp7 {\n    width: 1.05rem;\n    height: 1.05rem;\n}\n\n.project-page_badgePublic_3hLam {\n    color: #0d6a2d;\n    background: #dff8e7;\n}\n\n.project-page_badgeUnlisted_1afrX {\n    color: #835600;\n    background: #fff1c6;\n}\n\n.project-page_badgePrivate_3RUiz {\n    color: #8d1111;\n    background: #ffe0e0;\n}\n\n.project-page_actionBar_DZpl2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n    margin: 1.1rem 0 1.35rem;\n}\n\n.project-page_statBtn_2hEla,\n.project-page_remixBtn_-D20-,\n.project-page_editorLink_11Wot {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.35rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-decoration: none;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.project-page_statBtn_2hEla {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.project-page_editorLink_11Wot,\n.project-page_remixBtn_-D20- {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.project-page_statBtn_2hEla:hover:not(:disabled),\n.project-page_remixBtn_-D20-:hover:not(:disabled),\n.project-page_editorLink_11Wot:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.project-page_statBtn_2hEla:active:not(:disabled),\n.project-page_remixBtn_-D20-:active:not(:disabled),\n.project-page_editorLink_11Wot:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.project-page_statBtn_2hEla:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.project-page_statBtnLiked_1KFkd {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.project-page_statBtnFavorited_2nsH0 {\n    color: #182b63;\n    background: #ffd84d;\n    -webkit-box-shadow: 0 0.2rem 0 #d6a900;\n            box-shadow: 0 0.2rem 0 #d6a900;\n}\n\n.project-page_deleteProjectBtn_1_P5H {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.project-page_viewStat_1nEPM {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.3rem;\n    color: #56648e;\n    font-size: 1rem;\n    font-weight: 800;\n}\n\n.project-page_tabs_hgF9n {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_tab_1DiCC {\n    min-height: 2.1rem;\n    border: 0;\n    border-radius: 999px;\n    padding: 0 0.95rem;\n    color: #243f8f;\n    background: #e7efff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    cursor: pointer;\n}\n\n.project-page_tabActive_1hzjj {\n    color: #ffffff;\n    background: #ff7a1a;\n}\n\n.project-page_body_C8AKw {\n    display: grid;\n    gap: 1rem;\n}\n\n.project-page_mainGrid_1I9rQ {\n    display: grid;\n    grid-template-columns: minmax(22rem, 32rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.project-page_playerColumn_iZODB,\n.project-page_infoColumn_t5rZ6 {\n    min-width: 0;\n}\n\n.project-page_playerFrame_2rQly {\n    width: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: auto;\n    border-radius: 0.8rem;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.project-page_playerFrame_2rQly > img {\n    width: 100%;\n    display: block;\n}\n\n.project-page_playerFrame_2rQly [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.project-page_playerFallback_10Pka {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.project-page_lowerBand_1kVWh {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.project-page_lowerHeader_2fXDr {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n    margin-bottom: 1rem;\n}\n\n.project-page_lowerHeader_2fXDr h2 {\n    margin: 0;\n    color: #243f8f;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.project-page_lowerHeader_2fXDr span {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.project-page_remixPlaceholder_bhMmA {\n    height: 9.4rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    color: #d800ff;\n    background: #d8e4ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.project-page_remixPlaceholder_bhMmA img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_section_2WswC,\n.project-page_commentBubble_1zoUg,\n.project-page_commentInput_3W8bO,\n.project-page_loginPrompt_3uGQJ,\n.project-page_noComments_lfEVZ {\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    background: #eaf2ff;\n}\n\n.project-page_section_2WswC {\n    margin-bottom: 1rem;\n    padding: 1rem;\n}\n\n.project-page_sectionTitle_3FVsa {\n    margin: 0 0 0.65rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.project-page_sectionText_rXaIH,\n.project-page_emptyText_2HTQR {\n    margin: 0;\n    color: #344473;\n    font-size: 1rem;\n    font-weight: 600;\n    line-height: 1.5;\n    white-space: pre-wrap;\n    word-break: break-word;\n}\n\n.project-page_emptyText_2HTQR {\n    color: #7280a8;\n}\n\n.project-page_editBar_2hbQJ {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.55rem;\n    margin-bottom: 1rem;\n    color: #56648e;\n    font-weight: 800;\n}\n\n.project-page_visibilitySelect_3a5Bg,\n.project-page_editArea_3SHT2,\n.project-page_commentInputField_2IaoT,\n.project-page_replyInputField_3d7f_ {\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    color: #182b63;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 700;\n    outline: none;\n}\n\n.project-page_visibilitySelect_3a5Bg {\n    min-height: 2.35rem;\n    padding: 0 0.7rem;\n}\n\n.project-page_editArea_3SHT2,\n.project-page_commentInputField_2IaoT,\n.project-page_replyInputField_3d7f_ {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    padding: 0.75rem;\n    font-size: 0.95rem;\n    line-height: 1.45;\n    resize: vertical;\n}\n\n.project-page_visibilitySelect_3a5Bg:focus,\n.project-page_editArea_3SHT2:focus,\n.project-page_commentInputField_2IaoT:focus,\n.project-page_replyInputField_3d7f_:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.project-page_saveRow_1Htd2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n    margin-top: 0.75rem;\n}\n\n.project-page_editBtn_2P_Oq,\n.project-page_saveBtn_2UXdt,\n.project-page_cancelBtn_16Ezz,\n.project-page_loadMoreBtn_2hGBH,\n.project-page_commentSubmitBtn_34U5K,\n.project-page_commentReplyBtn_1maxA,\n.project-page_replyCancelBtn_3d2ZC,\n.project-page_replySubmitBtn_1k3mB {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.35rem;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n}\n\n.project-page_editBtn_2P_Oq,\n.project-page_cancelBtn_16Ezz,\n.project-page_loadMoreBtn_2hGBH,\n.project-page_commentReplyBtn_1maxA,\n.project-page_replyCancelBtn_3d2ZC {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.project-page_saveBtn_2UXdt,\n.project-page_commentSubmitBtn_34U5K,\n.project-page_replySubmitBtn_1k3mB {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.project-page_editBtn_2P_Oq {\n    margin-top: 0.75rem;\n}\n\n.project-page_commentInput_3W8bO {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) auto;\n    gap: 0.65rem;\n    margin-bottom: 1rem;\n    padding: 0.75rem;\n}\n\n.project-page_commentSubmitBtn_34U5K {\n    -webkit-align-self: end;\n        -ms-flex-item-align: end;\n            align-self: end;\n    min-width: 2.65rem;\n    padding: 0 0.7rem;\n}\n\n.project-page_commentList_1RCq7 {\n    display: grid;\n    gap: 0.85rem;\n}\n\n.project-page_comment_1GL26 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.65rem;\n}\n\n.project-page_commentReply_1XENR {\n    margin-top: 0.75rem;\n    gap: 0.5rem;\n}\n\n.project-page_commentReply_1XENR .project-page_commentAvatar_VbgXq {\n    width: 1.8rem;\n    height: 1.8rem;\n    border-radius: 0.5rem;\n    font-size: 0.65rem;\n}\n\n.project-page_commentAvatar_VbgXq {\n    width: 2.35rem;\n    height: 2.35rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    border-radius: 0.65rem;\n    font-size: 0.8rem;\n}\n\n.project-page_commentAvatar_VbgXq img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.project-page_commentBubble_1zoUg {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    padding: 0.8rem;\n}\n\n.project-page_commentHeader_3R5J5 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n    margin-bottom: 0.4rem;\n}\n\n.project-page_commentAuthor_2v59M {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.project-page_commentDate_24PA1 {\n    color: #56648e;\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.project-page_commentDeleteBtn_3h4Eb {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-left: auto;\n    border: 0;\n    border-radius: 0.35rem;\n    color: #8d1111;\n    background: #ffe0e0;\n    cursor: pointer;\n}\n\n.project-page_commentContent_14yaH {\n    color: #344473;\n    font-size: 0.95rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n    word-break: break-word;\n}\n\n.project-page_commentLink_lzqAC {\n    color: #243f8f;\n    font-weight: 800;\n    text-decoration: underline;\n    text-decoration-thickness: 0.12rem;\n    text-underline-offset: 0.16rem;\n}\n\n.project-page_commentLink_lzqAC:hover,\n.project-page_commentLink_lzqAC:focus {\n    color: #7e55d8;\n}\n\n.project-page_commentActions_3JW2k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n    margin-top: 0.55rem;\n}\n\n.project-page_commentReplyBtn_1maxA {\n    min-height: 1.75rem;\n    padding: 0 0.6rem;\n    font-size: 0.52rem;\n}\n\n.project-page_replyInput_22svb {\n    margin-top: 0.75rem;\n    border-top: 0.12rem solid #d7e0f5;\n    padding-top: 0.75rem;\n}\n\n.project-page_replyInputField_3d7f_ {\n    min-height: 4.25rem;\n    font-size: 0.9rem;\n}\n\n.project-page_replyActions_q0-4D {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.5rem;\n    margin-top: 0.55rem;\n}\n\n.project-page_replyCancelBtn_3d2ZC,\n.project-page_replySubmitBtn_1k3mB {\n    min-height: 1.9rem;\n    padding: 0 0.7rem;\n    font-size: 0.55rem;\n}\n\n.project-page_replySubmitBtn_1k3mB:disabled {\n    cursor: default;\n    opacity: 0.55;\n}\n\n.project-page_replyList_1KEKp {\n    margin-top: 0.8rem;\n    border-left: 0.18rem solid #c6d6ff;\n    padding-left: 0.75rem;\n}\n\n.project-page_replyList_1KEKp .project-page_commentBubble_1zoUg {\n    padding: 0.65rem;\n    background: #ffffff;\n}\n\n.project-page_loginPrompt_3uGQJ,\n.project-page_noComments_lfEVZ {\n    padding: 1rem;\n    color: #56648e;\n    font-weight: 800;\n    text-align: center;\n}\n\n.project-page_loadMoreBtn_2hGBH {\n    width: 100%;\n    margin-top: 1rem;\n}\n\n.project-page_remixBadge_u69PK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #7e55d8;\n    font-weight: 800;\n    text-decoration: none;\n}\n\n.project-page_loadingWrap_HicOB {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 1rem;\n    min-height: 16rem;\n    color: #56648e;\n    font-weight: 800;\n}\n\n.project-page_spinner_2e7Qd {\n    width: 2.35rem;\n    height: 2.35rem;\n    border: 0.25rem solid #d8e4ff;\n    border-top-color: #243f8f;\n    border-radius: 999px;\n    -webkit-animation: project-page_spin_2zBiE 0.8s linear infinite;\n            animation: project-page_spin_2zBiE 0.8s linear infinite;\n}\n\n@-webkit-keyframes project-page_spin_2zBiE {\n    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }\n}\n\n@keyframes project-page_spin_2zBiE {\n    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }\n}\n\n@media (max-width: 640px) {\n    .project-page_header_3kFLm {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .project-page_title_1ioNB {\n        white-space: normal;\n    }\n\n    .project-page_commentInput_3W8bO {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 900px) {\n    .project-page_mainGrid_1I9rQ,\n    .project-page_lowerBand_1kVWh {\n        grid-template-columns: 1fr;\n    }\n\n    .project-page_lowerBand_1kVWh {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -405,16 +427,16 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2065:
+/***/ 2113:
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(465);
+var escape = __webpack_require__(499);
 exports = module.exports = __webpack_require__(21)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800&display=swap);", ""]);
 
 // module
-exports.push([module.i, ".dogoblock-web-app_app-shell_2PA39 {\n    min-height: 100vh;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background: #ffffff;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_topbar_3aLHW {\n    width: 100%;\n    background: #182b63;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n            box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n    padding: 0.35rem 0;\n}\n\n.dogoblock-web-app_topbar-inner_1PVrq {\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    position: relative;\n}\n\n.dogoblock-web-app_brand_25VAQ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 8.5rem;\n    cursor: pointer;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_logo_2DRMj {\n    display: block;\n    width: 7.75rem;\n    height: auto;\n}\n\n.dogoblock-web-app_nav-center_23sFd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 1.35rem;\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n        -ms-transform: translateX(-50%);\n            transform: translateX(-50%);\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_nav-right_1hx6M {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1.35rem;\n    font-size: 0.78rem; \n    font-weight: 700;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_nav-button_1dItK,\n.dogoblock-web-app_inline-button_wEmD4 {\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: inherit;\n    font: inherit;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_nav-button_1dItK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    color: #ffffff;\n    line-height: 1.2;\n}\n\n.dogoblock-web-app_nav-icon_27ZE8 {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.4;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL {\n    width: 1rem;\n    height: 1rem;\n    margin-right: 0.35rem;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL svg,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    width: 1rem;\n    height: 1rem;\n    stroke-width: 2.6;\n}\n\n.dogoblock-web-app_inline-icon_3pGo_ {\n    margin-right: 0.32rem;\n    vertical-align: -0.18rem;\n}\n\n.dogoblock-web-app_nav-button_1dItK:hover,\n.dogoblock-web-app_inline-button_wEmD4:hover {\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_user-badge_38q0T {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #ffffff;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_user-badge_38q0T::before {\n    content: \"\";\n    width: 0.75rem;\n    height: 0.75rem;\n    border-radius: 999px;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n            box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_page_z_onn {\n    width: min(100% - 2rem, 74rem);\n    margin: 0 auto;\n    padding: 2.3rem 0 3rem;\n}\n\n.dogoblock-web-app_home-page_4fkF1 {\n    padding-top: 3.25rem;\n}\n\n.dogoblock-web-app_hero_1xxqp {\n    min-height: 29rem;\n    display: grid;\n    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 2.5rem;\n}\n\n.dogoblock-web-app_hero-copy_156mN {\n    max-width: 44rem;\n}\n\n.dogoblock-web-app_kicker_1y7vH {\n    margin: 0 0 0.65rem;\n    color: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_hero_1xxqp h1,\n.dogoblock-web-app_page-header_2q-ME h1,\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_hero_1xxqp h1 {\n    max-width: 40rem;\n    font-size: clamp(2.2rem, 5vw, 4.8rem);\n}\n\n.dogoblock-web-app_hero-text_2OLVS {\n    max-width: 35rem;\n    margin: 1.2rem 0 0;\n    color: #344473;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.55;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc,\n.dogoblock-web-app_actions_XinWC {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc {\n    margin-top: 1.5rem;\n}\n\n.dogoblock-web-app_hero-preview_SVneW {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.dogoblock-web-app_preview-card_vDMIu {\n    width: min(100%, 23rem);\n    padding: 0.75rem;\n    border: 0.42rem solid #182b63;\n    border-radius: 1.25rem;\n    background: #0739a5;\n    color: #ffffff;\n    -webkit-box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n            box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 {\n    height: 14rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-bottom: 0.75rem;\n    border-radius: 0.65rem;\n    background:\n        -o-radial-gradient(76% 18%, circle, #ff8a1d 0 10%, transparent 11%),\n        -o-linear-gradient(315deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    background:\n        radial-gradient(circle at 76% 18%, #ff8a1d 0 10%, transparent 11%),\n        linear-gradient(135deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    overflow: hidden;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.1rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong,\n.dogoblock-web-app_preview-card_vDMIu small {\n    display: block;\n    padding: 0 0.2rem;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong {\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_preview-card_vDMIu small {\n    margin-top: 0.15rem;\n    font-size: 0.72rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_narrow-page_186pT {\n    width: min(100% - 2rem, 28rem);\n    padding-top: 3.5rem;\n}\n\n.dogoblock-web-app_auth-section_2gv_4 {\n    width: 100%;\n    min-height: calc(100vh - 8rem);\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 3.5rem 1.5rem;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #ffffff;\n    background-image: url(" + escape(__webpack_require__(2066)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG {\n    width: min(100%, 28rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG .dogoblock-web-app_panel_Q0s02 {\n    -webkit-box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_legal-consent_2eySd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.6rem;\n    margin: 0.2rem 0 1rem;\n    color: #4d5d88;\n    font-size: 0.76rem;\n    font-weight: 650;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_legal-consent_2eySd input {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 1rem;\n    height: 1rem;\n    margin-top: 0.12rem;\n    accent-color: #243f8f;\n}\n\n.dogoblock-web-app_legal-consent_2eySd a {\n    color: #244fc7;\n    font-weight: 800;\n    text-underline-offset: 0.12em;\n}\n\n.dogoblock-web-app_panel_Q0s02 {\n    background: #ffffff;\n    border: 0.18rem solid #243f8f;\n    border-radius: 0.85rem;\n    padding: 1.4rem;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin-bottom: 1rem;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    margin-bottom: 1.25rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME h1 {\n    font-size: 1.9rem;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_search-bar_2Winb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #ffffff;\n    border: 2px solid #e0e7ff;\n    border-radius: 99px;\n    padding: 0.4rem 1rem;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    max-width: 400px;\n    margin: 0 1rem;\n    -webkit-transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    -o-transition: border-color 0.2s ease, box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;\n}\n\n.dogoblock-web-app_search-bar_2Winb:focus-within {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n            box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n}\n\n.dogoblock-web-app_search-icon_1Qs5C {\n    color: #8d9ec4;\n    margin-right: 0.5rem;\n}\n\n.dogoblock-web-app_search-input_3D28S {\n    border: none;\n    background: transparent;\n    outline: none;\n    font-size: 0.95rem;\n    font-family: inherit;\n    color: #344473;\n    width: 100%;\n}\n\n.dogoblock-web-app_search-input_3D28S::-webkit-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-moz-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S:-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_primary-button_J8O77,\n.dogoblock-web-app_secondary-button_1TFxG,\n.dogoblock-web-app_danger-button_1pdOP,\n.dogoblock-web-app_light-button_KaXx_ {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_primary-button_J8O77 {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.dogoblock-web-app_secondary-button_1TFxG {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_danger-button_1pdOP {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.dogoblock-web-app_light-button_KaXx_ {\n    color: #243f8f;\n    background: #e7efff;\n    -webkit-box-shadow: 0 0.2rem 0 #c6d6ff;\n            box-shadow: 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_primary-button_J8O77:hover,\n.dogoblock-web-app_secondary-button_1TFxG:hover,\n.dogoblock-web-app_danger-button_1pdOP:hover,\n.dogoblock-web-app_light-button_KaXx_:hover,\n.dogoblock-web-app_project-card_2NByI:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.dogoblock-web-app_primary-button_J8O77:active,\n.dogoblock-web-app_secondary-button_1TFxG:active,\n.dogoblock-web-app_danger-button_1pdOP:active,\n.dogoblock-web-app_light-button_KaXx_:active,\n.dogoblock-web-app_project-card_2NByI:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.dogoblock-web-app_field_VXAJd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    margin-bottom: 0.85rem;\n    color: #243f8f;\n    font-size: 0.78rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_field_VXAJd input,\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 2.65rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    padding: 0 0.75rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.95rem;\n    font-weight: 700;\n    outline: none;\n}\n\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 5.5rem;\n    padding-top: 0.7rem;\n    padding-bottom: 0.7rem;\n    line-height: 1.4;\n    resize: vertical;\n}\n\n.dogoblock-web-app_field_VXAJd input:focus,\n.dogoblock-web-app_field_VXAJd textarea:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.dogoblock-web-app_form-hint_1ve3y {\n    margin: 1rem 0 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_inline-button_wEmD4 {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_error_3uIrk {\n    margin-bottom: 0.9rem;\n    border-radius: 0.45rem;\n    padding: 0.7rem 0.8rem;\n    color: #8d1111;\n    background: #ffe7e7;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_project-grid_W2vKL {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(13.9rem, 13.9rem));\n    gap: 1rem;\n}\n\n.dogoblock-web-app_project-card-wrap_3i3y1 {\n    position: relative;\n    width: 13.9rem;\n}\n\n.dogoblock-web-app_project-card_2NByI {\n    width: 13.9rem;\n    min-height: 11rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0;\n    border: 0.35rem solid #182b63;\n    border-radius: 0.85rem;\n    padding: 0;\n    background: #0739a5;\n    color: #ffffff;\n    text-align: left;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    cursor: pointer;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz {\n    position: absolute;\n    top: 0.62rem;\n    right: 0.62rem;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #ffffff;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.15rem 0 #b51616;\n            box-shadow: 0 0.15rem 0 #b51616;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz:hover {\n    -webkit-transform: translateY(-0.06rem);\n        -ms-transform: translateY(-0.06rem);\n            transform: translateY(-0.06rem);\n}\n\n.dogoblock-web-app_project-thumbnail_26w0a {\n    height: 7rem;\n    display: block;\n    overflow: hidden;\n    border-radius: 0;\n    background: #d8e4ff;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_project-thumbnail-image_2HJxW {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background:\n        -o-radial-gradient(82% 12%, circle, #ff8a1d 0 12%, transparent 13%),\n        -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.05rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.dogoblock-web-app_project-title_1UyeV {\n    display: block;\n    min-height: 1rem;\n    margin-top: 0.15rem;\n    overflow: hidden;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.74rem;\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_project-meta_p_s94 {\n    display: block;\n    position: relative;\n    padding-left: 0.55rem;\n    color: #ffffff;\n    font-size: 0.58rem;\n    font-weight: 800;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_project-meta_p_s94::before {\n    content: \"\";\n    position: absolute;\n    left: 0.05rem;\n    top: 0.22rem;\n    width: 0.24rem;\n    height: 0.24rem;\n    border-radius: 999px;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_card-body_2RDB_ {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    padding: 0.5rem 0.55rem 0.55rem;\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.dogoblock-web-app_featured-card_3hVgO .dogoblock-web-app_card-body_2RDB_ {\n    padding: 0.65rem 0.75rem 0.75rem;\n}\n\n.dogoblock-web-app_card-avatar-col_GPjdL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_card-avatar-icon_2H8lk {\n    width: 2.15rem;\n    height: 2.15rem;\n    color: #ffffff;\n    fill: #ffffff;\n    stroke-width: 1.8;\n}\n\n.dogoblock-web-app_card-info-col_3pwGi {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    gap: 0.12rem;\n}\n\n.dogoblock-web-app_card-title_1OH15 {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.85rem;\n    font-weight: 800;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_card-author_1lvNV {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: #a8b8ff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_empty-state_oJImC {\n    width: min(100%, 28rem);\n    margin-top: 1rem;\n    border: 0.18rem dashed #c6d6ff;\n    border-radius: 0.75rem;\n    padding: 1.4rem;\n    color: #344473;\n    font-weight: 800;\n    text-align: center;\n}\n\n.dogoblock-web-app_project-details-page_HYCVs {\n    width: min(100% - 2rem, 79rem);\n}\n\n.dogoblock-web-app_details-header_3-XXe {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.45rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 0;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl h1 {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    line-height: 1.05;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl p {\n    margin: 0.2rem 0 0;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl strong {\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_details-avatar_eht0D {\n    width: 4.6rem;\n    height: 4.6rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.7rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_details-main-grid_3v5Ue {\n    display: grid;\n    grid-template-columns: minmax(22rem, 38rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.dogoblock-web-app_details-player-column_boimX {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 {\n    width: 100%;\n    max-width: 100%;\n    min-height: 30.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: auto;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.8rem;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_detail-stats_favx8 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 1.4rem;\n    margin-top: 1rem;\n    color: #56648e;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_details-info-column_JMmlU {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb {\n    margin-bottom: 1rem;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb h2,\n.dogoblock-web-app_comments-section_3ZgUT h2,\n.dogoblock-web-app_remix-section_1yYhw h2 {\n    margin: 0 0 0.6rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_detail-text-box_2PJp4 {\n    min-height: 9.8rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    padding: 1rem;\n    color: #344473;\n    background: #eaf2ff;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n}\n\n.dogoblock-web-app_detail-meta-bar_Wnt9Z {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1rem;\n    margin-top: 0.55rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-lower-band_1Y7DY {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_comment-avatar_AxAjx {\n    width: 2.5rem;\n    height: 2.5rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 input {\n    width: min(100%, 28rem);\n    min-height: 2.55rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0 0.85rem;\n    color: #56648e;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_empty-comment_1h0gb {\n    margin-top: 1rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI span {\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv {\n    height: 9.4rem;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-image_2HJxW,\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_muted_1seQ1 {\n    color: #56648e;\n    font-size: 0.85rem;\n}\n\n.dogoblock-web-app_editor-shell_3Zz5e {\n    height: 100vh;\n}\n\n.dogoblock-web-app_hidden-input_2pI22 {\n    display: none;\n}\n\n.dogoblock-web-app_user-badge-button_2xFBg {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-page_2dR7P {\n    width: min(100% - 2rem, 78rem);\n    padding-top: 2rem;\n    padding-bottom: 3rem;\n}\n\n/* ── TOP ROW ─────────────────────────────────────── */\n\n.dogoblock-web-app_profile-top-row_2pjAA {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 1.2rem;\n    margin-bottom: 1.4rem;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n}\n\n/* LEFT — user info card */\n\n.dogoblock-web-app_profile-info-card_3p37B {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-info-header_9XpmA {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    padding: 0.75rem 1.35rem;\n    background: #182b63;\n}\n\n.dogoblock-web-app_profile-info-body_3BmaB {\n    padding: 1.1rem 1.35rem 1.25rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 4.8rem;\n    height: 4.8rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.22rem solid #182b63;\n    border-radius: 0.85rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\nh1.dogoblock-web-app_profile-name_xdCx7 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n    font-weight: 400;\n    line-height: 1.1;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_profile-name-stack_dupRO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.2rem;\n}\n\n.dogoblock-web-app_profile-username_xpxIA {\n    color: #cacaca;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_profile-section_3mhFz {\n    margin-bottom: 1.1rem;\n}\n\n.dogoblock-web-app_profile-section-title_23Dve {\n    margin: 0 0 0.4rem;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_profile-section-text_ay6bA {\n    margin: 0.45rem 0 0;\n    color: #344473;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.6;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.4rem;\n    margin-top: auto;\n    padding: 0.55rem 1.2rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #182b63;\n    color: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd:hover {\n    opacity: 0.85;\n}\n\n/* RIGHT — featured project card */\n\n.dogoblock-web-app_profile-featured-card_2-syp {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-featured-header_wo1pS {\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-title_b9KMP {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.8rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    white-space: pre-line;\n    line-height: 1.3;\n    display: block;\n}\n\n.dogoblock-web-app_profile-featured-body_ylNPD {\n    padding: 1.1rem 1.35rem 1.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG {\n    display: block;\n    width: 100%;\n    aspect-ratio: 16 / 9;\n    overflow: hidden;\n    border-radius: 0.65rem;\n    border: 0;\n    padding: 0;\n    cursor: pointer;\n    background: #d8e4ff;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n    -webkit-transition: -webkit-transform 240ms ease;\n    transition: -webkit-transform 240ms ease;\n    -o-transition: transform 240ms ease;\n    transition: transform 240ms ease;\n    transition: transform 240ms ease, -webkit-transform 240ms ease;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG:hover img {\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG > div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_profile-featured-empty_2VneF {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n    color: #56648e;\n    font-weight: 700;\n    font-size: 0.82rem;\n    padding: 2rem;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-stats_2miVh {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.2rem;\n    margin-top: 0.85rem;\n}\n\n.dogoblock-web-app_profile-featured-stat_ylXqE {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    color: #243f8f;\n    font-size: 1rem;\n    font-weight: 700;\n}\n\n/* ── SECTION BLOCKS (projects / favorites) ──────── */\n\n.dogoblock-web-app_profile-section-2_3aWOC {\n    border: 0.22rem solid #243f8f;\n    border-radius: 0.95rem;\n    padding: 0;\n    background: #ffffff;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n    margin-bottom: 1.4rem;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-section-header_2CEuH {\n    margin: 0;\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-section-heading_2Axcz {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.15rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    display: block;\n}\n\n.dogoblock-web-app_profile-section-body_TwpfC {\n    padding: 1.25rem 1.35rem 1.5rem;\n}\n\n/* ── EDIT FORM ───────────────────────────────────── */\n\n.dogoblock-web-app_profile-form_3eCSN {\n    width: 100%;\n    margin-bottom: 1.4rem;\n}\n\n.dogoblock-web-app_profile-form-actions_1GpBH {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    gap: 0.65rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n/* ── LOGOUT ROW ─────────────────────────────────── */\n\n.dogoblock-web-app_profile-logout-row_1H6A9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    margin-top: 0.5rem;\n}\n\n/* Legacy classes kept for any remaining references */\n\n.dogoblock-web-app_profile-hero_3T3MG { display: none; }\n\n.dogoblock-web-app_profile-tabs_2hl_k { display: none; }\n\n.dogoblock-web-app_profile-tab_G5MbT { display: none; }\n\n.dogoblock-web-app_profile-tab-active_fjXNE { display: none; }\n\n.dogoblock-web-app_profile-grid_3XVac { display: none; }\n\n.dogoblock-web-app_profile-panel_1O9VV { display: none; }\n\n.dogoblock-web-app_profile-actions_1Jgif { display: none; }\n\n.dogoblock-web-app_profile-stats_2Y3vS { display: none; }\n\n@media (max-width: 900px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.45rem 0;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        padding: 0 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        gap: 0.75rem;\n        font-size: 0.72rem;\n    }\n\n    .dogoblock-web-app_hero_1xxqp {\n        grid-template-columns: 1fr;\n        gap: 1.5rem;\n    }\n\n    .dogoblock-web-app_hero-preview_SVneW {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe,\n    .dogoblock-web-app_details-main-grid_3v5Ue,\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 640px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.55rem 0 0.65rem;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        width: 100%;\n        display: grid;\n        grid-template-columns: minmax(0, 1fr) auto;\n        -webkit-box-align: center;\n        -webkit-align-items: center;\n            -ms-flex-align: center;\n                align-items: center;\n        min-height: auto;\n        padding: 0 0.75rem;\n        gap: 0.55rem 0.75rem;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n    }\n\n    .dogoblock-web-app_brand_25VAQ {\n        min-width: 0;\n        -webkit-box-flex: 0;\n        -webkit-flex: none;\n            -ms-flex: none;\n                flex: none;\n    }\n\n    .dogoblock-web-app_logo_2DRMj {\n        width: 6.75rem;\n    }\n\n    .dogoblock-web-app_nav-center_23sFd {\n        position: static;\n        grid-column: 1 / -1;\n        grid-row: 2;\n        width: 100%;\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n        gap: 0.9rem;\n        overflow-x: auto;\n        -webkit-transform: none;\n            -ms-transform: none;\n                transform: none;\n        scrollbar-width: none;\n    }\n\n    .dogoblock-web-app_nav-center_23sFd::-webkit-scrollbar {\n        display: none;\n    }\n\n    .dogoblock-web-app_nav-right_1hx6M {\n        min-width: 0;\n        gap: 0.55rem;\n        -webkit-box-flex: 0;\n        -webkit-flex: none;\n            -ms-flex: none;\n                flex: none;\n    }\n\n    .dogoblock-web-app_nav-link_1wf1m,\n    .dogoblock-web-app_nav-btn-editor_kCCmG,\n    .dogoblock-web-app_nav-btn-criar-conta_f8GdL,\n    .dogoblock-web-app_nav-btn-sair_2e95R {\n        -webkit-box-flex: 0;\n        -webkit-flex: 0 0 auto;\n            -ms-flex: 0 0 auto;\n                flex: 0 0 auto;\n        font-size: 0.7rem;\n    }\n\n    .dogoblock-web-app_page_z_onn {\n        width: min(100% - 1.25rem, 74rem);\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_page-header_2q-ME {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_project-grid_W2vKL {\n        grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));\n    }\n\n    .dogoblock-web-app_project-card_2NByI,\n    .dogoblock-web-app_project-card-wrap_3i3y1 {\n        width: 100%;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl h1 {\n        white-space: normal;\n    }\n\n    .dogoblock-web-app_detail-meta-bar_Wnt9Z {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   NAVBAR — institutional links\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_nav-link_1wf1m {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: #ffffff;\n    font: inherit;\n    font-size: 0.82rem;\n    font-weight: 700;\n    line-height: 1.2;\n    text-decoration: none;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_nav-link_1wf1m:hover {\n    opacity: 0.8;\n}\n\n/* Botão \"</> Editor\" — borda amarela */\n\n.dogoblock-web-app_nav-btn-editor_kCCmG {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.1rem;\n    border: 0.14rem solid #FFB800;\n    border-radius: 999px;\n    background: transparent;\n    color: #FFB800;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-editor_kCCmG:hover {\n    background: rgba(255, 184, 0, 0.12);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Botão \"Criar Conta\" — preenchido amarelo */\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.25rem;\n    border: 0;\n    border-radius: 999px;\n    background: #FFB800;\n    color: #182b63;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 800;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -webkit-box-shadow: 0 0.18rem 0 #b87800;\n            box-shadow: 0 0.18rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #b87800;\n            box-shadow: 0 0.28rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #b87800;\n            box-shadow: 0 0.06rem 0 #b87800;\n}\n\n/* Botão username e Sair — estilo sutil */\n\n.dogoblock-web-app_nav-btn-user_2a2-x {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    min-height: 2.1rem;\n    padding: 0 1rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 400;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #971212;\n            box-shadow: 0 0.28rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #971212;\n            box-shadow: 0 0.06rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 2.1rem;\n    height: 2.1rem;\n    border: 0;\n    border-radius: 50%;\n    background: rgba(255, 255, 255, 0.12);\n    color: #ffffff;\n    cursor: pointer;\n    -webkit-transition: background 150ms ease, -webkit-transform 120ms ease;\n    transition: background 150ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 150ms ease, transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:hover {\n    background: rgba(255, 255, 255, 0.25);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:active {\n    background: rgba(255, 255, 255, 0.35);\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n/* ═══════════════════════════════════════════════════\n   HOME PAGE — full-width layout\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_home-page_4fkF1 {\n    width: 100%;\n    padding: 0;\n}\n\n/* ── HERO ──────────────────────────────────────────── */\n\n.dogoblock-web-app_hero-section_kEmie {\n    position: relative;\n    overflow: hidden;\n    background-color: #182b63;\n    background-image: url(" + escape(__webpack_require__(2067)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_hero-inner_1BSXF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%;\n    padding: 0;\n    margin: 0 auto;\n    min-height: 25rem;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-copy-new_1-NFP {\n    padding: 3rem 1rem 3rem max(1rem, calc((100% - 80rem) / 2));\n    max-width: none;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-title_3vzv9 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3.2rem);\n    font-weight: 400;\n    line-height: 1.12;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_hero-accent_fT7jP {\n    color: #FC0006;\n}\n\n.dogoblock-web-app_hero-actions-new_3rUsr {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.75rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0;\n    border-radius: 0.4rem;\n    background: #e02020;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-box-shadow: 0 0.22rem 0 #9e0f0f;\n            box-shadow: 0 0.22rem 0 #9e0f0f;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    -webkit-box-shadow: 0 0.35rem 0 #9e0f0f;\n            box-shadow: 0 0.35rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.1rem 0 #9e0f0f;\n            box-shadow: 0 0.1rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0.16rem solid #ffffff;\n    border-radius: 0.4rem;\n    background: transparent;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: transform 120ms ease, background 120ms ease;\n    transition: transform 120ms ease, background 120ms ease;\n    transition: transform 120ms ease, background 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    background: rgba(255, 255, 255, 0.1);\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt {\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: end;\n    -webkit-align-items: flex-end;\n        -ms-flex-align: end;\n            align-items: flex-end;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    z-index: 1;\n    pointer-events: none;\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt img {\n    display: block;\n    width: auto;\n    height: 100%;\n    max-height: 25rem;\n    -o-object-fit: contain;\n       object-fit: contain;\n    -o-object-position: bottom right;\n       object-position: bottom right;\n}\n\n/* ── PROJETOS EM DESTAQUE ──────────────────────────── */\n\n.dogoblock-web-app_featured-section_3NRT3 {\n    padding: 5rem 0 5rem;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_featured-title_tVGCx {\n    margin: 0 0 1.8rem;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.6rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_featured-empty_2RA0I {\n    color: #56648e;\n    text-align: center;\n    font-weight: 700;\n    padding: 2rem 0;\n}\n\n.dogoblock-web-app_featured-grid_3At29 {\n    display: grid;\n    grid-template-columns: repeat(4, 1fr);\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_featured-card_3hVgO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    border: 0.3rem solid #182b63;\n    border-radius: 0.85rem;\n    overflow: hidden;\n    background: #1a3aad;\n    color: #ffffff;\n    text-align: left;\n    cursor: pointer;\n    padding: 0;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    -webkit-transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    -o-transition: transform 130ms ease, box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease, -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n}\n\n.dogoblock-web-app_featured-card_3hVgO:hover {\n    -webkit-transform: translateY(-4px);\n        -ms-transform: translateY(-4px);\n            transform: translateY(-4px);\n    -webkit-box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n            box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n}\n\n.dogoblock-web-app_featured-card_3hVgO:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t {\n    height: 9rem;\n    overflow: hidden;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n    display: block;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t>div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_featured-card-body_3t-kX {\n    padding: 0.6rem 0.7rem 0.75rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.18rem;\n}\n\n.dogoblock-web-app_featured-card-title_2I_HI {\n    display: block;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_featured-card-author_fatHU {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    font-size: 0.6rem;\n    font-weight: 800;\n    color: rgba(255, 255, 255, 0.75);\n}\n\n.dogoblock-web-app_featured-card-author_fatHU::before {\n    content: \"\";\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 0.52rem;\n    height: 0.52rem;\n    border-radius: 999px;\n    border: 0.1rem solid rgba(255, 255, 255, 0.65);\n}\n\n/* ═══════════════════════════════════════════════════\n   SITE FOOTER\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_site-footer_1iprI {\n    margin-top: auto;\n    background: #182b63;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-inner_2qcat {\n    display: grid;\n    grid-template-columns: auto 1fr 1fr 1.4fr;\n    gap: 2.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    padding: 3rem 0 2.5rem;\n}\n\n.dogoblock-web-app_footer-brand_Gbx7N {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n}\n\n.dogoblock-web-app_footer-logo_1Vta7 {\n    width: 10rem;\n    height: auto;\n    display: block;\n}\n\n.dogoblock-web-app_footer-links_2GnH_,\n.dogoblock-web-app_footer-lei_2aRPq,\n.dogoblock-web-app_footer-contact_kixSb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.5rem;\n    font-size: 0.78rem;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ strong,\n.dogoblock-web-app_footer-lei_2aRPq strong,\n.dogoblock-web-app_footer-contact_kixSb strong {\n    display: block;\n    margin-bottom: 0.35rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    letter-spacing: 0.02em;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a,\n.dogoblock-web-app_footer-lei_2aRPq a {\n    color: rgba(255, 255, 255, 0.75);\n    text-decoration: none;\n    font-weight: 600;\n    line-height: 1.4;\n    -webkit-transition: color 120ms ease;\n    -o-transition: color 120ms ease;\n    transition: color 120ms ease;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a:hover,\n.dogoblock-web-app_footer-lei_2aRPq a:hover {\n    color: #ffffff;\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_footer-contact_kixSb span {\n    color: rgba(255, 255, 255, 0.75);\n    font-weight: 600;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_footer-bottom_18YbC {\n    border-top: 1px solid rgba(255, 255, 255, 0.1);\n    text-align: center;\n    padding: 1.1rem 1rem;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: rgba(255, 255, 255, 0.45);\n    letter-spacing: 0.03em;\n}\n\n/* ── HOME RESPONSIVE ─────────────────────────────── */\n\n@media (max-width: 960px) {\n    .dogoblock-web-app_hero-inner_1BSXF {\n        grid-template-columns: 1fr;\n        min-height: auto;\n    }\n\n    .dogoblock-web-app_hero-copy-new_1-NFP {\n        padding-bottom: 0;\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 55%;\n        margin: 0 auto;\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr 1fr;\n        gap: 2rem;\n    }\n\n    .dogoblock-web-app_footer-brand_Gbx7N {\n        grid-column: 1 / -1;\n    }\n\n    .dogoblock-web-app_footer-lei_2aRPq {\n        grid-column: auto;\n    }\n}\n\n@media (max-width: 620px) {\n    .dogoblock-web-app_hero-title_3vzv9 {\n        font-size: clamp(1.6rem, 6vw, 2.2rem);\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 80%;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n        gap: 0.75rem;\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   PROJECT DETAILS PAGE — wireframe-faithful layout\n═══════════════════════════════════════════════════ */\n\n/* Page wrapper */\n\n.dogoblock-web-app_pd-page_KaiaO {\n    width: min(100% - 2rem, 78rem);\n    margin: 0 auto;\n    padding: 1.8rem 0 3.5rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_pd-loading_2yBGM {\n    color: #56648e;\n    font-weight: 700;\n    margin-bottom: 1rem;\n}\n\n/* ── HEADER ─────────────────────────────────────── */\n\n.dogoblock-web-app_pd-header_15sVF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.5rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-header-left_Ywyhv {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n/* Project thumbnail in header */\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4 {\n    position: relative;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 5rem;\n    height: 5rem;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_pd-thumb-img_1KW1w {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 {\n    width: 100%;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: -o-linear-gradient(315deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n    background: linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    text-shadow: 0.06rem 0.06rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-title-group_15Btu {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.15rem;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-title_3OX_1 {\n    margin: 0;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.3rem, 3vw, 2.2rem);\n    font-weight: 400;\n    line-height: 1.1;\n    white-space: nowrap;\n    overflow: hidden;\n    -o-text-overflow: ellipsis;\n       text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_pd-author_3AAnG,\n.dogoblock-web-app_pd-date_cKn04 {\n    margin: 0;\n    color: #56648e;\n    font-size: 0.82rem;\n    font-weight: 600;\n}\n\n/* Right action buttons */\n\n.dogoblock-web-app_pd-header-actions_2py2D {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0.55rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    -o-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:hover:not(:disabled) {\n    background: #dde6ff;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:disabled {\n    opacity: 0.75;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #ffc5c5;\n    border-radius: 0.45rem;\n    background: #fff0f0;\n    color: #c02020;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    -o-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI:hover {\n    background: #ffdede;\n}\n\n/* ── MAIN GRID ───────────────────────────────────── */\n\n.dogoblock-web-app_pd-main-grid_FNx8H {\n    display: grid;\n    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);\n    gap: 1.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    margin-bottom: 2rem;\n}\n\n/* LEFT COLUMN — player */\n\n.dogoblock-web-app_pd-player-col_BxfGo {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #ffffff;\n}\n\n/* Toolbar bar */\n\n.dogoblock-web-app_pd-toolbar_3dhry {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding: 0.35rem 0.65rem;\n    background: #f5f7ff;\n    border-bottom: 0.12rem solid #e0e7ff;\n}\n\n.dogoblock-web-app_pd-toolbar-flags_TXL2k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.45rem;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a,\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    display: inline-block;\n    width: 0.85rem;\n    height: 0.85rem;\n    border-radius: 999px;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a {\n    background: #22b455;\n    -webkit-box-shadow: 0 0 0 0.1rem #178a3e;\n            box-shadow: 0 0 0 0.1rem #178a3e;\n}\n\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    background: #e83030;\n    -webkit-box-shadow: 0 0 0 0.1rem #b51616;\n            box-shadow: 0 0 0 0.1rem #b51616;\n}\n\n.dogoblock-web-app_pd-toolbar-right_1SdU2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #56648e;\n    font-size: 0.7rem;\n    cursor: pointer;\n    opacity: 0.7;\n    -webkit-transition: opacity 120ms ease;\n    -o-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_:hover {\n    opacity: 1;\n}\n\n/* Stage */\n\n.dogoblock-web-app_pd-stage_2YPmb {\n    width: 100%;\n    min-height: 21rem;\n    background: #f0f4ff;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-stage_2YPmb [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n/* Stats + \"Ver por dentro\" row */\n\n.dogoblock-web-app_pd-stats-row_3md3- {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    padding: 0.65rem 0.85rem;\n    background: #ffffff;\n    border-top: 0.12rem solid #e0e7ff;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-stats_32ety {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_pd-stat_a_ebm {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #344473;\n    font-size: 0.92rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:hover {\n    background: #dde6ff;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n/* RIGHT COLUMN — info textareas */\n\n.dogoblock-web-app_pd-info-col_28UnO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_pd-info-section_5wpZ9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.35rem;\n}\n\n.dogoblock-web-app_pd-info-label_3e4_s {\n    color: #243f8f;\n    font-size: 0.82rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 8rem;\n    padding: 0.65rem 0.75rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.5;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO[readonly] {\n    background: #eaf0fa;\n    color: #56648e;\n    cursor: default;\n}\n\n/* ── COMMENTS SECTION ────────────────────────────── */\n\n.dogoblock-web-app_pd-comments_3XlQU {\n    padding-top: 0.5rem;\n}\n\n.dogoblock-web-app_pd-comments-title_1bOdq {\n    margin: 0 0 0.85rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.05rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-comment-composer_3lF9C {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-avatar_32eUa {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2.8rem;\n    height: 2.8rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: #d8e4ff;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-comment-input-wrap_NelRJ {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.55rem;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 4rem;\n    padding: 0.65rem 0.85rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.9rem;\n    font-weight: 600;\n    line-height: 1.4;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    -o-transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-webkit-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-moz-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-comment-actions_2XheL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo,\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    min-height: 1.75rem;\n    padding: 0 0.85rem;\n    border-radius: 0.35rem;\n    border: 0;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo {\n    background: #c6d6ff;\n    color: #182b63;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:hover {\n    background: #b0c2f5;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    background: #e8ecf5;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS:hover {\n    background: #d7dff0;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Responsive — single column on smaller screens */\n\n@media (max-width: 860px) {\n    .dogoblock-web-app_pd-main-grid_FNx8H {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_pd-header_15sVF {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_pd-header-actions_2py2D {\n        -webkit-box-orient: horizontal;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: row;\n            -ms-flex-direction: row;\n                flex-direction: row;\n        -webkit-flex-wrap: wrap;\n            -ms-flex-wrap: wrap;\n                flex-wrap: wrap;\n        width: 100%;\n    }\n\n    .dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n    .dogoblock-web-app_pd-btn-visibility-private_2D01B,\n    .dogoblock-web-app_pd-btn-delete_eb3sI {\n        -webkit-box-flex: 1;\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1;\n    }\n}\n\n/* ── Visibility badge / button — state-based colours ── */\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.9rem;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    border: 0;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_ {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_:hover {\n    background: #1da04c;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B:hover {\n    background: #c41a1a;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* span version (non-owner, not clickable) */\n\nspan.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\nspan.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    cursor: default;\n    pointer-events: none;\n    opacity: 0.85;\n}\n\n/* ── Interactive stat buttons (like / fav) ── */\n\n.dogoblock-web-app_pd-stat-btn_2G3OI,\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH,\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    padding: 0.3rem 0.65rem;\n    border: 0.12rem solid transparent;\n    border-radius: 999px;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    -o-transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n    background: transparent;\n    color: #344473;\n}\n\n.dogoblock-web-app_pd-stat-btn_2G3OI:hover {\n    background: #eaf0fa;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH {\n    color: #e02020;\n    background: #ffeaea;\n    border-color: #ffc5c5;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH:hover {\n    background: #ffd6d6;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    color: #d69800;\n    background: #fff8e5;\n    border-color: #ffe699;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0:hover {\n    background: #fff2cc;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n/* ── Thumbnail overlay (change cover) ── */\n\n.dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    position: absolute;\n    inset: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.75rem;\n    background: rgba(0, 0, 0, 0.45);\n    color: #ffffff;\n    opacity: 0;\n    cursor: pointer;\n    -webkit-transition: opacity 160ms ease;\n    -o-transition: opacity 160ms ease;\n    transition: opacity 160ms ease;\n}\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4:hover .dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    opacity: 1;\n}\n\n/* ── Save details button ── */\n\n.dogoblock-web-app_pd-btn-save-details_RNirf,\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    -o-transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-align-self: flex-start;\n        -ms-flex-item-align: start;\n            align-self: flex-start;\n    margin-top: 0.35rem;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf {\n    background: #243f8f;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #182b63;\n            box-shadow: 0 0.18rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:hover:not(:disabled) {\n    background: #1b3070;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:disabled {\n    opacity: 0.65;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n/* ── Comment avatar initials ── */\n\n.dogoblock-web-app_pd-comment-avatar-initials_1IO8e {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 100%;\n    height: 100%;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n    color: #56648e;\n}\n\n/* ── Comment list ── */\n\n.dogoblock-web-app_pd-comment-list_27QY8 {\n    list-style: none;\n    margin: 1rem 0 0;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-item_9DLQt {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.65rem;\n    padding: 0.75rem 0.9rem;\n    border: 0.12rem solid #e0e7ff;\n    border-radius: 0.65rem;\n    background: #f9fbff;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-comment-item-avatar_3j-Br {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #8d9ec4;\n}\n\n.dogoblock-web-app_pd-comment-item-body_3-T6S {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-comment-item-author_1pVLK {\n    display: block;\n    font-size: 0.9rem;\n    font-weight: 800;\n    color: #243f8f;\n    margin-bottom: 0.25rem;\n}\n\n.dogoblock-web-app_pd-comment-item-author-link_39xdr {\n    display: block;\n    border: none;\n    background: transparent;\n    padding: 0;\n    font-family: inherit;\n    font-size: 0.9rem;\n    font-weight: 800;\n    color: #243f8f;\n    margin-bottom: 0.25rem;\n    cursor: pointer;\n    text-align: left;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n    -webkit-text-decoration-color: transparent;\n            text-decoration-color: transparent;\n    -webkit-transition: color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n    transition: color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n    -o-transition: text-decoration-color 0.15s ease, color 0.15s ease;\n    transition: text-decoration-color 0.15s ease, color 0.15s ease;\n    transition: text-decoration-color 0.15s ease, color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n}\n\n.dogoblock-web-app_pd-comment-item-author-link_39xdr:hover {\n    color: #7e55d8;\n    -webkit-text-decoration-color: #7e55d8;\n            text-decoration-color: #7e55d8;\n}\n\n.dogoblock-web-app_pd-comment-item-text_1Ll3B {\n    margin: 0;\n    font-size: 0.88rem;\n    font-weight: 600;\n    color: #344473;\n    line-height: 1.5;\n    word-break: break-word;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 1.6rem;\n    height: 1.6rem;\n    border: 0;\n    border-radius: 0.35rem;\n    background: transparent;\n    color: #aab0c4;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease;\n    -o-transition: background 120ms ease, color 120ms ease;\n    transition: background 120ms ease, color 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog:hover {\n    background: #ffe7e7;\n    color: #e02020;\n}\n\n.dogoblock-web-app_pd-comment-empty_1I3-k {\n    margin: 1rem 0 0;\n    color: #8d9ec4;\n    font-size: 0.85rem;\n    font-weight: 600;\n}\n\n/* ── Publish button disabled state ── */\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:disabled {\n    opacity: 0.55;\n    cursor: default;\n}\n\n/* ── Reply button (inline, below comment text) ── */\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    margin-top: 0.4rem;\n    padding: 0.18rem 0.55rem;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 999px;\n    background: transparent;\n    color: #56648e;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.8rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    -o-transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n}\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg:hover {\n    background: #e8f0ff;\n    color: #182b63;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* ── Inline reply composer ── */\n\n.dogoblock-web-app_pd-reply-composer_1PY6w {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.55rem;\n    margin-top: 0.65rem;\n    padding: 0.65rem 0.75rem;\n    background: #f0f5ff;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    -webkit-animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n            animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n}\n\n@-webkit-keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n@keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n/* ── Threaded replies list ── */\n\n.dogoblock-web-app_pd-reply-list_1RzXI {\n    list-style: none;\n    margin: 0.65rem 0 0 2.2rem;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.45rem;\n    border-left: 0.22rem solid #c6d6ff;\n    padding-left: 0.75rem;\n}\n\n.dogoblock-web-app_pd-reply-item_2r86P {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.5rem;\n    padding: 0.5rem 0.7rem;\n    border: 0.1rem solid #e8eeff;\n    border-radius: 0.5rem;\n    background: #ffffff;\n    position: relative;\n}\n\n/* ── Toast container ─────────────────────────────────────────────────────── */\n\n.dogoblock-web-app_toast-container_3681H {\n    position: fixed;\n    bottom: 1.5rem;\n    right: 1.5rem;\n    z-index: 9999;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: reverse;\n    -webkit-flex-direction: column-reverse;\n        -ms-flex-direction: column-reverse;\n            flex-direction: column-reverse;\n    gap: 0.5rem;\n    pointer-events: none;\n}\n\n.dogoblock-web-app_toast-container_3681H > * {\n    pointer-events: auto;\n}\n\n@media (max-width: 48rem) {\n    .dogoblock-web-app_toast-container_3681H {\n        bottom: 1rem;\n        right: 0.75rem;\n        left: 0.75rem;\n    }\n}\n\n/* ─── Forgot Password & Public Profile Styles ──────────────────────────────── */\n\n.dogoblock-web-app_forgot-password-row_2uwgY {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    margin: -0.35rem 0 0.85rem;\n}\n\n.dogoblock-web-app_success-box_3icZ5 {\n    padding: 1rem;\n    border-radius: 0.55rem;\n    background: #e8f5e9;\n    color: #2e7d32;\n    font-weight: 700;\n    font-size: 0.95rem;\n    line-height: 1.4;\n    text-align: center;\n}\n\n.dogoblock-web-app_author-link_PZTpH {\n    border: none;\n    background: transparent;\n    padding: 0;\n    color: inherit;\n    font: inherit;\n    font-weight: 800;\n    cursor: pointer;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n}\n\n.dogoblock-web-app_author-link_PZTpH:hover {\n    color: #243f8f;\n}\n\n.dogoblock-web-app_public-profile-page_1Cr0u {\n    max-width: 64rem;\n}\n\n.dogoblock-web-app_public-profile-header_1LMjz {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 1.75rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n}\n\n.dogoblock-web-app_public-profile-avatar_3QxQA {\n    width: 6.5rem;\n    height: 6.5rem;\n    border-radius: 50%;\n    background: #243f8f;\n    color: #ffffff;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.2rem;\n    overflow: hidden;\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    -webkit-box-shadow: 0 0.4rem 0 #182b63;\n            box-shadow: 0 0.4rem 0 #182b63;\n}\n\n.dogoblock-web-app_public-profile-avatar_3QxQA img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_public-profile-info_1DbDk {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_public-profile-name_2MKE8 {\n    margin: 0;\n    font-size: 1.8rem;\n    color: #243f8f;\n    line-height: 1.1;\n}\n\n.dogoblock-web-app_public-profile-username_987Nm {\n    font-size: 1.05rem;\n    font-weight: 800;\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_public-profile-bio_1_c2s {\n    margin: 0.5rem 0 0;\n    color: #344473;\n    font-size: 0.98rem;\n    line-height: 1.5;\n    font-weight: 600;\n}\n\n.dogoblock-web-app_public-profile-working_Od1ZL {\n    margin: 0.25rem 0 0;\n    color: #56648e;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_public-profile-stats_CkAnG {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    gap: 1.5rem;\n    margin-top: 0.85rem;\n    padding-top: 0.85rem;\n    border-top: 1px solid #e0e7ff;\n}\n\n.dogoblock-web-app_public-profile-stat_2cnC- {\n    font-size: 0.92rem;\n    color: #344473;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_public-profile-stat_2cnC- strong {\n    color: #243f8f;\n    font-size: 1.15rem;\n}\n", ""]);
+exports.push([module.i, ".dogoblock-web-app_app-shell_2PA39 {\n    min-height: 100vh;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background: #ffffff;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_topbar_3aLHW {\n    width: 100%;\n    background: #182b63;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n            box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);\n    padding: 0.35rem 0;\n}\n\n.dogoblock-web-app_topbar-inner_1PVrq {\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.25rem;\n    position: relative;\n}\n\n.dogoblock-web-app_brand_25VAQ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 8.5rem;\n    cursor: pointer;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_logo_2DRMj {\n    display: block;\n    width: 7.75rem;\n    height: auto;\n}\n\n.dogoblock-web-app_nav-center_23sFd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 1.35rem;\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n        -ms-transform: translateX(-50%);\n            transform: translateX(-50%);\n    font-size: 0.78rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_nav-right_1hx6M {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1.35rem;\n    font-size: 0.78rem; \n    font-weight: 700;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_nav-button_1dItK,\n.dogoblock-web-app_inline-button_wEmD4 {\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: inherit;\n    font: inherit;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_nav-button_1dItK {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    color: #ffffff;\n    line-height: 1.2;\n}\n\n.dogoblock-web-app_nav-icon_27ZE8 {\n    width: 0.9rem;\n    height: 0.9rem;\n    stroke-width: 2.4;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL {\n    width: 1rem;\n    height: 1rem;\n    margin-right: 0.35rem;\n}\n\n.dogoblock-web-app_icon-wrap_sITAL svg,\n.dogoblock-web-app_inline-icon_3pGo_ {\n    width: 1rem;\n    height: 1rem;\n    stroke-width: 2.6;\n}\n\n.dogoblock-web-app_inline-icon_3pGo_ {\n    margin-right: 0.32rem;\n    vertical-align: -0.18rem;\n}\n\n.dogoblock-web-app_nav-button_1dItK:hover,\n.dogoblock-web-app_inline-button_wEmD4:hover {\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_user-badge_38q0T {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #ffffff;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_user-badge_38q0T::before {\n    content: \"\";\n    width: 0.75rem;\n    height: 0.75rem;\n    border-radius: 999px;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n            box-shadow: inset 0 -0.22rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_page_z_onn {\n    width: min(100% - 2rem, 74rem);\n    margin: 0 auto;\n    padding: 2.3rem 0 3rem;\n}\n\n.dogoblock-web-app_home-page_4fkF1 {\n    padding-top: 3.25rem;\n}\n\n.dogoblock-web-app_hero_1xxqp {\n    min-height: 29rem;\n    display: grid;\n    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 2.5rem;\n}\n\n.dogoblock-web-app_hero-copy_156mN {\n    max-width: 44rem;\n}\n\n.dogoblock-web-app_kicker_1y7vH {\n    margin: 0 0 0.65rem;\n    color: #ff2b2b;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_hero_1xxqp h1,\n.dogoblock-web-app_page-header_2q-ME h1,\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin: 0;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_hero_1xxqp h1 {\n    max-width: 40rem;\n    font-size: clamp(2.2rem, 5vw, 4.8rem);\n}\n\n.dogoblock-web-app_hero-text_2OLVS {\n    max-width: 35rem;\n    margin: 1.2rem 0 0;\n    color: #344473;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.55;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc,\n.dogoblock-web-app_actions_XinWC {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.65rem;\n}\n\n.dogoblock-web-app_hero-actions_2Mbfc {\n    margin-top: 1.5rem;\n}\n\n.dogoblock-web-app_hero-preview_SVneW {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.dogoblock-web-app_preview-card_vDMIu {\n    width: min(100%, 23rem);\n    padding: 0.75rem;\n    border: 0.42rem solid #182b63;\n    border-radius: 1.25rem;\n    background: #0739a5;\n    color: #ffffff;\n    -webkit-box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n            box-shadow: 0.6rem 0.7rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 {\n    height: 14rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    margin-bottom: 0.75rem;\n    border-radius: 0.65rem;\n    background:\n        radial-gradient(circle at 76% 18%, #ff8a1d 0 10%, transparent 11%),\n        linear-gradient(135deg, #b4c4df 0 42%, #7f8ea8 43% 100%);\n    overflow: hidden;\n}\n\n.dogoblock-web-app_preview-window_3Grs6 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.1rem;\n    text-shadow: 0.12rem 0.12rem 0 #182b63;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong,\n.dogoblock-web-app_preview-card_vDMIu small {\n    display: block;\n    padding: 0 0.2rem;\n}\n\n.dogoblock-web-app_preview-card_vDMIu strong {\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_preview-card_vDMIu small {\n    margin-top: 0.15rem;\n    font-size: 0.72rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_narrow-page_186pT {\n    width: min(100% - 2rem, 28rem);\n    padding-top: 3.5rem;\n}\n\n.dogoblock-web-app_auth-section_2gv_4 {\n    width: 100%;\n    min-height: calc(100vh - 8rem);\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 3.5rem 1.5rem;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    background-color: #ffffff;\n    background-image: url(" + escape(__webpack_require__(2114)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG {\n    width: min(100%, 28rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_auth-card-wrap_JtkmG .dogoblock-web-app_panel_Q0s02 {\n    -webkit-box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0 0.8rem 2rem rgba(11, 23, 60, 0.4), 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_legal-consent_2eySd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.6rem;\n    margin: 0.2rem 0 1rem;\n    color: #4d5d88;\n    font-size: 0.76rem;\n    font-weight: 650;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_legal-consent_2eySd input {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 1rem;\n    height: 1rem;\n    margin-top: 0.12rem;\n    accent-color: #243f8f;\n}\n\n.dogoblock-web-app_legal-consent_2eySd a {\n    color: #244fc7;\n    font-weight: 800;\n    text-underline-offset: 0.12em;\n}\n\n.dogoblock-web-app_panel_Q0s02 {\n    background: #ffffff;\n    border: 0.18rem solid #243f8f;\n    border-radius: 0.85rem;\n    padding: 1.4rem;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n}\n\n.dogoblock-web-app_panel_Q0s02 h1 {\n    margin-bottom: 1rem;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    margin-bottom: 1.25rem;\n}\n\n.dogoblock-web-app_page-header_2q-ME h1 {\n    font-size: 1.9rem;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_search-bar_2Winb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    background-color: #ffffff;\n    border: 2px solid #e0e7ff;\n    border-radius: 99px;\n    padding: 0.4rem 1rem;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    max-width: 400px;\n    margin: 0 1rem;\n    -webkit-transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, -webkit-box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease;\n    transition: border-color 0.2s ease, box-shadow 0.2s ease, -webkit-box-shadow 0.2s ease;\n}\n\n.dogoblock-web-app_search-bar_2Winb:focus-within {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n            box-shadow: 0 0 0 3px rgba(36, 63, 143, 0.1);\n}\n\n.dogoblock-web-app_search-icon_1Qs5C {\n    color: #8d9ec4;\n    margin-right: 0.5rem;\n}\n\n.dogoblock-web-app_search-input_3D28S {\n    border: none;\n    background: transparent;\n    outline: none;\n    font-size: 0.95rem;\n    font-family: inherit;\n    color: #344473;\n    width: 100%;\n}\n\n.dogoblock-web-app_search-input_3D28S::-webkit-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-moz-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S:-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::-ms-input-placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_search-input_3D28S::placeholder {\n    color: #aab0c4;\n}\n\n.dogoblock-web-app_primary-button_J8O77,\n.dogoblock-web-app_secondary-button_1TFxG,\n.dogoblock-web-app_danger-button_1pdOP,\n.dogoblock-web-app_light-button_KaXx_ {\n    min-height: 2.15rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0;\n    border-radius: 0.45rem;\n    padding: 0 0.85rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.62rem;\n    font-weight: 400;\n    letter-spacing: 0;\n    line-height: 1;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_primary-button_J8O77 {\n    color: #ffffff;\n    background: #243f8f;\n    -webkit-box-shadow: 0 0.2rem 0 #182b63;\n            box-shadow: 0 0.2rem 0 #182b63;\n}\n\n.dogoblock-web-app_secondary-button_1TFxG {\n    color: #243f8f;\n    background: #ffffff;\n    -webkit-box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n            box-shadow: inset 0 0 0 0.12rem #d7e0f5, 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_danger-button_1pdOP {\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.2rem 0 #b51616;\n            box-shadow: 0 0.2rem 0 #b51616;\n}\n\n.dogoblock-web-app_light-button_KaXx_ {\n    color: #243f8f;\n    background: #e7efff;\n    -webkit-box-shadow: 0 0.2rem 0 #c6d6ff;\n            box-shadow: 0 0.2rem 0 #c6d6ff;\n}\n\n.dogoblock-web-app_primary-button_J8O77:hover,\n.dogoblock-web-app_secondary-button_1TFxG:hover,\n.dogoblock-web-app_danger-button_1pdOP:hover,\n.dogoblock-web-app_light-button_KaXx_:hover,\n.dogoblock-web-app_project-card_2NByI:hover {\n    -webkit-transform: translateY(-0.08rem);\n        -ms-transform: translateY(-0.08rem);\n            transform: translateY(-0.08rem);\n}\n\n.dogoblock-web-app_primary-button_J8O77:active,\n.dogoblock-web-app_secondary-button_1TFxG:active,\n.dogoblock-web-app_danger-button_1pdOP:active,\n.dogoblock-web-app_light-button_KaXx_:active,\n.dogoblock-web-app_project-card_2NByI:active {\n    -webkit-transform: translateY(0.05rem);\n        -ms-transform: translateY(0.05rem);\n            transform: translateY(0.05rem);\n}\n\n.dogoblock-web-app_field_VXAJd {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    margin-bottom: 0.85rem;\n    color: #243f8f;\n    font-size: 0.78rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_field_VXAJd input,\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 2.65rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    padding: 0 0.75rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.95rem;\n    font-weight: 700;\n    outline: none;\n}\n\n.dogoblock-web-app_field_VXAJd textarea {\n    min-height: 5.5rem;\n    padding-top: 0.7rem;\n    padding-bottom: 0.7rem;\n    line-height: 1.4;\n    resize: vertical;\n}\n\n.dogoblock-web-app_field_VXAJd input:focus,\n.dogoblock-web-app_field_VXAJd textarea:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.16rem rgba(36, 63, 143, 0.12);\n}\n\n.dogoblock-web-app_form-hint_1ve3y {\n    margin: 1rem 0 0;\n    color: #344473;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_inline-button_wEmD4 {\n    color: #243f8f;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_error_3uIrk {\n    margin-bottom: 0.9rem;\n    border-radius: 0.45rem;\n    padding: 0.7rem 0.8rem;\n    color: #8d1111;\n    background: #ffe7e7;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_project-grid_W2vKL {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(13.9rem, 13.9rem));\n    gap: 1rem;\n}\n\n.dogoblock-web-app_project-card-wrap_3i3y1 {\n    position: relative;\n    width: 13.9rem;\n}\n\n.dogoblock-web-app_project-card_2NByI {\n    width: 13.9rem;\n    min-height: 11rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0;\n    border: 0.35rem solid #182b63;\n    border-radius: 0.85rem;\n    padding: 0;\n    background: #0739a5;\n    color: #ffffff;\n    text-align: left;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    cursor: pointer;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz {\n    position: absolute;\n    top: 0.62rem;\n    right: 0.62rem;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 0.12rem solid #ffffff;\n    border-radius: 0.55rem;\n    color: #ffffff;\n    background: #ff2b2b;\n    -webkit-box-shadow: 0 0.15rem 0 #b51616;\n            box-shadow: 0 0.15rem 0 #b51616;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_project-delete-button_1ypDz:hover {\n    -webkit-transform: translateY(-0.06rem);\n        -ms-transform: translateY(-0.06rem);\n            transform: translateY(-0.06rem);\n}\n\n.dogoblock-web-app_project-thumbnail_26w0a {\n    height: 7rem;\n    display: block;\n    overflow: hidden;\n    border-radius: 0;\n    background: #d8e4ff;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_project-thumbnail-image_2HJxW {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background:\n        radial-gradient(circle at 82% 12%, #ff8a1d 0 12%, transparent 13%),\n        linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_project-thumbnail-fallback_18iRF span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.05rem;\n    text-shadow: 0.08rem 0.08rem 0 #182b63;\n}\n\n.dogoblock-web-app_project-title_1UyeV {\n    display: block;\n    min-height: 1rem;\n    margin-top: 0.15rem;\n    overflow: hidden;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.74rem;\n    font-weight: 400;\n    line-height: 1.05;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_project-meta_p_s94 {\n    display: block;\n    position: relative;\n    padding-left: 0.55rem;\n    color: #ffffff;\n    font-size: 0.58rem;\n    font-weight: 800;\n    line-height: 1.05;\n}\n\n.dogoblock-web-app_project-meta_p_s94::before {\n    content: \"\";\n    position: absolute;\n    left: 0.05rem;\n    top: 0.22rem;\n    width: 0.24rem;\n    height: 0.24rem;\n    border-radius: 999px;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_card-body_2RDB_ {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    padding: 0.5rem 0.55rem 0.55rem;\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n.dogoblock-web-app_featured-card_3hVgO .dogoblock-web-app_card-body_2RDB_ {\n    padding: 0.65rem 0.75rem 0.75rem;\n}\n\n.dogoblock-web-app_card-avatar-col_GPjdL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_card-avatar-icon_2H8lk {\n    width: 2.15rem;\n    height: 2.15rem;\n    color: #ffffff;\n    fill: #ffffff;\n    stroke-width: 1.8;\n}\n\n.dogoblock-web-app_card-info-col_3pwGi {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    gap: 0.12rem;\n}\n\n.dogoblock-web-app_card-title_1OH15 {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.85rem;\n    font-weight: 800;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_card-author_1lvNV {\n    display: block;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: #a8b8ff;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    line-height: 1.15;\n}\n\n.dogoblock-web-app_empty-state_oJImC {\n    width: min(100%, 28rem);\n    margin-top: 1rem;\n    border: 0.18rem dashed #c6d6ff;\n    border-radius: 0.75rem;\n    padding: 1.4rem;\n    color: #344473;\n    font-weight: 800;\n    text-align: center;\n}\n\n.dogoblock-web-app_project-details-page_HYCVs {\n    width: min(100% - 2rem, 79rem);\n}\n\n.dogoblock-web-app_details-header_3-XXe {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.45rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    min-width: 0;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl h1 {\n    margin: 0;\n    overflow: hidden;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3rem);\n    font-weight: 400;\n    line-height: 1.05;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl p {\n    margin: 0.2rem 0 0;\n    color: #56648e;\n    font-size: 0.95rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-title-area_2N4tl strong {\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_details-avatar_eht0D {\n    width: 4.6rem;\n    height: 4.6rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    overflow: hidden;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.7rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_details-main-grid_3v5Ue {\n    display: grid;\n    grid-template-columns: minmax(22rem, 38rem) minmax(20rem, 1fr);\n    gap: 1.35rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n}\n\n.dogoblock-web-app_details-player-column_boimX {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 {\n    width: 100%;\n    max-width: 100%;\n    min-height: 30.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: auto;\n    border: 0.18rem solid #182b63;\n    border-radius: 0.8rem;\n    background: #ffffff;\n}\n\n.dogoblock-web-app_detail-stage-player_1iQg7 [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_detail-stats_favx8 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 1.4rem;\n    margin-top: 1rem;\n    color: #56648e;\n    font-size: 1.08rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_details-info-column_JMmlU {\n    min-width: 0;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb {\n    margin-bottom: 1rem;\n}\n\n.dogoblock-web-app_detail-text-section_2cGjb h2,\n.dogoblock-web-app_comments-section_3ZgUT h2,\n.dogoblock-web-app_remix-section_1yYhw h2 {\n    margin: 0 0 0.6rem;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.18rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_detail-text-box_2PJp4 {\n    min-height: 9.8rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.75rem;\n    padding: 1rem;\n    color: #344473;\n    background: #eaf2ff;\n    font-size: 1.05rem;\n    font-weight: 600;\n    line-height: 1.45;\n    white-space: pre-wrap;\n}\n\n.dogoblock-web-app_detail-meta-bar_Wnt9Z {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    gap: 1rem;\n    margin-top: 0.55rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_details-lower-band_1Y7DY {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);\n    gap: 2.5rem;\n    margin: 2rem calc((100vw - min(100vw, 79rem)) / -2) -3rem;\n    padding: 2.2rem max(1rem, calc((100vw - 79rem) / 2)) 3rem;\n    background: #eaf2ff;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.65rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_comment-avatar_AxAjx {\n    width: 2.5rem;\n    height: 2.5rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n}\n\n.dogoblock-web-app_comment-composer_1fFS2 input {\n    width: min(100%, 28rem);\n    min-height: 2.55rem;\n    border: 0.12rem solid #d7e0f5;\n    border-radius: 0.55rem;\n    padding: 0 0.85rem;\n    color: #56648e;\n    background: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_empty-comment_1h0gb {\n    margin-top: 1rem;\n    color: #56648e;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_section-title-row_2aVtI span {\n    color: #7e55d8;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv {\n    height: 9.4rem;\n    overflow: hidden;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-image_2HJxW,\n.dogoblock-web-app_remix-placeholder_1jarv .dogoblock-web-app_project-thumbnail-fallback_18iRF {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_muted_1seQ1 {\n    color: #56648e;\n    font-size: 0.85rem;\n}\n\n.dogoblock-web-app_editor-shell_3Zz5e {\n    height: 100vh;\n}\n\n.dogoblock-web-app_hidden-input_2pI22 {\n    display: none;\n}\n\n.dogoblock-web-app_user-badge-button_2xFBg {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_profile-page_2dR7P {\n    width: min(100% - 2rem, 78rem);\n    padding-top: 2rem;\n    padding-bottom: 3rem;\n}\n\n/* ── TOP ROW ─────────────────────────────────────── */\n\n.dogoblock-web-app_profile-top-row_2pjAA {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 1.2rem;\n    margin-bottom: 1.4rem;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n}\n\n/* LEFT — user info card */\n\n.dogoblock-web-app_profile-info-card_3p37B {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-info-header_9XpmA {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    padding: 0.75rem 1.35rem;\n    background: #182b63;\n}\n\n.dogoblock-web-app_profile-info-body_3BmaB {\n    padding: 1.1rem 1.35rem 1.25rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 4.8rem;\n    height: 4.8rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    border: 0.22rem solid #182b63;\n    border-radius: 0.85rem;\n    color: #ffffff;\n    background: #7e55d8;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.75rem;\n}\n\n.dogoblock-web-app_profile-avatar_r_K2L img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\nh1.dogoblock-web-app_profile-name_xdCx7 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2rem;\n    font-weight: 400;\n    line-height: 1.1;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_profile-name-stack_dupRO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.2rem;\n}\n\n.dogoblock-web-app_profile-username_xpxIA {\n    color: #cacaca;\n    font-size: 0.82rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_profile-section_3mhFz {\n    margin-bottom: 1.1rem;\n}\n\n.dogoblock-web-app_profile-section-title_23Dve {\n    margin: 0 0 0.4rem;\n    color: #243f8f;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n.dogoblock-web-app_profile-section-text_ay6bA {\n    margin: 0.45rem 0 0;\n    color: #344473;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.6;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    gap: 0.4rem;\n    margin-top: auto;\n    padding: 0.55rem 1.2rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #182b63;\n    color: #ffffff;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_profile-edit-button_2AMzd:hover {\n    opacity: 0.85;\n}\n\n/* RIGHT — featured project card */\n\n.dogoblock-web-app_profile-featured-card_2-syp {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    padding: 0;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-featured-header_wo1pS {\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-title_b9KMP {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.8rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    white-space: pre-line;\n    line-height: 1.3;\n    display: block;\n}\n\n.dogoblock-web-app_profile-featured-body_ylNPD {\n    padding: 1.1rem 1.35rem 1.2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG {\n    display: block;\n    width: 100%;\n    aspect-ratio: 16 / 9;\n    overflow: hidden;\n    border-radius: 0.65rem;\n    border: 0;\n    padding: 0;\n    cursor: pointer;\n    background: #d8e4ff;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG img {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n    -webkit-transition: -webkit-transform 240ms ease;\n    transition: -webkit-transform 240ms ease;\n    transition: transform 240ms ease;\n    transition: transform 240ms ease, -webkit-transform 240ms ease;\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG:hover img {\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_profile-featured-thumb_B6_VG > div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_profile-featured-empty_2VneF {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.65rem;\n    background: #d8e4ff;\n    color: #56648e;\n    font-weight: 700;\n    font-size: 0.82rem;\n    padding: 2rem;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-featured-stats_2miVh {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.2rem;\n    margin-top: 0.85rem;\n}\n\n.dogoblock-web-app_profile-featured-stat_ylXqE {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    color: #243f8f;\n    font-size: 1rem;\n    font-weight: 700;\n}\n\n/* ── SECTION BLOCKS (projects / favorites) ──────── */\n\n.dogoblock-web-app_profile-section-2_3aWOC {\n    border: 0.22rem solid #243f8f;\n    border-radius: 0.95rem;\n    padding: 0;\n    background: #ffffff;\n    -webkit-box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n            box-shadow: 0.35rem 0.45rem 0 #d8e4ff;\n    margin-bottom: 1.4rem;\n    overflow: hidden;\n}\n\n.dogoblock-web-app_profile-section-header_2CEuH {\n    margin: 0;\n    padding: 0.6rem 1.5rem;\n    background: #182b63;\n    text-align: center;\n}\n\n.dogoblock-web-app_profile-section-heading_2Axcz {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.15rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n    display: block;\n}\n\n.dogoblock-web-app_profile-section-body_TwpfC {\n    padding: 1.25rem 1.35rem 1.5rem;\n}\n\n/* ── EDIT FORM ───────────────────────────────────── */\n\n.dogoblock-web-app_profile-form_3eCSN {\n    width: 100%;\n    margin-bottom: 1.4rem;\n}\n\n.dogoblock-web-app_profile-form-actions_1GpBH {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    gap: 0.65rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n/* ── LOGOUT ROW ─────────────────────────────────── */\n\n.dogoblock-web-app_profile-logout-row_1H6A9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    margin-top: 0.5rem;\n}\n\n/* Legacy classes kept for any remaining references */\n\n.dogoblock-web-app_profile-hero_3T3MG { display: none; }\n\n.dogoblock-web-app_profile-tabs_2hl_k { display: none; }\n\n.dogoblock-web-app_profile-tab_G5MbT { display: none; }\n\n.dogoblock-web-app_profile-tab-active_fjXNE { display: none; }\n\n.dogoblock-web-app_profile-grid_3XVac { display: none; }\n\n.dogoblock-web-app_profile-panel_1O9VV { display: none; }\n\n.dogoblock-web-app_profile-actions_1Jgif { display: none; }\n\n.dogoblock-web-app_profile-stats_2Y3vS { display: none; }\n\n@media (max-width: 900px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.45rem 0;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        padding: 0 1rem;\n    }\n\n    .dogoblock-web-app_nav_5Hvdh {\n        gap: 0.75rem;\n        font-size: 0.72rem;\n    }\n\n    .dogoblock-web-app_hero_1xxqp {\n        grid-template-columns: 1fr;\n        gap: 1.5rem;\n    }\n\n    .dogoblock-web-app_hero-preview_SVneW {\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe,\n    .dogoblock-web-app_details-main-grid_3v5Ue,\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_details-header_3-XXe {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-lower-band_1Y7DY {\n        margin-right: -1rem;\n        margin-left: -1rem;\n        padding-right: 1rem;\n        padding-left: 1rem;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 640px) {\n    .dogoblock-web-app_topbar_3aLHW {\n        padding: 0.55rem 0 0.65rem;\n    }\n\n    .dogoblock-web-app_topbar-inner_1PVrq {\n        width: 100%;\n        display: grid;\n        grid-template-columns: minmax(0, 1fr) auto;\n        -webkit-box-align: center;\n        -webkit-align-items: center;\n            -ms-flex-align: center;\n                align-items: center;\n        min-height: auto;\n        padding: 0 0.75rem;\n        gap: 0.55rem 0.75rem;\n        -webkit-box-sizing: border-box;\n                box-sizing: border-box;\n    }\n\n    .dogoblock-web-app_brand_25VAQ {\n        min-width: 0;\n        -webkit-box-flex: 0;\n        -webkit-flex: none;\n            -ms-flex: none;\n                flex: none;\n    }\n\n    .dogoblock-web-app_logo_2DRMj {\n        width: 6.75rem;\n    }\n\n    .dogoblock-web-app_nav-center_23sFd {\n        position: static;\n        grid-column: 1 / -1;\n        grid-row: 2;\n        width: 100%;\n        -webkit-box-pack: start;\n        -webkit-justify-content: flex-start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n        gap: 0.9rem;\n        overflow-x: auto;\n        -webkit-transform: none;\n            -ms-transform: none;\n                transform: none;\n        scrollbar-width: none;\n    }\n\n    .dogoblock-web-app_nav-center_23sFd::-webkit-scrollbar {\n        display: none;\n    }\n\n    .dogoblock-web-app_nav-right_1hx6M {\n        min-width: 0;\n        gap: 0.55rem;\n        -webkit-box-flex: 0;\n        -webkit-flex: none;\n            -ms-flex: none;\n                flex: none;\n    }\n\n    .dogoblock-web-app_nav-link_1wf1m,\n    .dogoblock-web-app_nav-btn-editor_kCCmG,\n    .dogoblock-web-app_nav-btn-criar-conta_f8GdL,\n    .dogoblock-web-app_nav-btn-sair_2e95R {\n        -webkit-box-flex: 0;\n        -webkit-flex: 0 0 auto;\n            -ms-flex: 0 0 auto;\n                flex: 0 0 auto;\n        font-size: 0.7rem;\n    }\n\n    .dogoblock-web-app_page_z_onn {\n        width: min(100% - 1.25rem, 74rem);\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_page-header_2q-ME {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_project-grid_W2vKL {\n        grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));\n    }\n\n    .dogoblock-web-app_project-card_2NByI,\n    .dogoblock-web-app_project-card-wrap_3i3y1 {\n        width: 100%;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_details-title-area_2N4tl h1 {\n        white-space: normal;\n    }\n\n    .dogoblock-web-app_detail-meta-bar_Wnt9Z {\n        -webkit-box-align: start;\n        -webkit-align-items: flex-start;\n            -ms-flex-align: start;\n                align-items: flex-start;\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_profile-top-row_2pjAA {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   NAVBAR — institutional links\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_nav-link_1wf1m {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.32rem;\n    border: 0;\n    padding: 0;\n    background: transparent;\n    color: #ffffff;\n    font: inherit;\n    font-size: 0.82rem;\n    font-weight: 700;\n    line-height: 1.2;\n    text-decoration: none;\n    cursor: pointer;\n    -webkit-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_nav-link_1wf1m:hover {\n    opacity: 0.8;\n}\n\n/* Botão \"</> Editor\" — borda amarela */\n\n.dogoblock-web-app_nav-btn-editor_kCCmG {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.1rem;\n    border: 0.14rem solid #FFB800;\n    border-radius: 999px;\n    background: transparent;\n    color: #FFB800;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-editor_kCCmG:hover {\n    background: rgba(255, 184, 0, 0.12);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Botão \"Criar Conta\" — preenchido amarelo */\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-height: 2rem;\n    padding: 0 1.25rem;\n    border: 0;\n    border-radius: 999px;\n    background: #FFB800;\n    color: #182b63;\n    font: inherit;\n    font-size: 0.78rem;\n    font-weight: 800;\n    cursor: pointer;\n    white-space: nowrap;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    -webkit-box-shadow: 0 0.18rem 0 #b87800;\n            box-shadow: 0 0.18rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #b87800;\n            box-shadow: 0 0.28rem 0 #b87800;\n}\n\n.dogoblock-web-app_nav-btn-criar-conta_f8GdL:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #b87800;\n            box-shadow: 0 0.06rem 0 #b87800;\n}\n\n/* Botão username e Sair — estilo sutil */\n\n.dogoblock-web-app_nav-btn-user_2a2-x {\n    font-weight: 800;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    min-height: 2.1rem;\n    padding: 0 1rem;\n    border: 0;\n    border-radius: 0.55rem;\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.72rem;\n    font-weight: 400;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:hover {\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n    -webkit-box-shadow: 0 0.28rem 0 #971212;\n            box-shadow: 0 0.28rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-btn-sair_2e95R:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.06rem 0 #971212;\n            box-shadow: 0 0.06rem 0 #971212;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 2.1rem;\n    height: 2.1rem;\n    border: 0;\n    border-radius: 50%;\n    background: rgba(255, 255, 255, 0.12);\n    color: #ffffff;\n    cursor: pointer;\n    -webkit-transition: background 150ms ease, -webkit-transform 120ms ease;\n    transition: background 150ms ease, -webkit-transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease;\n    transition: background 150ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:hover {\n    background: rgba(255, 255, 255, 0.25);\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_nav-user-icon-btn_1M-Tc:active {\n    background: rgba(255, 255, 255, 0.35);\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n/* ═══════════════════════════════════════════════════\n   HOME PAGE — full-width layout\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_home-page_4fkF1 {\n    width: 100%;\n    padding: 0;\n}\n\n/* ── HERO ──────────────────────────────────────────── */\n\n.dogoblock-web-app_hero-section_kEmie {\n    position: relative;\n    overflow: hidden;\n    background-color: #182b63;\n    background-image: url(" + escape(__webpack_require__(2115)) + ");\n    background-repeat: no-repeat;\n    background-position: center center;\n    background-size: cover;\n}\n\n.dogoblock-web-app_hero-inner_1BSXF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%;\n    padding: 0;\n    margin: 0 auto;\n    min-height: 25rem;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-copy-new_1-NFP {\n    padding: 3rem 1rem 3rem max(1rem, calc((100% - 80rem) / 2));\n    max-width: none;\n    position: relative;\n    z-index: 2;\n}\n\n.dogoblock-web-app_hero-title_3vzv9 {\n    margin: 0;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.8rem, 3vw, 3.2rem);\n    font-weight: 400;\n    line-height: 1.12;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_hero-accent_fT7jP {\n    color: #FC0006;\n}\n\n.dogoblock-web-app_hero-actions-new_3rUsr {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n    gap: 0.75rem;\n    margin-top: 2rem;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0;\n    border-radius: 0.4rem;\n    background: #e02020;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-box-shadow: 0 0.22rem 0 #9e0f0f;\n            box-shadow: 0 0.22rem 0 #9e0f0f;\n    -webkit-transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease;\n    transition: transform 120ms ease, box-shadow 120ms ease, -webkit-transform 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    -webkit-box-shadow: 0 0.35rem 0 #9e0f0f;\n            box-shadow: 0 0.35rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-primary_1OBbc:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n    -webkit-box-shadow: 0 0.1rem 0 #9e0f0f;\n            box-shadow: 0 0.1rem 0 #9e0f0f;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC {\n    min-height: 2.4rem;\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    padding: 0 1.4rem;\n    border: 0.16rem solid #ffffff;\n    border-radius: 0.4rem;\n    background: transparent;\n    color: #ffffff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.68rem;\n    text-transform: uppercase;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: transform 120ms ease, background 120ms ease;\n    transition: transform 120ms ease, background 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:hover {\n    -webkit-transform: translateY(-2px);\n        -ms-transform: translateY(-2px);\n            transform: translateY(-2px);\n    background: rgba(255, 255, 255, 0.1);\n}\n\n.dogoblock-web-app_hero-btn-outline_344fC:active {\n    -webkit-transform: translateY(1px);\n        -ms-transform: translateY(1px);\n            transform: translateY(1px);\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt {\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: end;\n    -webkit-align-items: flex-end;\n        -ms-flex-align: end;\n            align-items: flex-end;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    z-index: 1;\n    pointer-events: none;\n}\n\n.dogoblock-web-app_hero-illustration_Xpfzt img {\n    display: block;\n    width: auto;\n    height: 100%;\n    max-height: 25rem;\n    -o-object-fit: contain;\n       object-fit: contain;\n    -o-object-position: bottom right;\n       object-position: bottom right;\n}\n\n/* ── PROJETOS EM DESTAQUE ──────────────────────────── */\n\n.dogoblock-web-app_featured-section_3NRT3 {\n    padding: 5rem 0 5rem;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n}\n\n.dogoblock-web-app_featured-title_tVGCx {\n    margin: 0 0 1.8rem;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1.6rem;\n    font-weight: 400;\n    text-align: center;\n    text-transform: uppercase;\n}\n\n.dogoblock-web-app_featured-empty_2RA0I {\n    color: #56648e;\n    text-align: center;\n    font-weight: 700;\n    padding: 2rem 0;\n}\n\n.dogoblock-web-app_featured-grid_3At29 {\n    display: grid;\n    grid-template-columns: repeat(4, 1fr);\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_featured-card_3hVgO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    border: 0.3rem solid #182b63;\n    border-radius: 0.85rem;\n    overflow: hidden;\n    background: #1a3aad;\n    color: #ffffff;\n    text-align: left;\n    cursor: pointer;\n    padding: 0;\n    -webkit-box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n            box-shadow: 0 0.18rem 0 rgba(24, 43, 99, 0.35);\n    -webkit-transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    transition: -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease;\n    transition: transform 130ms ease, box-shadow 130ms ease, -webkit-transform 130ms ease, -webkit-box-shadow 130ms ease;\n}\n\n.dogoblock-web-app_featured-card_3hVgO:hover {\n    -webkit-transform: translateY(-4px);\n        -ms-transform: translateY(-4px);\n            transform: translateY(-4px);\n    -webkit-box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n            box-shadow: 0 8px 20px rgba(24, 43, 99, 0.28);\n}\n\n.dogoblock-web-app_featured-card_3hVgO:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t {\n    height: 9rem;\n    overflow: hidden;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n    display: block;\n}\n\n.dogoblock-web-app_featured-thumbnail_1W30t>div {\n    width: 100%;\n    height: 100%;\n}\n\n.dogoblock-web-app_featured-card-body_3t-kX {\n    padding: 0.6rem 0.7rem 0.75rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.18rem;\n}\n\n.dogoblock-web-app_featured-card-title_2I_HI {\n    display: block;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    color: #ffffff;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_featured-card-author_fatHU {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    font-size: 0.6rem;\n    font-weight: 800;\n    color: rgba(255, 255, 255, 0.75);\n}\n\n.dogoblock-web-app_featured-card-author_fatHU::before {\n    content: \"\";\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 0.52rem;\n    height: 0.52rem;\n    border-radius: 999px;\n    border: 0.1rem solid rgba(255, 255, 255, 0.65);\n}\n\n/* ═══════════════════════════════════════════════════\n   SITE FOOTER\n═══════════════════════════════════════════════════ */\n\n.dogoblock-web-app_site-footer_1iprI {\n    margin-top: auto;\n    background: #182b63;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-inner_2qcat {\n    display: grid;\n    grid-template-columns: auto 1fr 1fr 1.4fr;\n    gap: 2.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    width: min(100% - 2rem, 80rem);\n    margin: 0 auto;\n    padding: 3rem 0 2.5rem;\n}\n\n.dogoblock-web-app_footer-brand_Gbx7N {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n}\n\n.dogoblock-web-app_footer-logo_1Vta7 {\n    width: 10rem;\n    height: auto;\n    display: block;\n}\n\n.dogoblock-web-app_footer-links_2GnH_,\n.dogoblock-web-app_footer-lei_2aRPq,\n.dogoblock-web-app_footer-contact_kixSb {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.5rem;\n    font-size: 0.78rem;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ strong,\n.dogoblock-web-app_footer-lei_2aRPq strong,\n.dogoblock-web-app_footer-contact_kixSb strong {\n    display: block;\n    margin-bottom: 0.35rem;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.8rem;\n    font-weight: 400;\n    letter-spacing: 0.02em;\n    color: #ffffff;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a,\n.dogoblock-web-app_footer-lei_2aRPq a {\n    color: rgba(255, 255, 255, 0.75);\n    text-decoration: none;\n    font-weight: 600;\n    line-height: 1.4;\n    -webkit-transition: color 120ms ease;\n    transition: color 120ms ease;\n}\n\n.dogoblock-web-app_footer-links_2GnH_ a:hover,\n.dogoblock-web-app_footer-lei_2aRPq a:hover {\n    color: #ffffff;\n    text-decoration: underline;\n}\n\n.dogoblock-web-app_footer-contact_kixSb span {\n    color: rgba(255, 255, 255, 0.75);\n    font-weight: 600;\n    line-height: 1.5;\n}\n\n.dogoblock-web-app_footer-bottom_18YbC {\n    border-top: 1px solid rgba(255, 255, 255, 0.1);\n    text-align: center;\n    padding: 1.1rem 1rem;\n    font-size: 0.68rem;\n    font-weight: 700;\n    color: rgba(255, 255, 255, 0.45);\n    letter-spacing: 0.03em;\n}\n\n/* ── HOME RESPONSIVE ─────────────────────────────── */\n\n@media (max-width: 960px) {\n    .dogoblock-web-app_hero-inner_1BSXF {\n        grid-template-columns: 1fr;\n        min-height: auto;\n    }\n\n    .dogoblock-web-app_hero-copy-new_1-NFP {\n        padding-bottom: 0;\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 55%;\n        margin: 0 auto;\n        padding-top: 1.5rem;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr 1fr;\n        gap: 2rem;\n    }\n\n    .dogoblock-web-app_footer-brand_Gbx7N {\n        grid-column: 1 / -1;\n    }\n\n    .dogoblock-web-app_footer-lei_2aRPq {\n        grid-column: auto;\n    }\n}\n\n@media (max-width: 620px) {\n    .dogoblock-web-app_hero-title_3vzv9 {\n        font-size: clamp(1.6rem, 6vw, 2.2rem);\n    }\n\n    .dogoblock-web-app_hero-illustration_Xpfzt {\n        max-width: 80%;\n    }\n\n    .dogoblock-web-app_featured-grid_3At29 {\n        grid-template-columns: repeat(2, 1fr);\n        gap: 0.75rem;\n    }\n\n    .dogoblock-web-app_footer-inner_2qcat {\n        grid-template-columns: 1fr;\n    }\n}\n\n/* ═══════════════════════════════════════════════════\n   PROJECT DETAILS PAGE — wireframe-faithful layout\n═══════════════════════════════════════════════════ */\n\n/* Page wrapper */\n\n.dogoblock-web-app_pd-page_KaiaO {\n    width: min(100% - 2rem, 78rem);\n    margin: 0 auto;\n    padding: 1.8rem 0 3.5rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n}\n\n.dogoblock-web-app_pd-loading_2yBGM {\n    color: #56648e;\n    font-weight: 700;\n    margin-bottom: 1rem;\n}\n\n/* ── HEADER ─────────────────────────────────────── */\n\n.dogoblock-web-app_pd-header_15sVF {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1.5rem;\n    margin-bottom: 1.5rem;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-header-left_Ywyhv {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1rem;\n    min-width: 0;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n/* Project thumbnail in header */\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4 {\n    position: relative;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 5rem;\n    height: 5rem;\n    border: 0.18rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #d8e4ff;\n}\n\n.dogoblock-web-app_pd-thumb-img_1KW1w {\n    width: 100%;\n    height: 100%;\n    display: block;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 {\n    width: 100%;\n    height: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: linear-gradient(135deg, #bcc8dd 0 45%, #7e8da8 46% 100%);\n}\n\n.dogoblock-web-app_pd-thumb-fallback_tB_L1 span {\n    color: #d800ff;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 1rem;\n    text-shadow: 0.06rem 0.06rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-title-group_15Btu {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.15rem;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-title_3OX_1 {\n    margin: 0;\n    color: #182b63;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: clamp(1.3rem, 3vw, 2.2rem);\n    font-weight: 400;\n    line-height: 1.1;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.dogoblock-web-app_pd-author_3AAnG,\n.dogoblock-web-app_pd-date_cKn04 {\n    margin: 0;\n    color: #56648e;\n    font-size: 0.82rem;\n    font-weight: 600;\n}\n\n/* Right action buttons */\n\n.dogoblock-web-app_pd-header-actions_2py2D {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-align: stretch;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    gap: 0.55rem;\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:hover:not(:disabled) {\n    background: #dde6ff;\n}\n\n.dogoblock-web-app_pd-btn-visibility_1jaCu:disabled {\n    opacity: 0.75;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI {\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.8rem;\n    border: 0.12rem solid #ffc5c5;\n    border-radius: 0.45rem;\n    background: #fff0f0;\n    color: #c02020;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease;\n    transition: background 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-delete_eb3sI:hover {\n    background: #ffdede;\n}\n\n/* ── MAIN GRID ───────────────────────────────────── */\n\n.dogoblock-web-app_pd-main-grid_FNx8H {\n    display: grid;\n    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);\n    gap: 1.5rem;\n    -webkit-box-align: start;\n    -webkit-align-items: start;\n        -ms-flex-align: start;\n            align-items: start;\n    margin-bottom: 2rem;\n}\n\n/* LEFT COLUMN — player */\n\n.dogoblock-web-app_pd-player-col_BxfGo {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.75rem;\n    overflow: hidden;\n    background: #ffffff;\n}\n\n/* Toolbar bar */\n\n.dogoblock-web-app_pd-toolbar_3dhry {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding: 0.35rem 0.65rem;\n    background: #f5f7ff;\n    border-bottom: 0.12rem solid #e0e7ff;\n}\n\n.dogoblock-web-app_pd-toolbar-flags_TXL2k {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.45rem;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a,\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    display: inline-block;\n    width: 0.85rem;\n    height: 0.85rem;\n    border-radius: 999px;\n    cursor: pointer;\n}\n\n.dogoblock-web-app_pd-flag-green_1Yb_a {\n    background: #22b455;\n    -webkit-box-shadow: 0 0 0 0.1rem #178a3e;\n            box-shadow: 0 0 0 0.1rem #178a3e;\n}\n\n.dogoblock-web-app_pd-flag-red_OuNdy {\n    background: #e83030;\n    -webkit-box-shadow: 0 0 0 0.1rem #b51616;\n            box-shadow: 0 0 0 0.1rem #b51616;\n}\n\n.dogoblock-web-app_pd-toolbar-right_1SdU2 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_ {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #56648e;\n    font-size: 0.7rem;\n    cursor: pointer;\n    opacity: 0.7;\n    -webkit-transition: opacity 120ms ease;\n    transition: opacity 120ms ease;\n}\n\n.dogoblock-web-app_pd-bar-icon_3WJm_:hover {\n    opacity: 1;\n}\n\n/* Stage */\n\n.dogoblock-web-app_pd-stage_2YPmb {\n    width: 100%;\n    min-height: 21rem;\n    background: #f0f4ff;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    overflow: hidden;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-stage_2YPmb [class*=\"stage-wrapper_stage-wrapper\"] {\n    margin: 0 auto;\n}\n\n/* Stats + \"Ver por dentro\" row */\n\n.dogoblock-web-app_pd-stats-row_3md3- {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: justify;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    gap: 1rem;\n    padding: 0.65rem 0.85rem;\n    background: #ffffff;\n    border-top: 0.12rem solid #e0e7ff;\n    -webkit-flex-wrap: wrap;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap;\n}\n\n.dogoblock-web-app_pd-stats_32ety {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 1.1rem;\n}\n\n.dogoblock-web-app_pd-stat_a_ebm {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    color: #344473;\n    font-size: 0.92rem;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.45rem;\n    background: #f0f4ff;\n    color: #243f8f;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:hover {\n    background: #dde6ff;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-see-inside_1mD05:active {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0);\n}\n\n/* RIGHT COLUMN — info textareas */\n\n.dogoblock-web-app_pd-info-col_28UnO {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 1rem;\n}\n\n.dogoblock-web-app_pd-info-section_5wpZ9 {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.35rem;\n}\n\n.dogoblock-web-app_pd-info-label_3e4_s {\n    color: #243f8f;\n    font-size: 0.82rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 8rem;\n    padding: 0.65rem 0.75rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 600;\n    line-height: 1.5;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-info-textarea_1VRTO[readonly] {\n    background: #eaf0fa;\n    color: #56648e;\n    cursor: default;\n}\n\n/* ── COMMENTS SECTION ────────────────────────────── */\n\n.dogoblock-web-app_pd-comments_3XlQU {\n    padding-top: 0.5rem;\n}\n\n.dogoblock-web-app_pd-comments-title_1bOdq {\n    margin: 0 0 0.85rem;\n    color: #182b63;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 1.05rem;\n    font-weight: 800;\n}\n\n.dogoblock-web-app_pd-comment-composer_3lF9C {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-avatar_32eUa {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2.8rem;\n    height: 2.8rem;\n    border: 0.14rem solid #c6d6ff;\n    border-radius: 0.65rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    background: #d8e4ff;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-comment-input-wrap_NelRJ {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.55rem;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo {\n    width: 100%;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    min-height: 4rem;\n    padding: 0.65rem 0.85rem;\n    border: 0.12rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    background: #f5f7ff;\n    color: #344473;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.9rem;\n    font-weight: 600;\n    line-height: 1.4;\n    resize: vertical;\n    outline: none;\n    -webkit-transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, -webkit-box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease;\n    transition: border-color 120ms ease, box-shadow 120ms ease, -webkit-box-shadow 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-webkit-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-moz-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::-ms-input-placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo::placeholder {\n    color: #8d9ec4;\n    font-weight: 500;\n}\n\n.dogoblock-web-app_pd-comment-input_3zPZo:focus {\n    border-color: #243f8f;\n    -webkit-box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n            box-shadow: 0 0 0 0.14rem rgba(36, 63, 143, 0.12);\n    background: #ffffff;\n}\n\n.dogoblock-web-app_pd-comment-actions_2XheL {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.5rem;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo,\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    min-height: 1.75rem;\n    padding: 0 0.85rem;\n    border-radius: 0.35rem;\n    border: 0;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo {\n    background: #c6d6ff;\n    color: #182b63;\n}\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:hover {\n    background: #b0c2f5;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS {\n    background: #e8ecf5;\n    color: #56648e;\n}\n\n.dogoblock-web-app_pd-btn-cancel_3KsTS:hover {\n    background: #d7dff0;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* Responsive — single column on smaller screens */\n\n@media (max-width: 860px) {\n    .dogoblock-web-app_pd-main-grid_FNx8H {\n        grid-template-columns: 1fr;\n    }\n\n    .dogoblock-web-app_pd-header_15sVF {\n        -webkit-box-orient: vertical;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: column;\n            -ms-flex-direction: column;\n                flex-direction: column;\n    }\n\n    .dogoblock-web-app_pd-header-actions_2py2D {\n        -webkit-box-orient: horizontal;\n        -webkit-box-direction: normal;\n        -webkit-flex-direction: row;\n            -ms-flex-direction: row;\n                flex-direction: row;\n        -webkit-flex-wrap: wrap;\n            -ms-flex-wrap: wrap;\n                flex-wrap: wrap;\n        width: 100%;\n    }\n\n    .dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n    .dogoblock-web-app_pd-btn-visibility-private_2D01B,\n    .dogoblock-web-app_pd-btn-delete_eb3sI {\n        -webkit-box-flex: 1;\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1;\n    }\n}\n\n/* ── Visibility badge / button — state-based colours ── */\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    min-width: 8rem;\n    min-height: 2rem;\n    padding: 0.35rem 0.9rem;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.72rem;\n    font-weight: 700;\n    text-align: center;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    border: 0;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_ {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n.dogoblock-web-app_pd-btn-visibility-public_1XRR_:hover {\n    background: #1da04c;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    background: #e02020;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #971212;\n            box-shadow: 0 0.18rem 0 #971212;\n}\n\n.dogoblock-web-app_pd-btn-visibility-private_2D01B:hover {\n    background: #c41a1a;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* span version (non-owner, not clickable) */\n\nspan.dogoblock-web-app_pd-btn-visibility-public_1XRR_,\nspan.dogoblock-web-app_pd-btn-visibility-private_2D01B {\n    cursor: default;\n    pointer-events: none;\n    opacity: 0.85;\n}\n\n/* ── Interactive stat buttons (like / fav) ── */\n\n.dogoblock-web-app_pd-stat-btn_2G3OI,\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH,\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.35rem;\n    padding: 0.3rem 0.65rem;\n    border: 0.12rem solid transparent;\n    border-radius: 999px;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.88rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n    background: transparent;\n    color: #344473;\n}\n\n.dogoblock-web-app_pd-stat-btn_2G3OI:hover {\n    background: #eaf0fa;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH {\n    color: #e02020;\n    background: #ffeaea;\n    border-color: #ffc5c5;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-like_2k0RH:hover {\n    background: #ffd6d6;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0 {\n    color: #d69800;\n    background: #fff8e5;\n    border-color: #ffe699;\n}\n\n.dogoblock-web-app_pd-stat-btn-active-fav_34SY0:hover {\n    background: #fff2cc;\n    -webkit-transform: scale(1.06);\n        -ms-transform: scale(1.06);\n            transform: scale(1.06);\n}\n\n/* ── Thumbnail overlay (change cover) ── */\n\n.dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    position: absolute;\n    inset: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-radius: 0.75rem;\n    background: rgba(0, 0, 0, 0.45);\n    color: #ffffff;\n    opacity: 0;\n    cursor: pointer;\n    -webkit-transition: opacity 160ms ease;\n    transition: opacity 160ms ease;\n}\n\n.dogoblock-web-app_pd-thumb-box_2-Fq4:hover .dogoblock-web-app_pd-thumb-overlay_1FiyH {\n    opacity: 1;\n}\n\n/* ── Save details button ── */\n\n.dogoblock-web-app_pd-btn-save-details_RNirf,\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.4rem;\n    min-height: 2.1rem;\n    padding: 0 1.1rem;\n    border: 0;\n    border-radius: 0.45rem;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.78rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, -webkit-transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease;\n    transition: background 120ms ease, transform 120ms ease, -webkit-transform 120ms ease;\n    -webkit-align-self: flex-start;\n        -ms-flex-item-align: start;\n            align-self: flex-start;\n    margin-top: 0.35rem;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf {\n    background: #243f8f;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #182b63;\n            box-shadow: 0 0.18rem 0 #182b63;\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:hover:not(:disabled) {\n    background: #1b3070;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n.dogoblock-web-app_pd-btn-save-details_RNirf:disabled {\n    opacity: 0.65;\n    cursor: default;\n}\n\n.dogoblock-web-app_pd-btn-save-details-done_k0fD4 {\n    background: #22b455;\n    color: #ffffff;\n    -webkit-box-shadow: 0 0.18rem 0 #178a3e;\n            box-shadow: 0 0.18rem 0 #178a3e;\n}\n\n/* ── Comment avatar initials ── */\n\n.dogoblock-web-app_pd-comment-avatar-initials_1IO8e {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 100%;\n    height: 100%;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 0.9rem;\n    color: #56648e;\n}\n\n/* ── Comment list ── */\n\n.dogoblock-web-app_pd-comment-list_27QY8 {\n    list-style: none;\n    margin: 1rem 0 0;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.75rem;\n}\n\n.dogoblock-web-app_pd-comment-item_9DLQt {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.65rem;\n    padding: 0.75rem 0.9rem;\n    border: 0.12rem solid #e0e7ff;\n    border-radius: 0.65rem;\n    background: #f9fbff;\n    position: relative;\n}\n\n.dogoblock-web-app_pd-comment-item-avatar_3j-Br {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    width: 2rem;\n    height: 2rem;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    color: #8d9ec4;\n}\n\n.dogoblock-web-app_pd-comment-item-body_3-T6S {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 0;\n}\n\n.dogoblock-web-app_pd-comment-item-author_1pVLK {\n    display: block;\n    font-size: 0.9rem;\n    font-weight: 800;\n    color: #243f8f;\n    margin-bottom: 0.25rem;\n}\n\n.dogoblock-web-app_pd-comment-item-author-link_39xdr {\n    display: block;\n    border: none;\n    background: transparent;\n    padding: 0;\n    font-family: inherit;\n    font-size: 0.9rem;\n    font-weight: 800;\n    color: #243f8f;\n    margin-bottom: 0.25rem;\n    cursor: pointer;\n    text-align: left;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n    -webkit-text-decoration-color: transparent;\n            text-decoration-color: transparent;\n    -webkit-transition: color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n    transition: color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n    transition: text-decoration-color 0.15s ease, color 0.15s ease;\n    transition: text-decoration-color 0.15s ease, color 0.15s ease, -webkit-text-decoration-color 0.15s ease;\n}\n\n.dogoblock-web-app_pd-comment-item-author-link_39xdr:hover {\n    color: #7e55d8;\n    -webkit-text-decoration-color: #7e55d8;\n            text-decoration-color: #7e55d8;\n}\n\n.dogoblock-web-app_pd-comment-item-text_1Ll3B {\n    margin: 0;\n    font-size: 0.88rem;\n    font-weight: 600;\n    color: #344473;\n    line-height: 1.5;\n    word-break: break-word;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog {\n    -webkit-box-flex: 0;\n    -webkit-flex: 0 0 auto;\n        -ms-flex: 0 0 auto;\n            flex: 0 0 auto;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    width: 1.6rem;\n    height: 1.6rem;\n    border: 0;\n    border-radius: 0.35rem;\n    background: transparent;\n    color: #aab0c4;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease;\n    transition: background 120ms ease, color 120ms ease;\n}\n\n.dogoblock-web-app_pd-comment-item-delete_kSpog:hover {\n    background: #ffe7e7;\n    color: #e02020;\n}\n\n.dogoblock-web-app_pd-comment-empty_1I3-k {\n    margin: 1rem 0 0;\n    color: #8d9ec4;\n    font-size: 0.85rem;\n    font-weight: 600;\n}\n\n/* ── Publish button disabled state ── */\n\n.dogoblock-web-app_pd-btn-publish_1qnjo:disabled {\n    opacity: 0.55;\n    cursor: default;\n}\n\n/* ── Reply button (inline, below comment text) ── */\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg {\n    display: -webkit-inline-box;\n    display: -webkit-inline-flex;\n    display: -ms-inline-flexbox;\n    display: inline-flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    gap: 0.28rem;\n    margin-top: 0.4rem;\n    padding: 0.18rem 0.55rem;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 999px;\n    background: transparent;\n    color: #56648e;\n    font-family: \"Montserrat\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    font-size: 0.8rem;\n    font-weight: 700;\n    cursor: pointer;\n    -webkit-transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, -webkit-transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease;\n    transition: background 120ms ease, color 120ms ease, transform 100ms ease, -webkit-transform 100ms ease;\n}\n\n.dogoblock-web-app_pd-comment-reply-btn_3Lyzg:hover {\n    background: #e8f0ff;\n    color: #182b63;\n    -webkit-transform: translateY(-1px);\n        -ms-transform: translateY(-1px);\n            transform: translateY(-1px);\n}\n\n/* ── Inline reply composer ── */\n\n.dogoblock-web-app_pd-reply-composer_1PY6w {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.55rem;\n    margin-top: 0.65rem;\n    padding: 0.65rem 0.75rem;\n    background: #f0f5ff;\n    border: 0.1rem solid #c6d6ff;\n    border-radius: 0.55rem;\n    -webkit-animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n            animation: dogoblock-web-app_replyFadeIn_flhdW 160ms ease;\n}\n\n@-webkit-keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n@keyframes dogoblock-web-app_replyFadeIn_flhdW {\n    from { opacity: 0; -webkit-transform: translateY(-4px); transform: translateY(-4px); }\n    to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }\n}\n\n/* ── Threaded replies list ── */\n\n.dogoblock-web-app_pd-reply-list_1RzXI {\n    list-style: none;\n    margin: 0.65rem 0 0 2.2rem;\n    padding: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.45rem;\n    border-left: 0.22rem solid #c6d6ff;\n    padding-left: 0.75rem;\n}\n\n.dogoblock-web-app_pd-reply-item_2r86P {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 0.5rem;\n    padding: 0.5rem 0.7rem;\n    border: 0.1rem solid #e8eeff;\n    border-radius: 0.5rem;\n    background: #ffffff;\n    position: relative;\n}\n\n/* ── Toast container ─────────────────────────────────────────────────────── */\n\n.dogoblock-web-app_toast-container_3681H {\n    position: fixed;\n    bottom: 1.5rem;\n    right: 1.5rem;\n    z-index: 9999;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: reverse;\n    -webkit-flex-direction: column-reverse;\n        -ms-flex-direction: column-reverse;\n            flex-direction: column-reverse;\n    gap: 0.5rem;\n    pointer-events: none;\n}\n\n.dogoblock-web-app_toast-container_3681H > * {\n    pointer-events: auto;\n}\n\n@media (max-width: 48rem) {\n    .dogoblock-web-app_toast-container_3681H {\n        bottom: 1rem;\n        right: 0.75rem;\n        left: 0.75rem;\n    }\n}\n\n/* ─── Forgot Password & Public Profile Styles ──────────────────────────────── */\n\n.dogoblock-web-app_forgot-password-row_2uwgY {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: end;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n    margin: -0.35rem 0 0.85rem;\n}\n\n.dogoblock-web-app_success-box_3icZ5 {\n    padding: 1rem;\n    border-radius: 0.55rem;\n    background: #e8f5e9;\n    color: #2e7d32;\n    font-weight: 700;\n    font-size: 0.95rem;\n    line-height: 1.4;\n    text-align: center;\n}\n\n.dogoblock-web-app_author-link_PZTpH {\n    border: none;\n    background: transparent;\n    padding: 0;\n    color: inherit;\n    font: inherit;\n    font-weight: 800;\n    cursor: pointer;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n}\n\n.dogoblock-web-app_author-link_PZTpH:hover {\n    color: #243f8f;\n}\n\n.dogoblock-web-app_public-profile-page_1Cr0u {\n    max-width: 64rem;\n}\n\n.dogoblock-web-app_public-profile-header_1LMjz {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: start;\n    -webkit-align-items: flex-start;\n        -ms-flex-align: start;\n            align-items: flex-start;\n    gap: 1.75rem;\n    margin-bottom: 2rem;\n    padding: 2rem;\n}\n\n.dogoblock-web-app_public-profile-avatar_3QxQA {\n    width: 6.5rem;\n    height: 6.5rem;\n    border-radius: 50%;\n    background: #243f8f;\n    color: #ffffff;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    font-family: \"Bungee\", \"Montserrat\", sans-serif;\n    font-size: 2.2rem;\n    overflow: hidden;\n    -webkit-flex-shrink: 0;\n        -ms-flex-negative: 0;\n            flex-shrink: 0;\n    -webkit-box-shadow: 0 0.4rem 0 #182b63;\n            box-shadow: 0 0.4rem 0 #182b63;\n}\n\n.dogoblock-web-app_public-profile-avatar_3QxQA img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.dogoblock-web-app_public-profile-info_1DbDk {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    gap: 0.4rem;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.dogoblock-web-app_public-profile-name_2MKE8 {\n    margin: 0;\n    font-size: 1.8rem;\n    color: #243f8f;\n    line-height: 1.1;\n}\n\n.dogoblock-web-app_public-profile-username_987Nm {\n    font-size: 1.05rem;\n    font-weight: 800;\n    color: #7e55d8;\n}\n\n.dogoblock-web-app_public-profile-bio_1_c2s {\n    margin: 0.5rem 0 0;\n    color: #344473;\n    font-size: 0.98rem;\n    line-height: 1.5;\n    font-weight: 600;\n}\n\n.dogoblock-web-app_public-profile-working_Od1ZL {\n    margin: 0.25rem 0 0;\n    color: #56648e;\n    font-size: 0.9rem;\n}\n\n.dogoblock-web-app_public-profile-stats_CkAnG {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    gap: 1.5rem;\n    margin-top: 0.85rem;\n    padding-top: 0.85rem;\n    border-top: 1px solid #e0e7ff;\n}\n\n.dogoblock-web-app_public-profile-stat_2cnC- {\n    font-size: 0.92rem;\n    color: #344473;\n    font-weight: 700;\n}\n\n.dogoblock-web-app_public-profile-stat_2cnC- strong {\n    color: #243f8f;\n    font-size: 1.15rem;\n}\n", ""]);
 
 // exports
 exports.locals = {
@@ -861,21 +883,21 @@ exports.locals = {
 
 /***/ }),
 
-/***/ 2066:
+/***/ 2114:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "static/assets/a0f2f98e8648fcb6c90756bd16e5eb7d.png";
 
 /***/ }),
 
-/***/ 2067:
+/***/ 2115:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "static/assets/6ab57785fe92515fe2b802064b584d42.png";
 
 /***/ }),
 
-/***/ 2079:
+/***/ 2127:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -887,17 +909,17 @@ var react = __webpack_require__(0);
 var react_default = /*#__PURE__*/__webpack_require__.n(react);
 
 // EXTERNAL MODULE: ./node_modules/react-dom/index.js
-var react_dom = __webpack_require__(123);
+var react_dom = __webpack_require__(131);
 var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
 
 // EXTERNAL MODULE: ./node_modules/redux/es/index.js + 6 modules
-var es = __webpack_require__(83);
+var es = __webpack_require__(88);
 
 // EXTERNAL MODULE: ./node_modules/react-intl/lib/index.es.js + 1 modules
 var index_es = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/lib/app-state-hoc.jsx + 1 modules
-var app_state_hoc = __webpack_require__(215);
+var app_state_hoc = __webpack_require__(234);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(1);
@@ -907,101 +929,92 @@ var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 var react_redux_es = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/circle-user.js
-var circle_user = __webpack_require__(2117);
+var circle_user = __webpack_require__(2171);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-out.js
-var log_out = __webpack_require__(2118);
+var log_out = __webpack_require__(2172);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user.js
-var icons_user = __webpack_require__(2119);
+var icons_user = __webpack_require__(2173);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/log-in.js
-var log_in = __webpack_require__(2120);
+var log_in = __webpack_require__(2174);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/user-plus.js
-var user_plus = __webpack_require__(2121);
+var user_plus = __webpack_require__(2175);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/search.js
-var search = __webpack_require__(2122);
+var search = __webpack_require__(2176);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/upload.js
-var upload = __webpack_require__(2115);
+var upload = __webpack_require__(2169);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/plus.js
-var plus = __webpack_require__(2098);
+var plus = __webpack_require__(2153);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/trash-2.js
-var trash_2 = __webpack_require__(2097);
+var trash_2 = __webpack_require__(2151);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/save.js
-var save = __webpack_require__(2123);
+var save = __webpack_require__(2177);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/heart.js
-var heart = __webpack_require__(2101);
+var heart = __webpack_require__(2156);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/star.js
-var star = __webpack_require__(2102);
+var star = __webpack_require__(2157);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/folder-open.js
-var folder_open = __webpack_require__(2124);
+var folder_open = __webpack_require__(2178);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/message-circle.js
-var message_circle = __webpack_require__(2099);
+var message_circle = __webpack_require__(2154);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/copy.js
-var copy = __webpack_require__(2125);
+var copy = __webpack_require__(2179);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/code-xml.js
-var code_xml = __webpack_require__(2114);
+var code_xml = __webpack_require__(2168);
 
-// EXTERNAL MODULE: ./src/containers/gui.jsx + 312 modules
-var gui = __webpack_require__(200);
+// EXTERNAL MODULE: ./src/containers/gui.jsx + 311 modules
+var gui = __webpack_require__(218);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
-var icons_reply = __webpack_require__(2100);
+var icons_reply = __webpack_require__(2155);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/repeat-2.js
-var repeat_2 = __webpack_require__(2103);
+var repeat_2 = __webpack_require__(2158);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/bell.js
-var bell = __webpack_require__(2104);
+var bell = __webpack_require__(2159);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/x.js
-var x = __webpack_require__(2105);
+var x = __webpack_require__(2160);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/check-check.js
-var check_check = __webpack_require__(2106);
+var check_check = __webpack_require__(2161);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/chevron-down.js
-var chevron_down = __webpack_require__(2107);
+var chevron_down = __webpack_require__(2162);
 
 // EXTERNAL MODULE: ./src/components/notifications/notifications-bell.css
-var notifications_bell = __webpack_require__(104);
+var notifications_bell = __webpack_require__(111);
 var notifications_bell_default = /*#__PURE__*/__webpack_require__.n(notifications_bell);
 
 // CONCATENATED MODULE: ./src/components/notifications/notifications-bell.jsx
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _createSuper(t) { var r = _isNativeReflectConstruct(); return function () { var e, o = _getPrototypeOf(t); if (r) { var s = _getPrototypeOf(this).constructor; e = Reflect.construct(o, arguments, s); } else e = o.apply(this, arguments); return _possibleConstructorReturn(this, e); }; }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
 
 
 
@@ -1013,7 +1026,6 @@ var typeIcon = {
   PROJECT_FAVORITE: star["a" /* default */],
   PROJECT_REMIX: repeat_2["a" /* default */]
 };
-
 var formatDate = function formatDate(value) {
   if (!value) return '';
   var date = new Date(value);
@@ -1024,13 +1036,11 @@ var formatDate = function formatDate(value) {
     minute: '2-digit'
   });
 };
-
 var getInitials = function getInitials(user) {
   return (user && (user.name || user.username) || '?').split(' ').map(function (part) {
     return part[0];
   }).slice(0, 2).join('').toUpperCase();
 };
-
 var notifications_bell_NotificationAvatar = function NotificationAvatar(_ref) {
   var user = _ref.user;
   return /*#__PURE__*/react_default.a.createElement("span", {
@@ -1040,15 +1050,13 @@ var notifications_bell_NotificationAvatar = function NotificationAvatar(_ref) {
     src: user.avatarUrl
   }) : getInitials(user));
 };
-
 notifications_bell_NotificationAvatar.propTypes = {
   user: prop_types_default.a.object
 };
-
 var notifications_bell_NotificationItem = function NotificationItem(_ref2) {
   var notification = _ref2.notification,
-      onOpen = _ref2.onOpen,
-      onDelete = _ref2.onDelete;
+    onOpen = _ref2.onOpen,
+    onDelete = _ref2.onDelete;
   var NotificationIcon = typeIcon[notification.type] || bell["a" /* default */];
   var actorName = notification.actor && (notification.actor.name || notification.actor.username);
   var unread = !notification.readAt;
@@ -1090,23 +1098,21 @@ var notifications_bell_NotificationItem = function NotificationItem(_ref2) {
     className: notifications_bell_default.a.deleteBtnIcon
   })));
 };
-
 notifications_bell_NotificationItem.propTypes = {
   notification: prop_types_default.a.object.isRequired,
   onDelete: prop_types_default.a.func.isRequired,
   onOpen: prop_types_default.a.func.isRequired
 };
-
 var notifications_bell_NotificationsDropdown = function NotificationsDropdown(_ref3) {
   var loading = _ref3.loading,
-      loadingMore = _ref3.loadingMore,
-      notifications = _ref3.notifications,
-      unreadCount = _ref3.unreadCount,
-      hasMore = _ref3.hasMore,
-      onMarkAllRead = _ref3.onMarkAllRead,
-      onOpenNotification = _ref3.onOpenNotification,
-      onDeleteNotification = _ref3.onDeleteNotification,
-      onLoadMore = _ref3.onLoadMore;
+    loadingMore = _ref3.loadingMore,
+    notifications = _ref3.notifications,
+    unreadCount = _ref3.unreadCount,
+    hasMore = _ref3.hasMore,
+    onMarkAllRead = _ref3.onMarkAllRead,
+    onOpenNotification = _ref3.onOpenNotification,
+    onDeleteNotification = _ref3.onDeleteNotification,
+    onLoadMore = _ref3.onLoadMore;
   return /*#__PURE__*/react_default.a.createElement("div", {
     className: notifications_bell_default.a.dropdown
   }, /*#__PURE__*/react_default.a.createElement("div", {
@@ -1148,7 +1154,6 @@ var notifications_bell_NotificationsDropdown = function NotificationsDropdown(_r
     className: notifications_bell_default.a.footer
   }, unreadCount > 0 ? "".concat(unreadCount, " n\xE3o lida(s)") : 'Tudo em dia ✓'));
 };
-
 notifications_bell_NotificationsDropdown.propTypes = {
   hasMore: prop_types_default.a.bool,
   loading: prop_types_default.a.bool,
@@ -1167,17 +1172,12 @@ notifications_bell_NotificationsDropdown.defaultProps = {
   notifications: [],
   unreadCount: 0
 };
-
 var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Component) {
   _inherits(NotificationsBell, _React$Component);
-
   var _super = _createSuper(NotificationsBell);
-
   function NotificationsBell(props) {
     var _this;
-
     _classCallCheck(this, NotificationsBell);
-
     _this = _super.call(this, props);
     _this.state = {
       open: false,
@@ -1189,7 +1189,6 @@ var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Compone
     _this.setWrapRef = _this.setWrapRef.bind(_assertThisInitialized(_this));
     return _this;
   }
-
   _createClass(NotificationsBell, [{
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -1213,7 +1212,6 @@ var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Compone
     key: "triggerShake",
     value: function triggerShake() {
       var _this2 = this;
-
       this.setState({
         shaking: true
       });
@@ -1240,7 +1238,6 @@ var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Compone
     key: "handleToggle",
     value: function handleToggle() {
       var _this3 = this;
-
       this.setState(function (prevState) {
         var open = !prevState.open;
         if (open) _this3.props.onOpen();
@@ -1261,14 +1258,14 @@ var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Compone
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          loading = _this$props.loading,
-          loadingMore = _this$props.loadingMore,
-          notifications = _this$props.notifications,
-          unreadCount = _this$props.unreadCount,
-          hasMore = _this$props.hasMore,
-          onMarkAllRead = _this$props.onMarkAllRead,
-          onDeleteNotification = _this$props.onDeleteNotification,
-          onLoadMore = _this$props.onLoadMore;
+        loading = _this$props.loading,
+        loadingMore = _this$props.loadingMore,
+        notifications = _this$props.notifications,
+        unreadCount = _this$props.unreadCount,
+        hasMore = _this$props.hasMore,
+        onMarkAllRead = _this$props.onMarkAllRead,
+        onDeleteNotification = _this$props.onDeleteNotification,
+        onLoadMore = _this$props.onLoadMore;
       var badgeText = unreadCount > 99 ? '99+' : unreadCount;
       var bellClass = [notifications_bell_default.a.bellIcon, this.state.shaking ? notifications_bell_default.a.bellShake : ''].filter(Boolean).join(' ');
       return /*#__PURE__*/react_default.a.createElement("span", {
@@ -1297,10 +1294,8 @@ var notifications_bell_NotificationsBell = /*#__PURE__*/function (_React$Compone
       }) : null);
     }
   }]);
-
   return NotificationsBell;
 }(react_default.a.Component);
-
 notifications_bell_NotificationsBell.propTypes = {
   hasMore: prop_types_default.a.bool,
   loading: prop_types_default.a.bool,
@@ -1322,7 +1317,7 @@ notifications_bell_NotificationsBell.defaultProps = {
 };
 /* harmony default export */ var notifications_notifications_bell = (notifications_bell_NotificationsBell);
 // EXTERNAL MODULE: ./src/components/notifications/notification-toast.css
-var notification_toast = __webpack_require__(225);
+var notification_toast = __webpack_require__(244);
 var notification_toast_default = /*#__PURE__*/__webpack_require__.n(notification_toast);
 
 // CONCATENATED MODULE: ./src/components/notifications/notification-toast.jsx
@@ -1337,17 +1332,15 @@ var notification_toast_typeIcon = {
   PROJECT_FAVORITE: star["a" /* default */],
   PROJECT_REMIX: repeat_2["a" /* default */]
 };
-
 var notification_toast_getInitials = function getInitials(user) {
   return (user && (user.name || user.username) || '?').split(' ').map(function (part) {
     return part[0];
   }).slice(0, 2).join('').toUpperCase();
 };
-
 var notification_toast_NotificationToast = function NotificationToast(_ref) {
   var notification = _ref.notification,
-      onDismiss = _ref.onDismiss,
-      onClick = _ref.onClick;
+    onDismiss = _ref.onDismiss,
+    onClick = _ref.onClick;
   var Icon = notification_toast_typeIcon[notification.type] || bell["a" /* default */];
   var actorName = notification.actor && (notification.actor.name || notification.actor.username);
   return /*#__PURE__*/react_default.a.createElement("div", {
@@ -1385,7 +1378,6 @@ var notification_toast_NotificationToast = function NotificationToast(_ref) {
     className: notification_toast_default.a.toastProgress
   }));
 };
-
 notification_toast_NotificationToast.propTypes = {
   notification: prop_types_default.a.object.isRequired,
   onClick: prop_types_default.a.func.isRequired,
@@ -1393,7 +1385,7 @@ notification_toast_NotificationToast.propTypes = {
 };
 /* harmony default export */ var notifications_notification_toast = (notification_toast_NotificationToast);
 // EXTERNAL MODULE: ./src/components/legal-page/legal-page.css
-var legal_page = __webpack_require__(226);
+var legal_page = __webpack_require__(245);
 var legal_page_default = /*#__PURE__*/__webpack_require__.n(legal_page);
 
 // CONCATENATED MODULE: ./src/components/legal-page/legal-page.jsx
@@ -1401,9 +1393,8 @@ var legal_page_default = /*#__PURE__*/__webpack_require__.n(legal_page);
 
 
 
-var LAST_UPDATED = '24 de agosto de 2026';
+var LAST_UPDATED = '1 de outubro de 2026';
 var CONTACT_EMAIL = 'contato@editoradogomaker.com';
-
 var scrollToSection = function scrollToSection(event) {
   var section = document.getElementById(event.currentTarget.dataset.section);
   if (section) section.scrollIntoView({
@@ -1411,12 +1402,11 @@ var scrollToSection = function scrollToSection(event) {
     block: 'start'
   });
 };
-
 var legal_page_LegalLayout = function LegalLayout(_ref) {
   var children = _ref.children,
-      description = _ref.description,
-      sections = _ref.sections,
-      title = _ref.title;
+    description = _ref.description,
+    sections = _ref.sections,
+    title = _ref.title;
   return /*#__PURE__*/react_default.a.createElement("main", {
     className: legal_page_default.a.page
   }, /*#__PURE__*/react_default.a.createElement("header", {
@@ -1445,7 +1435,6 @@ var legal_page_LegalLayout = function LegalLayout(_ref) {
     className: legal_page_default.a.content
   }, children)));
 };
-
 legal_page_LegalLayout.propTypes = {
   children: prop_types_default.a.node.isRequired,
   description: prop_types_default.a.string.isRequired,
@@ -1455,7 +1444,6 @@ legal_page_LegalLayout.propTypes = {
   })).isRequired,
   title: prop_types_default.a.string.isRequired
 };
-
 var legal_page_TermsOfUse = function TermsOfUse() {
   var sections = [{
     id: 'aceitacao',
@@ -1533,7 +1521,6 @@ var legal_page_TermsOfUse = function TermsOfUse() {
     href: "mailto:".concat(CONTACT_EMAIL)
   }, CONTACT_EMAIL), /*#__PURE__*/react_default.a.createElement("span", null, '(31) 99259-9654'))));
 };
-
 var legal_page_PrivacyPolicy = function PrivacyPolicy() {
   var sections = [{
     id: 'controlador',
@@ -1585,7 +1572,7 @@ var legal_page_PrivacyPolicy = function PrivacyPolicy() {
     id: "dados"
   }, /*#__PURE__*/react_default.a.createElement("h2", null, '2. Dados pessoais que tratamos'), /*#__PURE__*/react_default.a.createElement("div", {
     className: legal_page_default.a.tableWrap
-  }, /*#__PURE__*/react_default.a.createElement("table", null, /*#__PURE__*/react_default.a.createElement("thead", null, /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("th", null, 'Categoria'), /*#__PURE__*/react_default.a.createElement("th", null, 'Exemplos'))), /*#__PURE__*/react_default.a.createElement("tbody", null, /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Cadastro e autenticação'), /*#__PURE__*/react_default.a.createElement("td", null, 'Nome, nome de usuário, e-mail, senha protegida por hash, tokens de sessão e redefinição de senha.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Perfil e comunidade'), /*#__PURE__*/react_default.a.createElement("td", null, 'Avatar, biografia, atividade atual, projetos, comentários, respostas, curtidas, favoritos, remixes e notificações.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Projetos e assets'), /*#__PURE__*/react_default.a.createElement("td", null, 'Código em blocos, JSON do projeto, títulos, descrições, instruções, créditos, capas, imagens, sons e metadados de arquivos.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Compilação'), /*#__PURE__*/react_default.a.createElement("td", null, 'Código Arduino ou MicroPython, placa selecionada, bibliotecas, tamanho do código, logs, erros e artefatos temporários.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Uso e segurança'), /*#__PURE__*/react_default.a.createElement("td", null, 'Endereço IP, datas, páginas e ações, visualizações de projetos, navegador, sistema, falhas e registros técnicos.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Atendimento'), /*#__PURE__*/react_default.a.createElement("td", null, 'E-mail e conteúdo das solicitações enviadas ao suporte ou sobre direitos de privacidade.')))))), /*#__PURE__*/react_default.a.createElement("section", {
+  }, /*#__PURE__*/react_default.a.createElement("table", null, /*#__PURE__*/react_default.a.createElement("thead", null, /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("th", null, 'Categoria'), /*#__PURE__*/react_default.a.createElement("th", null, 'Exemplos'))), /*#__PURE__*/react_default.a.createElement("tbody", null, /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Cadastro e autenticação'), /*#__PURE__*/react_default.a.createElement("td", null, 'Nome, nome de usuário, e-mail, senha protegida por hash, tokens de sessão e redefinição de senha.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Perfil e comunidade'), /*#__PURE__*/react_default.a.createElement("td", null, 'Avatar, biografia, atividade atual, projetos, comentários, respostas, curtidas, favoritos, remixes e notificações.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Projetos e assets'), /*#__PURE__*/react_default.a.createElement("td", null, 'Código em blocos, JSON do projeto, títulos, descrições, instruções, créditos, capas, imagens, sons e metadados de arquivos.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Compilação'), /*#__PURE__*/react_default.a.createElement("td", null, 'Código Arduino ou MicroPython, placa selecionada, bibliotecas, tamanho do código, logs, erros e artefatos temporários.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Uso e segurança'), /*#__PURE__*/react_default.a.createElement("td", null, 'Endereço IP, datas, páginas e ações, visualizações de projetos, navegador, sistema, falhas e registros técnicos.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Atendimento'), /*#__PURE__*/react_default.a.createElement("td", null, 'E-mail e conteúdo das solicitações enviadas ao suporte ou sobre direitos de privacidade.')), /*#__PURE__*/react_default.a.createElement("tr", null, /*#__PURE__*/react_default.a.createElement("td", null, 'Feedback e diagnóstico de falhas'), /*#__PURE__*/react_default.a.createElement("td", null, 'Mensagem enviada pelo usuário, nome e e-mail quando informados, versão do aplicativo, plataforma, idioma, rota, placa selecionada, modo de programação e detalhes técnicos da falha.')))))), /*#__PURE__*/react_default.a.createElement("section", {
     id: "finalidades"
   }, /*#__PURE__*/react_default.a.createElement("h2", null, '3. Para que usamos os dados'), /*#__PURE__*/react_default.a.createElement("p", null, 'Tratamos dados para:'), /*#__PURE__*/react_default.a.createElement("ul", null, /*#__PURE__*/react_default.a.createElement("li", null, 'criar e proteger contas, autenticar usuários e recuperar senhas;'), /*#__PURE__*/react_default.a.createElement("li", null, 'salvar, carregar, compartilhar e administrar projetos e assets;'), /*#__PURE__*/react_default.a.createElement("li", null, 'oferecer perfis, comentários, curtidas, favoritos, remixes e notificações;'), /*#__PURE__*/react_default.a.createElement("li", null, 'compilar código, gerar artefatos e diagnosticar falhas de compilação;'), /*#__PURE__*/react_default.a.createElement("li", null, 'prevenir abuso, fraude, incidentes e acessos não autorizados;'), /*#__PURE__*/react_default.a.createElement("li", null, 'medir desempenho e uso, corrigir erros e melhorar o produto;'), /*#__PURE__*/react_default.a.createElement("li", null, 'responder solicitações, cumprir obrigações legais e exercer direitos em processos.')), /*#__PURE__*/react_default.a.createElement("p", null, 'Conforme o contexto, as bases legais podem incluir execução do contrato e procedimentos solicitados pelo usuário, cumprimento de obrigação legal, exercício regular de direitos, legítimo interesse com avaliação de necessidade e impacto, proteção do titular e consentimento quando exigido.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "publicacao"
@@ -1593,11 +1580,11 @@ var legal_page_PrivacyPolicy = function PrivacyPolicy() {
     id: "dispositivo"
   }, /*#__PURE__*/react_default.a.createElement("h2", null, '5. Câmera, microfone, USB, Bluetooth e Agent'), /*#__PURE__*/react_default.a.createElement("p", null, 'Algumas extensões podem solicitar acesso à câmera ou ao microfone. Em regra, a detecção e a execução acontecem no dispositivo. Uma gravação, imagem ou resultado somente integra o projeto ou é enviado ao servidor quando a funcionalidade utilizada exigir isso e o usuário realizar a ação correspondente.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Web Serial, Web USB, Web Bluetooth e DoGoBlock Agent podem tratar localmente informações da placa, como porta, identificadores do dispositivo e dados da comunicação. Código enviado para compilação online é tratado pela API antes de o artefato retornar ao navegador ou ao Agent.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "cookies"
-  }, /*#__PURE__*/react_default.a.createElement("h2", null, '6. Cookies, analytics e armazenamento local'), /*#__PURE__*/react_default.a.createElement("p", null, 'O DoGo Block usa armazenamento local necessário para manter a sessão autenticada e preferências da aplicação. Esses dados permanecem no navegador até a expiração, saída da conta, limpeza pelo usuário ou substituição técnica.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Quando configurado, o Google Analytics 4 coleta informações de navegação e desempenho, podendo usar identificadores e cookies analíticos. Esses dados ajudam a entender páginas acessadas, eventos de uso, erros e características gerais do dispositivo. O provedor pode tratar dados conforme seus próprios termos e políticas.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Você pode bloquear ou apagar cookies e dados locais nas configurações do navegador. O bloqueio do armazenamento estritamente necessário pode impedir login e outras funcionalidades. Bloqueadores de conteúdo também podem impedir a medição analítica.')), /*#__PURE__*/react_default.a.createElement("section", {
+  }, /*#__PURE__*/react_default.a.createElement("h2", null, '6. Cookies, analytics e armazenamento local'), /*#__PURE__*/react_default.a.createElement("p", null, 'O DoGo Block usa armazenamento local necessário para manter a sessão autenticada e preferências da aplicação. Esses dados permanecem no navegador até a expiração, saída da conta, limpeza pelo usuário ou substituição técnica.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Quando configurado, o Google Analytics 4 coleta informações de navegação e desempenho, podendo usar identificadores e cookies analíticos. Esses dados ajudam a entender páginas acessadas, eventos de uso, erros e características gerais do dispositivo. O provedor pode tratar dados conforme seus próprios termos e políticas.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Quando configurado, o Sentry recebe relatos enviados pelo formulário de feedback e registros técnicos de falhas inesperadas do Web ou Desktop. O envio automático não inclui o projeto, o código gerado, imagens, credenciais ou logs seriais. Uma captura de tela somente é enviada quando o usuário decide anexá-la ao feedback. Nome e e-mail somente são enviados quando o usuário os informa no formulário.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Você pode bloquear ou apagar cookies e dados locais nas configurações do navegador. O bloqueio do armazenamento estritamente necessário pode impedir login e outras funcionalidades. Bloqueadores de conteúdo também podem impedir a medição analítica.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "compartilhamento"
-  }, /*#__PURE__*/react_default.a.createElement("h2", null, '7. Com quem podemos compartilhar dados'), /*#__PURE__*/react_default.a.createElement("p", null, 'Podemos compartilhar apenas os dados necessários com:'), /*#__PURE__*/react_default.a.createElement("ul", null, /*#__PURE__*/react_default.a.createElement("li", null, 'provedores de hospedagem, banco de dados, entrega de conteúdo e armazenamento, incluindo infraestrutura Cloudflare quando configurada;'), /*#__PURE__*/react_default.a.createElement("li", null, 'provedores de e-mail para recuperação de senha e comunicações operacionais;'), /*#__PURE__*/react_default.a.createElement("li", null, 'Google Analytics, quando a medição estiver habilitada;'), /*#__PURE__*/react_default.a.createElement("li", null, 'prestadores que apoiem segurança, manutenção e atendimento;'), /*#__PURE__*/react_default.a.createElement("li", null, 'autoridades públicas, mediante obrigação legal, ordem válida ou necessidade de exercício de direitos;'), /*#__PURE__*/react_default.a.createElement("li", null, 'outra organização em reorganização societária, observados a legislação e os direitos dos titulares.')), /*#__PURE__*/react_default.a.createElement("p", null, 'Não vendemos dados pessoais.')), /*#__PURE__*/react_default.a.createElement("section", {
+  }, /*#__PURE__*/react_default.a.createElement("h2", null, '7. Com quem podemos compartilhar dados'), /*#__PURE__*/react_default.a.createElement("p", null, 'Podemos compartilhar apenas os dados necessários com:'), /*#__PURE__*/react_default.a.createElement("ul", null, /*#__PURE__*/react_default.a.createElement("li", null, 'provedores de hospedagem, banco de dados, entrega de conteúdo e armazenamento, incluindo infraestrutura Cloudflare quando configurada;'), /*#__PURE__*/react_default.a.createElement("li", null, 'provedores de e-mail para recuperação de senha e comunicações operacionais;'), /*#__PURE__*/react_default.a.createElement("li", null, 'Google Analytics, quando a medição estiver habilitada;'), /*#__PURE__*/react_default.a.createElement("li", null, 'Sentry, para receber feedback e diagnosticar falhas técnicas quando a integração estiver configurada;'), /*#__PURE__*/react_default.a.createElement("li", null, 'prestadores que apoiem segurança, manutenção e atendimento;'), /*#__PURE__*/react_default.a.createElement("li", null, 'autoridades públicas, mediante obrigação legal, ordem válida ou necessidade de exercício de direitos;'), /*#__PURE__*/react_default.a.createElement("li", null, 'outra organização em reorganização societária, observados a legislação e os direitos dos titulares.')), /*#__PURE__*/react_default.a.createElement("p", null, 'Não vendemos dados pessoais.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "transferencia"
-  }, /*#__PURE__*/react_default.a.createElement("h2", null, '8. Transferência internacional'), /*#__PURE__*/react_default.a.createElement("p", null, 'Alguns fornecedores de infraestrutura e analytics podem armazenar ou processar dados fora do Brasil. Nesses casos, buscamos utilizar fornecedores e mecanismos compatíveis com a LGPD e limitar o compartilhamento ao necessário para a finalidade informada.')), /*#__PURE__*/react_default.a.createElement("section", {
+  }, /*#__PURE__*/react_default.a.createElement("h2", null, '8. Transferência internacional'), /*#__PURE__*/react_default.a.createElement("p", null, 'Alguns fornecedores de infraestrutura, analytics e diagnóstico de falhas, incluindo Google Analytics e Sentry quando configurados, podem armazenar ou processar dados fora do Brasil. Nesses casos, buscamos utilizar fornecedores e mecanismos compatíveis com a LGPD e limitar o compartilhamento ao necessário para a finalidade informada.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "retencao"
   }, /*#__PURE__*/react_default.a.createElement("h2", null, '9. Retenção e exclusão'), /*#__PURE__*/react_default.a.createElement("p", null, 'Mantemos dados pelo tempo necessário para prestar o serviço, cumprir obrigações legais, prevenir abuso e exercer direitos. Conta, perfil e projetos permanecem enquanto a conta estiver ativa ou até solicitação válida de exclusão, ressalvadas retenções obrigatórias e ciclos de backup.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Jobs de compilação e seus artefatos são temporários. A configuração padrão atual mantém o artefato final por até 30 minutos e remove arquivos intermediários após a compilação; esse prazo pode ser ajustado por necessidade operacional.'), /*#__PURE__*/react_default.a.createElement("p", null, 'Conteúdo público removido pode permanecer temporariamente em caches, backups ou cópias feitas legitimamente por outros usuários antes da remoção.')), /*#__PURE__*/react_default.a.createElement("section", {
     id: "seguranca"
@@ -1619,88 +1606,69 @@ var legal_page_PrivacyPolicy = function PrivacyPolicy() {
     className: legal_page_default.a.legalNotice
   }, 'Este documento descreve o funcionamento técnico verificado em agosto de 2026 e deve ser revisado por profissional jurídico antes da publicação definitiva.')));
 };
-
 var legal_page_LegalPage = function LegalPage(_ref2) {
   var type = _ref2.type;
   return type === 'terms' ? /*#__PURE__*/react_default.a.createElement(legal_page_TermsOfUse, null) : /*#__PURE__*/react_default.a.createElement(legal_page_PrivacyPolicy, null);
 };
-
 legal_page_LegalPage.propTypes = {
   type: prop_types_default.a.oneOf(['privacy', 'terms']).isRequired
 };
 /* harmony default export */ var legal_page_legal_page = (legal_page_LegalPage);
 // EXTERNAL MODULE: ./src/reducers/project-state.js
-var project_state = __webpack_require__(38);
+var project_state = __webpack_require__(39);
 
 // EXTERNAL MODULE: ./src/reducers/project-interactions.js
-var project_interactions = __webpack_require__(239);
+var project_interactions = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(51);
+var dogoblock_api = __webpack_require__(52);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
-var lock_open = __webpack_require__(2108);
+var lock_open = __webpack_require__(2163);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/share-2.js
-var share_2 = __webpack_require__(2109);
+var share_2 = __webpack_require__(2164);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock.js
-var lock = __webpack_require__(2110);
+var lock = __webpack_require__(2165);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/pen-line.js
-var pen_line = __webpack_require__(2111);
+var pen_line = __webpack_require__(2166);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/ellipsis.js
-var ellipsis = __webpack_require__(2112);
+var ellipsis = __webpack_require__(2167);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/send.js
-var send = __webpack_require__(2113);
+var send = __webpack_require__(2152);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/eye.js
-var eye = __webpack_require__(2116);
+var eye = __webpack_require__(2170);
 
 // EXTERNAL MODULE: ./src/components/project-page/project-page.css
 var project_page = __webpack_require__(34);
 var project_page_default = /*#__PURE__*/__webpack_require__.n(project_page);
 
 // CONCATENATED MODULE: ./src/components/project-page/project-page.jsx
-function project_page_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { project_page_typeof = function _typeof(obj) { return typeof obj; }; } else { project_page_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return project_page_typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function project_page_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function project_page_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function project_page_createClass(Constructor, protoProps, staticProps) { if (protoProps) project_page_defineProperties(Constructor.prototype, protoProps); if (staticProps) project_page_defineProperties(Constructor, staticProps); return Constructor; }
-
-function project_page_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) project_page_setPrototypeOf(subClass, superClass); }
-
-function project_page_setPrototypeOf(o, p) { project_page_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return project_page_setPrototypeOf(o, p); }
-
-function project_page_createSuper(Derived) { var hasNativeReflectConstruct = project_page_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = project_page_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = project_page_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return project_page_possibleConstructorReturn(this, result); }; }
-
-function project_page_possibleConstructorReturn(self, call) { if (call && (project_page_typeof(call) === "object" || typeof call === "function")) { return call; } return project_page_assertThisInitialized(self); }
-
-function project_page_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function project_page_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function project_page_getPrototypeOf(o) { project_page_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return project_page_getPrototypeOf(o); }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
+function project_page_typeof(o) { "@babel/helpers - typeof"; return project_page_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, project_page_typeof(o); }
+function _defineProperty(e, r, t) { return (r = project_page_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function project_page_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function project_page_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, project_page_toPropertyKey(o.key), o); } }
+function project_page_createClass(e, r, t) { return r && project_page_defineProperties(e.prototype, r), t && project_page_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function project_page_toPropertyKey(t) { var i = project_page_toPrimitive(t, "string"); return "symbol" == project_page_typeof(i) ? i : i + ""; }
+function project_page_toPrimitive(t, r) { if ("object" != project_page_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != project_page_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function project_page_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && project_page_setPrototypeOf(t, e); }
+function project_page_setPrototypeOf(t, e) { return project_page_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, project_page_setPrototypeOf(t, e); }
+function project_page_createSuper(t) { var r = project_page_isNativeReflectConstruct(); return function () { var e, o = project_page_getPrototypeOf(t); if (r) { var s = project_page_getPrototypeOf(this).constructor; e = Reflect.construct(o, arguments, s); } else e = o.apply(this, arguments); return project_page_possibleConstructorReturn(this, e); }; }
+function project_page_possibleConstructorReturn(t, e) { if (e && ("object" == project_page_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return project_page_assertThisInitialized(t); }
+function project_page_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function project_page_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (project_page_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function project_page_getPrototypeOf(t) { return project_page_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, project_page_getPrototypeOf(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) { n[e] = r[e]; } return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0) { ; } } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
@@ -1714,22 +1682,17 @@ var project_page_formatDate = function formatDate(iso) {
     day: 'numeric'
   });
 };
-
 var ALLOWED_COMMENT_LINK_HOSTS = ['dogoblock.vercel.app', 'dogoblock.com', 'dogoblock.dogomaker.com'];
 var COMMENT_LINK_PATTERN = /(?:https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s<>"']*)?/gi;
-
 var splitTrailingPunctuation = function splitTrailingPunctuation(value) {
   var match = value.match(/^(.+?)([.,!?;:)]*)$/);
   return match ? [match[1], match[2]] : [value, ''];
 };
-
 var getAllowedCommentLink = function getAllowedCommentLink(value) {
   var _splitTrailingPunctua = splitTrailingPunctuation(value),
-      _splitTrailingPunctua2 = _slicedToArray(_splitTrailingPunctua, 1),
-      candidate = _splitTrailingPunctua2[0];
-
+    _splitTrailingPunctua2 = _slicedToArray(_splitTrailingPunctua, 1),
+    candidate = _splitTrailingPunctua2[0];
   var normalized = /^https?:\/\//i.test(candidate) ? candidate : "https://".concat(candidate);
-
   try {
     var url = new URL(normalized);
     if (url.protocol !== 'https:') return null;
@@ -1739,29 +1702,23 @@ var getAllowedCommentLink = function getAllowedCommentLink(value) {
     return null;
   }
 };
-
 var project_page_renderCommentContent = function renderCommentContent(content) {
   if (!content) return null;
   var parts = [];
   var lastIndex = 0;
   var match = COMMENT_LINK_PATTERN.exec(content);
-
   while (match) {
     if (match.index > lastIndex) {
       parts.push(content.slice(lastIndex, match.index));
     }
-
     var rawLink = match[0];
-
     var _splitTrailingPunctua3 = splitTrailingPunctuation(rawLink),
-        _splitTrailingPunctua4 = _slicedToArray(_splitTrailingPunctua3, 2),
-        candidate = _splitTrailingPunctua4[0],
-        punctuation = _splitTrailingPunctua4[1];
-
+      _splitTrailingPunctua4 = _slicedToArray(_splitTrailingPunctua3, 2),
+      candidate = _splitTrailingPunctua4[0],
+      punctuation = _splitTrailingPunctua4[1];
     var href = getAllowedCommentLink(rawLink);
-
     if (href) {
-      parts.push( /*#__PURE__*/react_default.a.createElement("a", {
+      parts.push(/*#__PURE__*/react_default.a.createElement("a", {
         key: "comment-link-".concat(match.index),
         className: project_page_default.a.commentLink,
         href: href,
@@ -1772,18 +1729,14 @@ var project_page_renderCommentContent = function renderCommentContent(content) {
     } else {
       parts.push(rawLink);
     }
-
     lastIndex = match.index + rawLink.length;
     match = COMMENT_LINK_PATTERN.exec(content);
   }
-
   if (lastIndex < content.length) {
     parts.push(content.slice(lastIndex));
   }
-
   return parts;
 };
-
 var project_page_VisibilityBadge = function VisibilityBadge(_ref) {
   var visibility = _ref.visibility;
   var map = {
@@ -1812,28 +1765,25 @@ var project_page_VisibilityBadge = function VisibilityBadge(_ref) {
     className: project_page_default.a.badgeIcon
   }), v.label);
 };
-
 project_page_VisibilityBadge.propTypes = {
   visibility: prop_types_default.a.string
 };
-
 var project_page_CommentItem = function CommentItem(_ref2) {
   var _comment$user, _comment$user2, _comment$user3, _comment$user4, _comment$user5;
-
   var comment = _ref2.comment,
-      canDelete = _ref2.canDelete,
-      onDelete = _ref2.onDelete,
-      canReply = _ref2.canReply,
-      isReply = _ref2.isReply,
-      onReplyStart = _ref2.onReplyStart,
-      onReplyCancel = _ref2.onReplyCancel,
-      onReplySubmit = _ref2.onReplySubmit,
-      onReplyTextChange = _ref2.onReplyTextChange,
-      replyText = _ref2.replyText,
-      replying = _ref2.replying,
-      submittingReply = _ref2.submittingReply,
-      currentUserId = _ref2.currentUserId,
-      ownerId = _ref2.ownerId;
+    canDelete = _ref2.canDelete,
+    onDelete = _ref2.onDelete,
+    canReply = _ref2.canReply,
+    isReply = _ref2.isReply,
+    onReplyStart = _ref2.onReplyStart,
+    onReplyCancel = _ref2.onReplyCancel,
+    onReplySubmit = _ref2.onReplySubmit,
+    onReplyTextChange = _ref2.onReplyTextChange,
+    replyText = _ref2.replyText,
+    replying = _ref2.replying,
+    submittingReply = _ref2.submittingReply,
+    currentUserId = _ref2.currentUserId,
+    ownerId = _ref2.ownerId;
   var initials = (((_comment$user = comment.user) === null || _comment$user === void 0 ? void 0 : _comment$user.name) || ((_comment$user2 = comment.user) === null || _comment$user2 === void 0 ? void 0 : _comment$user2.username) || '?').split(' ').map(function (w) {
     return w[0];
   }).slice(0, 2).join('').toUpperCase();
@@ -1910,7 +1860,6 @@ var project_page_CommentItem = function CommentItem(_ref2) {
     className: project_page_default.a.replyList
   }, comment.replies.map(function (reply) {
     var _reply$user;
-
     return /*#__PURE__*/react_default.a.createElement(CommentItem, {
       key: reply.id,
       comment: reply,
@@ -1920,7 +1869,6 @@ var project_page_CommentItem = function CommentItem(_ref2) {
     });
   }))));
 };
-
 project_page_CommentItem.propTypes = {
   comment: prop_types_default.a.object.isRequired,
   canDelete: prop_types_default.a.bool,
@@ -1950,17 +1898,12 @@ project_page_CommentItem.defaultProps = {
   replying: false,
   submittingReply: false
 };
-
 var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
   project_page_inherits(ProjectPage, _React$Component);
-
   var _super = project_page_createSuper(ProjectPage);
-
   function ProjectPage(props) {
     var _this;
-
     project_page_classCallCheck(this, ProjectPage);
-
     _this = _super.call(this, props);
     _this.state = {
       activeTab: 'about',
@@ -1997,7 +1940,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     _this.handleDeleteProject = _this.handleDeleteProject.bind(project_page_assertThisInitialized(_this));
     return _this;
   }
-
   project_page_createClass(ProjectPage, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
@@ -2006,7 +1948,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
           titleValue: this.props.title || ''
         });
       }
-
       if (prevProps.thumbnailUrl !== this.props.thumbnailUrl && this.state.coverPreview) {
         this.setState({
           coverPreview: null
@@ -2019,7 +1960,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
       this.setState({
         activeTab: tab
       });
-
       if (tab === 'comments' && this.props.onLoadComments) {
         this.props.onLoadComments(1);
       }
@@ -2028,7 +1968,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleLike",
     value: function handleLike() {
       if (!this.props.isLoggedIn) return;
-
       if (this.props.isLiked) {
         this.props.onUnlike();
       } else {
@@ -2039,7 +1978,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleFavorite",
     value: function handleFavorite() {
       if (!this.props.isLoggedIn) return;
-
       if (this.props.isFavorited) {
         this.props.onUnfavorite();
       } else {
@@ -2056,7 +1994,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleCommentSubmit",
     value: function handleCommentSubmit() {
       var _this2 = this;
-
       var content = this.state.commentText.trim();
       if (!content || this.state.submittingComment) return;
       this.setState({
@@ -2099,7 +2036,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleReplySubmit",
     value: function handleReplySubmit(parentId) {
       var _this3 = this;
-
       var content = this.state.replyText.trim();
       if (!content || this.state.submittingReply) return;
       this.setState({
@@ -2134,10 +2070,9 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleEditSave",
     value: function handleEditSave() {
       var _this4 = this;
-
       var _this$state = this.state,
-          editingSection = _this$state.editingSection,
-          editValue = _this$state.editValue;
+        editingSection = _this$state.editingSection,
+        editValue = _this$state.editValue;
       this.setState({
         savingDetails: true
       });
@@ -2155,7 +2090,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleTitleSave",
     value: function handleTitleSave() {
       var _this5 = this;
-
       var title = this.state.titleValue.trim();
       if (!title || this.state.savingDetails) return;
       this.setState({
@@ -2188,21 +2122,17 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "handleCoverSelected",
     value: function handleCoverSelected(event) {
       var _this6 = this;
-
       var file = event.target.files && event.target.files[0];
       event.target.value = '';
       if (!file) return;
-
       if (!file.type || !/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) {
         window.alert('Selecione uma imagem PNG, JPG, WEBP ou GIF para a capa.');
         return;
       }
-
       if (file.size > 5 * 1024 * 1024) {
         window.alert('A capa deve ter no máximo 5MB.');
         return;
       }
-
       this.setState({
         coverPreview: URL.createObjectURL(file),
         uploadingCover: true
@@ -2229,7 +2159,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "renderEditableSection",
     value: function renderEditableSection(section, label, placeholder) {
       var _this7 = this;
-
       var isEditing = this.state.editingSection === section;
       var value = this.props[section];
       var isOwner = this.props.isOwner;
@@ -2279,10 +2208,10 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "renderAboutTab",
     value: function renderAboutTab() {
       var _this$props = this.props,
-          remixedFromId = _this$props.remixedFromId,
-          isOwner = _this$props.isOwner,
-          visibility = _this$props.visibility,
-          onUpdateVisibility = _this$props.onUpdateVisibility;
+        remixedFromId = _this$props.remixedFromId,
+        isOwner = _this$props.isOwner,
+        visibility = _this$props.visibility,
+        onUpdateVisibility = _this$props.onUpdateVisibility;
       return /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, isOwner && /*#__PURE__*/react_default.a.createElement("div", {
         className: project_page_default.a.editBar
       }, /*#__PURE__*/react_default.a.createElement("span", {
@@ -2316,21 +2245,20 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "renderCommentsTab",
     value: function renderCommentsTab() {
       var _this8 = this;
-
       var _this$props2 = this.props,
-          isLoggedIn = _this$props2.isLoggedIn,
-          comments = _this$props2.comments,
-          commentsTotal = _this$props2.commentsTotal,
-          commentsPage = _this$props2.commentsPage,
-          commentsLoading = _this$props2.commentsLoading,
-          currentUserId = _this$props2.currentUserId,
-          ownerId = _this$props2.ownerId;
+        isLoggedIn = _this$props2.isLoggedIn,
+        comments = _this$props2.comments,
+        commentsTotal = _this$props2.commentsTotal,
+        commentsPage = _this$props2.commentsPage,
+        commentsLoading = _this$props2.commentsLoading,
+        currentUserId = _this$props2.currentUserId,
+        ownerId = _this$props2.ownerId;
       var _this$state2 = this.state,
-          commentText = _this$state2.commentText,
-          submittingComment = _this$state2.submittingComment,
-          replyParentId = _this$state2.replyParentId,
-          replyText = _this$state2.replyText,
-          submittingReply = _this$state2.submittingReply;
+        commentText = _this$state2.commentText,
+        submittingComment = _this$state2.submittingComment,
+        replyParentId = _this$state2.replyParentId,
+        replyText = _this$state2.replyText,
+        submittingReply = _this$state2.submittingReply;
       return /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, isLoggedIn ? /*#__PURE__*/react_default.a.createElement("div", {
         className: project_page_default.a.commentInput
       }, /*#__PURE__*/react_default.a.createElement("textarea", {
@@ -2347,7 +2275,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
         onKeyDown: function onKeyDown(e) {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-
             _this8.handleCommentSubmit();
           }
         }
@@ -2371,7 +2298,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
         className: project_page_default.a.commentList
       }, comments.map(function (c) {
         var _c$user;
-
         return /*#__PURE__*/react_default.a.createElement(project_page_CommentItem, {
           key: c.id,
           comment: c,
@@ -2403,9 +2329,9 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "renderDetailsSections",
     value: function renderDetailsSections() {
       var _this$props3 = this.props,
-          remixedFromId = _this$props3.remixedFromId,
-          isOwner = _this$props3.isOwner,
-          visibility = _this$props3.visibility;
+        remixedFromId = _this$props3.remixedFromId,
+        isOwner = _this$props3.isOwner,
+        visibility = _this$props3.visibility;
       return /*#__PURE__*/react_default.a.createElement(react_default.a.Fragment, null, isOwner && /*#__PURE__*/react_default.a.createElement("div", {
         className: project_page_default.a.editBar
       }, /*#__PURE__*/react_default.a.createElement("span", null, "Visibilidade:"), /*#__PURE__*/react_default.a.createElement("select", {
@@ -2431,24 +2357,23 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this9 = this;
-
       var _this$props4 = this.props,
-          loading = _this$props4.loading,
-          title = _this$props4.title,
-          owner = _this$props4.owner,
-          thumbnailUrl = _this$props4.thumbnailUrl,
-          visibility = _this$props4.visibility,
-          likeCount = _this$props4.likeCount,
-          favoriteCount = _this$props4.favoriteCount,
-          viewCount = _this$props4.viewCount,
-          commentCount = _this$props4.commentCount,
-          isLiked = _this$props4.isLiked,
-          isFavorited = _this$props4.isFavorited,
-          isLoggedIn = _this$props4.isLoggedIn,
-          isOwner = _this$props4.isOwner,
-          createdAt = _this$props4.createdAt,
-          projectId = _this$props4.projectId,
-          renderPlayer = _this$props4.renderPlayer;
+        loading = _this$props4.loading,
+        title = _this$props4.title,
+        owner = _this$props4.owner,
+        thumbnailUrl = _this$props4.thumbnailUrl,
+        visibility = _this$props4.visibility,
+        likeCount = _this$props4.likeCount,
+        favoriteCount = _this$props4.favoriteCount,
+        viewCount = _this$props4.viewCount,
+        commentCount = _this$props4.commentCount,
+        isLiked = _this$props4.isLiked,
+        isFavorited = _this$props4.isFavorited,
+        isLoggedIn = _this$props4.isLoggedIn,
+        isOwner = _this$props4.isOwner,
+        createdAt = _this$props4.createdAt,
+        projectId = _this$props4.projectId,
+        renderPlayer = _this$props4.renderPlayer;
       var currentThumbnail = this.state.coverPreview || thumbnailUrl;
       if (!projectId) return null;
       return /*#__PURE__*/react_default.a.createElement("div", {
@@ -2500,7 +2425,6 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
         },
         onKeyDown: function onKeyDown(e) {
           if (e.key === 'Enter') _this9.handleTitleSave();
-
           if (e.key === 'Escape') {
             _this9.setState({
               editingTitle: false,
@@ -2626,10 +2550,8 @@ var project_page_ProjectPage = /*#__PURE__*/function (_React$Component) {
       }), commentCount)), this.renderCommentsTab())))));
     }
   }]);
-
   return ProjectPage;
 }(react_default.a.Component);
-
 project_page_ProjectPage.propTypes = {
   projectId: prop_types_default.a.string,
   loading: prop_types_default.a.bool,
@@ -2706,31 +2628,20 @@ project_page_ProjectPage.defaultProps = {
 };
 /* harmony default export */ var project_page_project_page = (project_page_ProjectPage);
 // CONCATENATED MODULE: ./src/containers/project-page.jsx
-function containers_project_page_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { containers_project_page_typeof = function _typeof(obj) { return typeof obj; }; } else { containers_project_page_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return containers_project_page_typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function containers_project_page_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function containers_project_page_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function containers_project_page_createClass(Constructor, protoProps, staticProps) { if (protoProps) containers_project_page_defineProperties(Constructor.prototype, protoProps); if (staticProps) containers_project_page_defineProperties(Constructor, staticProps); return Constructor; }
-
-function containers_project_page_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) containers_project_page_setPrototypeOf(subClass, superClass); }
-
-function containers_project_page_setPrototypeOf(o, p) { containers_project_page_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return containers_project_page_setPrototypeOf(o, p); }
-
-function containers_project_page_createSuper(Derived) { var hasNativeReflectConstruct = containers_project_page_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = containers_project_page_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = containers_project_page_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return containers_project_page_possibleConstructorReturn(this, result); }; }
-
-function containers_project_page_possibleConstructorReturn(self, call) { if (call && (containers_project_page_typeof(call) === "object" || typeof call === "function")) { return call; } return containers_project_page_assertThisInitialized(self); }
-
-function containers_project_page_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function containers_project_page_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function containers_project_page_getPrototypeOf(o) { containers_project_page_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return containers_project_page_getPrototypeOf(o); }
-
-
+function containers_project_page_typeof(o) { "@babel/helpers - typeof"; return containers_project_page_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, containers_project_page_typeof(o); }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) { ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } } return n; }, _extends.apply(null, arguments); }
+function containers_project_page_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function containers_project_page_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, containers_project_page_toPropertyKey(o.key), o); } }
+function containers_project_page_createClass(e, r, t) { return r && containers_project_page_defineProperties(e.prototype, r), t && containers_project_page_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function containers_project_page_toPropertyKey(t) { var i = containers_project_page_toPrimitive(t, "string"); return "symbol" == containers_project_page_typeof(i) ? i : i + ""; }
+function containers_project_page_toPrimitive(t, r) { if ("object" != containers_project_page_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != containers_project_page_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function containers_project_page_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && containers_project_page_setPrototypeOf(t, e); }
+function containers_project_page_setPrototypeOf(t, e) { return containers_project_page_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, containers_project_page_setPrototypeOf(t, e); }
+function containers_project_page_createSuper(t) { var r = containers_project_page_isNativeReflectConstruct(); return function () { var e, o = containers_project_page_getPrototypeOf(t); if (r) { var s = containers_project_page_getPrototypeOf(this).constructor; e = Reflect.construct(o, arguments, s); } else e = o.apply(this, arguments); return containers_project_page_possibleConstructorReturn(this, e); }; }
+function containers_project_page_possibleConstructorReturn(t, e) { if (e && ("object" == containers_project_page_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return containers_project_page_assertThisInitialized(t); }
+function containers_project_page_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function containers_project_page_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (containers_project_page_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function containers_project_page_getPrototypeOf(t) { return containers_project_page_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, containers_project_page_getPrototypeOf(t); }
 
 
 
@@ -2740,14 +2651,10 @@ function containers_project_page_getPrototypeOf(o) { containers_project_page_get
 
 var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component) {
   containers_project_page_inherits(ProjectPageContainer, _React$Component);
-
   var _super = containers_project_page_createSuper(ProjectPageContainer);
-
   function ProjectPageContainer(props) {
     var _this;
-
     containers_project_page_classCallCheck(this, ProjectPageContainer);
-
     _this = _super.call(this, props);
     _this.handleLike = _this.handleLike.bind(containers_project_page_assertThisInitialized(_this));
     _this.handleUnlike = _this.handleUnlike.bind(containers_project_page_assertThisInitialized(_this));
@@ -2762,15 +2669,13 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     _this.handleUpdateCover = _this.handleUpdateCover.bind(containers_project_page_assertThisInitialized(_this));
     return _this;
   }
-
   containers_project_page_createClass(ProjectPageContainer, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var projectId = this.props.projectId;
-
       if (projectId) {
-        this.loadDetails(projectId); // Record a view (fire and forget)
-
+        this.loadDetails(projectId);
+        // Record a view (fire and forget)
         Object(dogoblock_api["B" /* recordProjectView */])(projectId).catch(function () {});
       }
     }
@@ -2785,14 +2690,11 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "loadDetails",
     value: function loadDetails(projectId) {
       var _this2 = this;
-
       this.props.onSetLoading(true);
       this.props.onSetComments([], 0, 1);
       Object(dogoblock_api["o" /* getProjectDetails */])(projectId).then(function (details) {
         if (_this2.props.projectId !== projectId) return;
-
         _this2.props.onSetDetails(details);
-
         _this2.handleLoadComments(1);
       }).catch(function (err) {
         console.error('Failed to load project details', err);
@@ -2806,7 +2708,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleLike",
     value: function handleLike() {
       var _this3 = this;
-
       Object(dogoblock_api["r" /* likeProject */])(this.props.projectId).then(function (res) {
         return _this3.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
@@ -2815,7 +2716,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUnlike",
     value: function handleUnlike() {
       var _this4 = this;
-
       Object(dogoblock_api["G" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
@@ -2824,7 +2724,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleFavorite",
     value: function handleFavorite() {
       var _this5 = this;
-
       Object(dogoblock_api["i" /* favoriteProject */])(this.props.projectId).then(function (res) {
         return _this5.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
@@ -2833,7 +2732,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUnfavorite",
     value: function handleUnfavorite() {
       var _this6 = this;
-
       Object(dogoblock_api["F" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
@@ -2849,7 +2747,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handlePostComment",
     value: function handlePostComment(content, parentId) {
       var _this7 = this;
-
       return Object(dogoblock_api["A" /* postComment */])(this.props.projectId, content, parentId).then(function (comment) {
         return _this7.props.onAddComment(comment);
       });
@@ -2858,7 +2755,6 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleDeleteComment",
     value: function handleDeleteComment(commentId) {
       var _this8 = this;
-
       Object(dogoblock_api["c" /* deleteComment */])(this.props.projectId, commentId).then(function (res) {
         return _this8.props.onRemoveComment(commentId, res && res.deletedCount);
       }).catch(console.error);
@@ -2867,21 +2763,18 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleLoadComments",
     value: function handleLoadComments(page) {
       var _this9 = this;
-
       var projectId = this.props.projectId;
       Object(dogoblock_api["l" /* getComments */])(projectId, page).then(function (res) {
         if (_this9.props.projectId !== projectId) return;
-
         _this9.props.onSetComments(res.comments, res.total, res.page);
       }).catch(console.error);
     }
   }, {
     key: "handleUpdateVisibility",
     value: function handleUpdateVisibility(visibility) {
-      var _this10 = this;
-
+      var _this0 = this;
       Object(dogoblock_api["J" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
-        _this10.props.onSetDetails(Object.assign({}, _this10.props, {
+        _this0.props.onSetDetails(Object.assign({}, _this0.props, {
           visibility: res.visibility
         }));
       }).catch(console.error);
@@ -2889,20 +2782,17 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleUpdateDetails",
     value: function handleUpdateDetails(patch) {
-      var _this11 = this;
-
+      var _this1 = this;
       return Object(dogoblock_api["I" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
-        _this11.props.onSetDetails(Object.assign({}, _this11.props, res));
+        _this1.props.onSetDetails(Object.assign({}, _this1.props, res));
       });
     }
   }, {
     key: "handleUpdateCover",
     value: function handleUpdateCover(coverFile) {
-      var _this12 = this;
-
+      var _this10 = this;
       return Object(dogoblock_api["K" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
-        _this12.props.onSetDetails(Object.assign({}, _this12.props, res));
-
+        _this10.props.onSetDetails(Object.assign({}, _this10.props, res));
         return res;
       });
     }
@@ -2926,10 +2816,8 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
       }));
     }
   }]);
-
   return ProjectPageContainer;
 }(react_default.a.Component);
-
 project_page_ProjectPageContainer.propTypes = {
   projectId: prop_types_default.a.string,
   isLoggedIn: prop_types_default.a.bool,
@@ -2966,7 +2854,6 @@ project_page_ProjectPageContainer.propTypes = {
   onAddComment: prop_types_default.a.func,
   onRemoveComment: prop_types_default.a.func
 };
-
 var mapStateToProps = function mapStateToProps(state) {
   var ix = state.scratchGui.projectInteractions;
   var session = state.scratchGui.session || state.session || {};
@@ -3000,7 +2887,6 @@ var mapStateToProps = function mapStateToProps(state) {
     isOwner: isLoggedIn && ix.owner && ix.owner.id === userId
   };
 };
-
 var project_page_mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onSetLoading: function onSetLoading(loading) {
@@ -3026,48 +2912,43 @@ var project_page_mapDispatchToProps = function mapDispatchToProps(dispatch) {
     }
   };
 };
-
 /* harmony default export */ var containers_project_page = (Object(react_redux_es["b" /* connect */])(mapStateToProps, project_page_mapDispatchToProps)(project_page_ProjectPageContainer));
 // EXTERNAL MODULE: ./src/lib/message-box.js
-var message_box = __webpack_require__(156);
+var message_box = __webpack_require__(168);
 
 // EXTERNAL MODULE: ./src/lib/analytics.js
-var analytics = __webpack_require__(116);
+var analytics = __webpack_require__(124);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api-config.js
-var dogoblock_api_config = __webpack_require__(193);
+var dogoblock_api_config = __webpack_require__(209);
 
 // CONCATENATED MODULE: ./src/lib/notifications-manager.js
-function notifications_manager_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function notifications_manager_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function notifications_manager_createClass(Constructor, protoProps, staticProps) { if (protoProps) notifications_manager_defineProperties(Constructor.prototype, protoProps); if (staticProps) notifications_manager_defineProperties(Constructor, staticProps); return Constructor; }
-
+function notifications_manager_typeof(o) { "@babel/helpers - typeof"; return notifications_manager_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, notifications_manager_typeof(o); }
+function notifications_manager_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function notifications_manager_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, notifications_manager_toPropertyKey(o.key), o); } }
+function notifications_manager_createClass(e, r, t) { return r && notifications_manager_defineProperties(e.prototype, r), t && notifications_manager_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function notifications_manager_toPropertyKey(t) { var i = notifications_manager_toPrimitive(t, "string"); return "symbol" == notifications_manager_typeof(i) ? i : i + ""; }
+function notifications_manager_toPrimitive(t, r) { if ("object" != notifications_manager_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != notifications_manager_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 var MIN_RETRY_MS = 2000;
 var MAX_RETRY_MS = 32000;
+
 /**
  * Manages a Server-Sent Events connection for notifications.
  * Automatically reconnects with exponential backoff when the connection drops.
  */
-
 var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
   function NotificationsManager() {
     notifications_manager_classCallCheck(this, NotificationsManager);
-
     this._source = null;
     this._token = null;
     this._retryMs = MIN_RETRY_MS;
     this._retryTimer = null;
     this._destroyed = false;
     this.onNotification = null; // (notification) => void
-
     this.onUnreadCount = null; // (count) => void
-
     this.onReconnect = null; // () => void
   }
-
   notifications_manager_createClass(NotificationsManager, [{
     key: "connect",
     value: function connect(token) {
@@ -3075,25 +2956,20 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
       this._token = token;
       this._destroyed = false;
       this._retryMs = MIN_RETRY_MS;
-
       this._openStream();
     }
   }, {
     key: "disconnect",
     value: function disconnect() {
       this._destroyed = true;
-
       this._clearRetryTimer();
-
       this._closeSource();
     }
   }, {
     key: "_openStream",
     value: function _openStream() {
       var _this = this;
-
       this._closeSource();
-
       if (!this._token || this._destroyed) return;
       var url = "".concat(Object(dogoblock_api_config["a" /* getApiHost */])(), "/notifications/stream?token=").concat(encodeURIComponent(this._token));
       var source = new EventSource(url);
@@ -3103,25 +2979,23 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
           var notification = JSON.parse(event.data);
           if (typeof _this.onNotification === 'function') _this.onNotification(notification);
           _this._retryMs = MIN_RETRY_MS; // Reset backoff on successful message
-        } catch (_unused) {// Ignore malformed payloads
+        } catch (_unused) {
+          // Ignore malformed payloads
         }
       });
       source.addEventListener('unread-count', function (event) {
         try {
           var data = JSON.parse(event.data);
-
           if (typeof _this.onUnreadCount === 'function') {
             _this.onUnreadCount(data.unreadCount || 0);
           }
-
           _this._retryMs = MIN_RETRY_MS;
-        } catch (_unused2) {// Ignore malformed payloads
+        } catch (_unused2) {
+          // Ignore malformed payloads
         }
       });
-
       source.onerror = function () {
         _this._closeSource();
-
         if (!_this._destroyed) _this._scheduleRetry();
       };
     }
@@ -3130,7 +3004,6 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
     value: function _closeSource() {
       if (this._source) {
         this._source.close();
-
         this._source = null;
       }
     }
@@ -3138,14 +3011,11 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
     key: "_scheduleRetry",
     value: function _scheduleRetry() {
       var _this2 = this;
-
       this._clearRetryTimer();
-
       if (this._destroyed) return;
       this._retryTimer = setTimeout(function () {
         if (!_this2._destroyed) {
           if (typeof _this2.onReconnect === 'function') _this2.onReconnect();
-
           _this2._openStream();
         }
       }, this._retryMs);
@@ -3160,26 +3030,24 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
       }
     }
   }]);
-
   return NotificationsManager;
 }();
-
 /* harmony default export */ var notifications_manager = (notifications_manager_NotificationsManager);
 // EXTERNAL MODULE: ./src/lib/auth-session.js
-var auth_session = __webpack_require__(145);
+var auth_session = __webpack_require__(155);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
-var reducers_session = __webpack_require__(376);
+var reducers_session = __webpack_require__(408);
 
 // EXTERNAL MODULE: ./src/reducers/mode.js
-var mode = __webpack_require__(180);
+var mode = __webpack_require__(194);
 
 // EXTERNAL MODULE: ./static/dogoblock_logo_full.svg
-var dogoblock_logo_full = __webpack_require__(327);
+var dogoblock_logo_full = __webpack_require__(356);
 var dogoblock_logo_full_default = /*#__PURE__*/__webpack_require__.n(dogoblock_logo_full);
 
 // EXTERNAL MODULE: ./static/hero-illustration.png
-var hero_illustration = __webpack_require__(1224);
+var hero_illustration = __webpack_require__(1270);
 var hero_illustration_default = /*#__PURE__*/__webpack_require__.n(hero_illustration);
 
 // EXTERNAL MODULE: ./src/playground/dogoblock-web-app.css
@@ -3187,54 +3055,32 @@ var dogoblock_web_app = __webpack_require__(14);
 var dogoblock_web_app_default = /*#__PURE__*/__webpack_require__.n(dogoblock_web_app);
 
 // CONCATENATED MODULE: ./src/playground/dogoblock-web-app.jsx
-function dogoblock_web_app_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { dogoblock_web_app_typeof = function _typeof(obj) { return typeof obj; }; } else { dogoblock_web_app_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return dogoblock_web_app_typeof(obj); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { dogoblock_web_app_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function dogoblock_web_app_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || dogoblock_web_app_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
+function dogoblock_web_app_typeof(o) { "@babel/helpers - typeof"; return dogoblock_web_app_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, dogoblock_web_app_typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { dogoblock_web_app_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function dogoblock_web_app_defineProperty(e, r, t) { return (r = dogoblock_web_app_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || dogoblock_web_app_unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return dogoblock_web_app_arrayLikeToArray(arr); }
-
-function dogoblock_web_app_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function dogoblock_web_app_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function dogoblock_web_app_createClass(Constructor, protoProps, staticProps) { if (protoProps) dogoblock_web_app_defineProperties(Constructor.prototype, protoProps); if (staticProps) dogoblock_web_app_defineProperties(Constructor, staticProps); return Constructor; }
-
-function dogoblock_web_app_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) dogoblock_web_app_setPrototypeOf(subClass, superClass); }
-
-function dogoblock_web_app_setPrototypeOf(o, p) { dogoblock_web_app_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return dogoblock_web_app_setPrototypeOf(o, p); }
-
-function dogoblock_web_app_createSuper(Derived) { var hasNativeReflectConstruct = dogoblock_web_app_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = dogoblock_web_app_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = dogoblock_web_app_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return dogoblock_web_app_possibleConstructorReturn(this, result); }; }
-
-function dogoblock_web_app_possibleConstructorReturn(self, call) { if (call && (dogoblock_web_app_typeof(call) === "object" || typeof call === "function")) { return call; } return dogoblock_web_app_assertThisInitialized(self); }
-
-function dogoblock_web_app_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function dogoblock_web_app_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function dogoblock_web_app_getPrototypeOf(o) { dogoblock_web_app_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return dogoblock_web_app_getPrototypeOf(o); }
-
-function dogoblock_web_app_slicedToArray(arr, i) { return dogoblock_web_app_arrayWithHoles(arr) || dogoblock_web_app_iterableToArrayLimit(arr, i) || dogoblock_web_app_unsupportedIterableToArray(arr, i) || dogoblock_web_app_nonIterableRest(); }
-
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return dogoblock_web_app_arrayLikeToArray(r); }
+function dogoblock_web_app_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function dogoblock_web_app_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, dogoblock_web_app_toPropertyKey(o.key), o); } }
+function dogoblock_web_app_createClass(e, r, t) { return r && dogoblock_web_app_defineProperties(e.prototype, r), t && dogoblock_web_app_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function dogoblock_web_app_toPropertyKey(t) { var i = dogoblock_web_app_toPrimitive(t, "string"); return "symbol" == dogoblock_web_app_typeof(i) ? i : i + ""; }
+function dogoblock_web_app_toPrimitive(t, r) { if ("object" != dogoblock_web_app_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != dogoblock_web_app_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function dogoblock_web_app_inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && dogoblock_web_app_setPrototypeOf(t, e); }
+function dogoblock_web_app_setPrototypeOf(t, e) { return dogoblock_web_app_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, dogoblock_web_app_setPrototypeOf(t, e); }
+function dogoblock_web_app_createSuper(t) { var r = dogoblock_web_app_isNativeReflectConstruct(); return function () { var e, o = dogoblock_web_app_getPrototypeOf(t); if (r) { var s = dogoblock_web_app_getPrototypeOf(this).constructor; e = Reflect.construct(o, arguments, s); } else e = o.apply(this, arguments); return dogoblock_web_app_possibleConstructorReturn(this, e); }; }
+function dogoblock_web_app_possibleConstructorReturn(t, e) { if (e && ("object" == dogoblock_web_app_typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return dogoblock_web_app_assertThisInitialized(t); }
+function dogoblock_web_app_assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function dogoblock_web_app_isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (dogoblock_web_app_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function dogoblock_web_app_getPrototypeOf(t) { return dogoblock_web_app_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, dogoblock_web_app_getPrototypeOf(t); }
+function dogoblock_web_app_slicedToArray(r, e) { return dogoblock_web_app_arrayWithHoles(r) || dogoblock_web_app_iterableToArrayLimit(r, e) || dogoblock_web_app_unsupportedIterableToArray(r, e) || dogoblock_web_app_nonIterableRest(); }
 function dogoblock_web_app_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function dogoblock_web_app_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return dogoblock_web_app_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return dogoblock_web_app_arrayLikeToArray(o, minLen); }
-
-function dogoblock_web_app_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function dogoblock_web_app_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function dogoblock_web_app_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
+function dogoblock_web_app_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return dogoblock_web_app_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? dogoblock_web_app_arrayLikeToArray(r, a) : void 0; } }
+function dogoblock_web_app_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) { n[e] = r[e]; } return n; }
+function dogoblock_web_app_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0) { ; } } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function dogoblock_web_app_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
@@ -3258,24 +3104,20 @@ function dogoblock_web_app_arrayWithHoles(arr) { if (Array.isArray(arr)) return 
 
 var NOTIFICATIONS_PAGE_SIZE = 10;
 var TOAST_DISMISS_MS = 5000;
-
 var parseRoute = function parseRoute() {
   var rawHash = window.location.hash.replace(/^#/, '');
   var legacyMatch = rawHash.match(/^(\d+)$/);
-
   if (legacyMatch) {
     return {
       name: 'editor',
       projectId: legacyMatch[1]
     };
   }
-
   var _split = (rawHash || '/').split('?'),
-      _split2 = dogoblock_web_app_slicedToArray(_split, 2),
-      path = _split2[0],
-      _split2$ = _split2[1],
-      query = _split2$ === void 0 ? '' : _split2$;
-
+    _split2 = dogoblock_web_app_slicedToArray(_split, 2),
+    path = _split2[0],
+    _split2$ = _split2[1],
+    query = _split2$ === void 0 ? '' : _split2$;
   var parts = path.split('/').filter(Boolean);
   var queryParams = new URLSearchParams(query);
   if (!parts.length) return {
@@ -3312,7 +3154,6 @@ var parseRoute = function parseRoute() {
   if (parts[0] === 'explore') return {
     name: 'explore'
   };
-
   if (parts[0] === 'editor') {
     return {
       name: 'editor',
@@ -3321,7 +3162,6 @@ var parseRoute = function parseRoute() {
       importKey: queryParams.get('import')
     };
   }
-
   if (parts[0] === 'projects' && parts[1]) return {
     name: 'projectDetails',
     projectId: parts[1]
@@ -3330,13 +3170,10 @@ var parseRoute = function parseRoute() {
     name: 'projects'
   };
 };
-
 var dogoblock_web_app_navigate = function navigate(hash) {
   window.location.hash = hash;
 };
-
 var noop = function noop() {};
-
 var dogoblock_web_app_trackEvent = function trackEvent(action, label) {
   analytics["a" /* default */].event({
     category: 'dogoblock-web',
@@ -3344,66 +3181,52 @@ var dogoblock_web_app_trackEvent = function trackEvent(action, label) {
     label: label
   });
 };
-
 var currentRouteHash = function currentRouteHash() {
   return window.location.hash.replace(/^#/, '') || '/';
 };
-
 var loginRouteFor = function loginRouteFor(route) {
   return "/login?next=".concat(encodeURIComponent(route || currentRouteHash()));
 };
-
 var dogoblock_web_app_formatDate = function formatDate(value) {
   if (!value) return '';
   return new Date(value).toLocaleDateString('pt-BR');
 };
-
 var getVisibilityLabel = function getVisibilityLabel(visibility) {
   if (visibility === 'PUBLIC') return 'Publico';
   if (visibility === 'UNLISTED') return 'Nao listado';
   return 'Privado';
 };
-
 var getProjectThumbnail = function getProjectThumbnail(project) {
   return project.thumbnailUrl || project.thumbnail || project.image || project.thumb || null;
 };
-
 var getProjectAuthor = function getProjectAuthor(project) {
   return project.author || project.username || project.owner && (project.owner.username || project.owner.name) || project.ownerUsername || 'Dogoblocker';
 };
-
 var getProjectInstructions = function getProjectInstructions(project) {
   return project.instructions || project.description || 'O autor ainda nao adicionou instrucoes para este projeto.';
 };
-
 var getProjectCredits = function getProjectCredits(project) {
   return project.notesAndCredits || project.credits || project.notes || 'O autor ainda nao adicionou notas ou creditos.';
 };
-
 var getProjectMetric = function getProjectMetric(project, fields) {
   for (var i = 0; i < fields.length; i++) {
     var value = project[fields[i]];
     if (typeof value === 'number') return value;
   }
-
   return 0;
 };
-
 var getProjectPublicUrl = function getProjectPublicUrl(project) {
   var url = new URL(window.location.href);
   url.hash = "/projects/".concat(project.id);
   return url.toString();
 };
-
 var dogoblock_web_app_getInitials = function getInitials(user) {
   return (user && (user.name || user.username) || '?').split(' ').map(function (part) {
     return part[0];
   }).slice(0, 2).join('').toUpperCase();
 };
-
 var dogoblock_web_app_renderProjectThumbnail = function renderProjectThumbnail(project) {
   var thumbnail = getProjectThumbnail(project);
-
   if (thumbnail) {
     return /*#__PURE__*/react_default.a.createElement("img", {
       alt: "",
@@ -3411,12 +3234,10 @@ var dogoblock_web_app_renderProjectThumbnail = function renderProjectThumbnail(p
       src: thumbnail
     });
   }
-
   return /*#__PURE__*/react_default.a.createElement("div", {
     className: dogoblock_web_app_default.a.projectThumbnailFallback
   }, /*#__PURE__*/react_default.a.createElement("span", null, 'DOGOBLOCK'));
 };
-
 var dogoblock_web_app_Icon = function Icon(_ref) {
   var children = _ref.children;
   return /*#__PURE__*/react_default.a.createElement("span", {
@@ -3424,21 +3245,15 @@ var dogoblock_web_app_Icon = function Icon(_ref) {
     className: dogoblock_web_app_default.a.iconWrap
   }, children);
 };
-
 dogoblock_web_app_Icon.propTypes = {
   children: prop_types_default.a.node
 };
-
 var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component) {
   dogoblock_web_app_inherits(DogoblockWebApp, _React$Component);
-
   var _super = dogoblock_web_app_createSuper(DogoblockWebApp);
-
   function DogoblockWebApp(props) {
     var _this;
-
     dogoblock_web_app_classCallCheck(this, DogoblockWebApp);
-
     _this = _super.call(this, props);
     _this.state = {
       route: parseRoute(),
@@ -3545,16 +3360,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     _this.handleNavigatePublicProfile = _this.handleNavigatePublicProfile.bind(dogoblock_web_app_assertThisInitialized(_this));
     return _this;
   }
-
   dogoblock_web_app_createClass(DogoblockWebApp, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
-
       window.addEventListener('hashchange', this.handleHashChange);
       this.loadRouteData(this.state.route);
       this._notificationsManager = new notifications_manager();
-
       this._notificationsManager.onNotification = function (notification) {
         _this2.setState(function (prevState) {
           return {
@@ -3562,20 +3374,17 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
               return item.id !== notification.id;
             }))).slice(0, NOTIFICATIONS_PAGE_SIZE)
           };
-        }); // Only show toast on non-editor screens
-
-
+        });
+        // Only show toast on non-editor screens
         if (_this2.state.route.name !== 'editor') {
           _this2.showToast(notification);
         }
       };
-
       this._notificationsManager.onUnreadCount = function (count) {
         _this2.setState({
           unreadCount: count
         });
       };
-
       this.setupNotifications();
     }
   }, {
@@ -3592,7 +3401,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     value: function componentDidUpdate(prevProps) {
       var previousUserId = prevProps.user && prevProps.user.id;
       var currentUserId = this.props.user && this.props.user.id;
-
       if (previousUserId !== currentUserId) {
         this.setupNotifications();
       }
@@ -3601,7 +3409,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleHashChange",
     value: function handleHashChange() {
       var _this3 = this;
-
       var route = parseRoute();
       this.setState({
         route: route,
@@ -3614,14 +3421,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "loadRouteData",
     value: function loadRouteData(route) {
       var _this4 = this;
-
       this.props.onSetPlayerOnly(route.name === 'projectDetails');
-
       if (this.props.user && (route.name === 'login' || route.name === 'register')) {
         dogoblock_web_app_navigate(route.next || '/projects');
         return;
       }
-
       if (route.name === 'home') {
         this.setState({
           loading: true
@@ -3637,13 +3441,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           });
         });
       }
-
       if (route.name === 'profile') {
         if (!this.props.user) {
           dogoblock_web_app_navigate(loginRouteFor('/profile'));
           return;
         }
-
         this.setState({
           loading: true,
           error: null,
@@ -3651,21 +3453,18 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
         Promise.all([Object(dogoblock_api["n" /* getMyProfile */])(), Object(dogoblock_api["u" /* listProjects */])(), Object(dogoblock_api["s" /* listFavoriteProjects */])()]).then(function (_ref2) {
           var _ref3 = dogoblock_web_app_slicedToArray(_ref2, 3),
-              profile = _ref3[0],
-              projects = _ref3[1],
-              favoriteProjects = _ref3[2];
-
+            profile = _ref3[0],
+            projects = _ref3[1],
+            favoriteProjects = _ref3[2];
           _this4.setState({
             profile: profile,
             projects: projects,
             favoriteProjects: favoriteProjects,
             loading: false,
             error: null
-          }); // Fetch details for up to 10 projects to find the most-liked one
-
-
+          });
+          // Fetch details for up to 10 projects to find the most-liked one
           var candidates = projects.slice(0, 10);
-
           if (candidates.length > 0) {
             Promise.all(candidates.map(function (p) {
               return Object(dogoblock_api["o" /* getProjectDetails */])(p.id).catch(function () {
@@ -3673,20 +3472,17 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
               });
             })).then(function (details) {
               var valid = details.filter(Boolean);
-              if (!valid.length) return; // Sort by likeCount desc, then favoriteCount desc as tiebreaker
-
+              if (!valid.length) return;
+              // Sort by likeCount desc, then favoriteCount desc as tiebreaker
               valid.sort(function (a, b) {
                 var likes = (b.likeCount || 0) - (a.likeCount || 0);
                 if (likes !== 0) return likes;
                 return (b.favoriteCount || 0) - (a.favoriteCount || 0);
               });
-
               _this4.setState({
                 featuredProjectDetails: valid[0]
               });
-            }).catch(function () {
-              /* silently ignore */
-            });
+            }).catch(function () {/* silently ignore */});
           }
         }).catch(function (error) {
           return _this4.setState({
@@ -3695,7 +3491,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           });
         });
       }
-
       if (route.name === 'projects' || route.name === 'explore') {
         this.setState({
           loading: true
@@ -3713,7 +3508,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           });
         });
       }
-
       if (route.name === 'publicProfile') {
         var username = route.username;
         this.setState({
@@ -3734,7 +3528,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           });
         });
       }
-
       if (route.name === 'projectDetails') {
         var requestedProjectId = route.projectId;
         this.setState({
@@ -3753,13 +3546,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         })]).then(function (_ref4) {
           var _ref5 = dogoblock_web_app_slicedToArray(_ref4, 2),
-              projectDetails = _ref5[0],
-              commentsResult = _ref5[1];
-
+            projectDetails = _ref5[0],
+            commentsResult = _ref5[1];
           if (_this4.state.route.name !== 'projectDetails' || _this4.state.route.projectId !== requestedProjectId) {
             return;
           }
-
           _this4.setState({
             projectDetails: projectDetails,
             loading: false,
@@ -3775,7 +3566,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           if (_this4.state.route.name !== 'projectDetails' || _this4.state.route.projectId !== requestedProjectId) {
             return;
           }
-
           _this4.setState({
             error: error.message,
             loading: false
@@ -3787,7 +3577,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleLogin",
     value: function handleLogin(event) {
       var _this5 = this;
-
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
@@ -3799,13 +3588,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         password: form.get('password')
       }).then(function (session) {
         dogoblock_web_app_trackEvent('login success', 'email');
-
         _this5.props.onLoginSuccess(session);
-
         dogoblock_web_app_navigate(_this5.state.route.next || '/projects');
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('login error', 'email');
-
         _this5.setState({
           error: error.message,
           loading: false
@@ -3816,7 +3602,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleRegister",
     value: function handleRegister(event) {
       var _this6 = this;
-
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
@@ -3830,13 +3615,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         password: form.get('password')
       }).then(function (session) {
         dogoblock_web_app_trackEvent('register success', 'email');
-
         _this6.props.onLoginSuccess(session);
-
         dogoblock_web_app_navigate(_this6.state.route.next || '/projects');
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('register error', 'email');
-
         _this6.setState({
           error: error.message,
           loading: false
@@ -3861,9 +3643,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "setupNotifications",
     value: function setupNotifications() {
       var _this7 = this;
-
       if (this._notificationsManager) this._notificationsManager.disconnect();
-
       if (!this.props.user) {
         this.setState({
           notifications: [],
@@ -3874,14 +3654,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
         return;
       }
-
       Object(dogoblock_api["q" /* getUnreadCount */])().then(function (result) {
         return _this7.setState({
           unreadCount: result.unreadCount || 0
         });
       }).catch(function () {});
       var session = Object(auth_session["c" /* readAuthSession */])();
-
       if (this._notificationsManager && session && session.accessToken) {
         this._notificationsManager.connect(session.accessToken);
       }
@@ -3890,7 +3668,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "showToast",
     value: function showToast(notification) {
       var _this8 = this;
-
       if (this._toastTimer) clearTimeout(this._toastTimer);
       this.setState({
         toastNotification: notification
@@ -3913,7 +3690,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleLoadNotifications",
     value: function handleLoadNotifications() {
       var _this9 = this;
-
       if (!this.props.user) return;
       this.setState({
         notificationsLoading: true,
@@ -3937,8 +3713,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleLoadMoreNotifications",
     value: function handleLoadMoreNotifications() {
-      var _this10 = this;
-
+      var _this0 = this;
       if (!this.props.user || this.state.notificationsLoadingMore) return;
       var nextPage = this.state.notificationsPage + 1;
       this.setState({
@@ -3946,8 +3721,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["t" /* listNotifications */])(nextPage, NOTIFICATIONS_PAGE_SIZE).then(function (result) {
         var newItems = result.notifications || [];
-
-        _this10.setState(function (prevState) {
+        _this0.setState(function (prevState) {
           return {
             notifications: [].concat(_toConsumableArray(prevState.notifications), _toConsumableArray(newItems.filter(function (n) {
               return !prevState.notifications.find(function (e) {
@@ -3960,7 +3734,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this10.setState({
+        return _this0.setState({
           error: error.message,
           notificationsLoadingMore: false
         });
@@ -3969,17 +3743,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleOpenNotification",
     value: function handleOpenNotification(notification) {
-      var _this11 = this;
-
+      var _this1 = this;
       var navigateToProject = function navigateToProject() {
         if (notification.projectId) {
           dogoblock_web_app_navigate("/projects/".concat(notification.projectId));
         }
       };
-
       if (!notification.readAt) {
         Object(dogoblock_api["z" /* markNotificationRead */])(notification.id).then(function (updated) {
-          _this11.setState(function (prevState) {
+          _this1.setState(function (prevState) {
             return {
               notifications: prevState.notifications.map(function (item) {
                 return item.id === notification.id ? Object.assign({}, item, updated) : item;
@@ -3987,23 +3759,20 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
               unreadCount: Math.max(0, prevState.unreadCount - 1)
             };
           });
-
           navigateToProject();
         }).catch(function () {
           return navigateToProject();
         });
         return;
       }
-
       navigateToProject();
     }
   }, {
     key: "handleDeleteNotification",
     value: function handleDeleteNotification(notification) {
-      var _this12 = this;
-
+      var _this10 = this;
       Object(dogoblock_api["d" /* deleteNotification */])(notification.id).then(function () {
-        _this12.setState(function (prevState) {
+        _this10.setState(function (prevState) {
           return {
             notifications: prevState.notifications.filter(function (item) {
               return item.id !== notification.id;
@@ -4012,7 +3781,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this12.setState({
+        return _this10.setState({
           error: error.message
         });
       });
@@ -4020,11 +3789,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleMarkAllNotificationsRead",
     value: function handleMarkAllNotificationsRead() {
-      var _this13 = this;
-
+      var _this11 = this;
       if (!this.props.user || this.state.unreadCount === 0) return;
       Object(dogoblock_api["y" /* markAllNotificationsRead */])().then(function (result) {
-        return _this13.setState(function (prevState) {
+        return _this11.setState(function (prevState) {
           return {
             unreadCount: 0,
             notifications: prevState.notifications.map(function (item) {
@@ -4035,7 +3803,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this13.setState({
+        return _this11.setState({
           error: error.message
         });
       });
@@ -4044,13 +3812,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleImportProject",
     value: function handleImportProject() {
       var importRoute = "/editor?import=".concat(Date.now());
-
       if (!this.props.user) {
         dogoblock_web_app_trackEvent('import project requires login', 'anonymous');
         dogoblock_web_app_navigate(loginRouteFor(importRoute));
         return;
       }
-
       dogoblock_web_app_trackEvent('import project', 'authenticated');
       dogoblock_web_app_navigate(importRoute);
     }
@@ -4062,38 +3828,31 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         dogoblock_web_app_navigate(loginRouteFor('/editor'));
         return;
       }
-
       dogoblock_web_app_trackEvent('new project', 'authenticated');
       dogoblock_web_app_navigate('/editor');
     }
   }, {
     key: "handleCopyProjectLink",
     value: function handleCopyProjectLink() {
-      var _this14 = this;
-
+      var _this12 = this;
       var project = this.state.projectDetails;
       if (!project) return;
       var link = getProjectPublicUrl(project);
-
       var onCopied = function onCopied() {
-        if (_this14.copyLinkTimer) clearTimeout(_this14.copyLinkTimer);
-
-        _this14.setState({
+        if (_this12.copyLinkTimer) clearTimeout(_this12.copyLinkTimer);
+        _this12.setState({
           copyLinkFeedback: true
         });
-
-        _this14.copyLinkTimer = setTimeout(function () {
-          return _this14.setState({
+        _this12.copyLinkTimer = setTimeout(function () {
+          return _this12.setState({
             copyLinkFeedback: false
           });
         }, 2200);
       };
-
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(link).then(onCopied).catch(function () {});
         return;
       }
-
       var textarea = document.createElement('textarea');
       textarea.value = link;
       textarea.setAttribute('readonly', 'readonly');
@@ -4108,17 +3867,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleDeleteProject",
     value: function handleDeleteProject() {
-      var _this15 = this;
-
+      var _this13 = this;
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var id = this.state.route.projectId;
       if (!id) return;
       if (!window.confirm('Excluir este projeto? Esta acao nao pode ser desfeita.')) return; // eslint-disable-line no-alert
-
       this.setState({
         loading: true,
         error: null
@@ -4128,8 +3884,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         dogoblock_web_app_navigate('/projects');
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('delete project error', 'details');
-
-        _this15.setState({
+        _this13.setState({
           error: error.message,
           loading: false
         });
@@ -4138,26 +3893,22 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleDeleteProjectFromCard",
     value: function handleDeleteProjectFromCard(event) {
-      var _this16 = this;
-
+      var _this14 = this;
       event.preventDefault();
       event.stopPropagation();
-
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var id = event.currentTarget.dataset.projectId;
       if (!id) return;
       if (!window.confirm('Excluir este projeto? Esta ação não pode ser desfeita.')) return; // eslint-disable-line no-alert
-
       this.setState({
         loading: true,
         error: null
       });
       Object(dogoblock_api["e" /* deleteProject */])(id).then(function () {
-        return _this16.setState(function (prevState) {
+        return _this14.setState(function (prevState) {
           return {
             projects: prevState.projects.filter(function (project) {
               return project.id !== id;
@@ -4173,8 +3924,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('delete project error', 'card');
-
-        _this16.setState({
+        _this14.setState({
           error: error.message,
           loading: false
         });
@@ -4187,12 +3937,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       var normalizedProjectId = projectId.toString();
       var routeProjectId = (this.state.route.projectId || project_state["f" /* defaultProjectId */]).toString();
       if (normalizedProjectId === routeProjectId) return;
-
       if (normalizedProjectId === project_state["f" /* defaultProjectId */]) {
         dogoblock_web_app_navigate('/editor');
         return;
       }
-
       dogoblock_web_app_trackEvent('project created', 'editor');
       dogoblock_web_app_navigate("/editor/".concat(normalizedProjectId));
     }
@@ -4213,7 +3961,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "handleShowMessageBox",
     value: function handleShowMessageBox(type, message) {
       if (type === message_box["a" /* default */].confirm) return confirm(message); // eslint-disable-line no-alert
-
       if (type === message_box["a" /* default */].alert) return alert(message); // eslint-disable-line no-alert
     }
   }, {
@@ -4227,15 +3974,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleUpdateVisibility",
     value: function handleUpdateVisibility(visibility) {
-      var _this17 = this;
-
+      var _this15 = this;
       var project = this.state.projectDetails;
-
       if (!this.props.user || !project) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       this.setState({
         loading: true,
         error: null
@@ -4244,16 +3988,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return Object(dogoblock_api["o" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         dogoblock_web_app_trackEvent('update project visibility success', visibility);
-
-        _this17.setState({
+        _this15.setState({
           projectDetails: projectDetails,
           loading: false,
           error: null
         });
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('update project visibility error', visibility);
-
-        _this17.setState({
+        _this15.setState({
           error: error.message,
           loading: false
         });
@@ -4314,8 +4056,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleForgotPassword",
     value: function handleForgotPassword(event) {
-      var _this18 = this;
-
+      var _this16 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
@@ -4324,12 +4065,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         forgotPasswordSuccess: false
       });
       Object(dogoblock_api["j" /* forgotPassword */])(form.get('email')).then(function () {
-        return _this18.setState({
+        return _this16.setState({
           forgotPasswordSuccess: true,
           loading: false
         });
       }).catch(function (error) {
-        return _this18.setState({
+        return _this16.setState({
           error: error.message,
           loading: false
         });
@@ -4338,32 +4079,29 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleResetPassword",
     value: function handleResetPassword(event) {
-      var _this19 = this;
-
+      var _this17 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       var password = form.get('password');
       var confirm = form.get('confirm');
-
       if (password !== confirm) {
         this.setState({
           error: 'As senhas não coincidem.'
         });
         return;
       }
-
       this.setState({
         error: null,
         loading: true,
         resetPasswordSuccess: false
       });
       Object(dogoblock_api["E" /* resetPassword */])(this.state.route.token, password).then(function () {
-        return _this19.setState({
+        return _this17.setState({
           resetPasswordSuccess: true,
           loading: false
         });
       }).catch(function (error) {
-        return _this19.setState({
+        return _this17.setState({
           error: error.message,
           loading: false
         });
@@ -4382,21 +4120,19 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       this.setState({
         profileTab: event.currentTarget.dataset.tab
       });
-    } // ── Project Details handlers ─────────────────────────────────────────────
+    }
 
+    // ── Project Details handlers ─────────────────────────────────────────────
   }, {
     key: "handlePdLike",
     value: function handlePdLike() {
-      var _this20 = this;
-
+      var _this18 = this;
       var project = this.state.projectDetails;
       if (!project) return;
-
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var wasLiked = this.state.pdLiked;
       this.setState(function (prevState) {
         return {
@@ -4409,7 +4145,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         dogoblock_web_app_trackEvent(wasLiked ? 'unlike project' : 'like project', 'project details');
       }).catch(function () {
         // rollback on error
-        _this20.setState(function (prevState) {
+        _this18.setState(function (prevState) {
           return {
             pdLiked: wasLiked,
             pdLikeCount: prevState.pdLikeCount + (wasLiked ? 1 : -1)
@@ -4420,16 +4156,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdFavorite",
     value: function handlePdFavorite() {
-      var _this21 = this;
-
+      var _this19 = this;
       var project = this.state.projectDetails;
       if (!project) return;
-
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var wasFavorited = this.state.pdFavorited;
       this.setState(function (prevState) {
         return {
@@ -4441,7 +4174,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       action(project.id).then(function () {
         dogoblock_web_app_trackEvent(wasFavorited ? 'unfavorite project' : 'favorite project', 'project details');
       }).catch(function () {
-        _this21.setState(function (prevState) {
+        _this19.setState(function (prevState) {
           return {
             pdFavorited: wasFavorited,
             pdStarCount: prevState.pdStarCount + (wasFavorited ? 1 : -1)
@@ -4452,16 +4185,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdRemix",
     value: function handlePdRemix() {
-      var _this22 = this;
-
+      var _this20 = this;
       var project = this.state.projectDetails;
       if (!project) return;
-
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       if (this.state.pdRemixing) return;
       this.setState({
         pdRemixing: true,
@@ -4469,16 +4199,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["D" /* remixProject */])(project.id).then(function (result) {
         dogoblock_web_app_trackEvent('remix project success', 'project details');
-
-        _this22.setState({
+        _this20.setState({
           pdRemixing: false
         });
-
         dogoblock_web_app_navigate("/editor/".concat(result.id));
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('remix project error', 'project details');
-
-        _this22.setState({
+        _this20.setState({
           pdRemixing: false,
           error: err.message || 'Erro ao replicar projeto'
         });
@@ -4487,13 +4214,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdSaveDetails",
     value: function handlePdSaveDetails() {
-      var _this23 = this;
-
+      var _this21 = this;
       var project = this.state.projectDetails;
       if (!project || !this.props.user) return;
       var _this$state = this.state,
-          pdInstructions = _this$state.pdInstructions,
-          pdCredits = _this$state.pdCredits;
+        pdInstructions = _this$state.pdInstructions,
+        pdCredits = _this$state.pdCredits;
       this.setState({
         pdSavingDetails: true,
         error: null
@@ -4502,22 +4228,21 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         instructions: pdInstructions,
         notesAndCredits: pdCredits
       }).then(function (updated) {
-        _this23.setState(function (prevState) {
+        _this21.setState(function (prevState) {
           return {
             pdSavingDetails: false,
             pdSaveDetailsFeedback: true,
             projectDetails: Object.assign({}, prevState.projectDetails, updated)
           };
         });
-
-        if (_this23.pdSaveFeedbackTimer) clearTimeout(_this23.pdSaveFeedbackTimer);
-        _this23.pdSaveFeedbackTimer = setTimeout(function () {
-          return _this23.setState({
+        if (_this21.pdSaveFeedbackTimer) clearTimeout(_this21.pdSaveFeedbackTimer);
+        _this21.pdSaveFeedbackTimer = setTimeout(function () {
+          return _this21.setState({
             pdSaveDetailsFeedback: false
           });
         }, 2500);
       }).catch(function (err) {
-        return _this23.setState({
+        return _this21.setState({
           pdSavingDetails: false,
           error: err.message
         });
@@ -4547,15 +4272,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdCommentSubmit",
     value: function handlePdCommentSubmit() {
-      var _this24 = this;
-
+      var _this22 = this;
       var project = this.state.projectDetails;
-
       if (!project || !this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var content = this.state.pdCommentText.trim();
       if (!content) return;
       this.setState({
@@ -4563,8 +4285,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["A" /* postComment */])(project.id, content).then(function (comment) {
         dogoblock_web_app_trackEvent('comment project success', 'project details');
-
-        _this24.setState(function (prevState) {
+        _this22.setState(function (prevState) {
           return {
             pdComments: [comment].concat(_toConsumableArray(prevState.pdComments)),
             pdCommentText: '',
@@ -4573,8 +4294,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('comment project error', 'project details');
-
-        _this24.setState({
+        _this22.setState({
           pdCommentsLoading: false,
           error: err.message
         });
@@ -4590,13 +4310,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdDeleteComment",
     value: function handlePdDeleteComment(event) {
-      var _this25 = this;
-
+      var _this23 = this;
       var commentId = event.currentTarget.dataset.commentId;
       var project = this.state.projectDetails;
       if (!project || !commentId) return;
       Object(dogoblock_api["c" /* deleteComment */])(project.id, commentId).then(function () {
-        _this25.setState(function (prevState) {
+        _this23.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.filter(function (c) {
               return String(c.id) !== String(commentId);
@@ -4604,7 +4323,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this25.setState({
+        return _this23.setState({
           error: err.message
         });
       });
@@ -4636,18 +4355,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdReplySubmit",
     value: function handlePdReplySubmit() {
-      var _this26 = this;
-
+      var _this24 = this;
       var project = this.state.projectDetails;
       var _this$state2 = this.state,
-          pdReplyToId = _this$state2.pdReplyToId,
-          pdReplyText = _this$state2.pdReplyText;
-
+        pdReplyToId = _this$state2.pdReplyToId,
+        pdReplyText = _this$state2.pdReplyText;
       if (!project || !this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
       }
-
       var content = pdReplyText.trim();
       if (!content || !pdReplyToId) return;
       this.setState({
@@ -4655,8 +4371,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["A" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
         dogoblock_web_app_trackEvent('reply comment success', 'project details');
-
-        _this26.setState(function (prevState) {
+        _this24.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
               if (String(c.id) !== String(pdReplyToId)) return c;
@@ -4671,8 +4386,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('reply comment error', 'project details');
-
-        _this26.setState({
+        _this24.setState({
           pdReplyLoading: false,
           error: err.message
         });
@@ -4681,14 +4395,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdDeleteReply",
     value: function handlePdDeleteReply(event) {
-      var _this27 = this;
-
+      var _this25 = this;
       var replyId = event.currentTarget.dataset.replyId;
       var parentId = event.currentTarget.dataset.parentId;
       var project = this.state.projectDetails;
       if (!project || !replyId) return;
       Object(dogoblock_api["c" /* deleteComment */])(project.id, replyId).then(function () {
-        _this27.setState(function (prevState) {
+        _this25.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
               if (String(c.id) !== String(parentId)) return c;
@@ -4701,7 +4414,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this27.setState({
+        return _this25.setState({
           error: err.message
         });
       });
@@ -4709,8 +4422,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdCoverChange",
     value: function handlePdCoverChange(event) {
-      var _this28 = this;
-
+      var _this26 = this;
       var file = event.target.files && event.target.files[0];
       var project = this.state.projectDetails;
       if (!file || !project) return;
@@ -4718,26 +4430,25 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdUploadingCover: true
       });
       Object(dogoblock_api["K" /* uploadProjectCover */])(project.id, file).then(function (updated) {
-        _this28.setState(function (prevState) {
+        _this26.setState(function (prevState) {
           return {
             pdUploadingCover: false,
             projectDetails: Object.assign({}, prevState.projectDetails, updated)
           };
         });
       }).catch(function (err) {
-        return _this28.setState({
+        return _this26.setState({
           pdUploadingCover: false,
           error: err.message
         });
-      }); // reset input so same file can be selected again
-
+      });
+      // reset input so same file can be selected again
       event.target.value = '';
     }
   }, {
     key: "handleProfileSubmit",
     value: function handleProfileSubmit(event) {
-      var _this29 = this;
-
+      var _this27 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
@@ -4752,25 +4463,22 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         workingOn: form.get('workingOn')
       }).then(function (profile) {
         var session = Object(auth_session["c" /* readAuthSession */])();
-
         if (session && session.accessToken) {
           var nextSession = {
             accessToken: session.accessToken,
             user: Object.assign({}, session.user, profile)
           };
           Object(auth_session["d" /* writeAuthSession */])(nextSession);
-
-          _this29.props.onLoginSuccess(nextSession);
+          _this27.props.onLoginSuccess(nextSession);
         }
-
-        _this29.setState({
+        _this27.setState({
           profile: profile,
           profileTab: 'overview',
           loading: false,
           error: null
         });
       }).catch(function (error) {
-        return _this29.setState({
+        return _this27.setState({
           error: error.message,
           loading: false
         });
@@ -4840,8 +4548,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderHome",
     value: function renderHome() {
-      var _this30 = this;
-
+      var _this28 = this;
       var featured = (this.state.projects || []).slice(0, 4);
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.homePage
@@ -4882,7 +4589,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           className: dogoblock_web_app_default.a.featuredCard,
           "data-project-id": project.id,
           key: project.id,
-          onClick: _this30.handleOpenProjectDetails
+          onClick: _this28.handleOpenProjectDetails
         }, /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.featuredThumbnail
         }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
@@ -5056,8 +4763,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     value: function renderProjects() {
       var publicList = !this.props.user || this.state.route.name === 'explore';
       var _this$state3 = this.state,
-          searchQuery = _this$state3.searchQuery,
-          projects = _this$state3.projects;
+        searchQuery = _this$state3.searchQuery,
+        projects = _this$state3.projects;
       var filteredProjects = projects.filter(function (project) {
         if (!searchQuery.trim()) return true;
         var query = searchQuery.toLowerCase();
@@ -5101,8 +4808,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderProjectCards",
     value: function renderProjectCards(projects, canDeleteProjects) {
-      var _this31 = this;
-
+      var _this29 = this;
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.projectGrid
       }, projects.map(function (project) {
@@ -5112,7 +4818,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.projectCard,
           "data-project-id": project.id,
-          onClick: _this31.handleOpenProjectDetails
+          onClick: _this29.handleOpenProjectDetails
         }, /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.projectThumbnail
         }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
@@ -5133,7 +4839,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           "data-project-id": project.id,
           title: "Excluir projeto",
           "aria-label": "Excluir projeto ".concat(project.title),
-          onClick: _this31.handleDeleteProjectFromCard
+          onClick: _this29.handleDeleteProjectFromCard
         }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
           "aria-hidden": "true",
           size: 15
@@ -5145,9 +4851,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     value: function renderProfile() {
       var profile = this.state.profile || this.props.user || {};
       var projects = this.state.projects;
-      var favorites = this.state.favoriteProjects; // Use the first project as the "featured" one;
+      var favorites = this.state.favoriteProjects;
+      // Use the first project as the "featured" one;
       // prefer the fully-loaded details (with stats) if available
-
       var featuredProject = this.state.featuredProjectDetails || projects[0] || null;
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: "".concat(dogoblock_web_app_default.a.page, " ").concat(dogoblock_web_app_default.a.profilePage)
@@ -5303,28 +5009,27 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderProjectDetails",
     value: function renderProjectDetails() {
-      var _this32 = this;
-
+      var _this30 = this;
       var _this$state4 = this.state,
-          projectDetails = _this$state4.projectDetails,
-          loading = _this$state4.loading,
-          error = _this$state4.error,
-          route = _this$state4.route,
-          pdComments = _this$state4.pdComments,
-          pdCommentsLoading = _this$state4.pdCommentsLoading,
-          pdCommentText = _this$state4.pdCommentText,
-          pdReplyToId = _this$state4.pdReplyToId,
-          pdReplyText = _this$state4.pdReplyText,
-          pdReplyLoading = _this$state4.pdReplyLoading,
-          pdInstructions = _this$state4.pdInstructions,
-          pdCredits = _this$state4.pdCredits,
-          pdSavingDetails = _this$state4.pdSavingDetails,
-          pdSaveDetailsFeedback = _this$state4.pdSaveDetailsFeedback,
-          pdUploadingCover = _this$state4.pdUploadingCover,
-          pdLiked = _this$state4.pdLiked,
-          pdFavorited = _this$state4.pdFavorited,
-          pdLikeCount = _this$state4.pdLikeCount,
-          pdStarCount = _this$state4.pdStarCount;
+        projectDetails = _this$state4.projectDetails,
+        loading = _this$state4.loading,
+        error = _this$state4.error,
+        route = _this$state4.route,
+        pdComments = _this$state4.pdComments,
+        pdCommentsLoading = _this$state4.pdCommentsLoading,
+        pdCommentText = _this$state4.pdCommentText,
+        pdReplyToId = _this$state4.pdReplyToId,
+        pdReplyText = _this$state4.pdReplyText,
+        pdReplyLoading = _this$state4.pdReplyLoading,
+        pdInstructions = _this$state4.pdInstructions,
+        pdCredits = _this$state4.pdCredits,
+        pdSavingDetails = _this$state4.pdSavingDetails,
+        pdSaveDetailsFeedback = _this$state4.pdSaveDetailsFeedback,
+        pdUploadingCover = _this$state4.pdUploadingCover,
+        pdLiked = _this$state4.pdLiked,
+        pdFavorited = _this$state4.pdFavorited,
+        pdLikeCount = _this$state4.pdLikeCount,
+        pdStarCount = _this$state4.pdStarCount;
       var projectId = route.projectId;
       var project = projectDetails || {};
       var user = this.props.user;
@@ -5525,13 +5230,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdCommentItemAuthorLink,
           "data-username": commentUsername,
-          onClick: _this32.handleNavigatePublicProfile
+          onClick: _this30.handleNavigatePublicProfile
         }, "@".concat(commentAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
           className: dogoblock_web_app_default.a.pdCommentItemText
         }, comment.content), user ? /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdCommentReplyBtn,
           "data-comment-id": comment.id,
-          onClick: isReplying ? _this32.handlePdReplyCancel : _this32.handlePdReplyOpen
+          onClick: isReplying ? _this30.handlePdReplyCancel : _this30.handlePdReplyOpen
         }, /*#__PURE__*/react_default.a.createElement(message_circle["a" /* default */], {
           "aria-hidden": "true",
           size: 12
@@ -5556,16 +5261,16 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           placeholder: "Respondendo a @".concat(commentAuthor, "..."),
           rows: 2,
           value: pdReplyText,
-          onChange: _this32.handlePdReplyChange
+          onChange: _this30.handlePdReplyChange
         }), /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.pdCommentActions
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdBtnPublish,
           disabled: pdReplyLoading || !pdReplyText.trim(),
-          onClick: _this32.handlePdReplySubmit
+          onClick: _this30.handlePdReplySubmit
         }, pdReplyLoading ? 'Enviando...' : 'Responder'), /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdBtnCancel,
-          onClick: _this32.handlePdReplyCancel
+          onClick: _this30.handlePdReplyCancel
         }, 'Cancelar')))) : null, comment.replies && comment.replies.length > 0 ? /*#__PURE__*/react_default.a.createElement("ul", {
           className: dogoblock_web_app_default.a.pdReplyList
         }, comment.replies.map(function (reply) {
@@ -5585,7 +5290,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           }, /*#__PURE__*/react_default.a.createElement("button", {
             className: dogoblock_web_app_default.a.pdCommentItemAuthorLink,
             "data-username": replyUsername,
-            onClick: _this32.handleNavigatePublicProfile
+            onClick: _this30.handleNavigatePublicProfile
           }, "@".concat(replyAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
             className: dogoblock_web_app_default.a.pdCommentItemText
           }, reply.content)), canDeleteReply ? /*#__PURE__*/react_default.a.createElement("button", {
@@ -5593,7 +5298,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
             className: dogoblock_web_app_default.a.pdCommentItemDelete,
             "data-reply-id": reply.id,
             "data-parent-id": comment.id,
-            onClick: _this32.handlePdDeleteReply
+            onClick: _this30.handlePdDeleteReply
           }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
             "aria-hidden": "true",
             size: 14
@@ -5602,7 +5307,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           "aria-label": "Excluir coment\xE1rio",
           className: dogoblock_web_app_default.a.pdCommentItemDelete,
           "data-comment-id": comment.id,
-          onClick: _this32.handlePdDeleteComment
+          onClick: _this30.handlePdDeleteComment
         }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
           "aria-hidden": "true",
           size: 14
@@ -5615,9 +5320,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "renderForgotPassword",
     value: function renderForgotPassword() {
       var _this$state5 = this.state,
-          forgotPasswordSuccess = _this$state5.forgotPasswordSuccess,
-          loading = _this$state5.loading,
-          error = _this$state5.error;
+        forgotPasswordSuccess = _this$state5.forgotPasswordSuccess,
+        loading = _this$state5.loading,
+        error = _this$state5.error;
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.authSection
       }, /*#__PURE__*/react_default.a.createElement("div", {
@@ -5666,10 +5371,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "renderResetPassword",
     value: function renderResetPassword() {
       var _this$state6 = this.state,
-          resetPasswordSuccess = _this$state6.resetPasswordSuccess,
-          loading = _this$state6.loading,
-          error = _this$state6.error,
-          route = _this$state6.route;
+        resetPasswordSuccess = _this$state6.resetPasswordSuccess,
+        loading = _this$state6.loading,
+        error = _this$state6.error,
+        route = _this$state6.route;
       var hasToken = Boolean(route.token);
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.authSection
@@ -5718,16 +5423,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "renderPublicProfile",
     value: function renderPublicProfile() {
       var _this$state7 = this.state,
-          publicProfile = _this$state7.publicProfile,
-          loading = _this$state7.loading,
-          error = _this$state7.error;
-
+        publicProfile = _this$state7.publicProfile,
+        loading = _this$state7.loading,
+        error = _this$state7.error;
       if (loading && !publicProfile) {
         return /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.page
         }, /*#__PURE__*/react_default.a.createElement("p", null, 'Carregando perfil...'));
       }
-
       if (error && !publicProfile) {
         return /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.page
@@ -5735,7 +5438,6 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           className: dogoblock_web_app_default.a.error
         }, error));
       }
-
       if (!publicProfile) return null;
       var projects = publicProfile.projects || [];
       return /*#__PURE__*/react_default.a.createElement("div", {
@@ -5801,8 +5503,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "render",
     value: function render() {
-      var _this33 = this;
-
+      var _this31 = this;
       var route = this.state.route;
       var editor = route.name === 'editor';
       return /*#__PURE__*/react_default.a.createElement("div", {
@@ -5816,18 +5517,15 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       }, /*#__PURE__*/react_default.a.createElement(notifications_notification_toast, {
         notification: this.state.toastNotification,
         onClick: function onClick() {
-          _this33.handleDismissToast();
-
-          _this33.handleOpenNotification(_this33.state.toastNotification);
+          _this31.handleDismissToast();
+          _this31.handleOpenNotification(_this31.state.toastNotification);
         },
         onDismiss: this.handleDismissToast
       })) : null);
     }
   }]);
-
   return DogoblockWebApp;
 }(react_default.a.Component);
-
 dogoblock_web_app_DogoblockWebApp.propTypes = {
   onLoginSuccess: prop_types_default.a.func.isRequired,
   onLogout: prop_types_default.a.func.isRequired,
@@ -5839,13 +5537,11 @@ dogoblock_web_app_DogoblockWebApp.propTypes = {
     username: prop_types_default.a.string
   })
 };
-
 var dogoblock_web_app_mapStateToProps = function mapStateToProps(state) {
   return {
     user: state.session && state.session.session ? state.session.session.user : null
   };
 };
-
 var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onLoginSuccess: function onLoginSuccess(session) {
@@ -5859,18 +5555,15 @@ var dogoblock_web_app_mapDispatchToProps = function mapDispatchToProps(dispatch)
     }
   };
 };
-
 /* harmony default export */ var playground_dogoblock_web_app = (Object(react_redux_es["b" /* connect */])(dogoblock_web_app_mapStateToProps, dogoblock_web_app_mapDispatchToProps)(dogoblock_web_app_DogoblockWebApp));
 // EXTERNAL MODULE: ./src/lib/hash-parser-hoc.jsx
-var hash_parser_hoc = __webpack_require__(295);
+var hash_parser_hoc = __webpack_require__(322);
 
 // EXTERNAL MODULE: ./src/lib/log.js
-var log = __webpack_require__(59);
+var log = __webpack_require__(60);
 
 // CONCATENATED MODULE: ./src/playground/render-gui.jsx
-function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { render_gui_typeof = function _typeof(obj) { return typeof obj; }; } else { render_gui_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return render_gui_typeof(obj); }
-
-
+function render_gui_typeof(o) { "@babel/helpers - typeof"; return render_gui_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, render_gui_typeof(o); }
 
 
 
@@ -5885,35 +5578,27 @@ function render_gui_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol =
 var render_gui_onClickCheckUpdate = function onClickCheckUpdate() {
   Object(log["a" /* default */])('User click check update');
 };
-
 var render_gui_onClickUpdate = function onClickUpdate() {
   Object(log["a" /* default */])('User click update');
 };
-
 var render_gui_onAbortUpdate = function onAbortUpdate() {
   Object(log["a" /* default */])('User click abort update');
 };
-
 var render_gui_onClickClearCache = function onClickClearCache() {
   Object(log["a" /* default */])('User click clear cahce');
 };
-
 var render_gui_onClickInstallDriver = function onClickInstallDriver() {
   Object(log["a" /* default */])('User click install driver');
 };
-
 var render_gui_handleTelemetryModalCancel = function handleTelemetryModalCancel() {
   Object(log["a" /* default */])('User canceled telemetry modal');
 };
-
 var render_gui_handleTelemetryModalOptIn = function handleTelemetryModalOptIn() {
   Object(log["a" /* default */])('User opted into telemetry');
 };
-
 var render_gui_handleTelemetryModalOptOut = function handleTelemetryModalOptOut() {
   Object(log["a" /* default */])('User opted out of telemetry');
 };
-
 var onClickAbout = [{
   title: /*#__PURE__*/react_default.a.createElement(index_es["a" /* FormattedMessage */], {
     defaultMessage: "About",
@@ -5947,7 +5632,6 @@ var onClickAbout = [{
     return Object(log["a" /* default */])('Data Settings');
   }
 }];
-
 var render_gui_handleShowMessageBox = function handleShowMessageBox(type, message) {
   if (type === message_box["a" /* default */].confirm) {
     return confirm(message); // eslint-disable-line no-alert
@@ -5955,25 +5639,24 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
     return alert(message); // eslint-disable-line no-alert
   }
 };
+
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
  * {object} appTarget - the DOM element to render to
  */
-
-
 /* harmony default export */ var render_gui = __webpack_exports__["default"] = (function (appTarget) {
-  gui["a" /* default */].setAppElement(appTarget); // note that redux's 'compose' function is just being used as a general utility to make
+  gui["a" /* default */].setAppElement(appTarget);
+
+  // note that redux's 'compose' function is just being used as a general utility to make
   // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
   // ability to compose reducers.
-
   var WrappedGui = Object(es["d" /* compose */])(app_state_hoc["a" /* default */], hash_parser_hoc["a" /* default */])(gui["a" /* default */]);
   var WrappedStandaloneGui = Object(app_state_hoc["a" /* default */])(gui["a" /* default */]);
   var WrappedDogoblockWebApp = Object(app_state_hoc["a" /* default */])(playground_dogoblock_web_app);
   var isTauriLight = "false" === 'true';
   var scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
   var simulateScratchDesktop;
-
   if (scratchDesktopMatches) {
     try {
       // parse 'true' into `true`, 'false' into `false`, etc.
@@ -5984,16 +5667,13 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
       simulateScratchDesktop = scratchDesktopMatches[1];
     }
   }
-
   if ( true && (typeof window === "undefined" ? "undefined" : render_gui_typeof(window)) === 'object') {
     // Warn before navigating away
     window.onbeforeunload = function () {
       return true;
     };
   }
-
   var app;
-
   if (isTauriLight) {
     app = /*#__PURE__*/react_default.a.createElement(WrappedStandaloneGui, {
       canEditTitle: true,
@@ -6021,17 +5701,16 @@ var render_gui_handleShowMessageBox = function handleShowMessageBox(type, messag
   } else {
     app = /*#__PURE__*/react_default.a.createElement(WrappedDogoblockWebApp, null);
   }
-
   react_dom_default.a.render(app, appTarget);
 });
 
 /***/ }),
 
-/***/ 225:
+/***/ 244:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2062);
+var content = __webpack_require__(2110);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -6053,11 +5732,11 @@ if(false) {}
 
 /***/ }),
 
-/***/ 226:
+/***/ 245:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2063);
+var content = __webpack_require__(2111);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -6083,33 +5762,7 @@ if(false) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(2064);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(22)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ 972:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(1672);
+var content = __webpack_require__(2112);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -6131,5 +5784,4 @@ if(false) {}
 
 /***/ })
 
-},[[1230,0]]]);
-//# sourceMappingURL=gui.js.map
+},[[1278,0]]]);
