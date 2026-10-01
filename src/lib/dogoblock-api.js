@@ -1,45 +1,129 @@
 import {getApiHost, getProjectHost} from './dogoblock-api-config';
-import {getAuthHeaders, writeAuthSession, clearAuthSession} from './auth-session';
+import {
+    clearAuthSession,
+    getAuthHeaders,
+    readAuthSession,
+    writeAuthSession
+} from './auth-session';
+
+let authSessionChangeHandler = null;
+let refreshRequest = null;
+
+class ApiError extends Error {
+    constructor (message, status) {
+        super(message);
+        this.name = 'ApiError';
+        this.status = status;
+    }
+}
 
 const parseJson = response => response.text().then(text => {
     if (!text) return null;
     return JSON.parse(text);
 });
 
-const request = (path, options = {}) => {
+const createResponseError = response => parseJson(response)
+    .catch(() => null)
+    .then(body => {
+        const message = body && body.message ? body.message : `HTTP ${response.status}`;
+        return new ApiError(Array.isArray(message) ? message.join(', ') : message, response.status);
+    });
+
+const fetchApi = (path, options = {}) => {
     const headers = Object.assign(
         {},
         options.skipAuth ? {} : getAuthHeaders(),
         options.headers || {}
     );
-    return fetch(`${getApiHost()}${path}`, Object.assign({}, options, {headers}))
-        .then(response => {
-            if (response.ok) return parseJson(response);
-            return parseJson(response)
-                .catch(() => null)
-                .then(body => {
-                    const message = body && body.message ? body.message : `HTTP ${response.status}`;
-                    throw new Error(Array.isArray(message) ? message.join(', ') : message);
-                });
-        });
+    const fetchOptions = Object.assign({}, options, {headers});
+    delete fetchOptions.skipAuth;
+    delete fetchOptions.skipRefresh;
+    return fetch(`${getApiHost()}${path}`, fetchOptions);
 };
 
-const requestRaw = (path, options = {}) => {
-    const headers = Object.assign(
-        {},
-        options.skipAuth ? {} : getAuthHeaders(),
-        options.headers || {}
-    );
-    return fetch(`${getApiHost()}${path}`, Object.assign({}, options, {headers}))
-        .then(response => {
-            if (response.ok) return response;
-            return parseJson(response)
-                .catch(() => null)
-                .then(body => {
-                    const message = body && body.message ? body.message : `HTTP ${response.status}`;
-                    throw new Error(Array.isArray(message) ? message.join(', ') : message);
-                });
+const notifyAuthSessionChange = session => {
+    if (typeof authSessionChangeHandler === 'function') {
+        authSessionChangeHandler(session);
+    }
+};
+
+const expireAuthSession = () => {
+    const hadSession = Boolean(readAuthSession());
+    clearAuthSession();
+    if (hadSession) notifyAuthSessionChange(null);
+};
+
+const refreshAuthSession = () => {
+    if (refreshRequest) return refreshRequest;
+
+    const currentSession = readAuthSession();
+    if (!currentSession || !currentSession.refreshToken) {
+        return Promise.reject(new ApiError('Sessão expirada', 401));
+    }
+
+    const operation = fetchApi('/auth/refresh', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({refreshToken: currentSession.refreshToken}),
+        skipAuth: true,
+        skipRefresh: true
+    }).then(response => {
+        if (!response.ok) {
+            return createResponseError(response).then(error => Promise.reject(error));
+        }
+        return parseJson(response);
+    })
+        .then(session => {
+            writeAuthSession(session);
+            notifyAuthSessionChange(session);
+            return session;
         });
+
+    refreshRequest = operation.then(
+        session => {
+            refreshRequest = null;
+            return session;
+        },
+        error => {
+            refreshRequest = null;
+            throw error;
+        });
+    return refreshRequest;
+};
+
+const fetchWithSession = (path, options = {}, retried = false) => fetchApi(path, options)
+    .then(response => {
+        if (response.status !== 401 || options.skipAuth || options.skipRefresh) {
+            return response;
+        }
+        if (retried) {
+            expireAuthSession();
+            return response;
+        }
+
+        return refreshAuthSession().then(
+            () => fetchWithSession(path, options, true),
+            () => {
+                expireAuthSession();
+                return response;
+            }
+        );
+    });
+
+const request = (path, options = {}) => fetchWithSession(path, options)
+    .then(response => {
+        if (response.ok) return parseJson(response);
+        return createResponseError(response).then(error => Promise.reject(error));
+    });
+
+const requestRaw = (path, options = {}) => fetchWithSession(path, options)
+    .then(response => {
+        if (response.ok) return response;
+        return createResponseError(response).then(error => Promise.reject(error));
+    });
+
+const setAuthSessionChangeHandler = handler => {
+    authSessionChangeHandler = typeof handler === 'function' ? handler : null;
 };
 
 const login = credentials => request('/auth/login', {
@@ -63,7 +147,16 @@ const register = data => request('/auth/register', {
 });
 
 const logout = () => {
+    const session = readAuthSession();
     clearAuthSession();
+    if (!session || !session.refreshToken) return Promise.resolve();
+    return request('/auth/logout', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({refreshToken: session.refreshToken}),
+        skipAuth: true,
+        skipRefresh: true
+    }).catch(() => null);
 };
 
 const me = () => request('/auth/me');
@@ -220,6 +313,7 @@ export {
     register,
     forgotPassword,
     resetPassword,
+    setAuthSessionChangeHandler,
     getMyProfile,
     getPublicUserProfile,
     updateProjectVisibility,

@@ -48,6 +48,7 @@ import {
     register,
     forgotPassword,
     resetPassword,
+    setAuthSessionChangeHandler,
     updateMyProfile,
     updateProjectVisibility,
     updateProjectDetails,
@@ -265,6 +266,7 @@ class DogoblockWebApp extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleAuthSessionChange = this.handleAuthSessionChange.bind(this);
         this.handleImportProject = this.handleImportProject.bind(this);
         this.handleDeleteProject = this.handleDeleteProject.bind(this);
         this.handleProjectCreated = this.handleProjectCreated.bind(this);
@@ -327,6 +329,7 @@ class DogoblockWebApp extends React.Component {
 
     componentDidMount () {
         window.addEventListener('hashchange', this.handleHashChange);
+        setAuthSessionChangeHandler(this.handleAuthSessionChange);
         this.loadRouteData(this.state.route);
         this._notificationsManager = new NotificationsManager();
         this._notificationsManager.onNotification = notification => {
@@ -349,6 +352,7 @@ class DogoblockWebApp extends React.Component {
 
     componentWillUnmount () {
         window.removeEventListener('hashchange', this.handleHashChange);
+        setAuthSessionChangeHandler(null);
         if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
         if (this._toastTimer) clearTimeout(this._toastTimer);
         if (this._notificationsManager) this._notificationsManager.disconnect();
@@ -420,14 +424,20 @@ class DogoblockWebApp extends React.Component {
                         }).catch(() => { /* silently ignore */ });
                     }
                 })
-                .catch(error => this.setState({error: error.message, loading: false}));
+                .catch(error => this.setState({
+                    error: error.status === 401 ? null : error.message,
+                    loading: false
+                }));
         }
         if (route.name === 'projects' || route.name === 'explore') {
             this.setState({loading: true});
             const loader = this.props.user && route.name === 'projects' ? listProjects : listPublicProjects;
             loader()
                 .then(projects => this.setState({projects, loading: false}))
-                .catch(error => this.setState({error: error.message, loading: false}));
+                .catch(error => this.setState({
+                    error: error.status === 401 ? null : error.message,
+                    loading: false
+                }));
         }
         if (route.name === 'publicProfile') {
             const {username} = route;
@@ -525,15 +535,49 @@ class DogoblockWebApp extends React.Component {
 
     handleLogout () {
         trackEvent('logout', 'header');
-        this.closeNotificationsStream();
-        apiLogout();
+        if (this._notificationsManager) this._notificationsManager.disconnect();
+        apiLogout().catch(() => { });
         this.props.onLogout();
         this.setState({
             notifications: [],
             unreadCount: 0,
+            notificationsLoading: false,
+            profile: null,
+            favoriteProjects: [],
+            error: null
+        }, () => {
+            if (this.state.route.name === 'projects') {
+                this.loadRouteData({name: 'projects'});
+            } else {
+                navigate('/projects');
+            }
+        });
+    }
+
+    handleAuthSessionChange (session) {
+        if (session) {
+            this.props.onLoginSuccess(session);
+            if (this._notificationsManager) {
+                this._notificationsManager.connect(session.accessToken);
+            }
+            return;
+        }
+
+        if (this._notificationsManager) this._notificationsManager.disconnect();
+        this.props.onLogout();
+        this.setState({
+            error: null,
+            profile: null,
+            favoriteProjects: [],
+            notifications: [],
+            unreadCount: 0,
             notificationsLoading: false
         });
-        navigate('/projects');
+        if (this.state.route.name === 'profile') {
+            navigate(loginRouteFor('/profile'));
+        } else if (this.state.route.name === 'projects') {
+            navigate(loginRouteFor('/projects'));
+        }
     }
 
     setupNotifications () {
@@ -1116,10 +1160,9 @@ class DogoblockWebApp extends React.Component {
             .then(profile => {
                 const session = readAuthSession();
                 if (session && session.accessToken) {
-                    const nextSession = {
-                        accessToken: session.accessToken,
+                    const nextSession = Object.assign({}, session, {
                         user: Object.assign({}, session.user, profile)
-                    };
+                    });
                     writeAuthSession(nextSession);
                     this.props.onLoginSuccess(nextSession);
                 }

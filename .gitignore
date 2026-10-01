@@ -20,4 +20,7 @@ npm-*
 .vercel
 /.openblock-vm
 
+# Local environment variables and secrets
 .env
+.env.local
+.env.*.local
