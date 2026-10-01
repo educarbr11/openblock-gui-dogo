@@ -215,14 +215,19 @@
     z-index: $z-index-menu-bar;
 }
 
-.feedback-link {
-    color: $motion-primary;
-    text-decoration: none;
+.feedback-menu-item {
+    min-width: 2.75rem;
+    border: 0;
+    padding: 0 0.7rem;
+    background: transparent;
+    color: $ui-white;
+    font: inherit;
+    cursor: pointer;
 }
 
-.feedback-button {
-    background-color: $ui-white;
-    height: 34px;
+.feedback-icon {
+    display: block;
+    flex: 0 0 auto;
 }
 
 .divider {

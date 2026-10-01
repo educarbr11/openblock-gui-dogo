@@ -4,7 +4,7 @@ import React from 'react';
 
 import styles from './legal-page.css';
 
-const LAST_UPDATED = '24 de agosto de 2026';
+const LAST_UPDATED = '1 de outubro de 2026';
 const CONTACT_EMAIL = 'contato@editoradogomaker.com';
 
 const scrollToSection = event => {
@@ -287,6 +287,10 @@ const PrivacyPolicy = () => {
                                 <td>{'Atendimento'}</td>
                                 <td>{'E-mail e conteúdo das solicitações enviadas ao suporte ou sobre direitos de privacidade.'}</td>
                             </tr>
+                            <tr>
+                                <td>{'Feedback e diagnóstico de falhas'}</td>
+                                <td>{'Mensagem enviada pelo usuário, nome e e-mail quando informados, versão do aplicativo, plataforma, idioma, rota, placa selecionada, modo de programação e detalhes técnicos da falha.'}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -338,6 +342,9 @@ const PrivacyPolicy = () => {
                     {'Quando configurado, o Google Analytics 4 coleta informações de navegação e desempenho, podendo usar identificadores e cookies analíticos. Esses dados ajudam a entender páginas acessadas, eventos de uso, erros e características gerais do dispositivo. O provedor pode tratar dados conforme seus próprios termos e políticas.'}
                 </p>
                 <p>
+                    {'Quando configurado, o Sentry recebe relatos enviados pelo formulário de feedback e registros técnicos de falhas inesperadas do Web ou Desktop. O envio automático não inclui o projeto, o código gerado, imagens, credenciais ou logs seriais. Uma captura de tela somente é enviada quando o usuário decide anexá-la ao feedback. Nome e e-mail somente são enviados quando o usuário os informa no formulário.'}
+                </p>
+                <p>
                     {'Você pode bloquear ou apagar cookies e dados locais nas configurações do navegador. O bloqueio do armazenamento estritamente necessário pode impedir login e outras funcionalidades. Bloqueadores de conteúdo também podem impedir a medição analítica.'}
                 </p>
             </section>
@@ -349,6 +356,7 @@ const PrivacyPolicy = () => {
                     <li>{'provedores de hospedagem, banco de dados, entrega de conteúdo e armazenamento, incluindo infraestrutura Cloudflare quando configurada;'}</li>
                     <li>{'provedores de e-mail para recuperação de senha e comunicações operacionais;'}</li>
                     <li>{'Google Analytics, quando a medição estiver habilitada;'}</li>
+                    <li>{'Sentry, para receber feedback e diagnosticar falhas técnicas quando a integração estiver configurada;'}</li>
                     <li>{'prestadores que apoiem segurança, manutenção e atendimento;'}</li>
                     <li>{'autoridades públicas, mediante obrigação legal, ordem válida ou necessidade de exercício de direitos;'}</li>
                     <li>{'outra organização em reorganização societária, observados a legislação e os direitos dos titulares.'}</li>
@@ -359,7 +367,7 @@ const PrivacyPolicy = () => {
             <section id="transferencia">
                 <h2>{'8. Transferência internacional'}</h2>
                 <p>
-                    {'Alguns fornecedores de infraestrutura e analytics podem armazenar ou processar dados fora do Brasil. Nesses casos, buscamos utilizar fornecedores e mecanismos compatíveis com a LGPD e limitar o compartilhamento ao necessário para a finalidade informada.'}
+                    {'Alguns fornecedores de infraestrutura, analytics e diagnóstico de falhas, incluindo Google Analytics e Sentry quando configurados, podem armazenar ou processar dados fora do Brasil. Nesses casos, buscamos utilizar fornecedores e mecanismos compatíveis com a LGPD e limitar o compartilhamento ao necessário para a finalidade informada.'}
                 </p>
             </section>
 

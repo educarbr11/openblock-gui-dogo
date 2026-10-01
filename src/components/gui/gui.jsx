@@ -39,6 +39,7 @@ import MachineLearningModal from '../../containers/machine-learning-modal.jsx';
 import MachineLearningResult from '../../containers/machine-learning-result.jsx';
 import HandPoseDetectionResult from '../../containers/hand-pose-detection-result.jsx';
 import HandGestureTrainer from '../../containers/hand-gesture-trainer.jsx';
+import FeedbackModal from '../../containers/feedback-modal.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
@@ -93,6 +94,7 @@ const GUIComponent = props => {
         costumeLibraryVisible,
         updateModalVisible,
         enableCommunity,
+        feedbackModalVisible,
         intl,
         isCreating,
         isFullScreen,
@@ -129,6 +131,7 @@ const GUIComponent = props => {
         onProjectTelemetryEvent,
         onRequestCloseBackdropLibrary,
         onRequestCloseCostumeLibrary,
+        onRequestCloseFeedbackModal,
         onRequestCloseTelemetryModal,
         onRemoveResourcePack,
         onSeeCommunity,
@@ -275,6 +278,9 @@ const GUIComponent = props => {
                         ) : null}
                         {handPoseGestureTrainerVisible ? (
                             <HandGestureTrainer vm={vm} />
+                        ) : null}
+                        {feedbackModalVisible ? (
+                            <FeedbackModal onRequestClose={onRequestCloseFeedbackModal} />
                         ) : null}
                         <MenuBar
                             accountNavOpen={accountNavOpen}
@@ -534,6 +540,7 @@ GUIComponent.propTypes = {
     costumeLibraryVisible: PropTypes.bool,
     costumesTabVisible: PropTypes.bool,
     enableCommunity: PropTypes.bool,
+    feedbackModalVisible: PropTypes.bool,
     handPoseDetectionResultVisible: PropTypes.bool,
     handPoseGestureTrainerVisible: PropTypes.bool,
     intl: intlShape.isRequired,
@@ -564,6 +571,7 @@ GUIComponent.propTypes = {
     onOpenRegistration: PropTypes.func,
     onRequestCloseBackdropLibrary: PropTypes.func,
     onRequestCloseCostumeLibrary: PropTypes.func,
+    onRequestCloseFeedbackModal: PropTypes.func,
     onRequestCloseTelemetryModal: PropTypes.func,
     onRemoveResourcePack: PropTypes.func,
     onSeeCommunity: PropTypes.func,

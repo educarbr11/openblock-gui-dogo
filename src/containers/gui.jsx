@@ -27,7 +27,8 @@ import {
     openHandPoseGestureTrainer,
     openMachineLearningResult,
     openMachineLearningTrainer,
-    openExtensionLibrary
+    openExtensionLibrary,
+    closeFeedbackModal
 } from '../reducers/modals';
 
 import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
@@ -179,6 +180,7 @@ const mapStateToProps = state => {
         isShowingProject: getIsShowingProject(loadingState),
         handPoseDetectionResultVisible: state.scratchGui.modals.handPoseDetectionResult,
         handPoseGestureTrainerVisible: state.scratchGui.modals.handPoseGestureTrainer,
+        feedbackModalVisible: state.scratchGui.modals.feedbackModal,
         loadingStateVisible: state.scratchGui.modals.loadingProject,
         machineLearningResultVisible: state.scratchGui.modals.machineLearningResult,
         machineLearningTrainerVisible: state.scratchGui.modals.machineLearningTrainer,
@@ -208,7 +210,8 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    onRequestCloseFeedbackModal: () => dispatch(closeFeedbackModal())
 });
 
 const ConnectedGUI = injectIntl(connect(

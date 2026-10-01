@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
 import bowser from 'bowser';
 import React from 'react';
+import {MessageSquareWarning} from 'lucide-react';
 
 import VM from 'openblock-vm';
 
@@ -37,7 +38,8 @@ import {
     openUploadProgress,
     openUpdateModal,
     openConnectionModal,
-    openDeviceLibrary
+    openDeviceLibrary,
+    openFeedbackModal
 } from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
@@ -115,6 +117,7 @@ import saveSvgAsPng from 'openblock-save-svg-as-png';
 import {showAlertWithTimeout} from '../../reducers/alerts';
 import {setProjectChanged} from '../../reducers/project-changed';
 import {setPendingProjectCover} from '../../reducers/project-cover';
+import {isFeedbackEnabled} from '../../lib/sentry';
 
 const ariaMessages = defineMessages({
     language: {
@@ -136,6 +139,11 @@ const ariaMessages = defineMessages({
         id: 'gui.menuBar.wiki',
         defaultMessage: 'Wiki',
         description: 'accessibility text for the wiki button'
+    },
+    feedback: {
+        id: 'gui.menuBar.feedback',
+        defaultMessage: 'Send feedback',
+        description: 'accessibility text for the feedback button'
     }
 });
 
@@ -1003,6 +1011,25 @@ class MenuBar extends React.Component {
                                 src={screenshotIcon}
                             />
                         </div>
+                        {isFeedbackEnabled() ? (
+                            <button
+                                aria-label={this.props.intl.formatMessage(ariaMessages.feedback)}
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable,
+                                    styles.feedbackMenuItem
+                                )}
+                                title={this.props.intl.formatMessage(ariaMessages.feedback)}
+                                type="button"
+                                onClick={this.props.onOpenFeedbackModal}
+                            >
+                                <MessageSquareWarning
+                                    aria-hidden="true"
+                                    className={styles.feedbackIcon}
+                                    size={20}
+                                />
+                            </button>
+                        ) : null}
                         {isTauriLight ? null : (
                             <React.Fragment>
                                 <Divider className={classNames(styles.divider)} />
@@ -1170,6 +1197,7 @@ MenuBar.propTypes = {
     onLogOut: PropTypes.func,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenRegistration: PropTypes.func,
+    onOpenFeedbackModal: PropTypes.func,
     onOpenTipLibrary: PropTypes.func,
     onProjectTelemetryEvent: PropTypes.func,
     onRequestOpenAbout: PropTypes.func,
@@ -1260,6 +1288,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
     autoUpdateProject: () => dispatch(autoUpdateProject()),
     onOpenTipLibrary: () => dispatch(openTipsLibrary()),
+    onOpenFeedbackModal: () => dispatch(openFeedbackModal()),
     onClickAccount: () => dispatch(openAccountMenu()),
     onRequestCloseAccount: () => dispatch(closeAccountMenu()),
     onClickFile: () => dispatch(openFileMenu()),

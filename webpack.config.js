@@ -9,6 +9,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const {sentryWebpackPlugin} = require('@sentry/webpack-plugin');
 
 // PostCss
 var autoprefixer = require('autoprefixer');
@@ -19,6 +20,13 @@ const createHash = crypto.createHash;
 crypto.createHash = algorithm => createHash(algorithm === 'md4' ? 'sha256' : algorithm);
 
 const loadDotEnv = () => {
+    const isHostedBuild = process.env.NODE_ENV === 'production' ||
+        process.env.CI === 'true' ||
+        process.env.CI === '1' ||
+        process.env.VERCEL === '1' ||
+        process.env.VERCEL === 'true';
+    if (isHostedBuild) return;
+
     const envPath = path.resolve(__dirname, '.env');
     if (!fs.existsSync(envPath)) return;
     fs.readFileSync(envPath, 'utf8')
@@ -43,6 +51,9 @@ const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
 const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
+const SENTRY_TUNNEL_URL = process.env.SENTRY_TUNNEL_URL || `${DOGOBLOCK_API_HOST}/observability/envelope`;
+const SENTRY_RELEASE = process.env.SENTRY_RELEASE || (process.env.VERCEL_GIT_COMMIT_SHA ?
+    `dogoblock-web@${process.env.VERCEL_GIT_COMMIT_SHA}` : '');
 const envDefinitions = {
     'process.env.NODE_ENV': JSON.stringify(BUILD_NODE_ENV),
     'process.env.DEBUG': Boolean(process.env.DEBUG),
@@ -50,7 +61,11 @@ const envDefinitions = {
     'process.env.GA_DEBUG': JSON.stringify(process.env.GA_DEBUG || 'false'),
     'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
     'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
-    'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false')
+    'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false'),
+    'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
+    'process.env.SENTRY_ENVIRONMENT': JSON.stringify(process.env.SENTRY_ENVIRONMENT || BUILD_NODE_ENV),
+    'process.env.SENTRY_RELEASE': JSON.stringify(SENTRY_RELEASE),
+    'process.env.SENTRY_TUNNEL_URL': JSON.stringify(SENTRY_TUNNEL_URL)
 };
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 const workspaceRoot = path.resolve(__dirname, '..');
@@ -67,9 +82,45 @@ const WATCH_IGNORED = [
     path.resolve(__dirname, 'node_modules')
 ];
 
+class RemoveSourceMapsPlugin {
+    apply (compiler) {
+        compiler.hooks.done.tap('RemoveSourceMapsPlugin', () => {
+            const removeMaps = directory => {
+                if (!fs.existsSync(directory)) return;
+                fs.readdirSync(directory, {withFileTypes: true}).forEach(entry => {
+                    const entryPath = path.join(directory, entry.name);
+                    if (entry.isDirectory()) removeMaps(entryPath);
+                    else if (entry.name.endsWith('.map')) fs.unlinkSync(entryPath);
+                });
+            };
+            removeMaps(compiler.options.output.path);
+        });
+    }
+}
+
+const createSentryWebpackPlugins = outputPath => {
+    if (BUILD_NODE_ENV !== 'production') return [];
+    if (!process.env.SENTRY_AUTH_TOKEN || !process.env.SENTRY_ORG ||
+        !process.env.SENTRY_PROJECT || !SENTRY_RELEASE) {
+        return [new RemoveSourceMapsPlugin()];
+    }
+
+    return [sentryWebpackPlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        release: {name: SENTRY_RELEASE},
+        sourcemaps: {
+            assets: path.join(outputPath, '**/*.js'),
+            filesToDeleteAfterUpload: path.join(outputPath, '**/*.js.map')
+        },
+        telemetry: false
+    })];
+};
+
 const base = {
     mode: BUILD_NODE_ENV === 'production' ? 'production' : 'development',
-    devtool: 'cheap-module-source-map',
+    devtool: BUILD_NODE_ENV === 'production' ? 'hidden-source-map' : 'cheap-module-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         host: '0.0.0.0',
@@ -212,8 +263,7 @@ module.exports = [
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
-                title: 'DoGoBlock',
-                sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
+                title: 'DoGoBlock'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'blocksonly'],
@@ -250,7 +300,7 @@ module.exports = [
                 from: 'extension-worker.{js,js.map}',
                 context: path.join(openBlockVMPath, 'dist', 'web')
             }])
-        ])
+        ]).concat(createSentryWebpackPlugins(path.resolve(__dirname, 'build')))
     })
 ].concat(
     process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist' ? (
@@ -297,6 +347,6 @@ module.exports = [
                     to: 'libraries',
                     flatten: true
                 }])
-            ])
+            ]).concat(createSentryWebpackPlugins(path.resolve(__dirname, 'dist')))
         })) : []
 );

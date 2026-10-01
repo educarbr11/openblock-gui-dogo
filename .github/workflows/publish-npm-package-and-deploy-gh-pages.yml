@@ -53,6 +53,9 @@ jobs:
         env:
           NODE_ENV: production
           GA_ID: ${{ secrets.GA_ID }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
+          SENTRY_RELEASE: dogoblock-web@${{ github.sha }}
           NODE_OPTIONS: --max-old-space-size=4000
           OPENBLOCK_VM_PATH: ${{ github.workspace }}/openblock-vm
         run: npm run build
@@ -125,6 +128,12 @@ jobs:
         env:
           NODE_ENV: production
           GA_ID: ${{ secrets.GA_ID }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: production
+          SENTRY_RELEASE: dogoblock-web@${{ github.sha }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           NODE_OPTIONS: --max-old-space-size=4000
           OPENBLOCK_VM_PATH: ${{ github.workspace }}/openblock-vm
         run: npm run build

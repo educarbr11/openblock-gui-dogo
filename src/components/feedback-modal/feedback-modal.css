@@ -1,0 +1,450 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+
+.modal-content {
+    display: flex;
+    width: calc(100vw - 2rem);
+    max-width: 42rem;
+    height: min(48rem, calc(100vh - 2rem));
+    max-height: calc(100vh - 2rem);
+    margin: 1rem auto;
+    background: $ui-white;
+}
+
+.modal-content > div {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+}
+
+.modal-header {
+    flex: 0 0 auto;
+}
+
+.form {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    background: $ui-white;
+    overflow: hidden;
+}
+
+.form-body {
+    min-height: 0;
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.success-body {
+    padding: 1.5rem;
+    background: $ui-white;
+}
+
+.intro {
+    margin: 0 0 1.25rem;
+    color: $text-primary;
+    line-height: 1.45;
+}
+
+.category-fieldset {
+    margin: 0 0 1.25rem;
+    border: 0;
+    padding: 0;
+}
+
+.category-fieldset legend,
+.field > span {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: $text-primary;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.category-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.category-button {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.4rem;
+    background: $ui-secondary;
+    color: $text-primary;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.category-button:hover,
+.category-button:focus {
+    border-color: $motion-primary;
+    outline: none;
+}
+
+.category-button-selected {
+    border-color: $motion-primary;
+    background: $motion-transparent;
+    color: $motion-primary;
+    box-shadow: 0 0 0 1px $motion-primary;
+}
+
+.field {
+    position: relative;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.4rem;
+    padding: 0.7rem 0.75rem;
+    background: $ui-white;
+    color: $text-primary;
+    font: inherit;
+    user-select: text;
+}
+
+.field textarea {
+    min-height: 7rem;
+    resize: vertical;
+    padding-bottom: 1.5rem;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: $motion-primary;
+    box-shadow: 0 0 0 2px $motion-transparent;
+    outline: none;
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+    border-color: $error-primary;
+}
+
+.identity-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.screenshot-section {
+    position: relative;
+    margin-bottom: 1rem;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.4rem;
+    padding: 0.85rem;
+    background: $ui-secondary;
+}
+
+.screenshot-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.screenshot-header strong {
+    color: $text-primary;
+    font-size: 0.82rem;
+}
+
+.screenshot-header p {
+    max-width: 22rem;
+    margin: 0.25rem 0 0;
+    color: $text-primary-transparent;
+    font-size: 0.76rem;
+    line-height: 1.35;
+}
+
+.screenshot-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.45rem;
+}
+
+.attachment-button {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.35rem;
+    padding: 0.45rem 0.65rem;
+    background: $ui-white;
+    color: $text-primary;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.attachment-button:hover,
+.attachment-button:focus {
+    border-color: $motion-primary;
+    color: $motion-primary;
+    outline: none;
+}
+
+.attachment-button:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+.file-input {
+    display: none;
+}
+
+.screenshot-preview {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.8rem;
+    border-top: 1px solid $ui-black-transparent;
+    padding-top: 0.8rem;
+}
+
+.screenshot-preview img {
+    width: 7rem;
+    height: 4.25rem;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    background: $ui-white;
+    object-fit: cover;
+}
+
+.screenshot-details {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.screenshot-details span {
+    overflow: hidden;
+    color: $text-primary;
+    font-size: 0.78rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.screenshot-details button {
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0.35rem;
+    background: transparent;
+    color: $error-primary;
+    cursor: pointer;
+}
+
+.screenshot-details button:hover,
+.screenshot-details button:focus {
+    background: $error-transparent;
+    outline: none;
+}
+
+.screenshot-error {
+    display: block;
+    margin-top: 0.65rem;
+    color: $error-primary;
+    font-weight: 700;
+}
+
+.screenshot-limit {
+    position: absolute;
+    right: 0.85rem;
+    bottom: 0.25rem;
+    color: $text-primary-transparent;
+    font-size: 0.65rem;
+}
+
+.field-error {
+    display: block;
+    margin-top: 0.3rem;
+    color: $error-primary;
+    font-weight: 700;
+}
+
+.character-count {
+    position: absolute;
+    right: 0.65rem;
+    bottom: 0.55rem;
+    color: $text-primary-transparent;
+    font-size: 0.72rem;
+}
+
+.privacy-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 0.15rem;
+    border-left: 3px solid $motion-primary;
+    padding: 0.75rem;
+    background: $motion-transparent;
+    color: $text-primary;
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.privacy-notice svg {
+    flex: 0 0 auto;
+    color: $motion-primary;
+}
+
+.submit-error {
+    margin-top: 0.75rem;
+    border-radius: 0.35rem;
+    padding: 0.65rem 0.75rem;
+    background: $error-transparent;
+    color: $error-primary;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    border-top: 1px solid $ui-black-transparent;
+    padding: 0.85rem 1.5rem;
+    background: $ui-white;
+    box-shadow: 0 -0.25rem 0.8rem rgba(0, 0, 0, 0.06);
+}
+
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border-radius: 0.35rem;
+    padding: 0.55rem 1rem;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primary-button {
+    border: 1px solid $motion-primary;
+    background: $motion-primary;
+    color: $ui-white;
+}
+
+.secondary-button {
+    border: 1px solid $ui-black-transparent;
+    background: $ui-white;
+    color: $text-primary;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+.success-body {
+    display: flex;
+    min-height: 20rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.success-body h2 {
+    margin: 1rem 0 0.35rem;
+}
+
+.success-body p {
+    max-width: 26rem;
+    margin: 0 0 1.25rem;
+    line-height: 1.45;
+}
+
+.success-icon {
+    display: flex;
+    width: 3.5rem;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $motion-transparent;
+    color: $motion-primary;
+}
+
+@media screen and (max-width: 640px), screen and (max-height: 620px) {
+    .modal-content {
+        width: calc(100vw - 1rem);
+        height: calc(100vh - 1rem);
+        max-height: calc(100vh - 1rem);
+        margin: 0.5rem auto;
+    }
+
+    .form-body,
+    .success-body {
+        padding: 1rem;
+    }
+
+    .actions {
+        padding: 0.7rem 1rem;
+    }
+
+    .identity-fields {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .screenshot-header {
+        flex-direction: column;
+    }
+
+    .screenshot-actions {
+        width: 100%;
+    }
+
+    .attachment-button {
+        flex: 1;
+    }
+
+    .field textarea {
+        min-height: 5.5rem;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .category-options {
+        grid-template-columns: 1fr;
+    }
+
+    .screenshot-actions,
+    .actions {
+        flex-direction: column;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+}
