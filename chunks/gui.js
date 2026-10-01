@@ -977,7 +977,7 @@ var copy = __webpack_require__(2179);
 var code_xml = __webpack_require__(2168);
 
 // EXTERNAL MODULE: ./src/containers/gui.jsx + 311 modules
-var gui = __webpack_require__(218);
+var gui = __webpack_require__(217);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/reply.js
 var icons_reply = __webpack_require__(2155);
@@ -1621,7 +1621,7 @@ var project_state = __webpack_require__(39);
 var project_interactions = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api.js
-var dogoblock_api = __webpack_require__(52);
+var dogoblock_api = __webpack_require__(50);
 
 // EXTERNAL MODULE: ./node_modules/lucide-react/dist/esm/icons/lock-open.js
 var lock_open = __webpack_require__(2163);
@@ -2716,7 +2716,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUnlike",
     value: function handleUnlike() {
       var _this4 = this;
-      Object(dogoblock_api["G" /* unlikeProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["H" /* unlikeProject */])(this.props.projectId).then(function (res) {
         return _this4.props.onSetLike(res.isLiked, res.likeCount);
       }).catch(console.error);
     }
@@ -2732,7 +2732,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUnfavorite",
     value: function handleUnfavorite() {
       var _this6 = this;
-      Object(dogoblock_api["F" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
+      Object(dogoblock_api["G" /* unfavoriteProject */])(this.props.projectId).then(function (res) {
         return _this6.props.onSetFavorite(res.isFavorited, res.favoriteCount);
       }).catch(console.error);
     }
@@ -2773,7 +2773,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUpdateVisibility",
     value: function handleUpdateVisibility(visibility) {
       var _this0 = this;
-      Object(dogoblock_api["J" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
+      Object(dogoblock_api["K" /* updateProjectVisibility */])(this.props.projectId, visibility).then(function (res) {
         _this0.props.onSetDetails(Object.assign({}, _this0.props, {
           visibility: res.visibility
         }));
@@ -2783,7 +2783,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUpdateDetails",
     value: function handleUpdateDetails(patch) {
       var _this1 = this;
-      return Object(dogoblock_api["I" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
+      return Object(dogoblock_api["J" /* updateProjectDetails */])(this.props.projectId, patch).then(function (res) {
         _this1.props.onSetDetails(Object.assign({}, _this1.props, res));
       });
     }
@@ -2791,7 +2791,7 @@ var project_page_ProjectPageContainer = /*#__PURE__*/function (_React$Component)
     key: "handleUpdateCover",
     value: function handleUpdateCover(coverFile) {
       var _this10 = this;
-      return Object(dogoblock_api["K" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
+      return Object(dogoblock_api["L" /* uploadProjectCover */])(this.props.projectId, coverFile).then(function (res) {
         _this10.props.onSetDetails(Object.assign({}, _this10.props, res));
         return res;
       });
@@ -2920,7 +2920,7 @@ var message_box = __webpack_require__(168);
 var analytics = __webpack_require__(124);
 
 // EXTERNAL MODULE: ./src/lib/dogoblock-api-config.js
-var dogoblock_api_config = __webpack_require__(209);
+var dogoblock_api_config = __webpack_require__(218);
 
 // CONCATENATED MODULE: ./src/lib/notifications-manager.js
 function notifications_manager_typeof(o) { "@babel/helpers - typeof"; return notifications_manager_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, notifications_manager_typeof(o); }
@@ -3034,7 +3034,7 @@ var notifications_manager_NotificationsManager = /*#__PURE__*/function () {
 }();
 /* harmony default export */ var notifications_manager = (notifications_manager_NotificationsManager);
 // EXTERNAL MODULE: ./src/lib/auth-session.js
-var auth_session = __webpack_require__(155);
+var auth_session = __webpack_require__(135);
 
 // EXTERNAL MODULE: ./src/reducers/session.js
 var reducers_session = __webpack_require__(408);
@@ -3300,6 +3300,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     _this.handleLogin = _this.handleLogin.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleRegister = _this.handleRegister.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleLogout = _this.handleLogout.bind(dogoblock_web_app_assertThisInitialized(_this));
+    _this.handleAuthSessionChange = _this.handleAuthSessionChange.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleImportProject = _this.handleImportProject.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleDeleteProject = _this.handleDeleteProject.bind(dogoblock_web_app_assertThisInitialized(_this));
     _this.handleProjectCreated = _this.handleProjectCreated.bind(dogoblock_web_app_assertThisInitialized(_this));
@@ -3365,6 +3366,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     value: function componentDidMount() {
       var _this2 = this;
       window.addEventListener('hashchange', this.handleHashChange);
+      Object(dogoblock_api["F" /* setAuthSessionChangeHandler */])(this.handleAuthSessionChange);
       this.loadRouteData(this.state.route);
       this._notificationsManager = new notifications_manager();
       this._notificationsManager.onNotification = function (notification) {
@@ -3391,6 +3393,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       window.removeEventListener('hashchange', this.handleHashChange);
+      Object(dogoblock_api["F" /* setAuthSessionChangeHandler */])(null);
       if (this.copyLinkTimer) clearTimeout(this.copyLinkTimer);
       if (this._toastTimer) clearTimeout(this._toastTimer);
       if (this._notificationsManager) this._notificationsManager.disconnect();
@@ -3486,7 +3489,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           }
         }).catch(function (error) {
           return _this4.setState({
-            error: error.message,
+            error: error.status === 401 ? null : error.message,
             loading: false
           });
         });
@@ -3503,7 +3506,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           });
         }).catch(function (error) {
           return _this4.setState({
-            error: error.message,
+            error: error.status === 401 ? null : error.message,
             loading: false
           });
         });
@@ -3628,21 +3631,58 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleLogout",
     value: function handleLogout() {
+      var _this7 = this;
       dogoblock_web_app_trackEvent('logout', 'header');
-      this.closeNotificationsStream();
-      Object(dogoblock_api["x" /* logout */])();
+      if (this._notificationsManager) this._notificationsManager.disconnect();
+      Object(dogoblock_api["x" /* logout */])().catch(function () {});
       this.props.onLogout();
       this.setState({
         notifications: [],
         unreadCount: 0,
+        notificationsLoading: false,
+        profile: null,
+        favoriteProjects: [],
+        error: null
+      }, function () {
+        if (_this7.state.route.name === 'projects') {
+          _this7.loadRouteData({
+            name: 'projects'
+          });
+        } else {
+          dogoblock_web_app_navigate('/projects');
+        }
+      });
+    }
+  }, {
+    key: "handleAuthSessionChange",
+    value: function handleAuthSessionChange(session) {
+      if (session) {
+        this.props.onLoginSuccess(session);
+        if (this._notificationsManager) {
+          this._notificationsManager.connect(session.accessToken);
+        }
+        return;
+      }
+      if (this._notificationsManager) this._notificationsManager.disconnect();
+      this.props.onLogout();
+      this.setState({
+        error: null,
+        profile: null,
+        favoriteProjects: [],
+        notifications: [],
+        unreadCount: 0,
         notificationsLoading: false
       });
-      dogoblock_web_app_navigate('/projects');
+      if (this.state.route.name === 'profile') {
+        dogoblock_web_app_navigate(loginRouteFor('/profile'));
+      } else if (this.state.route.name === 'projects') {
+        dogoblock_web_app_navigate(loginRouteFor('/projects'));
+      }
     }
   }, {
     key: "setupNotifications",
     value: function setupNotifications() {
-      var _this7 = this;
+      var _this8 = this;
       if (this._notificationsManager) this._notificationsManager.disconnect();
       if (!this.props.user) {
         this.setState({
@@ -3655,7 +3695,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         return;
       }
       Object(dogoblock_api["q" /* getUnreadCount */])().then(function (result) {
-        return _this7.setState({
+        return _this8.setState({
           unreadCount: result.unreadCount || 0
         });
       }).catch(function () {});
@@ -3667,13 +3707,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "showToast",
     value: function showToast(notification) {
-      var _this8 = this;
+      var _this9 = this;
       if (this._toastTimer) clearTimeout(this._toastTimer);
       this.setState({
         toastNotification: notification
       });
       this._toastTimer = setTimeout(function () {
-        _this8.setState({
+        _this9.setState({
           toastNotification: null
         });
       }, TOAST_DISMISS_MS);
@@ -3689,14 +3729,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleLoadNotifications",
     value: function handleLoadNotifications() {
-      var _this9 = this;
+      var _this0 = this;
       if (!this.props.user) return;
       this.setState({
         notificationsLoading: true,
         notificationsPage: 1
       });
       Object(dogoblock_api["t" /* listNotifications */])(1, NOTIFICATIONS_PAGE_SIZE).then(function (result) {
-        return _this9.setState({
+        return _this0.setState({
           notifications: result.notifications || [],
           unreadCount: result.unreadCount || 0,
           notificationsPage: 1,
@@ -3704,7 +3744,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           notificationsLoading: false
         });
       }).catch(function (error) {
-        return _this9.setState({
+        return _this0.setState({
           error: error.message,
           notificationsLoading: false
         });
@@ -3713,7 +3753,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleLoadMoreNotifications",
     value: function handleLoadMoreNotifications() {
-      var _this0 = this;
+      var _this1 = this;
       if (!this.props.user || this.state.notificationsLoadingMore) return;
       var nextPage = this.state.notificationsPage + 1;
       this.setState({
@@ -3721,7 +3761,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["t" /* listNotifications */])(nextPage, NOTIFICATIONS_PAGE_SIZE).then(function (result) {
         var newItems = result.notifications || [];
-        _this0.setState(function (prevState) {
+        _this1.setState(function (prevState) {
           return {
             notifications: [].concat(_toConsumableArray(prevState.notifications), _toConsumableArray(newItems.filter(function (n) {
               return !prevState.notifications.find(function (e) {
@@ -3734,7 +3774,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this0.setState({
+        return _this1.setState({
           error: error.message,
           notificationsLoadingMore: false
         });
@@ -3743,7 +3783,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleOpenNotification",
     value: function handleOpenNotification(notification) {
-      var _this1 = this;
+      var _this10 = this;
       var navigateToProject = function navigateToProject() {
         if (notification.projectId) {
           dogoblock_web_app_navigate("/projects/".concat(notification.projectId));
@@ -3751,7 +3791,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       };
       if (!notification.readAt) {
         Object(dogoblock_api["z" /* markNotificationRead */])(notification.id).then(function (updated) {
-          _this1.setState(function (prevState) {
+          _this10.setState(function (prevState) {
             return {
               notifications: prevState.notifications.map(function (item) {
                 return item.id === notification.id ? Object.assign({}, item, updated) : item;
@@ -3770,9 +3810,9 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleDeleteNotification",
     value: function handleDeleteNotification(notification) {
-      var _this10 = this;
+      var _this11 = this;
       Object(dogoblock_api["d" /* deleteNotification */])(notification.id).then(function () {
-        _this10.setState(function (prevState) {
+        _this11.setState(function (prevState) {
           return {
             notifications: prevState.notifications.filter(function (item) {
               return item.id !== notification.id;
@@ -3781,7 +3821,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this10.setState({
+        return _this11.setState({
           error: error.message
         });
       });
@@ -3789,10 +3829,10 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleMarkAllNotificationsRead",
     value: function handleMarkAllNotificationsRead() {
-      var _this11 = this;
+      var _this12 = this;
       if (!this.props.user || this.state.unreadCount === 0) return;
       Object(dogoblock_api["y" /* markAllNotificationsRead */])().then(function (result) {
-        return _this11.setState(function (prevState) {
+        return _this12.setState(function (prevState) {
           return {
             unreadCount: 0,
             notifications: prevState.notifications.map(function (item) {
@@ -3803,7 +3843,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (error) {
-        return _this11.setState({
+        return _this12.setState({
           error: error.message
         });
       });
@@ -3834,17 +3874,17 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleCopyProjectLink",
     value: function handleCopyProjectLink() {
-      var _this12 = this;
+      var _this13 = this;
       var project = this.state.projectDetails;
       if (!project) return;
       var link = getProjectPublicUrl(project);
       var onCopied = function onCopied() {
-        if (_this12.copyLinkTimer) clearTimeout(_this12.copyLinkTimer);
-        _this12.setState({
+        if (_this13.copyLinkTimer) clearTimeout(_this13.copyLinkTimer);
+        _this13.setState({
           copyLinkFeedback: true
         });
-        _this12.copyLinkTimer = setTimeout(function () {
-          return _this12.setState({
+        _this13.copyLinkTimer = setTimeout(function () {
+          return _this13.setState({
             copyLinkFeedback: false
           });
         }, 2200);
@@ -3867,7 +3907,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleDeleteProject",
     value: function handleDeleteProject() {
-      var _this13 = this;
+      var _this14 = this;
       if (!this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
         return;
@@ -3884,7 +3924,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         dogoblock_web_app_navigate('/projects');
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('delete project error', 'details');
-        _this13.setState({
+        _this14.setState({
           error: error.message,
           loading: false
         });
@@ -3893,7 +3933,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleDeleteProjectFromCard",
     value: function handleDeleteProjectFromCard(event) {
-      var _this14 = this;
+      var _this15 = this;
       event.preventDefault();
       event.stopPropagation();
       if (!this.props.user) {
@@ -3908,7 +3948,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         error: null
       });
       Object(dogoblock_api["e" /* deleteProject */])(id).then(function () {
-        return _this14.setState(function (prevState) {
+        return _this15.setState(function (prevState) {
           return {
             projects: prevState.projects.filter(function (project) {
               return project.id !== id;
@@ -3924,7 +3964,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('delete project error', 'card');
-        _this14.setState({
+        _this15.setState({
           error: error.message,
           loading: false
         });
@@ -3974,7 +4014,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleUpdateVisibility",
     value: function handleUpdateVisibility(visibility) {
-      var _this15 = this;
+      var _this16 = this;
       var project = this.state.projectDetails;
       if (!this.props.user || !project) {
         dogoblock_web_app_navigate(loginRouteFor());
@@ -3984,18 +4024,18 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         loading: true,
         error: null
       });
-      Object(dogoblock_api["J" /* updateProjectVisibility */])(project.id, visibility).then(function () {
+      Object(dogoblock_api["K" /* updateProjectVisibility */])(project.id, visibility).then(function () {
         return Object(dogoblock_api["o" /* getProjectDetails */])(project.id);
       }).then(function (projectDetails) {
         dogoblock_web_app_trackEvent('update project visibility success', visibility);
-        _this15.setState({
+        _this16.setState({
           projectDetails: projectDetails,
           loading: false,
           error: null
         });
       }).catch(function (error) {
         dogoblock_web_app_trackEvent('update project visibility error', visibility);
-        _this15.setState({
+        _this16.setState({
           error: error.message,
           loading: false
         });
@@ -4056,7 +4096,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleForgotPassword",
     value: function handleForgotPassword(event) {
-      var _this16 = this;
+      var _this17 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
@@ -4065,12 +4105,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         forgotPasswordSuccess: false
       });
       Object(dogoblock_api["j" /* forgotPassword */])(form.get('email')).then(function () {
-        return _this16.setState({
+        return _this17.setState({
           forgotPasswordSuccess: true,
           loading: false
         });
       }).catch(function (error) {
-        return _this16.setState({
+        return _this17.setState({
           error: error.message,
           loading: false
         });
@@ -4079,7 +4119,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleResetPassword",
     value: function handleResetPassword(event) {
-      var _this17 = this;
+      var _this18 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       var password = form.get('password');
@@ -4096,12 +4136,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         resetPasswordSuccess: false
       });
       Object(dogoblock_api["E" /* resetPassword */])(this.state.route.token, password).then(function () {
-        return _this17.setState({
+        return _this18.setState({
           resetPasswordSuccess: true,
           loading: false
         });
       }).catch(function (error) {
-        return _this17.setState({
+        return _this18.setState({
           error: error.message,
           loading: false
         });
@@ -4126,7 +4166,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdLike",
     value: function handlePdLike() {
-      var _this18 = this;
+      var _this19 = this;
       var project = this.state.projectDetails;
       if (!project) return;
       if (!this.props.user) {
@@ -4140,12 +4180,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           pdLikeCount: prevState.pdLikeCount + (wasLiked ? -1 : 1)
         };
       });
-      var action = wasLiked ? dogoblock_api["G" /* unlikeProject */] : dogoblock_api["r" /* likeProject */];
+      var action = wasLiked ? dogoblock_api["H" /* unlikeProject */] : dogoblock_api["r" /* likeProject */];
       action(project.id).then(function () {
         dogoblock_web_app_trackEvent(wasLiked ? 'unlike project' : 'like project', 'project details');
       }).catch(function () {
         // rollback on error
-        _this18.setState(function (prevState) {
+        _this19.setState(function (prevState) {
           return {
             pdLiked: wasLiked,
             pdLikeCount: prevState.pdLikeCount + (wasLiked ? 1 : -1)
@@ -4156,7 +4196,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdFavorite",
     value: function handlePdFavorite() {
-      var _this19 = this;
+      var _this20 = this;
       var project = this.state.projectDetails;
       if (!project) return;
       if (!this.props.user) {
@@ -4170,11 +4210,11 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           pdStarCount: prevState.pdStarCount + (wasFavorited ? -1 : 1)
         };
       });
-      var action = wasFavorited ? dogoblock_api["F" /* unfavoriteProject */] : dogoblock_api["i" /* favoriteProject */];
+      var action = wasFavorited ? dogoblock_api["G" /* unfavoriteProject */] : dogoblock_api["i" /* favoriteProject */];
       action(project.id).then(function () {
         dogoblock_web_app_trackEvent(wasFavorited ? 'unfavorite project' : 'favorite project', 'project details');
       }).catch(function () {
-        _this19.setState(function (prevState) {
+        _this20.setState(function (prevState) {
           return {
             pdFavorited: wasFavorited,
             pdStarCount: prevState.pdStarCount + (wasFavorited ? 1 : -1)
@@ -4185,7 +4225,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdRemix",
     value: function handlePdRemix() {
-      var _this20 = this;
+      var _this21 = this;
       var project = this.state.projectDetails;
       if (!project) return;
       if (!this.props.user) {
@@ -4199,13 +4239,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["D" /* remixProject */])(project.id).then(function (result) {
         dogoblock_web_app_trackEvent('remix project success', 'project details');
-        _this20.setState({
+        _this21.setState({
           pdRemixing: false
         });
         dogoblock_web_app_navigate("/editor/".concat(result.id));
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('remix project error', 'project details');
-        _this20.setState({
+        _this21.setState({
           pdRemixing: false,
           error: err.message || 'Erro ao replicar projeto'
         });
@@ -4214,7 +4254,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdSaveDetails",
     value: function handlePdSaveDetails() {
-      var _this21 = this;
+      var _this22 = this;
       var project = this.state.projectDetails;
       if (!project || !this.props.user) return;
       var _this$state = this.state,
@@ -4224,25 +4264,25 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         pdSavingDetails: true,
         error: null
       });
-      Object(dogoblock_api["I" /* updateProjectDetails */])(project.id, {
+      Object(dogoblock_api["J" /* updateProjectDetails */])(project.id, {
         instructions: pdInstructions,
         notesAndCredits: pdCredits
       }).then(function (updated) {
-        _this21.setState(function (prevState) {
+        _this22.setState(function (prevState) {
           return {
             pdSavingDetails: false,
             pdSaveDetailsFeedback: true,
             projectDetails: Object.assign({}, prevState.projectDetails, updated)
           };
         });
-        if (_this21.pdSaveFeedbackTimer) clearTimeout(_this21.pdSaveFeedbackTimer);
-        _this21.pdSaveFeedbackTimer = setTimeout(function () {
-          return _this21.setState({
+        if (_this22.pdSaveFeedbackTimer) clearTimeout(_this22.pdSaveFeedbackTimer);
+        _this22.pdSaveFeedbackTimer = setTimeout(function () {
+          return _this22.setState({
             pdSaveDetailsFeedback: false
           });
         }, 2500);
       }).catch(function (err) {
-        return _this21.setState({
+        return _this22.setState({
           pdSavingDetails: false,
           error: err.message
         });
@@ -4272,7 +4312,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdCommentSubmit",
     value: function handlePdCommentSubmit() {
-      var _this22 = this;
+      var _this23 = this;
       var project = this.state.projectDetails;
       if (!project || !this.props.user) {
         dogoblock_web_app_navigate(loginRouteFor());
@@ -4285,7 +4325,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["A" /* postComment */])(project.id, content).then(function (comment) {
         dogoblock_web_app_trackEvent('comment project success', 'project details');
-        _this22.setState(function (prevState) {
+        _this23.setState(function (prevState) {
           return {
             pdComments: [comment].concat(_toConsumableArray(prevState.pdComments)),
             pdCommentText: '',
@@ -4294,7 +4334,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('comment project error', 'project details');
-        _this22.setState({
+        _this23.setState({
           pdCommentsLoading: false,
           error: err.message
         });
@@ -4310,12 +4350,12 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdDeleteComment",
     value: function handlePdDeleteComment(event) {
-      var _this23 = this;
+      var _this24 = this;
       var commentId = event.currentTarget.dataset.commentId;
       var project = this.state.projectDetails;
       if (!project || !commentId) return;
       Object(dogoblock_api["c" /* deleteComment */])(project.id, commentId).then(function () {
-        _this23.setState(function (prevState) {
+        _this24.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.filter(function (c) {
               return String(c.id) !== String(commentId);
@@ -4323,7 +4363,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this23.setState({
+        return _this24.setState({
           error: err.message
         });
       });
@@ -4355,7 +4395,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdReplySubmit",
     value: function handlePdReplySubmit() {
-      var _this24 = this;
+      var _this25 = this;
       var project = this.state.projectDetails;
       var _this$state2 = this.state,
         pdReplyToId = _this$state2.pdReplyToId,
@@ -4371,7 +4411,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       });
       Object(dogoblock_api["A" /* postComment */])(project.id, content, pdReplyToId).then(function (reply) {
         dogoblock_web_app_trackEvent('reply comment success', 'project details');
-        _this24.setState(function (prevState) {
+        _this25.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
               if (String(c.id) !== String(pdReplyToId)) return c;
@@ -4386,7 +4426,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         });
       }).catch(function (err) {
         dogoblock_web_app_trackEvent('reply comment error', 'project details');
-        _this24.setState({
+        _this25.setState({
           pdReplyLoading: false,
           error: err.message
         });
@@ -4395,13 +4435,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdDeleteReply",
     value: function handlePdDeleteReply(event) {
-      var _this25 = this;
+      var _this26 = this;
       var replyId = event.currentTarget.dataset.replyId;
       var parentId = event.currentTarget.dataset.parentId;
       var project = this.state.projectDetails;
       if (!project || !replyId) return;
       Object(dogoblock_api["c" /* deleteComment */])(project.id, replyId).then(function () {
-        _this25.setState(function (prevState) {
+        _this26.setState(function (prevState) {
           return {
             pdComments: prevState.pdComments.map(function (c) {
               if (String(c.id) !== String(parentId)) return c;
@@ -4414,7 +4454,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           };
         });
       }).catch(function (err) {
-        return _this25.setState({
+        return _this26.setState({
           error: err.message
         });
       });
@@ -4422,22 +4462,22 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handlePdCoverChange",
     value: function handlePdCoverChange(event) {
-      var _this26 = this;
+      var _this27 = this;
       var file = event.target.files && event.target.files[0];
       var project = this.state.projectDetails;
       if (!file || !project) return;
       this.setState({
         pdUploadingCover: true
       });
-      Object(dogoblock_api["K" /* uploadProjectCover */])(project.id, file).then(function (updated) {
-        _this26.setState(function (prevState) {
+      Object(dogoblock_api["L" /* uploadProjectCover */])(project.id, file).then(function (updated) {
+        _this27.setState(function (prevState) {
           return {
             pdUploadingCover: false,
             projectDetails: Object.assign({}, prevState.projectDetails, updated)
           };
         });
       }).catch(function (err) {
-        return _this26.setState({
+        return _this27.setState({
           pdUploadingCover: false,
           error: err.message
         });
@@ -4448,14 +4488,14 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "handleProfileSubmit",
     value: function handleProfileSubmit(event) {
-      var _this27 = this;
+      var _this28 = this;
       event.preventDefault();
       var form = new FormData(event.currentTarget);
       this.setState({
         loading: true,
         error: null
       });
-      Object(dogoblock_api["H" /* updateMyProfile */])({
+      Object(dogoblock_api["I" /* updateMyProfile */])({
         name: form.get('name'),
         username: form.get('username'),
         email: form.get('email'),
@@ -4464,21 +4504,20 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       }).then(function (profile) {
         var session = Object(auth_session["c" /* readAuthSession */])();
         if (session && session.accessToken) {
-          var nextSession = {
-            accessToken: session.accessToken,
+          var nextSession = Object.assign({}, session, {
             user: Object.assign({}, session.user, profile)
-          };
+          });
           Object(auth_session["d" /* writeAuthSession */])(nextSession);
-          _this27.props.onLoginSuccess(nextSession);
+          _this28.props.onLoginSuccess(nextSession);
         }
-        _this27.setState({
+        _this28.setState({
           profile: profile,
           profileTab: 'overview',
           loading: false,
           error: null
         });
       }).catch(function (error) {
-        return _this27.setState({
+        return _this28.setState({
           error: error.message,
           loading: false
         });
@@ -4548,7 +4587,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderHome",
     value: function renderHome() {
-      var _this28 = this;
+      var _this29 = this;
       var featured = (this.state.projects || []).slice(0, 4);
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.homePage
@@ -4589,7 +4628,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           className: dogoblock_web_app_default.a.featuredCard,
           "data-project-id": project.id,
           key: project.id,
-          onClick: _this28.handleOpenProjectDetails
+          onClick: _this29.handleOpenProjectDetails
         }, /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.featuredThumbnail
         }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
@@ -4808,7 +4847,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderProjectCards",
     value: function renderProjectCards(projects, canDeleteProjects) {
-      var _this29 = this;
+      var _this30 = this;
       return /*#__PURE__*/react_default.a.createElement("div", {
         className: dogoblock_web_app_default.a.projectGrid
       }, projects.map(function (project) {
@@ -4818,7 +4857,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.projectCard,
           "data-project-id": project.id,
-          onClick: _this29.handleOpenProjectDetails
+          onClick: _this30.handleOpenProjectDetails
         }, /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.projectThumbnail
         }, dogoblock_web_app_renderProjectThumbnail(project)), /*#__PURE__*/react_default.a.createElement("div", {
@@ -4839,7 +4878,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           "data-project-id": project.id,
           title: "Excluir projeto",
           "aria-label": "Excluir projeto ".concat(project.title),
-          onClick: _this29.handleDeleteProjectFromCard
+          onClick: _this30.handleDeleteProjectFromCard
         }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
           "aria-hidden": "true",
           size: 15
@@ -5009,7 +5048,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "renderProjectDetails",
     value: function renderProjectDetails() {
-      var _this30 = this;
+      var _this31 = this;
       var _this$state4 = this.state,
         projectDetails = _this$state4.projectDetails,
         loading = _this$state4.loading,
@@ -5230,13 +5269,13 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdCommentItemAuthorLink,
           "data-username": commentUsername,
-          onClick: _this30.handleNavigatePublicProfile
+          onClick: _this31.handleNavigatePublicProfile
         }, "@".concat(commentAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
           className: dogoblock_web_app_default.a.pdCommentItemText
         }, comment.content), user ? /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdCommentReplyBtn,
           "data-comment-id": comment.id,
-          onClick: isReplying ? _this30.handlePdReplyCancel : _this30.handlePdReplyOpen
+          onClick: isReplying ? _this31.handlePdReplyCancel : _this31.handlePdReplyOpen
         }, /*#__PURE__*/react_default.a.createElement(message_circle["a" /* default */], {
           "aria-hidden": "true",
           size: 12
@@ -5261,16 +5300,16 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           placeholder: "Respondendo a @".concat(commentAuthor, "..."),
           rows: 2,
           value: pdReplyText,
-          onChange: _this30.handlePdReplyChange
+          onChange: _this31.handlePdReplyChange
         }), /*#__PURE__*/react_default.a.createElement("div", {
           className: dogoblock_web_app_default.a.pdCommentActions
         }, /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdBtnPublish,
           disabled: pdReplyLoading || !pdReplyText.trim(),
-          onClick: _this30.handlePdReplySubmit
+          onClick: _this31.handlePdReplySubmit
         }, pdReplyLoading ? 'Enviando...' : 'Responder'), /*#__PURE__*/react_default.a.createElement("button", {
           className: dogoblock_web_app_default.a.pdBtnCancel,
-          onClick: _this30.handlePdReplyCancel
+          onClick: _this31.handlePdReplyCancel
         }, 'Cancelar')))) : null, comment.replies && comment.replies.length > 0 ? /*#__PURE__*/react_default.a.createElement("ul", {
           className: dogoblock_web_app_default.a.pdReplyList
         }, comment.replies.map(function (reply) {
@@ -5290,7 +5329,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           }, /*#__PURE__*/react_default.a.createElement("button", {
             className: dogoblock_web_app_default.a.pdCommentItemAuthorLink,
             "data-username": replyUsername,
-            onClick: _this30.handleNavigatePublicProfile
+            onClick: _this31.handleNavigatePublicProfile
           }, "@".concat(replyAuthor)), /*#__PURE__*/react_default.a.createElement("p", {
             className: dogoblock_web_app_default.a.pdCommentItemText
           }, reply.content)), canDeleteReply ? /*#__PURE__*/react_default.a.createElement("button", {
@@ -5298,7 +5337,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
             className: dogoblock_web_app_default.a.pdCommentItemDelete,
             "data-reply-id": reply.id,
             "data-parent-id": comment.id,
-            onClick: _this30.handlePdDeleteReply
+            onClick: _this31.handlePdDeleteReply
           }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
             "aria-hidden": "true",
             size: 14
@@ -5307,7 +5346,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
           "aria-label": "Excluir coment\xE1rio",
           className: dogoblock_web_app_default.a.pdCommentItemDelete,
           "data-comment-id": comment.id,
-          onClick: _this30.handlePdDeleteComment
+          onClick: _this31.handlePdDeleteComment
         }, /*#__PURE__*/react_default.a.createElement(trash_2["a" /* default */], {
           "aria-hidden": "true",
           size: 14
@@ -5503,7 +5542,7 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
   }, {
     key: "render",
     value: function render() {
-      var _this31 = this;
+      var _this32 = this;
       var route = this.state.route;
       var editor = route.name === 'editor';
       return /*#__PURE__*/react_default.a.createElement("div", {
@@ -5517,8 +5556,8 @@ var dogoblock_web_app_DogoblockWebApp = /*#__PURE__*/function (_React$Component)
       }, /*#__PURE__*/react_default.a.createElement(notifications_notification_toast, {
         notification: this.state.toastNotification,
         onClick: function onClick() {
-          _this31.handleDismissToast();
-          _this31.handleOpenNotification(_this31.state.toastNotification);
+          _this32.handleDismissToast();
+          _this32.handleOpenNotification(_this32.state.toastNotification);
         },
         onDismiss: this.handleDismissToast
       })) : null);
