@@ -30,12 +30,12 @@ const createSentryMock = () => {
     return {scope, sdk};
 };
 
-const loadSentryService = (dsn, fetchImplementation) => {
+const loadSentryService = (dsn, fetchImplementation, tunnelUrl) => {
     jest.resetModules();
     process.env.SENTRY_DSN = dsn;
     process.env.SENTRY_ENVIRONMENT = 'test';
     process.env.SENTRY_RELEASE = 'dogoblock-test@1';
-    process.env.SENTRY_TUNNEL_URL = 'https://dogoblockapi.example/observability/envelope';
+    process.env.SENTRY_TUNNEL_URL = tunnelUrl || 'https://dogoblockapi.example/observability/envelope';
     process.env.OPENBLOCK_TAURI_LIGHT = 'false';
     const fetchMock = jest.fn(fetchImplementation || (() => Promise.resolve({ok: true, status: 200})));
     global.fetch = fetchMock;
@@ -82,6 +82,22 @@ test('registers the official feedback integration without injecting a duplicate 
     });
     expect(options.tunnel).toBe('https://dogoblockapi.example/observability/envelope');
     expect(sentryMock.sdk.makeFetchTransport).toHaveBeenCalled();
+});
+
+test('never uses a localhost tunnel in a production build', () => {
+    const previousNodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'production';
+    const {sentryMock, service} = loadSentryService(
+        'https://public@example.invalid/1',
+        null,
+        'http://localhost:3000/observability/envelope'
+    );
+
+    service.initializeSentry();
+
+    expect(sentryMock.sdk.init.mock.calls[0][0].tunnel)
+        .toBe('https://dogoblockapi.dogomaker.com/observability/envelope');
+    process.env.NODE_ENV = previousNodeEnv;
 });
 
 test('sanitizes sensitive event metadata before sending it', () => {

@@ -5,14 +5,29 @@ const FEEDBACK_DELIVERY_TIMEOUT_MS = 10000;
 const REDACTED_VALUE = '[Filtered]';
 const TRUNCATED_VALUE = '[Truncated]';
 const SENSITIVE_KEY_PATTERN = /(authorization|cookie|password|secret|token|access[_-]?token|refresh[_-]?token)/i;
+const DEFAULT_SENTRY_TUNNEL_URL = 'https://dogoblockapi.dogomaker.com/observability/envelope';
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
 
 let initializationAttempted = false;
 let initialized = false;
 const feedbackDeliveryWaiters = [];
 
 const getDsn = () => process.env.SENTRY_DSN || '';
-const getTunnelUrl = () => process.env.SENTRY_TUNNEL_URL ||
-    `${process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com'}/observability/envelope`;
+const isLoopbackUrl = value => {
+    try {
+        return LOOPBACK_HOSTS.includes(new URL(value).hostname);
+    } catch (error) {
+        return false;
+    }
+};
+const getTunnelUrl = () => {
+    const configuredUrl = process.env.SENTRY_TUNNEL_URL ||
+        `${process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com'}/observability/envelope`;
+    if (process.env.NODE_ENV === 'production' && isLoopbackUrl(configuredUrl)) {
+        return DEFAULT_SENTRY_TUNNEL_URL;
+    }
+    return configuredUrl;
+};
 
 const envelopeContainsFeedback = body => {
     if (!body) return false;

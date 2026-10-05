@@ -50,8 +50,25 @@ loadDotEnv();
 const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production' : 'development');
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
-const DOGOBLOCK_API_HOST = process.env.DOGOBLOCK_API_HOST || 'https://dogoblockapi.dogomaker.com';
-const SENTRY_TUNNEL_URL = process.env.SENTRY_TUNNEL_URL || `${DOGOBLOCK_API_HOST}/observability/envelope`;
+const PUBLIC_DOGOBLOCK_API_HOST = 'https://dogoblockapi.dogomaker.com';
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
+const isLoopbackUrl = value => {
+    try {
+        return LOOPBACK_HOSTS.includes(new URL(value).hostname);
+    } catch (error) {
+        return false;
+    }
+};
+const usePublicUrlInProduction = (value, fallback) =>
+    BUILD_NODE_ENV === 'production' && isLoopbackUrl(value) ? fallback : value;
+const DOGOBLOCK_API_HOST = usePublicUrlInProduction(
+    process.env.DOGOBLOCK_API_HOST || PUBLIC_DOGOBLOCK_API_HOST,
+    PUBLIC_DOGOBLOCK_API_HOST
+);
+const SENTRY_TUNNEL_URL = usePublicUrlInProduction(
+    process.env.SENTRY_TUNNEL_URL || `${DOGOBLOCK_API_HOST}/observability/envelope`,
+    `${PUBLIC_DOGOBLOCK_API_HOST}/observability/envelope`
+);
 const SENTRY_RELEASE = process.env.SENTRY_RELEASE || (process.env.VERCEL_GIT_COMMIT_SHA ?
     `dogoblock-web@${process.env.VERCEL_GIT_COMMIT_SHA}` : '');
 const envDefinitions = {

@@ -52,20 +52,21 @@ class Storage extends ScratchStorage {
             this.getProjectCreateConfig.bind(this),
             this.getProjectUpdateConfig.bind(this)
         );
+        // The API stores user assets and performs a status-aware fallback to the
+        // public CDN. It must be tried first because legacy scratch-storage treats
+        // an HTTP error page as a successfully downloaded binary asset.
         this.addWebStore(
             [this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound],
-            this.getAssetGetConfig.bind(this),
+            this.getAssetApiGetConfig.bind(this),
             // We set both the create and update configs to the same method because
             // storage assumes it should update if there is an assetId, but the
             // asset store uses the assetId as part of the create URI.
             this.getAssetCreateConfig.bind(this),
             this.getAssetCreateConfig.bind(this)
         );
-        // User-created Dogoblock assets are persisted by the API. Keep the public
-        // CDN as the primary read source and use the API when the asset is not there.
         this.addWebStore(
             [this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound],
-            this.getAssetApiGetConfig.bind(this)
+            this.getAssetGetConfig.bind(this)
         );
         this.addWebStore(
             [this.AssetType.Sound],
