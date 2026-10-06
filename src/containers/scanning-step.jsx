@@ -11,11 +11,15 @@ class ScanningStep extends React.Component {
             'handlePeripheralListUpdate',
             'handlePeripheralScanTimeout',
             'handleClickListAll',
+            'handleConnectionTypeChange',
+            'handleCloseManualFirmware',
+            'handleOpenManualFirmware',
             'handleRefresh'
         ]);
         this.state = {
             scanning: true,
-            peripheralList: []
+            peripheralList: [],
+            manualFirmwareOpen: false
         };
     }
     componentDidMount () {
@@ -32,8 +36,17 @@ class ScanningStep extends React.Component {
         this.props.vm.removeListener(
             'PERIPHERAL_SCAN_TIMEOUT', this.handlePeripheralScanTimeout);
     }
-    scanForPeripheral (listAll) {
-        this.props.vm.scanForPeripheral(this.props.deviceId, listAll);
+    getEffectiveConnectionType (connectionType = this.props.connectionType) {
+        if (connectionType === 'webBluetooth' && !this.props.webBluetoothConnectionSupported) {
+            return 'link';
+        }
+        if (connectionType === 'webSerial' && !this.props.webSerialConnectionSupported) {
+            return 'link';
+        }
+        return connectionType;
+    }
+    scanForPeripheral (listAll, connectionType = this.props.connectionType) {
+        this.props.vm.scanForPeripheral(this.props.deviceId, listAll, this.getEffectiveConnectionType(connectionType));
     }
     handlePeripheralScanTimeout () {
         this.setState({
@@ -56,6 +69,25 @@ class ScanningStep extends React.Component {
             peripheralList: []
         });
     }
+    handleConnectionTypeChange (e) {
+        const connectionType = e.target.value;
+        this.props.onConnectionTypeChange(connectionType);
+        this.scanForPeripheral(this.props.isListAll, connectionType);
+        this.setState({
+            scanning: true,
+            peripheralList: []
+        });
+    }
+    handleOpenManualFirmware () {
+        this.setState({
+            manualFirmwareOpen: true
+        });
+    }
+    handleCloseManualFirmware () {
+        this.setState({
+            manualFirmwareOpen: false
+        });
+    }
     handleRefresh () {
         this.scanForPeripheral(this.props.isListAll);
         this.setState({
@@ -66,17 +98,33 @@ class ScanningStep extends React.Component {
     render () {
         return (
             <ScanningStepComponent
+                connectionType={this.props.connectionType}
                 connectionSmallIconURL={this.props.connectionSmallIconURL}
+                deviceId={this.props.deviceId}
+                firmwareUploadRequired={this.props.firmwareUploadRequired}
+                isChromeOS={this.props.isChromeOS}
                 isSerialport={this.props.isSerialport}
                 isListAll={this.props.isListAll}
+                webBluetoothConnectionSupported={this.props.webBluetoothConnectionSupported}
+                webBluetoothConnectionVisible={this.props.webBluetoothConnectionVisible}
+                webBluetoothDebugInfo={this.props.webBluetoothDebugInfo}
+                webBluetoothStatus={this.props.webBluetoothStatus}
+                webSerialConnectionSupported={this.props.webSerialConnectionSupported}
+                webSerialConnectionVisible={this.props.webSerialConnectionVisible}
+                webSerialStatus={this.props.webSerialStatus}
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
                 title={this.props.deviceId}
                 onConnected={this.props.onConnected}
+                onConnectionTypeChange={this.handleConnectionTypeChange}
                 onConnecting={this.props.onConnecting}
                 onClickListAll={this.handleClickListAll}
+                onCloseManualFirmware={this.handleCloseManualFirmware}
+                onOpenManualFirmware={this.handleOpenManualFirmware}
                 onRefresh={this.handleRefresh}
+                onUploadFirmware={this.props.onUploadFirmware}
+                showManualFirmware={this.state.manualFirmwareOpen}
             />
         );
     }
@@ -84,13 +132,35 @@ class ScanningStep extends React.Component {
 
 ScanningStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
+    connectionType: PropTypes.string,
+    firmwareUploadRequired: PropTypes.bool,
+    isChromeOS: PropTypes.bool,
     isSerialport: PropTypes.bool.isRequired,
     isListAll: PropTypes.bool.isRequired,
     deviceId: PropTypes.string.isRequired,
     onConnected: PropTypes.func.isRequired,
+    onConnectionTypeChange: PropTypes.func,
     onConnecting: PropTypes.func.isRequired,
     onClickListAll: PropTypes.func.isRequired,
-    vm: PropTypes.instanceOf(VM).isRequired
+    onUploadFirmware: PropTypes.func,
+    vm: PropTypes.instanceOf(VM).isRequired,
+    webBluetoothConnectionSupported: PropTypes.bool,
+    webBluetoothConnectionVisible: PropTypes.bool,
+    webBluetoothDebugInfo: PropTypes.string,
+    webBluetoothStatus: PropTypes.string,
+    webSerialConnectionSupported: PropTypes.bool,
+    webSerialConnectionVisible: PropTypes.bool,
+    webSerialStatus: PropTypes.string
+};
+
+ScanningStep.defaultProps = {
+    connectionType: 'link',
+    webBluetoothConnectionSupported: false,
+    webBluetoothConnectionVisible: false,
+    webBluetoothStatus: 'notMicrobitBle',
+    webSerialConnectionSupported: false,
+    webSerialConnectionVisible: false,
+    webSerialStatus: 'notArduino'
 };
 
 export default ScanningStep;

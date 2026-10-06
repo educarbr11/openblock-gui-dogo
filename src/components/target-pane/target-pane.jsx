@@ -23,6 +23,7 @@ const TargetPane = ({
     spriteLibraryVisible,
     onActivateBlocksTab,
     onChangeSpriteDirection,
+    onChangeSpriteDraggable,
     onChangeSpriteName,
     onChangeSpriteRotationStyle,
     onChangeSpriteSize,
@@ -61,6 +62,7 @@ const TargetPane = ({
             sprites={sprites}
             stageSize={stageSize}
             onChangeSpriteDirection={onChangeSpriteDirection}
+            onChangeSpriteDraggable={onChangeSpriteDraggable}
             onChangeSpriteName={onChangeSpriteName}
             onChangeSpriteRotationStyle={onChangeSpriteRotationStyle}
             onChangeSpriteSize={onChangeSpriteSize}
@@ -116,6 +118,7 @@ const spriteShape = PropTypes.shape({
     }),
     costumeCount: PropTypes.number,
     direction: PropTypes.number,
+    draggable: PropTypes.bool,
     id: PropTypes.string,
     name: PropTypes.string,
     order: PropTypes.number,
@@ -135,6 +138,7 @@ TargetPane.propTypes = {
     }),
     onActivateBlocksTab: PropTypes.func.isRequired,
     onChangeSpriteDirection: PropTypes.func,
+    onChangeSpriteDraggable: PropTypes.func,
     onChangeSpriteName: PropTypes.func,
     onChangeSpriteRotationStyle: PropTypes.func,
     onChangeSpriteSize: PropTypes.func,

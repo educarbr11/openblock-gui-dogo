@@ -23,14 +23,18 @@ const STAGE_DIMENSION_DEFAULTS = {
  * Resolve the current GUI and browser state to an actual stage size enum value.
  * @param {STAGE_SIZE_MODES} stageSizeMode - the state of the stage size toggle button.
  * @param {boolean} isFullSize - true if the window is large enough for the large stage at its full size.
+ * @param {boolean} isMobileLandscape - true if the GUI is in compact mobile landscape layout.
  * @return {STAGE_DISPLAY_SIZES} - the stage size enum value we should use in this situation.
  */
-const resolveStageSize = (stageSizeMode, isFullSize) => {
-    if (stageSizeMode === STAGE_SIZE_MODES.small) {
-        return STAGE_DISPLAY_SIZES.small;
-    }
+const resolveStageSize = (stageSizeMode, isFullSize, isMobileLandscape = false) => {
     if (stageSizeMode === STAGE_SIZE_MODES.hide) {
         return STAGE_DISPLAY_SIZES.hide;
+    }
+    if (isMobileLandscape) {
+        return STAGE_DISPLAY_SIZES.mobileLandscape;
+    }
+    if (stageSizeMode === STAGE_SIZE_MODES.small) {
+        return STAGE_DISPLAY_SIZES.small;
     }
     if (isFullSize) {
         return STAGE_DISPLAY_SIZES.large;

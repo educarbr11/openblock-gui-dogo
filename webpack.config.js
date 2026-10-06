@@ -1,4 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
+const crypto = require('crypto');
+const fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 
@@ -7,23 +9,135 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const {sentryWebpackPlugin} = require('@sentry/webpack-plugin');
 
 // PostCss
 var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
-const STATIC_PATH = process.env.STATIC_PATH || '/static';
+const createHash = crypto.createHash;
+crypto.createHash = algorithm => createHash(algorithm === 'md4' ? 'sha256' : algorithm);
+
+const loadDotEnv = () => {
+    const isHostedBuild = process.env.NODE_ENV === 'production' ||
+        process.env.CI === 'true' ||
+        process.env.CI === '1' ||
+        process.env.VERCEL === '1' ||
+        process.env.VERCEL === 'true';
+    if (isHostedBuild) return;
+
+    const envPath = path.resolve(__dirname, '.env');
+    if (!fs.existsSync(envPath)) return;
+    fs.readFileSync(envPath, 'utf8')
+        .split(/\r?\n/)
+        .forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) return;
+            const separatorIndex = trimmed.indexOf('=');
+            if (separatorIndex === -1) return;
+            const key = trimmed.slice(0, separatorIndex).trim();
+            const value = trimmed.slice(separatorIndex + 1).trim()
+                .replace(/^['"]|['"]$/g, '');
+            if (key && typeof process.env[key] === 'undefined') {
+                process.env[key] = value;
+            }
+        });
+};
+
+loadDotEnv();
+
+const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production' : 'development');
+const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
+const PUBLIC_DOGOBLOCK_API_HOST = 'https://dogoblockapi.dogomaker.com';
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
+const isLoopbackUrl = value => {
+    try {
+        return LOOPBACK_HOSTS.includes(new URL(value).hostname);
+    } catch (error) {
+        return false;
+    }
+};
+const usePublicUrlInProduction = (value, fallback) =>
+    BUILD_NODE_ENV === 'production' && isLoopbackUrl(value) ? fallback : value;
+const DOGOBLOCK_API_HOST = usePublicUrlInProduction(
+    process.env.DOGOBLOCK_API_HOST || PUBLIC_DOGOBLOCK_API_HOST,
+    PUBLIC_DOGOBLOCK_API_HOST
+);
+const SENTRY_TUNNEL_URL = usePublicUrlInProduction(
+    process.env.SENTRY_TUNNEL_URL || `${DOGOBLOCK_API_HOST}/observability/envelope`,
+    `${PUBLIC_DOGOBLOCK_API_HOST}/observability/envelope`
+);
+const SENTRY_RELEASE = process.env.SENTRY_RELEASE || (process.env.VERCEL_GIT_COMMIT_SHA ?
+    `dogoblock-web@${process.env.VERCEL_GIT_COMMIT_SHA}` : '');
+const envDefinitions = {
+    'process.env.NODE_ENV': JSON.stringify(BUILD_NODE_ENV),
+    'process.env.DEBUG': Boolean(process.env.DEBUG),
+    'process.env.GA_ID': JSON.stringify(process.env.GA_ID || ''),
+    'process.env.GA_DEBUG': JSON.stringify(process.env.GA_DEBUG || 'false'),
+    'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
+    'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
+    'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false'),
+    'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
+    'process.env.SENTRY_ENVIRONMENT': JSON.stringify(process.env.SENTRY_ENVIRONMENT || BUILD_NODE_ENV),
+    'process.env.SENTRY_RELEASE': JSON.stringify(SENTRY_RELEASE),
+    'process.env.SENTRY_TUNNEL_URL': JSON.stringify(SENTRY_TUNNEL_URL)
+};
 const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
+const workspaceRoot = path.resolve(__dirname, '..');
+const localOpenBlockVMPath = process.env.OPENBLOCK_VM_PATH ?
+    path.resolve(process.env.OPENBLOCK_VM_PATH) :
+    path.resolve(__dirname, '..', 'openblock-vm');
+const hasLocalOpenBlockVM = require('fs').existsSync(path.join(localOpenBlockVMPath, 'package.json'));
+const openBlockVMPath = hasLocalOpenBlockVM ?
+    localOpenBlockVMPath :
+    path.resolve(__dirname, 'node_modules', 'openblock-vm');
 const WATCH_IGNORED = [
     path.resolve(__dirname, 'build'),
     path.resolve(__dirname, 'dist'),
     path.resolve(__dirname, 'node_modules')
 ];
 
+class RemoveSourceMapsPlugin {
+    apply (compiler) {
+        compiler.hooks.done.tap('RemoveSourceMapsPlugin', () => {
+            const removeMaps = directory => {
+                if (!fs.existsSync(directory)) return;
+                fs.readdirSync(directory, {withFileTypes: true}).forEach(entry => {
+                    const entryPath = path.join(directory, entry.name);
+                    if (entry.isDirectory()) removeMaps(entryPath);
+                    else if (entry.name.endsWith('.map')) fs.unlinkSync(entryPath);
+                });
+            };
+            removeMaps(compiler.options.output.path);
+        });
+    }
+}
+
+const createSentryWebpackPlugins = outputPath => {
+    if (BUILD_NODE_ENV !== 'production') return [];
+    if (!process.env.SENTRY_AUTH_TOKEN || !process.env.SENTRY_ORG ||
+        !process.env.SENTRY_PROJECT || !SENTRY_RELEASE) {
+        return [new RemoveSourceMapsPlugin()];
+    }
+
+    return [sentryWebpackPlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        release: {name: SENTRY_RELEASE},
+        sourcemaps: {
+            assets: path.join(outputPath, '**/*.js'),
+            filesToDeleteAfterUpload: path.join(outputPath, '**/*.js.map')
+        },
+        telemetry: false
+    })];
+};
+
 const base = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-    devtool: 'cheap-module-source-map',
+    mode: BUILD_NODE_ENV === 'production' ? 'production' : 'development',
+    devtool: BUILD_NODE_ENV === 'production' ? 'hidden-source-map' : 'cheap-module-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         host: '0.0.0.0',
@@ -42,7 +156,12 @@ const base = {
         hashFunction: 'sha256'
     },
     resolve: {
-        symlinks: false
+        symlinks: false,
+        alias: {
+            ...(hasLocalOpenBlockVM ? {
+                'openblock-vm': localOpenBlockVMPath
+            } : {})
+        }
     },
     module: {
         rules: [{
@@ -50,6 +169,7 @@ const base = {
             loader: 'babel-loader',
             include: [
                 path.resolve(__dirname, 'src'),
+                ...(hasLocalOpenBlockVM ? [path.join(localOpenBlockVMPath, 'src')] : []),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
@@ -63,7 +183,8 @@ const base = {
                     '@babel/plugin-transform-async-to-generator',
                     '@babel/plugin-proposal-object-rest-spread',
                     ['react-intl', {
-                        messagesDir: './translations/messages/'
+                        messagesDir: './translations/messages/',
+                        workspaceRoot
                     }]],
                 presets: ['@babel/preset-env', '@babel/preset-react']
             }
@@ -155,34 +276,29 @@ module.exports = [
             }
         },
         plugins: base.plugins.concat([
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
-                'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
-            }),
+            new webpack.DefinePlugin(envDefinitions),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
-                title: 'OpenBlock',
-                sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
+                title: 'DoGoBlock'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'blocksonly'],
                 template: 'src/playground/index.ejs',
                 filename: 'blocks-only.html',
-                title: 'OpenBlock GUI: Blocks Only Example'
+                title: 'DoGoBlock GUI: Blocks Only Example'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'compatibilitytesting'],
                 template: 'src/playground/index.ejs',
                 filename: 'compatibility-testing.html',
-                title: 'OpenBlock GUI: Compatibility Testing'
+                title: 'DoGoBlock GUI: Compatibility Testing'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'player'],
                 template: 'src/playground/index.ejs',
                 filename: 'player.html',
-                title: 'OpenBlock GUI: Player Example'
+                title: 'DoGoBlock GUI: Player Example'
             }),
             new CopyWebpackPlugin([{
                 from: 'static',
@@ -199,9 +315,9 @@ module.exports = [
             }]),
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
-                context: 'node_modules/openblock-vm/dist/web'
+                context: path.join(openBlockVMPath, 'dist', 'web')
             }])
-        ])
+        ]).concat(createSentryWebpackPlugins(path.resolve(__dirname, 'build')))
     })
 ].concat(
     process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist' ? (
@@ -233,13 +349,14 @@ module.exports = [
                 ])
             },
             plugins: base.plugins.concat([
+                new webpack.DefinePlugin(envDefinitions),
                 new CopyWebpackPlugin([{
                     from: 'node_modules/openblock-blocks/media',
                     to: 'static/blocks-media'
                 }]),
                 new CopyWebpackPlugin([{
                     from: 'extension-worker.{js,js.map}',
-                    context: 'node_modules/openblock-vm/dist/web'
+                    context: path.join(openBlockVMPath, 'dist', 'web')
                 }]),
                 // Include library JSON files for scratch-desktop to use for downloading
                 new CopyWebpackPlugin([{
@@ -247,6 +364,6 @@ module.exports = [
                     to: 'libraries',
                     flatten: true
                 }])
-            ])
+            ]).concat(createSentryWebpackPlugins(path.resolve(__dirname, 'dist')))
         })) : []
 );

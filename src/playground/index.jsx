@@ -8,15 +8,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import analytics, {initialAnalytics} from '../lib/analytics';
+import {initializeSentry} from '../lib/sentry';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx';
 import supportedBrowser from '../lib/supported-browser';
 
 import styles from './index.css';
 
+initializeSentry();
+
+const getAnalyticsPage = () => {
+    const hashPath = window.location.hash.replace(/^#/, '') || '/';
+    return `/community/web${hashPath.startsWith('/') ? hashPath : `/${hashPath}`}`;
+};
+
 initialAnalytics();
-// Register "base" page view
-analytics.send({hitType: 'pageview', page: '/community/web'});
+analytics.send({
+    hitType: 'pageview',
+    page: getAnalyticsPage(),
+    title: document.title
+});
+
+window.addEventListener('hashchange', () => {
+    analytics.send({
+        hitType: 'pageview',
+        page: getAnalyticsPage(),
+        title: document.title
+    });
+});
 
 const appTarget = document.createElement('div');
 appTarget.className = styles.app;

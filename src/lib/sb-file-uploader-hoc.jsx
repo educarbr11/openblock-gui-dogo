@@ -58,6 +58,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             if (this.props.isLoadingUpload && !prevProps.isLoadingUpload) {
                 this.handleFinishedLoadingUpload(); // cue step 5 below
             }
+            if (this.props.autoStartFileUploadKey &&
+                this.props.autoStartFileUploadKey !== prevProps.autoStartFileUploadKey) {
+                this.handleStartSelectingFileUpload();
+            }
         }
         componentWillUnmount () {
             this.removeFileObjects();
@@ -194,6 +198,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 onSetProjectTitle,
                 projectChanged,
                 requestProjectUpload: requestProjectUploadProp,
+                saveUploadedProjectAsNew,
                 userOwnsProject,
                 /* eslint-enable no-unused-vars */
                 ...componentProps
@@ -210,6 +215,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
     }
 
     SBFileUploaderComponent.propTypes = {
+        autoStartFileUploadKey: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]),
         canSave: PropTypes.bool,
         cancelFileUpload: PropTypes.func,
         closeFileMenu: PropTypes.func,
@@ -223,6 +232,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         onShowMessageBox: PropTypes.func.isRequired,
         projectChanged: PropTypes.bool,
         requestProjectUpload: PropTypes.func,
+        saveUploadedProjectAsNew: PropTypes.bool,
         userOwnsProject: PropTypes.bool,
         vm: PropTypes.shape({
             loadProject: PropTypes.func
@@ -247,7 +257,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         // transition project state from loading to regular, and close
         // loading screen and file menu
         onLoadingFinished: (loadingState, success) => {
-            dispatch(onLoadedProject(loadingState, ownProps.canSave, success));
+            const canSave = ownProps.saveUploadedProjectAsNew ? false : ownProps.canSave;
+            dispatch(onLoadedProject(loadingState, canSave, success));
             dispatch(closeLoadingProject());
             dispatch(closeFileMenu());
         },
