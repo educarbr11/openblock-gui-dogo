@@ -68,9 +68,9 @@ const deviceData = [
         iconURL: microbitIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Use o micro:bit pelo DoGoBlock Link com cabo USB."
+                defaultMessage="Conecte o micro:bit por USB na Web ou pelo DoGoBlock Link no Desktop."
                 description="Description for the micro:bit device"
-                id="gui.device.microbitV2.description"
+                id="gui.device.microbitV2.usbDescription"
             />
         ),
         featured: true,

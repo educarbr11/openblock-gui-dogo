@@ -10,6 +10,13 @@ import {setConnectionModalPeripheralName, setListAll, setConnectionType} from '.
 import extensionData from '../lib/libraries/extensions/index.jsx';
 import {isScratchDesktop} from '../lib/isScratchDesktop';
 import uploadArduinoRealtimeFirmware from '../lib/upload-arduino-realtime-firmware';
+import {
+    connectMicrobitWebUsb,
+    fetchMicrobitRealtimeFirmware,
+    flashMicrobitHex,
+    getMicrobitWebUsbErrorMessage,
+    isMicrobitWebUsbSupported
+} from '../lib/microbit-web-usb';
 
 class ConnectionModal extends React.Component {
     constructor (props) {
@@ -130,8 +137,9 @@ class ConnectionModal extends React.Component {
         return this.props.deviceId === 'microbitBle' ||
             (this.state.device && this.state.device.extensionId === 'microbitBle');
     }
-    isArduinoWebSerialConnection () {
-        return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo'].indexOf(this.props.deviceId) !== -1;
+    isWebSerialConnection () {
+        return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo', 'microbit', 'microbitV2']
+            .indexOf(this.props.deviceId) !== -1;
     }
     getWebBluetoothStatus () {
         return 'disabled';
@@ -143,8 +151,8 @@ class ConnectionModal extends React.Component {
         return 'Web Bluetooth não está disponível para este dispositivo.';
     }
     getWebSerialStatus () {
-        if (!this.isArduinoWebSerialConnection()) {
-            return 'notArduino';
+        if (!this.isWebSerialConnection()) {
+            return 'notSupportedDevice';
         }
         if (typeof window !== 'undefined' && window.isSecureContext === false) {
             return 'notSecure';
@@ -194,6 +202,31 @@ class ConnectionModal extends React.Component {
         this.props.onSetConnectionType(this.getEffectiveConnectionType(connectionType));
     }
     handleUploadFirmware () {
+        if (!isScratchDesktop() && this.props.deviceId === 'microbitV2' &&
+            this.getDisplayConnectionType() === 'webSerial') {
+            this.props.onOpenUploadProgress();
+            connectMicrobitWebUsb()
+                .then(usb => {
+                    this.props.vm.emit('PERIPHERAL_UPLOAD_STDOUT', {
+                        message: 'Micro:bit conectado via WebUSB.\n'
+                    });
+                    return fetchMicrobitRealtimeFirmware()
+                        .then(hex => {
+                            this.props.vm.emit('PERIPHERAL_UPLOAD_STDOUT', {
+                                message: 'Enviando firmware do modo palco...\n'
+                            });
+                            return flashMicrobitHex(usb, hex);
+                        })
+                        .catch(error => usb.disconnect().then(() => {
+                            throw error;
+                        }));
+                })
+                .then(() => this.props.vm.emit('PERIPHERAL_UPLOAD_SUCCESS', {firmware: true}))
+                .catch(error => this.props.vm.emit('PERIPHERAL_UPLOAD_ERROR', {
+                    message: getMicrobitWebUsbErrorMessage(error)
+                }));
+            return;
+        }
         if (uploadArduinoRealtimeFirmware({
             vm: this.props.vm,
             deviceId: this.props.deviceId,
@@ -213,12 +246,13 @@ class ConnectionModal extends React.Component {
         const webSerialStatus = this.getWebSerialStatus();
         const webBluetoothConnectionVisible = false;
         const webBluetoothConnectionSupported = webBluetoothStatus === 'supported';
-        const webSerialConnectionVisible = this.isArduinoWebSerialConnection();
+        const webSerialConnectionVisible = this.isWebSerialConnection();
         const webSerialConnectionSupported = webSerialStatus === 'supported';
         const connectionType = this.getDisplayConnectionType();
         return (
             <ConnectionModalComponent
                 connectionType={connectionType}
+                isWebSerial={connectionType === 'webSerial'}
                 connectingMessage={this.state.device && this.state.device.connectingMessage}
                 connectionIconURL={this.state.device && this.state.device.connectionIconURL}
                 connectionSmallIconURL={this.state.device && this.state.device.connectionSmallIconURL}
@@ -233,7 +267,9 @@ class ConnectionModal extends React.Component {
                 webSerialConnectionSupported={webSerialConnectionSupported}
                 webSerialConnectionVisible={webSerialConnectionVisible}
                 webSerialStatus={webSerialStatus}
-                firmwareUploadRequired={this.state.device && this.state.device.firmwareUploadRequired}
+                webUsbSupported={isMicrobitWebUsbSupported()}
+                firmwareUploadRequired={Boolean(this.state.device && this.state.device.firmwareUploadRequired) ||
+                    (!isScratchDesktop() && this.props.deviceId === 'microbitV2')}
                 connectionTipIconURL={this.state.device && this.state.device.connectionTipIconURL}
                 deviceId={this.props.deviceId}
                 name={this.state.device && this.state.device.name}

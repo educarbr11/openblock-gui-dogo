@@ -9,11 +9,12 @@ import Dots from './dots.jsx';
 
 import radarIcon from './icons/searching.png';
 import refreshIcon from './icons/refresh.svg';
+import {MICROBIT_REALTIME_FIRMWARE_V2_URL} from '../../lib/microbit-web-usb';
 
 import styles from './connection-modal.css';
 
-const MICROBIT_REALTIME_FIRMWARE_V2_URL = 'static/firmwares/microbit/dogoblock-microbit-realtime-v2.hex';
 const isMicrobitFirmwareDevice = deviceId => ['microbit', 'microbitV2', 'microbitBle'].indexOf(deviceId) !== -1;
+const isMicrobitSerialDevice = deviceId => ['microbit', 'microbitV2'].indexOf(deviceId) !== -1;
 
 const ScanningStep = props => (
     <Box className={styles.body}>
@@ -122,11 +123,19 @@ const ScanningStep = props => (
                                 src={radarIcon}
                             />
                             {props.connectionType === 'webSerial' ? (
-                                <FormattedMessage
-                                    defaultMessage="Use Refresh to select your Arduino USB device"
-                                    description="Text shown while waiting for Web Serial Arduino device selection"
-                                    id="gui.connection.scanning.arduinoWebSerialSelect"
-                                />
+                                isMicrobitSerialDevice(props.deviceId) ? (
+                                    <FormattedMessage
+                                        defaultMessage="Clique em Atualizar e selecione o micro:bit conectado por USB."
+                                        description="Prompt for selecting a micro:bit USB serial port"
+                                        id="gui.connection.scanning.microbitWebSerialSelect"
+                                    />
+                                ) : (
+                                    <FormattedMessage
+                                        defaultMessage="Use Refresh to select your Arduino USB device"
+                                        description="Text shown while waiting for Web Serial Arduino device selection"
+                                        id="gui.connection.scanning.arduinoWebSerialSelect"
+                                    />
+                                )
                             ) : props.isChromeOS ? (
                                 <FormattedMessage
                                     defaultMessage="Use Refresh to select a serial device in Chrome"
@@ -176,7 +185,22 @@ const ScanningStep = props => (
         <Box className={styles.bottomArea}>
             <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
                 {props.firmwareUploadRequired ? (
-                    props.connectionType === 'webBluetooth' ? (
+                    props.connectionType === 'webSerial' && isMicrobitSerialDevice(props.deviceId) ? (
+                        props.webUsbSupported ? (
+                            <FormattedMessage
+                                defaultMessage="Instale o firmware do modo palco via WebUSB antes de conectar."
+                                description="Prompt for browser micro:bit realtime firmware upload"
+                                id="gui.connection.scanning.microbitWebUsbFirmware"
+                            />
+                        ) : (
+                            <FormattedMessage
+                                defaultMessage={'WebUSB indisponível. Baixe o firmware e copie-o para a ' +
+                                    'unidade MICROBIT.'}
+                                description="Prompt when micro:bit WebUSB flashing is unavailable"
+                                id="gui.connection.scanning.microbitWebUsbUnavailable"
+                            />
+                        )
+                    ) : props.connectionType === 'webBluetooth' ? (
                         <FormattedMessage
                             defaultMessage={
                                 'Web Bluetooth está desativado por enquanto. Use o DoGoBlock Link para enviar ' +
@@ -202,7 +226,9 @@ const ScanningStep = props => (
             </Box>
             {props.firmwareUploadRequired && isMicrobitFirmwareDevice(props.deviceId) ? (
                 <button
-                    className={classNames(styles.bottomAreaItem, styles.connectionButton, styles.microbitFirmwareManualButton)}
+                    className={classNames(
+                        styles.bottomAreaItem, styles.connectionButton, styles.microbitFirmwareManualButton
+                    )}
                     onClick={props.onOpenManualFirmware}
                 >
                     <FormattedMessage
@@ -220,6 +246,8 @@ const ScanningStep = props => (
             {props.firmwareUploadRequired ? (
                 <button
                     className={classNames(styles.bottomAreaItem, styles.connectionButton)}
+                    disabled={props.connectionType === 'webSerial' &&
+                        isMicrobitSerialDevice(props.deviceId) && !props.webUsbSupported}
                     onClick={props.onUploadFirmware}
                 >
                     <FormattedMessage
@@ -284,11 +312,20 @@ const ScanningStep = props => (
                             />
                         </li>
                         <li>
-                            <FormattedMessage
-                                defaultMessage="Clique em Atualizar e conecte pelo DoGoBlock Link."
-                                description="Manual micro:bit firmware install step"
-                                id="gui.connection.microbitFirmwareManual.stepConnectLink"
-                            />
+                            {props.connectionType === 'webSerial' ? (
+                                <FormattedMessage
+                                    defaultMessage={'Clique em Atualizar e selecione o micro:bit pela ' +
+                                        'conexão Web Serial USB.'}
+                                    description="Manual micro:bit firmware install Web Serial step"
+                                    id="gui.connection.microbitFirmwareManual.stepConnectWebSerial"
+                                />
+                            ) : (
+                                <FormattedMessage
+                                    defaultMessage="Clique em Atualizar e conecte pelo DoGoBlock Link."
+                                    description="Manual micro:bit firmware install step"
+                                    id="gui.connection.microbitFirmwareManual.stepConnectLink"
+                                />
+                            )}
                         </li>
                     </ol>
                     <div className={styles.microbitFirmwareActions}>
@@ -348,7 +385,8 @@ ScanningStep.propTypes = {
     webBluetoothStatus: PropTypes.string,
     webSerialConnectionSupported: PropTypes.bool,
     webSerialConnectionVisible: PropTypes.bool,
-    webSerialStatus: PropTypes.string
+    webSerialStatus: PropTypes.string,
+    webUsbSupported: PropTypes.bool
 };
 
 ScanningStep.defaultProps = {

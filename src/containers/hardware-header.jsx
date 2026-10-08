@@ -21,6 +21,11 @@ import {
     getMicrobitCompileJob,
     downloadMicrobitCompileArtifact
 } from '../lib/dogoblock-api';
+import {
+    connectMicrobitWebUsb,
+    flashMicrobitHex,
+    getMicrobitWebUsbErrorMessage
+} from '../lib/microbit-web-usb';
 
 import HardwareHeaderComponent from '../components/hardware-header/hardware-header.jsx';
 
@@ -102,9 +107,33 @@ class HardwareHeader extends React.Component {
                 this.props.onWorkspaceIsEmpty();
             } else {
                 const startUpload = () => {
+                    let microbitCode;
+                    if (!isScratchDesktop() && isMicrobitUpload) {
+                        if (this.getRealDeviceId() !== 'microbitV2') {
+                            this.props.onOpenUploadProgress();
+                            window.setTimeout(() => this.emitUploadError(
+                                'O compilador Web gera programas para micro:bit v2. Selecione a placa micro:bit v2.'
+                            ), 0);
+                            return;
+                        }
+                        try {
+                            microbitCode = this.getMicrobitUploadCode();
+                        } catch (error) {
+                            this.props.onOpenUploadProgress();
+                            window.setTimeout(() => this.emitUploadError(error.message), 0);
+                            return;
+                        }
+                    }
                     this.props.onOpenUploadProgress();
                     if (!isScratchDesktop() && isMicrobitUpload) {
-                        window.setTimeout(this.handleMicrobitCompilerUpload, 0);
+                        if (this.props.peripheralName && this.getEffectiveConnectionType() === 'webSerial') {
+                            this.props.vm.disconnectPeripheral(this.props.deviceId);
+                        }
+                        connectMicrobitWebUsb()
+                            .then(usb => this.handleMicrobitCompilerUpload(usb, microbitCode))
+                            .catch(error => this.emitUploadError(
+                                getMicrobitWebUsbErrorMessage(error)
+                            ));
                     } else if (!isScratchDesktop() && this.isArduinoCompilerDevice()) {
                         window.setTimeout(this.handleArduinoCompilerUpload, 0);
                     } else {
@@ -274,17 +303,10 @@ class HardwareHeader extends React.Component {
         return poll();
     }
 
-    handleMicrobitCompilerUpload () {
+    handleMicrobitCompilerUpload (usbConnection, code) {
         this.compileLogLength = 0;
-        let code;
-        try {
-            code = this.getMicrobitUploadCode();
-        } catch (error) {
-            this.emitUploadError(error.message);
-            return;
-        }
         this.emitUploadStdout('Compilando MicroPython no Dogoblock API...\n');
-        createMicrobitCompileJob(code)
+        return createMicrobitCompileJob(code)
             .then(job => this.pollMicrobitCompileJob(job.id))
             .then(job => {
                 if (!job.artifact) {
@@ -294,23 +316,13 @@ class HardwareHeader extends React.Component {
                 return downloadMicrobitCompileArtifact(job.id);
             })
             .then(hex => {
-                this.emitUploadStdout('Enviando programa para o micro:bit via DoGoBlock Link...\n');
-                const uploadCompletion = this.waitForUploadCompletion();
-                const uploadResult = this.props.vm.uploadArtifactToPeripheral(this.props.deviceId, hex, null, {
-                    artifactType: 'microbitHex',
-                    fileName: 'dogoblock-microbit-program.hex',
-                    resumeRealtime: false
-                });
-                if (uploadResult === false) {
-                    uploadCompletion.cancel();
-                    throw new Error('Nao foi possivel iniciar o envio. Abra o DoGoBlock Link e tente novamente.');
-                }
-                this.emitUploadStdout('Programa recebido. Copiando .hex para a unidade MICROBIT...\n');
-                return this.waitForUploadResult(uploadResult, uploadCompletion);
+                this.emitUploadStdout('Enviando programa para o micro:bit via WebUSB...\n');
+                return flashMicrobitHex(usbConnection, hex);
             })
-            .catch(error => {
-                this.emitUploadError(error && error.message ? error.message : String(error));
-            });
+            .then(() => this.props.vm.emit('PERIPHERAL_UPLOAD_SUCCESS', {firmware: false}))
+            .catch(error => usbConnection.disconnect().then(() => {
+                throw error;
+            }));
     }
 
     pollMicrobitCompileJob (jobId) {

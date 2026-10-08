@@ -27,11 +27,11 @@ const UnavailableStep = props => (
                         />
                     </div>
                     <div className={styles.helpStepText}>
-                        {props.isChromeOS ? (
+                        {props.isChromeOS || props.isWebSerial ? (
                             <FormattedMessage
-                                defaultMessage="Use Chrome on ChromeOS and allow serial device access when prompted"
+                                defaultMessage="Use Chrome ou Edge e autorize o acesso à porta USB quando solicitado."
                                 description="Message for enabling Web Serial on ChromeOS"
-                                id="gui.connection.unavailable.webSerialAccess"
+                                id="gui.connection.unavailable.webSerialUsbAccess"
                             />
                         ) : (
                             <FormattedMessage
@@ -53,11 +53,11 @@ const UnavailableStep = props => (
                         />
                     </div>
                     <div className={styles.helpStepText}>
-                        {props.isChromeOS ? (
+                        {props.isChromeOS || props.isWebSerial ? (
                             <FormattedMessage
-                                defaultMessage="Connect USB and make sure the Arduino has realtime firmware installed"
+                                defaultMessage="Verifique o cabo USB e o firmware do modo palco da placa."
                                 description="Message for checking ChromeOS Web Serial Arduino setup"
-                                id="gui.connection.unavailable.webSerialFirmware"
+                                id="gui.connection.unavailable.webSerialUsbFirmware"
                             />
                         ) : (
                             <FormattedMessage
@@ -112,6 +112,7 @@ const UnavailableStep = props => (
 
 UnavailableStep.propTypes = {
     isChromeOS: PropTypes.bool,
+    isWebSerial: PropTypes.bool,
     onHelp: PropTypes.func,
     onScanning: PropTypes.func
 };

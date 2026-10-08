@@ -50,6 +50,7 @@ ConnectionModalComponent.propTypes = {
     connectionTipIconURL: PropTypes.string,
     firmwareUploadRequired: PropTypes.bool,
     isChromeOS: PropTypes.bool,
+    isWebSerial: PropTypes.bool,
     name: PropTypes.node,
     onCancel: PropTypes.func.isRequired,
     onConnectionTypeChange: PropTypes.func,
@@ -64,7 +65,8 @@ ConnectionModalComponent.propTypes = {
     webBluetoothStatus: PropTypes.string,
     webSerialConnectionSupported: PropTypes.bool,
     webSerialConnectionVisible: PropTypes.bool,
-    webSerialStatus: PropTypes.string
+    webSerialStatus: PropTypes.string,
+    webUsbSupported: PropTypes.bool
 };
 
 ConnectionModalComponent.defaultProps = {

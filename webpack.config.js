@@ -73,7 +73,7 @@ const SENTRY_RELEASE = process.env.SENTRY_RELEASE || (process.env.VERCEL_GIT_COM
     `dogoblock-web@${process.env.VERCEL_GIT_COMMIT_SHA}` : '');
 const envDefinitions = {
     'process.env.NODE_ENV': JSON.stringify(BUILD_NODE_ENV),
-    'process.env.DEBUG': Boolean(process.env.DEBUG),
+    'process.env.DEBUG': process.env.DEBUG === 'true' || process.env.DEBUG === '1',
     'process.env.GA_ID': JSON.stringify(process.env.GA_ID || ''),
     'process.env.GA_DEBUG': JSON.stringify(process.env.GA_DEBUG || 'false'),
     'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
@@ -187,6 +187,17 @@ const base = {
                         workspaceRoot
                     }]],
                 presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+        },
+        {
+            test: /\.jsx?$/,
+            loader: 'babel-loader',
+            include: /node_modules[\\/]@microbit[\\/]microbit-(connection|universal-hex)/,
+            options: {
+                babelrc: false,
+                presets: [['@babel/preset-env', {
+                    targets: {chrome: '69', edge: '79'}
+                }]]
             }
         },
         {

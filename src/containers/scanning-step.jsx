@@ -112,6 +112,7 @@ class ScanningStep extends React.Component {
                 webSerialConnectionSupported={this.props.webSerialConnectionSupported}
                 webSerialConnectionVisible={this.props.webSerialConnectionVisible}
                 webSerialStatus={this.props.webSerialStatus}
+                webUsbSupported={this.props.webUsbSupported}
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
@@ -150,7 +151,8 @@ ScanningStep.propTypes = {
     webBluetoothStatus: PropTypes.string,
     webSerialConnectionSupported: PropTypes.bool,
     webSerialConnectionVisible: PropTypes.bool,
-    webSerialStatus: PropTypes.string
+    webSerialStatus: PropTypes.string,
+    webUsbSupported: PropTypes.bool
 };
 
 ScanningStep.defaultProps = {
