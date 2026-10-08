@@ -1928,19 +1928,19 @@ const patchOpenBlockL10nLostConnectionBranding = () => {
 };
 
 const resourcePackTranslationsPtBr = {
-    'gui.resourcePack.title': 'Suporte ESP32',
-    'gui.resourcePack.installTitle': 'Instalar suporte ESP32',
-    'gui.resourcePack.updateTitle': 'Atualizar suporte ESP32',
-    'gui.resourcePack.description': 'Este pacote opcional adiciona as ferramentas necessárias para compilar e ' +
-        'enviar programas para placas ESP32 e ESP32-S3. Depois da instalação, funciona sem internet.',
+    'gui.resourcePack.title': 'Recurso opcional',
+    'gui.resourcePack.installTitle': 'Instalar {packName}',
+    'gui.resourcePack.updateTitle': 'Atualizar {packName}',
+    'gui.resourcePack.description': 'Este pacote opcional adiciona os arquivos necessários para usar este recurso. ' +
+        'Depois da instalação, funciona sem internet.',
     'gui.resourcePack.downloadSize': 'Download',
     'gui.resourcePack.installedSize': 'Espaço em disco',
     'gui.resourcePack.version': 'Versão',
-    'gui.resourcePack.downloading': 'Baixando suporte ESP32...',
+    'gui.resourcePack.downloading': 'Baixando {packName}...',
     'gui.resourcePack.extracting': 'Extraindo arquivos...',
     'gui.resourcePack.validating': 'Validando a instalação...',
     'gui.resourcePack.progressHint': 'Mantenha o DoGoBlock aberto até a instalação terminar.',
-    'gui.resourcePack.unsupported': 'O suporte ESP32 não está disponível para este sistema.',
+    'gui.resourcePack.unsupported': 'Este recurso opcional não está disponível para este sistema.',
     'gui.resourcePack.cancel': 'Cancelar',
     'gui.resourcePack.notNow': 'Agora não',
     'gui.resourcePack.useInstalled': 'Usar versão instalada',
@@ -1951,7 +1951,8 @@ const resourcePackTranslationsPtBr = {
     'gui.resourcePack.cardUpdate': 'Atualização disponível',
     'gui.resourcePack.cardUnavailable': 'Indisponível',
     'gui.resourcePack.cardOptional': 'Download opcional',
-    'gui.resourcePack.remove': 'Remover suporte ESP32'
+    'gui.resourcePack.cardInstalling': 'Instalando',
+    'gui.resourcePack.remove': 'Remover recurso opcional'
 };
 
 const patchOpenBlockL10nResourcePackPackage = packageDir => {

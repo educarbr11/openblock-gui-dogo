@@ -16,21 +16,22 @@ const formatBytes = bytes => {
     return `${scaled >= 10 || unitIndex === 0 ? scaled.toFixed(0) : scaled.toFixed(1)} ${units[unitIndex]}`;
 };
 
-const phaseMessage = phase => {
+const phaseMessage = (phase, packName) => {
     switch (phase) {
     case 'downloading':
         return (
             <FormattedMessage
-                defaultMessage="Downloading ESP32 support..."
-                description="ESP32 resource pack download status"
+                defaultMessage="Downloading {packName}..."
+                description="Optional resource pack download status"
                 id="gui.resourcePack.downloading"
+                values={{packName}}
             />
         );
     case 'extracting':
         return (
             <FormattedMessage
                 defaultMessage="Extracting files..."
-                description="ESP32 resource pack extraction status"
+                description="Optional resource pack extraction status"
                 id="gui.resourcePack.extracting"
             />
         );
@@ -38,7 +39,7 @@ const phaseMessage = phase => {
         return (
             <FormattedMessage
                 defaultMessage="Validating the installation..."
-                description="ESP32 resource pack validation status"
+                description="Optional resource pack validation status"
                 id="gui.resourcePack.validating"
             />
         );
@@ -49,6 +50,9 @@ const phaseMessage = phase => {
 
 const ResourcePackModal = props => {
     const status = props.status || {};
+    const packName = status.displayName || status.id || 'Recurso opcional';
+    const packMark = status.id === 'microbit-python' ? 'Python' :
+        status.id === 'arduino-r4' ? 'R4' : status.id === 'ai-ml' ? 'IA / ML' : 'ESP32';
     const isWorking = ['downloading', 'extracting', 'validating'].indexOf(status.phase) !== -1;
     const isError = status.phase === 'error';
     const isUnsupported = status.phase === 'unsupported';
@@ -58,13 +62,7 @@ const ResourcePackModal = props => {
     return (
         <Modal
             className={styles.modalContent}
-            contentLabel={(
-                <FormattedMessage
-                    defaultMessage="ESP32 support"
-                    description="ESP32 resource pack modal title"
-                    id="gui.resourcePack.title"
-                />
-            )}
+            contentLabel={packName}
             id="resourcePack"
             shouldCloseOnOverlayClick={!isWorking}
             closeButtonVisible={!isWorking}
@@ -72,30 +70,34 @@ const ResourcePackModal = props => {
         >
             <div className={styles.body}>
                 <div className={styles.intro}>
-                    <div className={styles.packMark}>{'ESP32'}</div>
+                    <div className={styles.packMark}>{packMark}</div>
                     <div>
                         <h3 className={styles.title}>
                             {isUpdate ? (
                                 <FormattedMessage
-                                    defaultMessage="Update ESP32 support"
-                                    description="ESP32 resource pack update heading"
+                                    defaultMessage="Update {packName}"
+                                    description="Optional resource pack update heading"
                                     id="gui.resourcePack.updateTitle"
+                                    values={{packName}}
                                 />
                             ) : (
                                 <FormattedMessage
-                                    defaultMessage="Install ESP32 support"
-                                    description="ESP32 resource pack install heading"
+                                    defaultMessage="Install {packName}"
+                                    description="Optional resource pack install heading"
                                     id="gui.resourcePack.installTitle"
+                                    values={{packName}}
                                 />
                             )}
                         </h3>
                         <p className={styles.description}>
-                            <FormattedMessage
-                                defaultMessage={'This optional package adds the tools required to compile and upload ' +
-                                    'programs to ESP32 and ESP32-S3 boards. After installation, it works offline.'}
-                                description="Description of the optional ESP32 resource pack"
-                                id="gui.resourcePack.description"
-                            />
+                            {status.description || (
+                                <FormattedMessage
+                                    defaultMessage={'This optional package adds the files required by this feature. ' +
+                                        'After installation, it works offline.'}
+                                    description="Description of an optional resource pack"
+                                    id="gui.resourcePack.description"
+                                />
+                            )}
                         </p>
                     </div>
                 </div>
@@ -138,7 +140,7 @@ const ResourcePackModal = props => {
                 {isWorking ? (
                     <div className={styles.progressSection}>
                         <div className={styles.progressHeader}>
-                            <strong>{phaseMessage(status.phase)}</strong>
+                            <strong>{phaseMessage(status.phase, packName)}</strong>
                             {status.phase === 'downloading' ? <span>{`${percentage}%`}</span> : null}
                         </div>
                         <div
@@ -172,7 +174,7 @@ const ResourcePackModal = props => {
                     >
                         {status.message || (
                             <FormattedMessage
-                                defaultMessage="ESP32 support is not available for this system."
+                                defaultMessage="This optional resource is not available for this system."
                                 description="Unsupported resource pack message"
                                 id="gui.resourcePack.unsupported"
                             />
@@ -260,6 +262,8 @@ ResourcePackModal.propTypes = {
     onUseInstalled: PropTypes.func.isRequired,
     status: PropTypes.shape({
         canUse: PropTypes.bool,
+        description: PropTypes.string,
+        displayName: PropTypes.string,
         downloadBytes: PropTypes.number,
         installedBytes: PropTypes.number,
         message: PropTypes.string,

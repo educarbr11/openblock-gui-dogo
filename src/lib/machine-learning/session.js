@@ -17,6 +17,7 @@ class MachineLearningSession {
         this.requested = false;
         this.startToken = 0;
         this.startPromise = null;
+        this.resourcePackRelease = null;
     }
 
     _initialState () {
@@ -84,13 +85,22 @@ class MachineLearningSession {
             });
             return Promise.resolve();
         }
-        this.startPromise = Promise.all([
-            loadTensorflow(),
-            navigator.mediaDevices.getUserMedia({video: true})
-        ])
-            .then(([libs, stream]) => {
+        this.startPromise = loadTensorflow()
+            .then(libs => {
+                if (!this.requested || startToken !== this.startToken) {
+                    libs.releaseResourcePack();
+                    return null;
+                }
+                this.resourcePackRelease = libs.releaseResourcePack;
+                return navigator.mediaDevices.getUserMedia({video: true})
+                    .then(stream => [libs, stream]);
+            })
+            .then(result => {
+                if (!result) return;
+                const [libs, stream] = result;
                 if (!this.requested || startToken !== this.startToken) {
                     stream.getTracks().forEach(track => track.stop());
+                    this._releaseResourcePack();
                     return;
                 }
                 this.tf = libs.tf;
@@ -104,6 +114,7 @@ class MachineLearningSession {
                     .then(model => {
                         if (!this.requested || startToken !== this.startToken) {
                             stream.getTracks().forEach(track => track.stop());
+                            this._releaseResourcePack();
                             return;
                         }
                         this.mobileNet = model;
@@ -118,6 +129,15 @@ class MachineLearningSession {
                     });
             })
             .catch(error => {
+                this.startPromise = null;
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                    this.stream = null;
+                }
+                this.videos.forEach(video => {
+                    video.srcObject = null;
+                });
+                this._releaseResourcePack();
                 this._setState({
                     loading: false,
                     error: this._cameraErrorMessage(error)
@@ -157,7 +177,15 @@ class MachineLearningSession {
         this.stream = null;
         this.classifier = null;
         this.startPromise = null;
+        this._releaseResourcePack();
         this._setState({loading: true});
+    }
+
+    _releaseResourcePack () {
+        if (!this.resourcePackRelease) return;
+        const release = this.resourcePackRelease;
+        this.resourcePackRelease = null;
+        release();
     }
 
     selectClass (label) {

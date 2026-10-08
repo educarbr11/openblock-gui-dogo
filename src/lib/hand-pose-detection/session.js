@@ -73,6 +73,7 @@ class HandPoseDetectionSession {
         this.requested = false;
         this.startToken = 0;
         this.startPromise = null;
+        this.resourcePackRelease = null;
         this.detecting = false;
         this.captureTimer = null;
         this.captureEndTimer = null;
@@ -148,16 +149,24 @@ class HandPoseDetectionSession {
             this._setState({loading: false, error: 'A câmera não está disponível neste navegador.'});
             return Promise.resolve();
         }
-        this.startPromise = Promise.all([
-            loadHandPoseDetection(),
-            navigator.mediaDevices.getUserMedia({
-                audio: false,
-                video: {facingMode: 'user', width: {ideal: 640}, height: {ideal: 480}}
+        this.startPromise = loadHandPoseDetection()
+            .then(libs => {
+                if (!this.requested || startToken !== this.startToken) {
+                    libs.releaseResourcePack();
+                    return null;
+                }
+                this.resourcePackRelease = libs.releaseResourcePack;
+                return navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {facingMode: 'user', width: {ideal: 640}, height: {ideal: 480}}
+                }).then(stream => [libs, stream]);
             })
-        ])
-            .then(([libs, stream]) => {
+            .then(result => {
+                if (!result) return null;
+                const [libs, stream] = result;
                 if (!this.requested || startToken !== this.startToken) {
                     stream.getTracks().forEach(track => track.stop());
+                    this._releaseResourcePack();
                     return null;
                 }
                 this.tf = libs.tf;
@@ -177,6 +186,7 @@ class HandPoseDetectionSession {
                 if (!detector) return;
                 if (!this.requested || startToken !== this.startToken) {
                     detector.dispose();
+                    this._releaseResourcePack();
                     return;
                 }
                 this.detector = detector;
@@ -188,6 +198,15 @@ class HandPoseDetectionSession {
             })
             .catch(error => {
                 this.startPromise = null;
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                    this.stream = null;
+                }
+                this.videos.forEach(video => {
+                    video.srcObject = null;
+                });
+                if (this.sourceVideo) this.sourceVideo.srcObject = null;
+                this._releaseResourcePack();
                 this._setState({loading: false, running: false, error: errorMessage(error)});
             });
         return this.startPromise;
@@ -208,6 +227,7 @@ class HandPoseDetectionSession {
         if (this.classifier && typeof this.classifier.clearAllClasses === 'function') this.classifier.clearAllClasses();
         this.stream = null;
         this.detector = null;
+        this._releaseResourcePack();
         this.classifier = null;
         this.startPromise = null;
         this.predictionHistory = [];
@@ -529,6 +549,13 @@ class HandPoseDetectionSession {
             modelActive: Boolean(model.active),
             modelReady: this._isModelReady(model)
         });
+    }
+
+    _releaseResourcePack () {
+        if (!this.resourcePackRelease) return;
+        const release = this.resourcePackRelease;
+        this.resourcePackRelease = null;
+        release();
     }
 
     _rebuildClassifier (model) {

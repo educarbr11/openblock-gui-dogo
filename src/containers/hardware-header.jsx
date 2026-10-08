@@ -84,8 +84,9 @@ class HardwareHeader extends React.Component {
     }
 
     handleUpload () {
-        if (this.isEsp32ResourceDevice() && this.props.onEnsureResourcePack) {
-            this.props.onEnsureResourcePack('esp32')
+        const resourcePackId = this.getRequiredResourcePackId();
+        if (resourcePackId && this.props.onEnsureResourcePack) {
+            this.props.onEnsureResourcePack(resourcePackId)
                 .then(this.handleUploadAfterResourceCheck)
                 .catch(() => {});
             return;
@@ -148,6 +149,13 @@ class HardwareHeader extends React.Component {
 
     isEsp32ResourceDevice () {
         return ['arduinoEsp32', 'arduinoEsp32S3'].indexOf(this.getRealDeviceId()) !== -1;
+    }
+
+    getRequiredResourcePackId () {
+        if (this.isEsp32ResourceDevice()) return 'esp32';
+        if (this.getRealDeviceId() === 'arduinoUnoR4Wifi') return 'arduino-r4';
+        if (isScratchDesktop() && this.isMicrobitCompilerDevice()) return 'microbit-python';
+        return null;
     }
 
     getRealDeviceId () {

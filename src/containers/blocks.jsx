@@ -951,6 +951,8 @@ class Blocks extends React.Component {
                 {extensionLibraryVisible ? (
                     <ExtensionLibrary
                         vm={vm}
+                        onGetResourcePackStatus={onGetResourcePackStatus}
+                        onRemoveResourcePack={onRemoveResourcePack}
                         onCategorySelected={this.handleCategorySelected}
                         onRequestClose={onRequestCloseExtensionLibrary}
                     />

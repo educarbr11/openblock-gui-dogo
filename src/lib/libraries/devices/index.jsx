@@ -61,6 +61,7 @@ const deviceData = [
     {
         name: 'micro:bit v2',
         deviceId: 'microbitV2',
+        desktopOptionalResourcePackId: 'microbit-python',
         manufactor: 'micro:bit',
         learnMore: 'https://microbit.org/get-started/user-guide/overview/',
         type: DeviceType.microbit,
@@ -206,6 +207,7 @@ const deviceData = [
     {
         name: 'Arduino Uno R4 WiFi',
         deviceId: 'arduinoUnoR4Wifi',
+        desktopResourcePackId: 'arduino-r4',
         manufactor: 'arduino',
         learnMore: 'https://docs.arduino.cc/hardware/uno-r4-wifi',
         type: DeviceType.arduino,

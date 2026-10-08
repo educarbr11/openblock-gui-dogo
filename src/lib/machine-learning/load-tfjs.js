@@ -1,12 +1,11 @@
 import getMlVendorPath from '../ml-vendor-path';
+import {acquireResourcePack} from '../resource-pack-service';
 
-const scripts = [
-    getMlVendorPath('tfjs/4.22.0/tf.min.js'),
-    getMlVendorPath('mobilenet/2.1.1/mobilenet.min.js'),
-    getMlVendorPath('knn-classifier/1.2.6/knn-classifier.min.js')
+const scriptPaths = [
+    'tfjs/4.22.0/tf.min.js',
+    'mobilenet/2.1.1/mobilenet.min.js',
+    'knn-classifier/1.2.6/knn-classifier.min.js'
 ];
-
-const mobilenetModelUrl = getMlVendorPath('mobilenet/model/model.json');
 
 let loadingPromise = null;
 
@@ -17,8 +16,8 @@ const loadScript = src => new Promise((resolve, reject) => {
             resolve();
             return;
         }
-        existing.addEventListener('load', resolve);
-        existing.addEventListener('error', reject);
+        existing.addEventListener('load', resolve, {once: true});
+        existing.addEventListener('error', reject, {once: true});
         return;
     }
 
@@ -29,12 +28,16 @@ const loadScript = src => new Promise((resolve, reject) => {
         script.setAttribute('data-loaded', 'true');
         resolve();
     };
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    script.onerror = () => {
+        script.remove();
+        reject(new Error(`Failed to load ${src}`));
+    };
     document.head.appendChild(script);
 });
 
-const loadTensorflow = () => {
+const loadLibraries = baseUrl => {
     if (!loadingPromise) {
+        const scripts = scriptPaths.map(relativePath => getMlVendorPath(relativePath, baseUrl));
         loadingPromise = scripts.reduce(
             (promise, src) => promise.then(() => loadScript(src)),
             Promise.resolve()
@@ -45,12 +48,27 @@ const loadTensorflow = () => {
             return {
                 tf: window.tf,
                 mobilenet: window.mobilenet,
-                knnClassifier: window.knnClassifier,
-                mobilenetModelUrl
+                knnClassifier: window.knnClassifier
             };
-        });
+        })
+            .catch(error => {
+                loadingPromise = null;
+                throw error;
+            });
     }
     return loadingPromise;
 };
+
+const loadTensorflow = () => acquireResourcePack('ai-ml').then(lease =>
+    loadLibraries(lease.baseUrl)
+        .then(libraries => Object.assign({}, libraries, {
+            mobilenetModelUrl: getMlVendorPath('mobilenet/model/model.json', lease.baseUrl),
+            releaseResourcePack: lease.release
+        }))
+        .catch(error => {
+            lease.release();
+            throw error;
+        })
+);
 
 export default loadTensorflow;

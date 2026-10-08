@@ -75,7 +75,9 @@ class DeviceLibrary extends React.PureComponent {
 
     refreshResourcePackStatuses (devices = this.props.deviceData) {
         if (!this.props.onGetResourcePackStatus) return;
-        const packIds = devices.map(device => device.desktopResourcePackId).filter(Boolean)
+        const packIds = devices.map(device =>
+            device.desktopResourcePackId || device.desktopOptionalResourcePackId
+        ).filter(Boolean)
             .filter((packId, index, all) => all.indexOf(packId) === index);
         Promise.all(packIds.map(packId => this.props.onGetResourcePackStatus(packId)
             .then(status => ({packId, status}))))
@@ -140,14 +142,16 @@ class DeviceLibrary extends React.PureComponent {
     }
 
     render () {
-        const deviceLibraryThumbnailData = this.props.deviceData.map(device => ({
-            rawURL: device.iconURL || deviceIcon,
-            resourcePackStatus: device.desktopResourcePackId ?
-                this.state.resourcePackStatuses[device.desktopResourcePackId] : null,
-            handleRemoveResourcePack: device.desktopResourcePackId && this.props.onRemoveResourcePack ?
-                () => this.handleRemoveResourcePack(device.desktopResourcePackId) : null,
-            ...device
-        }));
+        const deviceLibraryThumbnailData = this.props.deviceData.map(device => {
+            const packId = device.desktopResourcePackId || device.desktopOptionalResourcePackId;
+            return {
+                rawURL: device.iconURL || deviceIcon,
+                resourcePackStatus: packId ? this.state.resourcePackStatuses[packId] : null,
+                handleRemoveResourcePack: packId && this.props.onRemoveResourcePack ?
+                    () => this.handleRemoveResourcePack(packId) : null,
+                ...device
+            };
+        });
 
         return (
             <LibraryComponent

@@ -43,6 +43,7 @@ import FeedbackModal from '../../containers/feedback-modal.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
+import {configureResourcePackService} from '../../lib/resource-pack-service';
 
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
@@ -109,6 +110,7 @@ const GUIComponent = props => {
         machineLearningResultVisible,
         machineLearningTrainerVisible,
         renderLogin,
+        onAcquireResourcePack,
         onClickAbout,
         onClickAccountNav,
         onCloseAccountNav,
@@ -134,6 +136,7 @@ const GUIComponent = props => {
         onRequestCloseFeedbackModal,
         onRequestCloseTelemetryModal,
         onRemoveResourcePack,
+        onReleaseResourcePack,
         onSeeCommunity,
         onShare,
         onShowPrivacyPolicy,
@@ -152,6 +155,13 @@ const GUIComponent = props => {
         isRealtimeMode,
         ...componentProps
     } = omit(props, 'dispatch');
+    React.useEffect(() => {
+        configureResourcePackService({
+            acquire: onAcquireResourcePack,
+            release: onReleaseResourcePack
+        });
+        return () => configureResourcePackService(null);
+    }, [onAcquireResourcePack, onReleaseResourcePack]);
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -553,6 +563,7 @@ GUIComponent.propTypes = {
     logo: PropTypes.string,
     machineLearningResultVisible: PropTypes.bool,
     machineLearningTrainerVisible: PropTypes.bool,
+    onAcquireResourcePack: PropTypes.func,
     onActivateCostumesTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,
@@ -574,6 +585,7 @@ GUIComponent.propTypes = {
     onRequestCloseFeedbackModal: PropTypes.func,
     onRequestCloseTelemetryModal: PropTypes.func,
     onRemoveResourcePack: PropTypes.func,
+    onReleaseResourcePack: PropTypes.func,
     onSeeCommunity: PropTypes.func,
     onShare: PropTypes.func,
     onShowPrivacyPolicy: PropTypes.func,

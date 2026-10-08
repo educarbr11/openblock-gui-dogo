@@ -110,6 +110,7 @@ export default [
             />
         ),
         extensionId: 'machineLearning',
+        desktopResourcePackId: 'ai-ml',
         iconURL: machineLearningIconURL,
         insetIconURL: machineLearningInsetIconURL,
         description: (
@@ -131,6 +132,7 @@ export default [
             />
         ),
         extensionId: 'handPoseDetection',
+        desktopResourcePackId: 'ai-ml',
         iconURL: handPoseDetectionIconURL,
         insetIconURL: handPoseDetectionInsetIconURL,
         description: (
