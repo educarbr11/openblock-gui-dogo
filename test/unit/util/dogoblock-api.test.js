@@ -1,9 +1,13 @@
 import {
+    getProjectDetails,
     getMyProfile,
     listProjects,
+    listPublicProjects,
     logout,
-    setAuthSessionChangeHandler
+    setAuthSessionChangeHandler,
+    uploadProjectCover
 } from '../../../src/lib/dogoblock-api';
+import {getApiHost} from '../../../src/lib/dogoblock-api-config';
 import {readAuthSession, writeAuthSession} from '../../../src/lib/auth-session';
 
 const response = (status, body) => ({
@@ -120,5 +124,39 @@ describe('Dogoblock API authentication', () => {
         return request.then(() => {
             expect(global.fetch.mock.calls[0][0]).toMatch(/\/auth\/logout$/);
         });
+    });
+
+    test('uses the API host for legacy cover URLs in project details', () => {
+        global.fetch.mockImplementation(() => Promise.resolve(response(200, {
+            id: 'project-1',
+            thumbnailUrl: 'http://localhost:3000/project-covers/project-1.png?v=123'
+        })));
+
+        return getProjectDetails('project-1').then(project => {
+            expect(project.thumbnailUrl).toBe(`${getApiHost()}/project-covers/project-1.png?v=123`);
+        });
+    });
+
+    test('normalizes cover URLs returned after upload and in project lists', () => {
+        global.fetch.mockImplementation(() => Promise.resolve(response(200, [{
+            id: 'project-1',
+            thumbnailUrl: '/project-covers/project-1.png?v=123'
+        }, {
+            id: 'project-2',
+            thumbnailUrl: 'https://images.example.com/cover.png'
+        }])));
+
+        return listPublicProjects().then(projects => {
+            expect(projects[0].thumbnailUrl).toBe(`${getApiHost()}/project-covers/project-1.png?v=123`);
+            expect(projects[1].thumbnailUrl).toBe('https://images.example.com/cover.png');
+            global.fetch.mockImplementation(() => Promise.resolve(response(200, {
+                id: 'project-1',
+                thumbnailUrl: 'http://localhost:3000/project-covers/project-1.png?v=124'
+            })));
+            return uploadProjectCover('project-1', new File(['image'], 'cover.png', {type: 'image/png'}));
+        })
+            .then(project => {
+                expect(project.thumbnailUrl).toBe(`${getApiHost()}/project-covers/project-1.png?v=124`);
+            });
     });
 });

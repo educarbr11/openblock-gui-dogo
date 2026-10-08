@@ -1,4 +1,4 @@
-import {getApiHost, getProjectHost} from './dogoblock-api-config';
+import {getApiHost, getProjectCoverUrl, getProjectHost} from './dogoblock-api-config';
 import {
     clearAuthSession,
     getAuthHeaders,
@@ -122,6 +122,15 @@ const requestRaw = (path, options = {}) => fetchWithSession(path, options)
         return createResponseError(response).then(error => Promise.reject(error));
     });
 
+const withPublicCover = project => {
+    if (!project || !project.thumbnailUrl) return project;
+    return Object.assign({}, project, {thumbnailUrl: getProjectCoverUrl(project.thumbnailUrl)});
+};
+const withPublicCovers = projects => {
+    if (!Array.isArray(projects)) return projects;
+    return projects.map(withPublicCover);
+};
+
 const setAuthSessionChangeHandler = handler => {
     authSessionChangeHandler = typeof handler === 'function' ? handler : null;
 };
@@ -185,15 +194,16 @@ const updateMyProfile = profile => request('/users/me', {
     body: JSON.stringify(profile)
 });
 
-const listFavoriteProjects = () => request('/users/me/favorites');
+const listFavoriteProjects = () => request('/users/me/favorites').then(withPublicCovers);
 
-const getPublicUserProfile = username => request(`/users/${username}`, {skipAuth: true});
+const getPublicUserProfile = username => request(`/users/${username}`, {skipAuth: true})
+    .then(profile => Object.assign({}, profile, {projects: withPublicCovers(profile.projects)}));
 
 // ─── Projects ────────────────────────────────────────────────────────────────
 
-const listProjects = () => request('/projects');
-const listPublicProjects = () => request('/projects/public', {skipAuth: true});
-const getProjectDetails = projectId => request(`/projects/${projectId}/details`);
+const listProjects = () => request('/projects').then(withPublicCovers);
+const listPublicProjects = () => request('/projects/public', {skipAuth: true}).then(withPublicCovers);
+const getProjectDetails = projectId => request(`/projects/${projectId}/details`).then(withPublicCover);
 const deleteProject = projectId => request(`/projects/${projectId}`, {method: 'DELETE'});
 const updateProjectVisibility = (projectId, visibility) => request(`/projects/${projectId}/visibility`, {
     method: 'PUT',
@@ -213,7 +223,7 @@ const uploadProjectCover = (projectId, coverFile) => {
     return request(`/projects/${projectId}/cover`, {
         method: 'POST',
         body
-    });
+    }).then(withPublicCover);
 };
 
 const projectHost = getProjectHost();
@@ -244,7 +254,12 @@ const deleteComment = (projectId, commentId) =>
 // ─── Notifications ───────────────────────────────────────────────────────────
 
 const listNotifications = (page = 1, limit = 10) =>
-    request(`/notifications?page=${page}&limit=${limit}`);
+    request(`/notifications?page=${page}&limit=${limit}`)
+        .then(result => Object.assign({}, result, {
+            notifications: result.notifications.map(notification => Object.assign({}, notification, {
+                project: withPublicCover(notification.project)
+            }))
+        }));
 
 const getUnreadCount = () => request('/notifications/unread-count');
 
