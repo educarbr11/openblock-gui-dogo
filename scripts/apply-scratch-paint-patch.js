@@ -16,11 +16,168 @@ const dependencyPackageDirs = packageName => [
 const patches = [
     {
         label: 'scratch-paint rotation center',
+        dependencyPatch: true,
         packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
         applyDirectory: 'node_modules/scratch-paint',
         patchFile: path.join(root, 'patches', 'scratch-paint-rotation-center.patch'),
         markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'paint-editor.jsx'),
         markerText: 'startRotationCenterPick'
+    },
+    {
+        label: 'scratch-paint editor UX',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-editor-ux.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'properties-panel.jsx'),
+        markerText: 'class PropertiesPanel'
+    },
+    {
+        label: 'scratch-paint canvas readiness',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-canvas-ready.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'properties-panel.jsx'),
+        markerText: 'this.props.canvas && paper.project && paper.project.activeLayer'
+    },
+    {
+        label: 'scratch-paint flex width',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-flex-width.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components',
+            'paint-editor', 'paint-editor.css'),
+        markerText: 'box-sizing: border-box;'
+    },
+    {
+        label: 'scratch-paint bitmap mask bounds',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-bitmap-mask-bounds.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'helper', 'bitmap.js'),
+        markerText: 'const resizeMask = (item, width, height) =>'
+    },
+    {
+        label: 'scratch-paint contextual tools layout',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-contextual-tools-wrap.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components', 'paint-editor', 'properties-panel.css'),
+        markerText: '.contextual-tools'
+    },
+    {
+        label: 'scratch-paint narrow properties panel',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-narrow-properties.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components',
+            'paint-editor', 'properties-panel.css'),
+        markerText: 'max-width: calc(100% - 44px)'
+    },
+    {
+        label: 'scratch-paint geometry input history',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-geometry-noop.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'properties-panel.jsx'),
+        markerText: 'Math.abs(currentValue - value) < 0.01'
+    },
+    {
+        label: 'scratch-paint text properties layout',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-text-properties.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'containers', 'properties-panel.jsx'),
+        markerText: 'const textMode = this.props.mode === Modes.TEXT || this.props.mode === Modes.BIT_TEXT;'
+    },
+    {
+        label: 'scratch-paint compact toolbar lifecycle',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-compact-toolbar.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components', 'paint-editor', 'paint-editor.jsx'),
+        markerText: '<MediaQuery maxWidth={960}>'
+    },
+    {
+        label: 'scratch-paint color picker styles',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-color-picker-styles.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components', 'color-picker', 'color-picker.css'),
+        markerText: '.recent-swatches'
+    },
+    {
+        label: 'scratch-paint color popover layer',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-color-popover-layer.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'components', 'color-picker', 'color-picker.css'),
+        markerText: 'z-index: 20;'
+    },
+    {
+        label: 'scratch-render-fonts DoGoBlock families',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts'),
+        applyDirectory: 'node_modules/scratch-render-fonts',
+        patchFile: path.join(root, 'patches', 'scratch-render-fonts-dogoblock.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts', 'src', 'index.js'),
+        markerText: 'dogoblock-Poppins-Regular.ttf'
+    },
+    {
+        label: 'scratch-render-fonts raw font loader',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts'),
+        applyDirectory: 'node_modules/scratch-render-fonts',
+        patchFile: path.join(root, 'patches', 'scratch-render-fonts-raw-loader.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts', 'src', 'index.js'),
+        markerText: '!!base64-loader!./NotoSans-Medium.ttf'
+    },
+    {
+        label: 'openblock-l10n paint editor UX translations',
+        packageDir: path.join(dependencyRoot, 'node_modules', 'openblock-l10n'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', 'pt-br.json'),
+        markerText: '"gui.gui.collapsePaintStage": "Recolher palco durante a edição"',
+        jsonUpdates: ['pt-br', 'pt'].map(locale => ({
+            file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'paint-editor', `${locale}.json`),
+            values: {
+                'paint.properties.title': 'Propriedades',
+                'paint.properties.show': 'Mostrar propriedades',
+                'paint.properties.hide': 'Ocultar propriedades',
+                'paint.properties.appearance': 'Aparência',
+                'paint.properties.transform': 'Transformar',
+                'paint.properties.text': 'Texto',
+                'paint.properties.x': 'X',
+                'paint.properties.y': 'Y',
+                'paint.properties.width': 'Largura',
+                'paint.properties.height': 'Altura',
+                'paint.properties.rotation': 'Rotação',
+                'paint.properties.fontSize': 'Tamanho',
+                'paint.properties.multiple': 'Vários objetos selecionados',
+                'paint.colorPicker.hex': 'HEX',
+                'paint.colorPicker.rgb': 'RGB',
+                'paint.colorPicker.invalid': 'Cor inválida',
+                'paint.colorPicker.recent': 'Cores recentes',
+                'paint.fontPicker.search': 'Buscar fontes',
+                'paint.fontPicker.empty': 'Nenhuma fonte encontrada',
+                'paint.fontPicker.loadError': 'Não foi possível carregar esta fonte'
+            }
+        })).concat(['pt-br', 'pt'].map(locale => ({
+            file: path.join(dependencyRoot, 'node_modules', 'openblock-l10n', 'editor', 'interface', `${locale}.json`),
+            values: {
+                'gui.gui.collapsePaintStage': 'Recolher palco durante a edição',
+                'gui.gui.expandPaintStage': 'Mostrar palco durante a edição'
+            }
+        })))
     },
     {
         label: 'openblock-l10n Arduino begin translation',
@@ -113,7 +270,7 @@ const patches = [
 ];
 
 const gitApply = (patch, args) => spawnSync('git', ['apply'].concat(args), {
-    cwd: root,
+    cwd: dependencyRoot,
     encoding: 'utf8'
 });
 
@@ -2614,10 +2771,11 @@ const patchOpenBlockVmVideoSensingLifecycle = () => {
 };
 
 for (const patch of patches) {
-    if ((translationsOnly || dependenciesOnly) && !patch.jsonUpdates) {
+    if ((translationsOnly && !patch.jsonUpdates) ||
+        (dependenciesOnly && !patch.jsonUpdates && !patch.dependencyPatch)) {
         continue;
     }
-    if (!fs.existsSync(patch.packageDir) || !fs.existsSync(patch.patchFile)) {
+    if (!fs.existsSync(patch.packageDir) || (patch.patchFile && !fs.existsSync(patch.patchFile))) {
         continue;
     }
 
@@ -2649,6 +2807,26 @@ for (const patch of patches) {
     }
 
     console.log(`Applied ${patch.label} patch.`);
+}
+
+if (!translationsOnly) {
+    const fontDir = path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts', 'src');
+    const families = [
+        ['poppins', 'Poppins'], ['lato', 'Lato'], ['arvo', 'Arvo'], ['bangers', 'Bangers'],
+        ['play', 'Play'], ['share', 'Share'], ['spacemono', 'SpaceMono']
+    ];
+    if (fs.existsSync(fontDir)) {
+        families.forEach(([directory, family]) => {
+            const source = path.join(root, 'src', 'assets', 'paint-fonts', directory, `${family}-Regular.ttf`);
+            const target = path.join(fontDir, `dogoblock-${family}-Regular.ttf`);
+            if (!fs.existsSync(source) || fs.statSync(source).size < 10000) {
+                throw new Error(`Missing DoGoBlock font asset: ${source}`);
+            }
+            if (!fs.existsSync(target) || fs.statSync(source).size !== fs.statSync(target).size) {
+                fs.copyFileSync(source, target);
+            }
+        });
+    }
 }
 
 if (!translationsOnly) {

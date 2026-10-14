@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import omit from 'lodash.omit';
 import {connect} from 'react-redux';
 import {setFontsLoaded} from '../reducers/fonts-loaded';
+import getFonts from 'scratch-render-fonts';
 
 // This list is from scratch-render-fonts:
 // https://github.com/LLK/scratch-render-fonts/blob/master/src/index.js#L4
@@ -13,7 +14,14 @@ const FONTS = [
     'Marker',
     'Curly',
     'Pixel',
-    'Scratch'
+    'Scratch',
+    'Poppins',
+    'Lato',
+    'Arvo',
+    'Bangers',
+    'Play',
+    'Share',
+    'Space Mono'
 ];
 /* Higher Order Component to provide behavior for loading fonts.
  * @param {React.Component} WrappedComponent component to receive fontsLoaded prop
@@ -23,6 +31,7 @@ const FontLoaderHOC = function (WrappedComponent) {
     class FontLoaderComponent extends React.Component {
         componentDidMount () {
             if (this.props.fontsLoaded) return;
+            getFonts();
 
             const getFontPromises = () => {
                 const fontPromises = [];
@@ -43,19 +52,18 @@ const FontLoaderHOC = function (WrappedComponent) {
                 }
                 return fontPromises;
             };
+            const finishFontLoad = () => Promise.all(getFontPromises().map(promise =>
+                promise.catch(() => null)
+            )).then(() => this.props.onSetFontsLoaded());
             // Font promises must be gathered after the document is loaded, because on Mac Chrome, the promise
             // objects get replaced and the old ones never resolve.
             if (document.readyState === 'complete') {
-                Promise.all(getFontPromises()).then(() => {
-                    this.props.onSetFontsLoaded();
-                });
+                finishFontLoad();
             } else {
                 document.onreadystatechange = () => {
                     if (document.readyState !== 'complete') return;
                     document.onreadystatechange = null;
-                    Promise.all(getFontPromises()).then(() => {
-                        this.props.onSetFontsLoaded();
-                    });
+                    finishFontLoad();
                 };
             }
         }

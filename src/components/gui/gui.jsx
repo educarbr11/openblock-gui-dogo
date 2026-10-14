@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import omit from 'lodash.omit';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {PanelLeftClose, PanelLeftOpen} from 'lucide-react';
 import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
@@ -57,14 +58,36 @@ const messages = defineMessages({
         id: 'gui.gui.addExtension',
         description: 'Button to add an extension in the target pane',
         defaultMessage: 'Add Extension'
+    },
+    collapsePaintStage: {
+        id: 'gui.gui.collapsePaintStage',
+        defaultMessage: 'Hide stage while editing',
+        description: 'Hide the stage to make more room in the paint editor'
+    },
+    expandPaintStage: {
+        id: 'gui.gui.expandPaintStage',
+        defaultMessage: 'Show stage while editing',
+        description: 'Show the stage beside the paint editor'
     }
 });
+
+const PAINT_STAGE_STORAGE_KEY = 'dogoblock.paint-stage-collapsed';
+const initialPaintStageCollapsed = () => {
+    try {
+        const stored = window.localStorage.getItem(PAINT_STAGE_STORAGE_KEY);
+        if (stored !== null) return stored === 'true';
+    } catch (error) {
+        // Local storage can be unavailable in restricted browser contexts.
+    }
+    return window.innerWidth <= 1366;
+};
 
 // Cache this value to only retrieve it once the first time.
 // Assume that it doesn't change for a session.
 let isRendererSupported = null;
 
 const GUIComponent = props => {
+    const [paintStageCollapsed, setPaintStageCollapsed] = React.useState(initialPaintStageCollapsed);
     const {
         accountNavOpen,
         activeTabIndex,
@@ -162,6 +185,16 @@ const GUIComponent = props => {
         });
         return () => configureResourcePackService(null);
     }, [onAcquireResourcePack, onReleaseResourcePack]);
+    const togglePaintStage = React.useCallback(() => {
+        const nextValue = !paintStageCollapsed;
+        setPaintStageCollapsed(nextValue);
+        try {
+            window.localStorage.setItem(PAINT_STAGE_STORAGE_KEY, String(nextValue));
+        } catch (error) {
+            // The editor still works when local storage is blocked.
+        }
+        window.requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+    }, [paintStageCollapsed]);
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
@@ -332,7 +365,10 @@ const GUIComponent = props => {
                         />
                         <Box className={styles.bodyWrapper}>
                             <Box className={styles.flexWrapper}>
-                                <Box className={styles.editorWrapper}>
+                                <Box
+                                    className={classNames(styles.editorWrapper,
+                                        costumesPanelVisible && !paintStageCollapsed && styles.paintEditorWrapper)}
+                                >
                                     <Tabs
                                         forceRenderTabPanel
                                         className={tabClassNames.tabs}
@@ -407,6 +443,20 @@ const GUIComponent = props => {
                                                 </Tab>
                                             ) : null}
                                         </TabList>
+                                        {costumesPanelVisible && !isMobileLandscape && isRealtimeMode ? (
+                                            <button
+                                                aria-label={intl.formatMessage(paintStageCollapsed ?
+                                                    messages.expandPaintStage : messages.collapsePaintStage)}
+                                                className={styles.paintStageToggle}
+                                                title={intl.formatMessage(paintStageCollapsed ?
+                                                    messages.expandPaintStage : messages.collapsePaintStage)}
+                                                onClick={togglePaintStage}
+                                            >
+                                                {paintStageCollapsed ?
+                                                    <PanelLeftOpen size={18} /> :
+                                                    <PanelLeftClose size={18} />}
+                                            </button>
+                                        ) : null}
                                         <TabPanel className={tabClassNames.tabPanel}>
                                             <Box className={styles.blocksWrapper}>
                                                 <Blocks
@@ -483,7 +533,8 @@ const GUIComponent = props => {
                                 {isMobileLandscape ? null : (
                                     <Box
                                         className={classNames(styles.stageAndTargetWrapper, styles[stageSize],
-                                            isRealtimeMode ? styles.showStage : styles.hideStage)}
+                                            isRealtimeMode && !(costumesPanelVisible && paintStageCollapsed) ?
+                                                styles.showStage : styles.hideStage)}
                                     >
                                         <StageWrapper
                                             isFullScreen={isFullScreen}
