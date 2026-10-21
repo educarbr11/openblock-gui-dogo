@@ -1293,6 +1293,15 @@ h1.profile-name {
         font-size: 0.7rem;
     }
 
+    .nav-btn-app {
+        flex: 0 0 auto;
+        padding: 0 0.55rem;
+    }
+
+    .nav-btn-app span {
+        display: none;
+    }
+
     .page {
         width: min(100% - 1.25rem, 74rem);
         padding-top: 1.5rem;
@@ -1378,6 +1387,24 @@ h1.profile-name {
 
 .nav-btn-editor:hover {
     background: rgba(255, 184, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+/* Botão "Baixar app" — instala o PWA; aparece só quando o navegador oferece */
+.nav-btn-app {
+    min-height: 2rem;
+    padding: 0 1rem;
+    border: 0.14rem solid rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 120ms ease, transform 120ms ease;
+}
+
+.nav-btn-app:hover {
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-1px);
 }
 

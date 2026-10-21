@@ -14,7 +14,9 @@ DoGoBlock Agent Offline. O guia de instalação para professores está em
 | `static/pwa/*.png` | Ícones 192/512 e o ícone `maskable`, gerados de `static/dogoblock_logo_icon.svg`. |
 | `src/playground/service-worker.js` | Template do service worker. Não entra no bundle: vira `build/sw.js`. |
 | `PwaServiceWorkerPlugin` (`webpack.config.js`) | Gera `sw.js` com a lista de arquivos do build e o hash de conteúdo de cada um. |
-| `src/lib/register-service-worker.js` | Registra o `sw.js` no build de produção, só na janela do app instalado (`display-mode: standalone`). |
+| `src/lib/register-service-worker.js` | Registra o `sw.js` no build de produção. Na janela do app instalado (`display-mode: standalone`), pede ao service worker que baixe os arquivos offline. |
+| `src/lib/pwa-install.js` | Guarda o evento `beforeinstallprompt` do Chrome para o botão "Baixar app". |
+| `src/components/install-app-button/` | Botão "Baixar app", no cabeçalho do site e na barra do editor. Só aparece quando o navegador oferece a instalação (Chrome/Edge, app ainda não instalado). |
 | `src/lib/local-compiler.js` | Cliente da rota `ws://127.0.0.1:20111/openblock/compiler` do Agent Offline. |
 | `static/firmwares/arduino/*.hex` | Cópia do firmware realtime de `openblock-api/firmwares/arduino`, usada quando a API não responde. |
 
@@ -23,6 +25,11 @@ O manifest e o service worker só são gerados no build Web. O build mobile
 
 ## Cache
 
+- **Quando baixa:** todo acesso Web registra o `sw.js`, porque o Chrome só oferece
+  a instalação (e o botão "Baixar app") quando há um service worker com handler
+  `fetch`. Os arquivos offline só são baixados quando a janela do app instalado
+  envia `ENABLE_OFFLINE`. Até lá, as requisições vão direto para a rede. Visitas
+  em aba comum não baixam o cache offline.
 - **Precache:** todos os arquivos do build, exceto mapas, as páginas de exemplo
   (`player`, `blocks-only`, `compatibility-testing`), os modelos de
   `static/ml-vendor` e as imagens dos passos dos tutoriais. A primeira
@@ -37,9 +44,6 @@ O manifest e o service worker só são gerados no build Web. O build mobile
   rede primeiro, com cópia em cache para uso offline.
 - **Dogoblock API:** nunca passa pelo cache.
 
-Abrir o site em uma aba comum não registra o service worker. Isso evita que cada
-visita baixe o cache offline completo.
-
 ## Compilação Arduino
 
 `HardwareHeader.compileArduino` segue esta ordem:
@@ -52,15 +56,17 @@ visita baixe o cache offline completo.
 O `.hex` resultante segue o fluxo de upload que já existia: Web Serial para Uno
 e Nano, DoGoBlock Link para Leonardo.
 
-O Agent só aceita compilar para origens permitidas (`https://*.dogomaker.com` e
-`localhost`, por padrão). Se o DoGoBlock Web for publicado em outro domínio,
-inclua-o em `DEFAULT_ALLOWED_ORIGINS`, em
-`openblock-link/src/session/compiler.js`.
+O Agent só aceita compilar para origens permitidas
+(`https://dogoblock.vercel.app`, `https://*.dogomaker.com` e `localhost`, por
+padrão). Previews da Vercel (`dogoblock-git-….vercel.app`) não são aceitos. Se o
+DoGoBlock Web for publicado em outro domínio, inclua-o em
+`DEFAULT_ALLOWED_ORIGINS`, em `openblock-link/src/session/compiler.js`, e gere o
+Agent Offline de novo.
 
 ## Testar localmente
 
-O service worker só é registrado no build de produção e na janela do app
-instalado:
+O service worker só é registrado no build de produção, e os arquivos offline só
+são baixados na janela do app instalado:
 
 ```bash
 VERCEL=1 npm run build

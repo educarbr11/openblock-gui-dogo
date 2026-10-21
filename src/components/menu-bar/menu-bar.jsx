@@ -16,6 +16,7 @@ import CommunityButton from './community-button.jsx'; // eslint-disable-line no-
 import ShareButton from './share-button.jsx'; // eslint-disable-line no-unused-vars
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
+import InstallAppButton from '../install-app-button/install-app-button.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
 import SaveStatus from './save-status.jsx'; // eslint-disable-line no-unused-vars
 import ProjectWatcher from '../../containers/project-watcher.jsx'; // eslint-disable-line no-unused-vars
@@ -965,6 +966,11 @@ class MenuBar extends React.Component {
                         {compactSecondaryActions ? null : <FormattedMessage {...ariaMessages.tutorials} />}
                     </div> */}
                         <Divider className={classNames(styles.divider)} />
+                        <InstallAppButton
+                            className={classNames(styles.menuBarItem, styles.hoverable)}
+                            iconSize={18}
+                            showLabel={!compactSecondaryActions}
+                        />
                         {this.props.canSave && (
                             <React.Fragment>
                                 <input

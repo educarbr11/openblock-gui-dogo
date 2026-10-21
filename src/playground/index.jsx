@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 import analytics, {initialAnalytics} from '../lib/analytics';
 import {initializeSentry} from '../lib/sentry';
 import registerServiceWorker from '../lib/register-service-worker';
+import {listenForInstallPrompt} from '../lib/pwa-install';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx';
 import supportedBrowser from '../lib/supported-browser';
@@ -17,6 +18,7 @@ import supportedBrowser from '../lib/supported-browser';
 import styles from './index.css';
 
 initializeSentry();
+listenForInstallPrompt();
 registerServiceWorker();
 
 const getAnalyticsPage = () => {

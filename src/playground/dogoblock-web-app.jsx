@@ -24,6 +24,7 @@ import {
 
 import GUI from '../containers/gui.jsx';
 import NotificationsBell from '../components/notifications/notifications-bell.jsx';
+import InstallAppButton from '../components/install-app-button/install-app-button.jsx';
 import NotificationToast from '../components/notifications/notification-toast.jsx';
 import LegalPage from '../components/legal-page/legal-page.jsx';
 import ProjectPageContainer from '../containers/project-page.jsx';
@@ -1210,6 +1211,7 @@ class DogoblockWebApp extends React.Component {
                     </nav>
 
                     <div className={styles.navRight}>
+                        <InstallAppButton className={styles.navBtnApp} />
                         {user ? (
                             <React.Fragment>
                                 <NotificationsBell
