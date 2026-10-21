@@ -6,6 +6,11 @@
     <meta name="google" value="notranslate">
     <link rel="icon" type="image/svg+xml" href="static/dogoblock_logo_icon.svg">
     <link rel="shortcut icon" href="static/favicon.ico">
+    <% if (htmlWebpackPlugin.options.pwa) { %>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#203884">
+    <link rel="apple-touch-icon" href="static/pwa/icon-192.png">
+    <% } %>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
         #pre-loading {

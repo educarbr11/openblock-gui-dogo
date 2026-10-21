@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 
 import analytics, {initialAnalytics} from '../lib/analytics';
 import {initializeSentry} from '../lib/sentry';
+import registerServiceWorker from '../lib/register-service-worker';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx';
 import supportedBrowser from '../lib/supported-browser';
@@ -16,6 +17,7 @@ import supportedBrowser from '../lib/supported-browser';
 import styles from './index.css';
 
 initializeSentry();
+registerServiceWorker();
 
 const getAnalyticsPage = () => {
     const hashPath = window.location.hash.replace(/^#/, '') || '/';

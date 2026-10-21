@@ -311,9 +311,39 @@ const downloadMicrobitCompileArtifact = jobId => requestRaw(`/compiler/microbit/
     skipAuth: true
 }).then(response => response.text());
 
+/**
+ * True when a request failed because Dogoblock API could not be reached (offline, DNS, server down),
+ * as opposed to the API answering with a validation or compilation error.
+ * @param {Error} error - error rejected by a request in this module.
+ * @returns {boolean} whether a local fallback should be tried.
+ */
+const isApiUnavailableError = error => error instanceof TypeError ||
+    (error instanceof ApiError && error.status >= 500);
+
+// Copies of openblock-api/firmwares/arduino, bundled so realtime mode also works offline.
+const BUNDLED_ARDUINO_REALTIME_FIRMWARES = {
+    arduinoUno: 'arduinoUno.hex',
+    arduinoNano: 'arduinoUnoUltra.hex'
+};
+
+const downloadBundledArduinoRealtimeFirmware = board => {
+    const fileName = BUNDLED_ARDUINO_REALTIME_FIRMWARES[board];
+    if (!fileName) {
+        return Promise.reject(new Error('Firmware realtime offline indisponivel para esta placa.'));
+    }
+    return fetch(`static/firmwares/arduino/${fileName}`).then(response => {
+        if (!response.ok) throw new Error(`Firmware realtime offline indisponivel (HTTP ${response.status}).`);
+        return response.text();
+    });
+};
+
 const downloadArduinoRealtimeFirmware = board => requestRaw(`/firmwares/arduino/realtime/${board}`, {
     skipAuth: true
-}).then(response => response.text());
+}).then(response => response.text())
+    .catch(error => {
+        if (!isApiUnavailableError(error)) throw error;
+        return downloadBundledArduinoRealtimeFirmware(board);
+    });
 
 export {
     deleteProject,
@@ -356,5 +386,6 @@ export {
     createMicrobitCompileJob,
     getMicrobitCompileJob,
     downloadMicrobitCompileArtifact,
-    downloadArduinoRealtimeFirmware
+    downloadArduinoRealtimeFirmware,
+    isApiUnavailableError
 };

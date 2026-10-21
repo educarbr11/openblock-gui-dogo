@@ -19,8 +19,10 @@ import {
     downloadArduinoCompileArtifact,
     createMicrobitCompileJob,
     getMicrobitCompileJob,
-    downloadMicrobitCompileArtifact
+    downloadMicrobitCompileArtifact,
+    isApiUnavailableError
 } from '../lib/dogoblock-api';
+import {compileArduinoWithLocalAgent} from '../lib/local-compiler';
 import {
     connectMicrobitWebUsb,
     flashMicrobitHex,
@@ -248,16 +250,7 @@ class HardwareHeader extends React.Component {
             this.emitUploadError(error.message);
             return;
         }
-        this.emitUploadStdout('Compilando no Dogoblock API...\n');
-        createArduinoCompileJob(board, code, [])
-            .then(job => this.pollCompileJob(job.id))
-            .then(job => {
-                if (!job.artifact) {
-                    throw new Error('Compiler did not return an artifact.');
-                }
-                this.emitUploadStdout('Baixando arquivo compilado...\n');
-                return downloadArduinoCompileArtifact(job.id);
-            })
+        this.compileArduino(board, code)
             .then(hex => {
                 this.emitUploadStdout(connectionType === 'webSerial' ?
                     'Enviando para Arduino via Web Serial USB...\n' :
@@ -278,6 +271,36 @@ class HardwareHeader extends React.Component {
             .catch(error => {
                 this.emitUploadError(error && error.message ? error.message : String(error));
             });
+    }
+
+    compileArduino (board, code) {
+        if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+            return this.compileArduinoWithAgent(board, code);
+        }
+        return this.compileArduinoWithApi(board, code)
+            .catch(error => {
+                if (!isApiUnavailableError(error)) throw error;
+                this.emitUploadStdout('Dogoblock API indisponivel. Tentando o DoGoBlock Agent local...\n');
+                return this.compileArduinoWithAgent(board, code);
+            });
+    }
+
+    compileArduinoWithApi (board, code) {
+        this.emitUploadStdout('Compilando no Dogoblock API...\n');
+        return createArduinoCompileJob(board, code, [])
+            .then(job => this.pollCompileJob(job.id))
+            .then(job => {
+                if (!job.artifact) {
+                    throw new Error('Compiler did not return an artifact.');
+                }
+                this.emitUploadStdout('Baixando arquivo compilado...\n');
+                return downloadArduinoCompileArtifact(job.id);
+            });
+    }
+
+    compileArduinoWithAgent (board, code) {
+        this.emitUploadStdout('Compilando offline no DoGoBlock Agent...\n');
+        return compileArduinoWithLocalAgent(board, code, message => this.emitUploadStdout(message));
     }
 
     pollCompileJob (jobId) {
