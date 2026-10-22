@@ -1,7 +1,9 @@
 const fs = require('fs');
 const {spawnSync} = require('child_process');
 
-module.exports = (patchFile, args, cwd) => spawnSync('git', ['apply'].concat(args, '-'), {
+module.exports = (patchFile, args, cwd) => spawnSync('git', [
+    '-c', 'core.autocrlf=false', '-c', 'core.eol=lf', 'apply'
+].concat(args, '-'), {
     cwd,
     encoding: 'utf8',
     // Windows checkouts can contain CRLF patches, while npm packages use LF.

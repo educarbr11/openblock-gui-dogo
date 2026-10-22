@@ -2,6 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const {spawnSync} = require('child_process');
 const applyGitPatch = require('./lib/apply-git-patch');
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dogoblock-patch-test-'));
@@ -24,7 +25,7 @@ const patch = [
     ''
 ].join('\n');
 
-const createFixture = (name, content) => {
+const createFixture = (name, content, autoCrlf = 'false') => {
     const cwd = path.join(root, name);
     const source = path.join(cwd, directory, 'src', 'example.js');
     const added = path.join(cwd, directory, 'src', 'added.js');
@@ -32,24 +33,34 @@ const createFixture = (name, content) => {
     fs.mkdirSync(path.dirname(source), {recursive: true});
     fs.writeFileSync(source, before);
     fs.writeFileSync(patchFile, content);
+    for (const args of [
+        ['init', '--quiet'],
+        ['config', 'core.autocrlf', autoCrlf],
+        ['config', 'core.eol', 'crlf']
+    ]) {
+        const result = spawnSync('git', args, {cwd, encoding: 'utf8'});
+        assert.strictEqual(result.status, 0, result.stderr || String(result.error));
+    }
     return {cwd, source, added, patchFile};
 };
 
 try {
-    for (const lineEnding of ['LF', 'CRLF']) {
-        const content = lineEnding === 'CRLF' ? patch.replace(/\n/g, '\r\n') : patch;
-        const fixture = createFixture(lineEnding, content);
-        const args = [`--directory=${directory}`];
-        const check = applyGitPatch(fixture.patchFile, ['--check'].concat(args), fixture.cwd);
-        assert.strictEqual(check.status, 0, check.stderr || String(check.error));
-        assert.strictEqual(fs.readFileSync(fixture.source, 'utf8'), before);
-        assert.strictEqual(fs.existsSync(fixture.added), false);
+    for (const autoCrlf of ['false', 'true']) {
+        for (const lineEnding of ['LF', 'CRLF']) {
+            const content = lineEnding === 'CRLF' ? patch.replace(/\n/g, '\r\n') : patch;
+            const fixture = createFixture(`${lineEnding}-${autoCrlf}`, content, autoCrlf);
+            const args = [`--directory=${directory}`];
+            const check = applyGitPatch(fixture.patchFile, ['--check'].concat(args), fixture.cwd);
+            assert.strictEqual(check.status, 0, check.stderr || String(check.error));
+            assert.strictEqual(fs.readFileSync(fixture.source, 'utf8'), before);
+            assert.strictEqual(fs.existsSync(fixture.added), false);
 
-        const result = applyGitPatch(fixture.patchFile, args, fixture.cwd);
-        assert.strictEqual(result.status, 0, result.stderr || String(result.error));
-        assert.strictEqual(fs.readFileSync(fixture.source, 'utf8'), after);
-        assert.strictEqual(fs.readFileSync(fixture.added, 'utf8'), 'module.exports = true;\n');
-        process.stdout.write(`Dependency patch with ${lineEnding}: passed\n`);
+            const result = applyGitPatch(fixture.patchFile, args, fixture.cwd);
+            assert.strictEqual(result.status, 0, result.stderr || String(result.error));
+            assert.strictEqual(fs.readFileSync(fixture.source, 'utf8'), after);
+            assert.strictEqual(fs.readFileSync(fixture.added, 'utf8'), 'module.exports = true;\n');
+            process.stdout.write(`Dependency patch with ${lineEnding}, autocrlf=${autoCrlf}: passed\n`);
+        }
     }
 
     const incompatible = createFixture('incompatible', patch);
