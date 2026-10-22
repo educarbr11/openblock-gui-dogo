@@ -136,12 +136,6 @@ const ScanningStep = props => (
                                         id="gui.connection.scanning.arduinoWebSerialSelect"
                                     />
                                 )
-                            ) : props.isChromeOS ? (
-                                <FormattedMessage
-                                    defaultMessage="Use Refresh to select a serial device in Chrome"
-                                    description="Text shown while waiting for Web Serial device selection"
-                                    id="gui.connection.scanning.webSerialSelect"
-                                />
                             ) : props.connectionType === 'webBluetooth' ? (
                                 <FormattedMessage
                                     defaultMessage="Use Refresh to select your micro:bit with Web Bluetooth"
@@ -156,6 +150,27 @@ const ScanningStep = props => (
                                 />
                             )}
                         </div>
+                        {props.isChromeOS && props.isSerialport ? (
+                            <div className={styles.chromeOsHint}>
+                                {props.connectionType === 'webSerial' ? (
+                                    <FormattedMessage
+                                        defaultMessage={'Chromebook: a placa não aparece se estiver compartilhada ' +
+                                            'com o Linux. Desative em Configurações > Sobre o ChromeOS > ' +
+                                            'Desenvolvedores > Linux > Gerenciar dispositivos USB.'}
+                                        description="Hint on ChromeOS when Web Serial does not show the board"
+                                        id="gui.connection.scanning.chromeOsWebSerialHint"
+                                    />
+                                ) : (
+                                    <FormattedMessage
+                                        defaultMessage={'Chromebook: o DoGoBlock Link só encontra a placa ' +
+                                            'compartilhada com o Linux. Ative-a em Configurações > Sobre o ' +
+                                            'ChromeOS > Desenvolvedores > Linux > Gerenciar dispositivos USB.'}
+                                        description="Hint on ChromeOS when DoGoBlock Link does not show the board"
+                                        id="gui.connection.scanning.chromeOsLinkHint"
+                                    />
+                                )}
+                            </div>
+                        ) : null}
                     </div>
                 ) : (
                     <div className={styles.peripheralTilePane}>

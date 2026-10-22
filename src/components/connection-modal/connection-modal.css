@@ -52,6 +52,16 @@
     font-weight: 600;
 }
 
+.chrome-os-hint {
+    max-width: 26rem;
+    margin: 0.75rem auto 0;
+    color: $text-primary;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-align: center;
+    opacity: 0.8;
+}
+
 .connection-type-warning {
     flex-basis: 100%;
     color: $text-primary;
