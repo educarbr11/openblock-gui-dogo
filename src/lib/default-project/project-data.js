@@ -61,7 +61,7 @@ const projectData = translateFunction => {
             },
             {
                 isStage: false,
-                name: translator(messages.sprite, {index: 1}),
+                name: 'Blue Bit',
                 variables: {},
                 lists: {},
                 broadcasts: {},
@@ -69,35 +69,43 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: '5de48e72637db4d7fc7f6bb526354114',
-                        name: translator(messages.costume, {index: 1}),
+                        assetId: '04688b82900df9364793b3e21fdbbaf5',
+                        name: 'blue-andando-01-1',
                         bitmapResolution: 1,
-                        md5ext: '5de48e72637db4d7fc7f6bb526354114.svg',
+                        md5ext: '04688b82900df9364793b3e21fdbbaf5.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 93,
-                        rotationCenterY: 80
+                        rotationCenterX: 58,
+                        rotationCenterY: 120
                     },
                     {
-                        assetId: '48bbc82a10af3d0e0b7d5c677097df0e',
-                        name: translator(messages.costume, {index: 2}),
+                        assetId: 'c0f9236edcef66bc28253b40857c335b',
+                        name: 'blue-andando-02-1',
                         bitmapResolution: 1,
-                        md5ext: '48bbc82a10af3d0e0b7d5c677097df0e.svg',
+                        md5ext: 'c0f9236edcef66bc28253b40857c335b.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 93,
-                        rotationCenterY: 80
-                    }
-                ],
-                sounds: [
+                        rotationCenterX: 54,
+                        rotationCenterY: 120
+                    },
                     {
-                        assetId: '4e080acae1c3dc65eef30f07c2b0d4a5',
-                        name: translator(messages.chirp),
-                        dataFormat: 'wav',
-                        format: '',
-                        rate: 22050,
-                        sampleCount: 18688,
-                        md5ext: '4e080acae1c3dc65eef30f07c2b0d4a5.wav'
+                        assetId: 'da4bb572e80cc08141b2f9d0a156d8fa',
+                        name: 'blue-andando-03-1',
+                        bitmapResolution: 1,
+                        md5ext: 'da4bb572e80cc08141b2f9d0a156d8fa.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 58,
+                        rotationCenterY: 120
+                    },
+                    {
+                        assetId: '8cf2889132c6c536c2960e951fac17a8',
+                        name: 'blue-andando-04-1',
+                        bitmapResolution: 1,
+                        md5ext: '8cf2889132c6c536c2960e951fac17a8.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 54,
+                        rotationCenterY: 120
                     }
                 ],
+                sounds: [],
                 volume: 100,
                 visible: true,
                 x: 0,

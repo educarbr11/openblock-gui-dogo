@@ -38,12 +38,20 @@ const vmManagerHOC = function (WrappedComponent) {
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
             }
+            if (this.props.isLoadingWithId && this.props.fontsLoaded && this.props.projectData) {
+                this.loadProject();
+            }
         }
         componentDidUpdate (prevProps) {
             // if project is in loading state, AND fonts are loaded,
             // and they weren't both that way until now... load project!
             if (this.props.isLoadingWithId && this.props.fontsLoaded &&
-                (!prevProps.isLoadingWithId || !prevProps.fontsLoaded)) {
+                (
+                    !prevProps.isLoadingWithId ||
+                    !prevProps.fontsLoaded ||
+                    this.props.projectData !== prevProps.projectData ||
+                    this.props.projectId !== prevProps.projectId
+                )) {
                 this.loadProject();
             }
             // Start the VM if entering editor mode with an unstarted vm
@@ -52,12 +60,26 @@ const vmManagerHOC = function (WrappedComponent) {
             }
         }
         loadProject () {
+            const loadingProjectId = this.props.projectId;
+            const loadingProjectData = this.props.projectData;
             return this.props.vm.loadProject(this.props.projectData)
                 .then(() => {
+                    if (
+                        this.props.projectId !== loadingProjectId ||
+                        this.props.projectData !== loadingProjectData
+                    ) {
+                        if (this.props.isLoadingWithId && this.props.projectData) {
+                            return this.loadProject();
+                        }
+                        return;
+                    }
                     this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
                     // the renderer can be async.
-                    setTimeout(() => this.props.onSetProjectUnchanged());
+                    setTimeout(() => {
+                        this.props.onSetProjectUnchanged();
+                        this.props.vm.emitTargetsUpdate(false);
+                    });
 
                     // If the vm is not running, call draw on the renderer manually
                     // This draws the state of the loaded project with no blocks running

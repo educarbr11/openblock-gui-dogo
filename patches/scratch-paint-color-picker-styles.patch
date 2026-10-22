@@ -1,0 +1,71 @@
+diff --git a/src/components/color-picker/color-picker.css b/src/components/color-picker/color-picker.css
+index 77987fb5..53e177b5 100644
+--- a/src/components/color-picker/color-picker.css
++++ b/src/components/color-picker/color-picker.css
+@@ -112,3 +112,66 @@
+ [dir="rtl"] .gradient-swatches-row {
+     flex-direction: row-reverse;
+ }
++
++.color-inputs {
++    margin: 8px;
++    display: grid;
++    gap: 6px;
++}
++
++.color-input {
++    display: flex;
++    align-items: center;
++    gap: 5px;
++    min-width: 0;
++    color: #575e75;
++    font-size: 0.7rem;
++    font-weight: bold;
++}
++
++.color-input input {
++    width: 100%;
++    min-width: 0;
++    height: 28px;
++    border: 1px solid #c5cedc;
++    border-radius: 4px;
++    padding: 0 5px;
++    color: #575e75;
++}
++
++.color-input input[aria-invalid="true"] {
++    border-color: #d13838;
++}
++
++.rgb-inputs {
++    display: grid;
++    grid-template-columns: repeat(3, minmax(0, 1fr));
++    gap: 6px;
++}
++
++.error {
++    color: #b52828;
++    font-size: 0.7rem;
++}
++
++.recent-colors {
++    margin: 8px;
++    color: #575e75;
++    font-size: 0.7rem;
++    font-weight: bold;
++}
++
++.recent-swatches {
++    display: flex;
++    flex-wrap: wrap;
++    gap: 5px;
++    margin-top: 5px;
++}
++
++.recent-swatches button {
++    width: 25px;
++    height: 25px;
++    border: 1px solid #9da8bd;
++    border-radius: 3px;
++    cursor: pointer;
++}

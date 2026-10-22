@@ -1,0 +1,20 @@
+diff --git a/src/containers/properties-panel.jsx b/src/containers/properties-panel.jsx
+index 61b73925..a1aedf67 100644
+--- a/src/containers/properties-panel.jsx
++++ b/src/containers/properties-panel.jsx
+@@ -48,6 +48,15 @@ class PropertiesPanel extends React.Component {
+         if (!item || !Number.isFinite(value) || Math.abs(value) > 10000) return;
+ 
+         const bounds = item.bounds;
++        const currentValue = {
++            x: item.position.x,
++            y: item.position.y,
++            width: bounds.width,
++            height: bounds.height,
++            rotation: item.rotation,
++            fontSize: item.fontSize
++        }[property];
++        if (Number.isFinite(currentValue) && Math.abs(currentValue - value) < 0.01) return;
+         if (property === 'x' || property === 'y') {
+             item.position = new paper.Point(
+                 property === 'x' ? value : item.position.x,

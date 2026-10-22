@@ -1,0 +1,28 @@
+diff --git a/editor/interface/pt-br.json b/editor/interface/pt-br.json
+--- a/editor/interface/pt-br.json
++++ b/editor/interface/pt-br.json
+@@ -43,6 +43,10 @@
+     "gui.connection.error.helpbutton": "Ajuda",
+     "gui.connection.peripheral-name-label": "Nome do dispositivo",
+     "gui.connection.connect": "Conectar",
++    "gui.connection.type.label": "Tipo de conexão",
++    "gui.connection.webSerial.notSecure": "Web Serial exige HTTPS ou localhost.",
++    "gui.connection.webSerial.missingApi": "Web Serial não está disponível. Use Chrome/Edge com HTTPS/localhost.",
++    "gui.connection.scanning.arduinoWebSerialSelect": "Use Atualizar para selecionar seu Arduino USB",
+     "gui.connection.scanning.lookingforperipherals": "Procurando por dispositivos",
+     "gui.connection.scanning.noPeripheralsFound": "Nenhum dispositivo encontrado",
+     "gui.connection.scanning.instructions": "Selecione seu dispositivo na lista acima.",
+diff --git a/editor/interface/pt.json b/editor/interface/pt.json
+--- a/editor/interface/pt.json
++++ b/editor/interface/pt.json
+@@ -43,6 +43,10 @@
+     "gui.connection.error.helpbutton": "Ajuda",
+     "gui.connection.peripheral-name-label": "Nome do dispositivo",
+     "gui.connection.connect": "Ligar",
++    "gui.connection.type.label": "Tipo de ligação",
++    "gui.connection.webSerial.notSecure": "Web Serial requer HTTPS ou localhost.",
++    "gui.connection.webSerial.missingApi": "Web Serial não está disponível. Use Chrome/Edge com HTTPS/localhost.",
++    "gui.connection.scanning.arduinoWebSerialSelect": "Use Refrescar para seleccionar o seu Arduino USB",
+     "gui.connection.scanning.lookingforperipherals": "Procurando dispositivos",
+     "gui.connection.scanning.noPeripheralsFound": "Não foram encontrados dispositivos",
+     "gui.connection.scanning.instructions": "Seleccione o seu dispositivo na lista abaixo.",

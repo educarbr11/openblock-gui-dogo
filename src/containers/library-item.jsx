@@ -16,6 +16,7 @@ class LibraryItem extends React.PureComponent {
             'handleKeyPress',
             'handleMouseEnter',
             'handleMouseLeave',
+            'handleRemoveResourcePack',
             'handlePlay',
             'handleStop',
             'rotateIcon',
@@ -92,6 +93,11 @@ class LibraryItem extends React.PureComponent {
             }
         }
     }
+    handleRemoveResourcePack (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.props.onRemoveResourcePack) this.props.onRemoveResourcePack();
+    }
     handlePlay () {
         this.props.onMouseEnter(this.props.id);
     }
@@ -159,10 +165,12 @@ class LibraryItem extends React.PureComponent {
                 onKeyPress={this.handleKeyPress}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
+                onRemoveResourcePack={this.handleRemoveResourcePack}
                 onPlay={this.handlePlay}
                 onStop={this.handleStop}
                 programMode={this.props.programMode}
                 programLanguage={this.props.programLanguage}
+                resourcePackStatus={this.props.resourcePackStatus}
                 version={this.props.version}
             />
         );
@@ -202,9 +210,14 @@ LibraryItem.propTypes = {
     ]),
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
+    onRemoveResourcePack: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
     programLanguage: PropTypes.arrayOf(PropTypes.string),
     programMode: PropTypes.arrayOf(PropTypes.string),
+    resourcePackStatus: PropTypes.shape({
+        canUse: PropTypes.bool,
+        phase: PropTypes.string
+    }),
     showPlayButton: PropTypes.bool,
     version: PropTypes.string
 };

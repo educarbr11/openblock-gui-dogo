@@ -1,0 +1,15 @@
+diff --git a/src/components/color-picker/color-picker.css b/src/components/color-picker/color-picker.css
+index 53e177b5..b3c27fff 100644
+--- a/src/components/color-picker/color-picker.css
++++ b/src/components/color-picker/color-picker.css
+@@ -1,6 +1,10 @@
+ @import "../../css/units";
+ 
+ /* Popover styles */
++:global(.Popover) {
++    z-index: 20;
++}
++
+ :global(.Popover-body) {
+     background: white;
+     border: 1px solid #ddd;

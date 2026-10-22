@@ -1,0 +1,22 @@
+diff --git a/editor/blocks/pt-br.json b/editor/blocks/pt-br.json
+--- a/editor/blocks/pt-br.json
++++ b/editor/blocks/pt-br.json
+@@ -38,6 +38,7 @@
+     "DATA_INDEX_ALL": "todos",
+     "DATA_INDEX_LAST": "último",
+     "DATA_INDEX_RANDOM": "aleatório",
++    "EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar",
+     "EVENT_WHENFLAGCLICKED": "quando %1 for clicado",
+     "EVENT_WHENTHISSPRITECLICKED": "quando este ator for clicado",
+     "EVENT_WHENSTAGECLICKED": "quando o palco for clicado",
+diff --git a/editor/blocks/pt.json b/editor/blocks/pt.json
+--- a/editor/blocks/pt.json
++++ b/editor/blocks/pt.json
+@@ -38,6 +38,7 @@
+     "DATA_INDEX_ALL": "tudo",
+     "DATA_INDEX_LAST": "o último item",
+     "DATA_INDEX_RANDOM": "um item ao acaso",
++    "EVENT_WHENARDUINOBEGIN": "quando o Arduino iniciar",
+     "EVENT_WHENFLAGCLICKED": "Quando alguém clicar em %1",
+     "EVENT_WHENTHISSPRITECLICKED": "Quando alguém clicar em ti",
+     "EVENT_WHENSTAGECLICKED": "Quando alguém clicar no palco",

@@ -1,0 +1,82 @@
+# App instalável (PWA) e modo offline
+
+O build Web do DoGoBlock pode ser instalado como app pelo Chrome (Chromebook,
+Windows, Linux e macOS). Depois de instalado e aberto uma vez com internet, o
+editor abre sem conexão. Para enviar código Arduino sem internet, o app usa o
+DoGoBlock Agent Offline. O guia de instalação para professores está em
+[`openblock-agent/docs/chromebook.md`](../../openblock-agent/docs/chromebook.md).
+
+## Peças
+
+| Arquivo | Função |
+| --- | --- |
+| `src/playground/manifest.webmanifest` | Manifest do app, copiado para `build/manifest.webmanifest`. Abre direto em `#/editor`. |
+| `static/pwa/*.png` | Ícones 192/512 e o ícone `maskable`, gerados de `static/dogoblock_logo_icon.svg`. |
+| `src/playground/service-worker.js` | Template do service worker. Não entra no bundle: vira `build/sw.js`. |
+| `PwaServiceWorkerPlugin` (`webpack.config.js`) | Gera `sw.js` com a lista de arquivos do build e o hash de conteúdo de cada um. |
+| `src/lib/register-service-worker.js` | Registra o `sw.js` no build de produção. Na janela do app instalado (`display-mode: standalone`), pede ao service worker que baixe os arquivos offline. |
+| `src/lib/pwa-install.js` | Guarda o evento `beforeinstallprompt` do Chrome para o botão "Baixar app". |
+| `src/components/install-app-button/` | Botão "Baixar app", no cabeçalho do site e na barra do editor. Só aparece quando o navegador oferece a instalação (Chrome/Edge, app ainda não instalado). |
+| `src/lib/local-compiler.js` | Cliente da rota `ws://127.0.0.1:20111/openblock/compiler` do Agent Offline. |
+| `static/firmwares/arduino/*.hex` | Cópia do firmware realtime de `openblock-api/firmwares/arduino`, usada quando a API não responde. |
+
+O manifest e o service worker só são gerados no build Web. O build mobile
+(`OPENBLOCK_TAURI_LIGHT=true`) não inclui nenhum dos dois.
+
+## Cache
+
+- **Quando baixa:** todo acesso Web registra o `sw.js`, porque o Chrome só oferece
+  a instalação (e o botão "Baixar app") quando há um service worker com handler
+  `fetch`. Os arquivos offline só são baixados quando a janela do app instalado
+  envia `ENABLE_OFFLINE`. Até lá, as requisições vão direto para a rede. Visitas
+  em aba comum não baixam o cache offline.
+- **Precache:** todos os arquivos do build, exceto mapas, as páginas de exemplo
+  (`player`, `blocks-only`, `compatibility-testing`), os modelos de
+  `static/ml-vendor` e as imagens dos passos dos tutoriais. A primeira
+  instalação baixa cerca de 20 MB além do que o editor já carregou. Nas
+  atualizações, só baixam de novo os arquivos cujo conteúdo mudou.
+- **Atualização:** uma nova versão é instalada em segundo plano e passa a valer
+  quando todas as janelas do app forem fechadas. Assim um editor aberto nunca
+  mistura arquivos de dois builds.
+- **CDN de assets:** sprites, cenários e sons usam nomes por md5 e ficam em cache
+  depois do primeiro uso (cache-first).
+- **Outros arquivos do mesmo domínio** (modelos de ML, imagens dos tutoriais):
+  rede primeiro, com cópia em cache para uso offline.
+- **Dogoblock API:** nunca passa pelo cache.
+
+## Compilação Arduino
+
+`HardwareHeader.compileArduino` decide pela conexão escolhida:
+
+- **DoGoBlock Link** (Agent Offline ou o app para computador): compila sempre no
+  computador, offline, pela rota `/openblock/compiler`.
+- **Web Serial:** compila sempre na Dogoblock API (online).
+
+O `.hex` resultante segue o fluxo de upload que já existia. No modo Link, o
+firmware do modo tempo real também vem da cópia embutida no editor, sem a API.
+O Agent comum (sem compilador) não serve para o modo Link; use o Agent Offline
+ou o app para computador.
+
+O build do app para computador (`OPENBLOCK_TAURI_DESKTOP=true`) esconde a opção
+Web Serial e usa só o DoGoBlock Link embutido.
+
+O Agent só aceita compilar para origens permitidas
+(`https://dogoblock.vercel.app`, `https://*.dogomaker.com` e `localhost`, por
+padrão). Previews da Vercel (`dogoblock-git-….vercel.app`) não são aceitos. Se o
+DoGoBlock Web for publicado em outro domínio, inclua-o em
+`DEFAULT_ALLOWED_ORIGINS`, em `openblock-link/src/session/compiler.js`, e gere o
+Agent Offline de novo.
+
+## Testar localmente
+
+O service worker só é registrado no build de produção, e os arquivos offline só
+são baixados na janela do app instalado:
+
+```bash
+VERCEL=1 npm run build
+npx http-server build -p 8601 -c-1
+```
+
+Abra `http://localhost:8601`, instale o app pelo Chrome e abra a janela
+instalada. Em DevTools > Application > Service workers, confira o `sw.js`
+ativo. Para simular a falta de internet, use DevTools > Network > Offline.
