@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const {spawnSync} = require('child_process');
+const applyGitPatch = require('./lib/apply-git-patch');
 
 const root = path.resolve(__dirname, '..');
 const dependencyRoot = process.env.OPENBLOCK_PATCH_DEPENDENCIES_ROOT ?
@@ -269,14 +269,11 @@ const patches = [
     }
 ];
 
-const gitApply = (patch, args) => spawnSync('git', ['apply'].concat(args), {
-    cwd: dependencyRoot,
-    encoding: 'utf8'
-});
+const gitApply = (patch, args) => applyGitPatch(patch.patchFile, args, dependencyRoot);
 
 const patchArgs = patch => patch.applyDirectory ?
-    [`--directory=${patch.applyDirectory}`, patch.patchFile] :
-    [patch.patchFile];
+    [`--directory=${patch.applyDirectory}`] :
+    [];
 
 const applyJsonUpdates = patch => {
     if (!patch.jsonUpdates) return false;
@@ -2769,6 +2766,15 @@ const patchOpenBlockVmVideoSensingLifecycle = () => {
         .concat(externalVmPath)
         .forEach(patchOpenBlockVmVideoSensingLifecyclePackage);
 };
+
+if (!translationsOnly) {
+    // The pinned npm release of scratch-render-fonts ships this source with CRLF.
+    const fontIndex = path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts', 'src', 'index.js');
+    if (fs.existsSync(fontIndex)) {
+        const source = fs.readFileSync(fontIndex, 'utf8');
+        if (source.includes('\r\n')) fs.writeFileSync(fontIndex, source.replace(/\r\n/g, '\n'));
+    }
+}
 
 for (const patch of patches) {
     if ((translationsOnly && !patch.jsonUpdates) ||

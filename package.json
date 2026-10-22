@@ -18,6 +18,7 @@
     "test": "npm run test:lint && npm run test:unit && npm run build && npm run test:integration",
     "test:integration": "jest --runInBand test[\\\\/]integration",
     "test:lint": "eslint . --ext .js,.jsx --fix",
+    "test:patches": "node scripts/test-dependency-patches.js",
     "test:unit": "",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
     "watch": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --watch",
