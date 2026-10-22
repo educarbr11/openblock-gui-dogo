@@ -19,8 +19,7 @@ import {
     downloadArduinoCompileArtifact,
     createMicrobitCompileJob,
     getMicrobitCompileJob,
-    downloadMicrobitCompileArtifact,
-    isApiUnavailableError
+    downloadMicrobitCompileArtifact
 } from '../lib/dogoblock-api';
 import {compileArduinoWithLocalAgent} from '../lib/local-compiler';
 import {
@@ -161,7 +160,9 @@ class HardwareHeader extends React.Component {
     }
 
     isWebSerialSupported () {
-        return typeof navigator !== 'undefined' &&
+        // The desktop app talks to its built-in DoGoBlock Link only.
+        return process.env.OPENBLOCK_TAURI_DESKTOP !== 'true' &&
+            typeof navigator !== 'undefined' &&
             Boolean(navigator.serial) &&
             !(typeof window !== 'undefined' && window.isSecureContext === false);
     }
@@ -273,16 +274,13 @@ class HardwareHeader extends React.Component {
             });
     }
 
+    // DoGoBlock Link (Agent Offline or the desktop app) always compiles offline;
+    // Web Serial compiles on Dogoblock API.
     compileArduino (board, code) {
-        if (typeof navigator !== 'undefined' && navigator.onLine === false) {
-            return this.compileArduinoWithAgent(board, code);
+        if (this.getEffectiveConnectionType() === 'link') {
+            return this.compileArduinoWithLink(board, code);
         }
-        return this.compileArduinoWithApi(board, code)
-            .catch(error => {
-                if (!isApiUnavailableError(error)) throw error;
-                this.emitUploadStdout('Dogoblock API indisponivel. Tentando o DoGoBlock Agent local...\n');
-                return this.compileArduinoWithAgent(board, code);
-            });
+        return this.compileArduinoWithApi(board, code);
     }
 
     compileArduinoWithApi (board, code) {
@@ -298,8 +296,8 @@ class HardwareHeader extends React.Component {
             });
     }
 
-    compileArduinoWithAgent (board, code) {
-        this.emitUploadStdout('Compilando offline no DoGoBlock Agent...\n');
+    compileArduinoWithLink (board, code) {
+        this.emitUploadStdout('Compilando offline no DoGoBlock Link...\n');
         return compileArduinoWithLocalAgent(board, code, message => this.emitUploadStdout(message));
     }
 

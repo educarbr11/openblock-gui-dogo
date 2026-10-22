@@ -49,6 +49,8 @@ loadDotEnv();
 
 const BUILD_NODE_ENV = process.env.NODE_ENV || (process.env.VERCEL ? 'production' : 'development');
 const isTauriLightBuild = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+// Full web app packaged in the Tauri desktop app, which serves the files and runs DoGoBlock Link itself.
+const isTauriDesktopBuild = process.env.OPENBLOCK_TAURI_DESKTOP === 'true';
 const STATIC_PATH = process.env.STATIC_PATH || (isTauriLightBuild ? './static' : '/static');
 const PUBLIC_DOGOBLOCK_API_HOST = 'https://dogoblockapi.dogomaker.com';
 const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '::1'];
@@ -79,6 +81,7 @@ const envDefinitions = {
     'process.env.GA_TEST_MODE': JSON.stringify(process.env.GA_TEST_MODE || 'false'),
     'process.env.DOGOBLOCK_API_HOST': JSON.stringify(DOGOBLOCK_API_HOST),
     'process.env.OPENBLOCK_TAURI_LIGHT': JSON.stringify(process.env.OPENBLOCK_TAURI_LIGHT || 'false'),
+    'process.env.OPENBLOCK_TAURI_DESKTOP': JSON.stringify(process.env.OPENBLOCK_TAURI_DESKTOP || 'false'),
     'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     'process.env.SENTRY_ENVIRONMENT': JSON.stringify(process.env.SENTRY_ENVIRONMENT || BUILD_NODE_ENV),
     'process.env.SENTRY_RELEASE': JSON.stringify(SENTRY_RELEASE),
@@ -155,7 +158,7 @@ class PwaServiceWorkerPlugin {
 }
 
 const createPwaWebpackPlugins = () => {
-    if (isTauriLightBuild) return [];
+    if (isTauriLightBuild || isTauriDesktopBuild) return [];
     return [
         new CopyWebpackPlugin([{
             from: 'src/playground/manifest.webmanifest',
@@ -356,7 +359,7 @@ module.exports = [
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
                 title: 'DoGoBlock',
-                pwa: !isTauriLightBuild
+                pwa: !isTauriLightBuild && !isTauriDesktopBuild
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'blocksonly'],
@@ -397,7 +400,8 @@ module.exports = [
             .concat(createSentryWebpackPlugins(path.resolve(__dirname, 'build')))
     })
 ].concat(
-    process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist' ? (
+    // The desktop app only needs the web app above, not the library build.
+    (process.env.NODE_ENV === 'production' || process.env.BUILD_MODE === 'dist') && !isTauriDesktopBuild ? (
         // export as library
         defaultsDeep({}, base, {
             target: 'web',

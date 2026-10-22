@@ -5,8 +5,8 @@ const CONNECT_TIMEOUT_MS = 5000;
 const COMPILE_TIMEOUT_MS = 180000;
 const POLICY_VIOLATION_CLOSE_CODE = 1008;
 
-const AGENT_NOT_FOUND_MESSAGE = 'Sem acesso a Dogoblock API e o DoGoBlock Agent nao foi encontrado em ' +
-    '127.0.0.1:20111. Abra o DoGoBlock Agent Offline e tente novamente.';
+const AGENT_NOT_FOUND_MESSAGE = 'O DoGoBlock Link nao foi encontrado em 127.0.0.1:20111. ' +
+    'Abra o DoGoBlock Agent Offline (ou o app DoGoBlock para computador) e tente novamente.';
 const AGENT_WITHOUT_COMPILER_MESSAGE = 'O DoGoBlock Agent aberto nao compila programas offline. ' +
     'Instale a versao DoGoBlock Agent Offline.';
 const ORIGIN_NOT_ALLOWED_MESSAGE = 'O DoGoBlock Agent recusou a compilacao pedida por este endereco do editor.';

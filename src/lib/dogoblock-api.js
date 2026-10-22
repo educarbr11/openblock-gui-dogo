@@ -387,5 +387,6 @@ export {
     getMicrobitCompileJob,
     downloadMicrobitCompileArtifact,
     downloadArduinoRealtimeFirmware,
+    downloadBundledArduinoRealtimeFirmware,
     isApiUnavailableError
 };

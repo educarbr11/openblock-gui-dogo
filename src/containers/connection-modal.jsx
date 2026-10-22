@@ -138,6 +138,8 @@ class ConnectionModal extends React.Component {
             (this.state.device && this.state.device.extensionId === 'microbitBle');
     }
     isWebSerialConnection () {
+        // The desktop app talks to its built-in DoGoBlock Link only.
+        if (process.env.OPENBLOCK_TAURI_DESKTOP === 'true') return false;
         return ['arduinoUno', 'arduinoNano', 'arduinoLeonardo', 'microbit', 'microbitV2']
             .indexOf(this.props.deviceId) !== -1;
     }

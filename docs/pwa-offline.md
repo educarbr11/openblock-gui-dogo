@@ -46,15 +46,19 @@ O manifest e o service worker só são gerados no build Web. O build mobile
 
 ## Compilação Arduino
 
-`HardwareHeader.compileArduino` segue esta ordem:
+`HardwareHeader.compileArduino` decide pela conexão escolhida:
 
-1. Se `navigator.onLine` for `false`, compila no Agent.
-2. Senão, compila na Dogoblock API.
-3. Se a API não responder (erro de rede ou HTTP 5xx), compila no Agent. Erros de
-   compilação devolvidos pela API são mostrados normalmente, sem fallback.
+- **DoGoBlock Link** (Agent Offline ou o app para computador): compila sempre no
+  computador, offline, pela rota `/openblock/compiler`.
+- **Web Serial:** compila sempre na Dogoblock API (online).
 
-O `.hex` resultante segue o fluxo de upload que já existia: Web Serial para Uno
-e Nano, DoGoBlock Link para Leonardo.
+O `.hex` resultante segue o fluxo de upload que já existia. No modo Link, o
+firmware do modo tempo real também vem da cópia embutida no editor, sem a API.
+O Agent comum (sem compilador) não serve para o modo Link; use o Agent Offline
+ou o app para computador.
+
+O build do app para computador (`OPENBLOCK_TAURI_DESKTOP=true`) esconde a opção
+Web Serial e usa só o DoGoBlock Link embutido.
 
 O Agent só aceita compilar para origens permitidas
 (`https://dogoblock.vercel.app`, `https://*.dogomaker.com` e `localhost`, por

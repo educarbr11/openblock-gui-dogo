@@ -1,5 +1,5 @@
 import {isScratchDesktop} from './isScratchDesktop';
-import {downloadArduinoRealtimeFirmware} from './dogoblock-api';
+import {downloadArduinoRealtimeFirmware, downloadBundledArduinoRealtimeFirmware} from './dogoblock-api';
 
 const WEB_SERIAL_FIRMWARE_BOARDS = ['arduinoUno', 'arduinoNano'];
 
@@ -8,7 +8,8 @@ const getRealDeviceId = deviceId => {
     return id.indexOf('_') === -1 ? id : id.split('_')[1];
 };
 
-const isWebSerialSupported = () => typeof navigator !== 'undefined' &&
+const isWebSerialSupported = () => process.env.OPENBLOCK_TAURI_DESKTOP !== 'true' &&
+    typeof navigator !== 'undefined' &&
     Boolean(navigator.serial) &&
     !(typeof window !== 'undefined' && window.isSecureContext === false);
 
@@ -47,7 +48,8 @@ const uploadArduinoRealtimeFirmware = ({
     if (shouldUseWebSerialFirmware(deviceId, connectionType)) {
         if (!isWebSerialSupported()) {
             if (onOpenUploadProgress) onOpenUploadProgress();
-            emitUploadError(vm, 'Web Serial USB nao esta disponivel neste navegador. Use Chrome/Edge com HTTPS/localhost.');
+            emitUploadError(vm,
+                'Web Serial USB nao esta disponivel neste navegador. Use Chrome/Edge com HTTPS/localhost.');
             return true;
         }
         if (!vm.getPeripheralIsConnected(deviceId)) {
@@ -82,10 +84,11 @@ const uploadArduinoRealtimeFirmware = ({
 
         if (onOpenUploadProgress) onOpenUploadProgress();
         if (onSetRealtimeConnection) onSetRealtimeConnection(false);
-        emitUploadStdout(vm, 'Baixando firmware Arduino realtime do Dogoblock API...\n');
-        downloadArduinoRealtimeFirmware(board)
+        // DoGoBlock Link works offline, so it uses the firmware bundled with the editor.
+        emitUploadStdout(vm, 'Preparando firmware Arduino realtime...\n');
+        downloadBundledArduinoRealtimeFirmware(board)
             .then(hex => {
-                emitUploadStdout(vm, 'Firmware recebido. Iniciando gravacao via OpenBlock Link...\n');
+                emitUploadStdout(vm, 'Firmware pronto. Iniciando gravacao via DoGoBlock Link...\n');
                 vm.uploadArtifactToPeripheral(deviceId, hex, null, {
                     artifactType: 'compiledArtifact',
                     firmware: true,
@@ -100,7 +103,9 @@ const uploadArduinoRealtimeFirmware = ({
 
     if (connectionType === 'webSerial' && WEB_SERIAL_FIRMWARE_BOARDS.indexOf(board) === -1) {
         if (onOpenUploadProgress) onOpenUploadProgress();
-        emitUploadError(vm, 'Envio de firmware via Web Serial USB suporta apenas Arduino Uno e Nano. Use OpenBlock Link para esta placa.');
+        emitUploadError(vm,
+            'Envio de firmware via Web Serial USB suporta apenas Arduino Uno e Nano. ' +
+            'Use OpenBlock Link para esta placa.');
         return true;
     }
 

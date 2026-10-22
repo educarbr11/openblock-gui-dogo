@@ -13,7 +13,8 @@ const notifyListeners = () => {
 };
 
 const listenForInstallPrompt = () => {
-    if (typeof window === 'undefined' || process.env.OPENBLOCK_TAURI_LIGHT === 'true') return;
+    if (typeof window === 'undefined' || process.env.OPENBLOCK_TAURI_LIGHT === 'true' ||
+        process.env.OPENBLOCK_TAURI_DESKTOP === 'true') return;
     window.addEventListener('beforeinstallprompt', event => {
         // Keep the event for the button instead of Chrome's own banner (shown on Android).
         event.preventDefault();
