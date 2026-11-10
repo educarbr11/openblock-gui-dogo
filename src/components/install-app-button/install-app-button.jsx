@@ -40,6 +40,8 @@ class InstallAppButton extends React.Component {
             <button
                 aria-label={this.props.showLabel ? null : 'Baixar app'}
                 className={classNames(styles.installAppButton, this.props.className)}
+                role={this.props.role}
+                tabIndex={this.props.role === 'menuitem' ? -1 : null}
                 title="Instalar o DoGoBlock como aplicativo neste computador"
                 type="button"
                 onClick={this.handleClick}
@@ -57,6 +59,7 @@ class InstallAppButton extends React.Component {
 InstallAppButton.propTypes = {
     className: PropTypes.string,
     iconSize: PropTypes.number,
+    role: PropTypes.string,
     showLabel: PropTypes.bool
 };
 
