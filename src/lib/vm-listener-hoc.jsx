@@ -17,6 +17,8 @@ import {setDeviceData} from '../reducers/device-data';
 
 import {makeDeviceLibrary} from '../lib/libraries/devices/index.jsx';
 
+const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+
 /*
  * Higher Order Component to manage events emitted by the VM
  * @param {React.Component} WrappedComponent component to manage VM events for
@@ -51,9 +53,11 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.on('PROJECT_CHANGED', this.handleProjectChanged);
             this.props.vm.on('RUNTIME_STARTED', this.props.onRuntimeStarted);
             this.props.vm.on('PROJECT_START', this.props.onGreenFlag);
-            this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.handleDeviceRealtimeAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.handleDeviceRealtimeSuccess);
+            if (!isTauriLight) {
+                this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
+                this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.handleDeviceRealtimeAlert);
+                this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.handleDeviceRealtimeSuccess);
+            }
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
 
         }
@@ -63,13 +67,18 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.addEventListener('keyup', this.handleKeyUp);
             }
             this.props.vm.postIOData('userData', {username: this.props.username});
-            // Update device list
-            this.props.vm.extensionManager.getDeviceList().then(data => {
-                this.props.onSetDeviceData(makeDeviceLibrary(data));
-            })
-                .catch(() => {
-                    this.props.onSetDeviceData(makeDeviceLibrary());
-                });
+            if (this.props.shouldUpdateTargets) {
+                this.props.vm.emitTargetsUpdate(false /* Emit the event, but do not trigger project change */);
+            }
+            if (!isTauriLight) {
+                // Update device list
+                this.props.vm.extensionManager.getDeviceList().then(data => {
+                    this.props.onSetDeviceData(makeDeviceLibrary(data));
+                })
+                    .catch(() => {
+                        this.props.onSetDeviceData(makeDeviceLibrary());
+                    });
+            }
         }
         componentDidUpdate (prevProps) {
             if (prevProps.username !== this.props.username) {
@@ -83,11 +92,24 @@ const vmListenerHOC = function (WrappedComponent) {
             }
         }
         componentWillUnmount () {
-            this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
-                this.handleDeviceRealtimeAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
-                this.handleDeviceRealtimeSuccess);
+            this.props.vm.removeListener('targetsUpdate', this.handleTargetsUpdate);
+            this.props.vm.removeListener('MONITORS_UPDATE', this.props.onMonitorsUpdate);
+            this.props.vm.removeListener('BLOCK_DRAG_UPDATE', this.props.onBlockDragUpdate);
+            this.props.vm.removeListener('TURBO_MODE_ON', this.props.onTurboModeOn);
+            this.props.vm.removeListener('TURBO_MODE_OFF', this.props.onTurboModeOff);
+            this.props.vm.removeListener('PROJECT_RUN_START', this.props.onProjectRunStart);
+            this.props.vm.removeListener('PROJECT_RUN_STOP', this.props.onProjectRunStop);
+            this.props.vm.removeListener('PROJECT_CHANGED', this.handleProjectChanged);
+            this.props.vm.removeListener('RUNTIME_STARTED', this.props.onRuntimeStarted);
+            this.props.vm.removeListener('PROJECT_START', this.props.onGreenFlag);
+            this.props.vm.removeListener('MIC_LISTENING', this.props.onMicListeningUpdate);
+            if (!isTauriLight) {
+                this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
+                this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
+                    this.handleDeviceRealtimeAlert);
+                this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
+                    this.handleDeviceRealtimeSuccess);
+            }
             if (this.props.attachKeyboardEvents) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);
@@ -141,16 +163,16 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         handleDeviceRealtimeAlert (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onShowDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(false);
             }
         }
         handleDeviceRealtimeSuccess (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onClearDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(true);
             }

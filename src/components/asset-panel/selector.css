@@ -83,3 +83,78 @@ $fade-out-distance: 100px;
     background: white;
     filter: opacity(15%) brightness(0%);
 }
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .wrapper {
+        width: 3.5rem;
+        min-width: 3.5rem;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .list-area {
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .list-area:after {
+        height: 2.35rem;
+    }
+
+    .list-item {
+        width: 2.75rem;
+        height: 2.75rem;
+        margin: 0.25rem auto;
+    }
+
+    .new-buttons {
+        min-height: 2.15rem;
+        padding: 0.2rem 0;
+    }
+
+    .new-buttons:before {
+        height: 2.5rem;
+    }
+
+    .new-buttons > button + button {
+        margin-top: 0.2rem;
+    }
+
+    .new-buttons :global([class*="action-menu_main-button"]) {
+        width: 1.85rem;
+        height: 1.85rem;
+        box-shadow: 0 0 0 2px $motion-transparent;
+    }
+
+    .new-buttons :global([class*="action-menu_main-button"]):hover {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 3px $motion-transparent;
+    }
+
+    .new-buttons :global([class*="action-menu_main-icon"]) {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .new-buttons :global([class*="action-menu_more-buttons-outer"]) {
+        width: 1.65rem;
+        bottom: 1.85rem;
+        margin-right: 0.1rem;
+        margin-bottom: -0.9rem;
+        margin-left: 0.1rem;
+        padding-bottom: 0.9rem;
+        border-top-left-radius: 1.65rem;
+        border-top-right-radius: 1.65rem;
+    }
+
+    .new-buttons :global([class*="action-menu_more-button"]) {
+        width: 1.65rem;
+        height: 1.65rem;
+    }
+
+    .new-buttons :global([class*="action-menu_more-icon"]) {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+}

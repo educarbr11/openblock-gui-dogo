@@ -4,14 +4,12 @@ import {compose} from 'redux';
 import {FormattedMessage} from 'react-intl';
 
 import AppStateHOC from '../lib/app-state-hoc.jsx';
+import DogoblockWebApp from './dogoblock-web-app.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
+import {getAssetHost} from '../lib/dogoblock-api-config';
 import log from '../lib/log.js';
 import MessageBoxType from '../lib/message-box.js';
-
-const onClickLogo = () => {
-    window.location = 'https://www.openblock.cc/';
-};
 
 const onClickCheckUpdate = () => {
     log('User click check update');
@@ -103,10 +101,9 @@ export default appTarget => {
         AppStateHOC,
         HashParserHOC
     )(GUI);
-
-    // TODO a hack for testing the backpack, allow backpack host to be set by url param
-    const backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
-    const backpackHost = backpackHostMatches ? backpackHostMatches[1] : null;
+    const WrappedStandaloneGui = AppStateHOC(GUI);
+    const WrappedDogoblockWebApp = AppStateHOC(DogoblockWebApp);
+    const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
 
     const scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
     let simulateScratchDesktop;
@@ -126,9 +123,18 @@ export default appTarget => {
         window.onbeforeunload = () => true;
     }
 
-    ReactDOM.render(
-        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-        simulateScratchDesktop ?
+    let app;
+    if (isTauriLight) {
+        app = (
+            <WrappedStandaloneGui
+                canEditTitle
+                assetHost={getAssetHost()}
+                canSave={false}
+                onShowMessageBox={handleShowMessageBox}
+            />
+        );
+    } else if (simulateScratchDesktop) {
+        app = (
             <WrappedGui
                 canEditTitle
                 isScratchDesktop
@@ -144,15 +150,11 @@ export default appTarget => {
                 onClickClearCache={onClickClearCache}
                 onClickInstallDriver={onClickInstallDriver}
                 onShowMessageBox={handleShowMessageBox}
-            /> :
-            <WrappedGui
-                canEditTitle
-                backpackVisible
-                showComingSoon
-                backpackHost={backpackHost}
-                canSave={false}
-                onClickLogo={onClickLogo}
-                onShowMessageBox={handleShowMessageBox}
-            />,
-        appTarget);
+            />
+        );
+    } else {
+        app = <WrappedDogoblockWebApp />;
+    }
+
+    ReactDOM.render(app, appTarget);
 };

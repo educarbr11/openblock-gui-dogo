@@ -69,13 +69,16 @@ class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleRemoveResourcePack',
+            'refreshResourcePackStatuses',
             'updateScratchExtensions',
             'updateDeviceExtensions',
             'handleItemSelect'
         ]);
         this.state = {
             scratchExtensions: [],
-            deviceExtensions: []
+            deviceExtensions: [],
+            resourcePackStatuses: {}
         };
     }
 
@@ -92,8 +95,25 @@ class ExtensionLibrary extends React.PureComponent {
             .then(data => {
                 if (data) {
                     this.setState({scratchExtensions: data});
+                    this.refreshResourcePackStatuses(data);
                 }
             });
+    }
+
+    refreshResourcePackStatuses (extensions = this.state.scratchExtensions) {
+        if (!this.props.onGetResourcePackStatus) return;
+        const packIds = extensions.map(extension => extension.desktopResourcePackId).filter(Boolean)
+            .filter((packId, index, all) => all.indexOf(packId) === index);
+        Promise.all(packIds.map(packId => this.props.onGetResourcePackStatus(packId)
+            .then(status => ({packId, status}))))
+            .then(results => {
+                const resourcePackStatuses = {};
+                results.forEach(result => {
+                    resourcePackStatuses[result.packId] = result.status;
+                });
+                this.setState({resourcePackStatuses});
+            })
+            .catch(() => {});
     }
 
     updateDeviceExtensions () {
@@ -114,7 +134,7 @@ class ExtensionLibrary extends React.PureComponent {
                 // eslint-disable-next-line no-alert
                 url = prompt(this.props.intl.formatMessage(messages.extensionUrl));
             }
-            if (id && !item.disabled) {
+            const loadOrUnload = () => {
                 if (this.props.vm.extensionManager.isExtensionLoaded(url)) {
                     this.props.vm.extensionManager.unloadExtension(url);
                     this.updateScratchExtensions();
@@ -128,6 +148,9 @@ class ExtensionLibrary extends React.PureComponent {
                         });
                     });
                 }
+            };
+            if (id && !item.disabled) {
+                loadOrUnload();
             }
         } else if (id && !item.disabled) {
             if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
@@ -149,6 +172,12 @@ class ExtensionLibrary extends React.PureComponent {
             }
         }
     }
+    handleRemoveResourcePack (packId) {
+        if (!this.props.onRemoveResourcePack) return;
+        this.props.onRemoveResourcePack(packId)
+            .then(() => this.refreshResourcePackStatuses())
+            .catch(() => this.refreshResourcePackStatuses());
+    }
     render () {
         let extensionLibraryThumbnailData = [];
         const device = this.props.deviceData.find(dev => dev.deviceId === this.props.deviceId);
@@ -160,10 +189,16 @@ class ExtensionLibrary extends React.PureComponent {
             }
             return true;
         })
-            .map(extension => ({
-                rawURL: extension.iconURL || extensionIcon,
-                ...extension
-            }))
+            .map(extension => {
+                const packId = extension.desktopResourcePackId;
+                return {
+                    rawURL: extension.iconURL || extensionIcon,
+                    resourcePackStatus: packId ? this.state.resourcePackStatuses[packId] : null,
+                    handleRemoveResourcePack: packId && this.props.onRemoveResourcePack ?
+                        () => this.handleRemoveResourcePack(packId) : null,
+                    ...extension
+                };
+            })
             .sort((a, b) => {
                 if ((b.isLoaded !== true) && (a.isLoaded === true)) return -1;
                 return 1;
@@ -197,6 +232,8 @@ ExtensionLibrary.propTypes = {
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
     isRealtimeMode: PropTypes.bool,
+    onGetResourcePackStatus: PropTypes.func,
+    onRemoveResourcePack: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types

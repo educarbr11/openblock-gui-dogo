@@ -17,3 +17,10 @@ npm-*
 # Generated translation files
 /translations
 /locale
+.vercel
+/.openblock-vm
+
+# Local environment variables and secrets
+.env
+.env.local
+.env.*.local

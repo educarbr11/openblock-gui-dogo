@@ -8,6 +8,7 @@ import AlertComponent from '../components/alerts/alert.jsx';
 import {openConnectionModal, openUploadProgress} from '../reducers/modals';
 import {showAlertWithTimeout} from '../reducers/alerts';
 import {manualUpdateProject} from '../reducers/project-state';
+import uploadArduinoRealtimeFirmware from '../lib/upload-arduino-realtime-firmware';
 
 class Alert extends React.Component {
     constructor (props) {
@@ -22,7 +23,20 @@ class Alert extends React.Component {
         this.props.onCloseAlert(this.props.index);
     }
     handleUploadFirmware () {
+        if (process.env.OPENBLOCK_TAURI_LIGHT === 'true') {
+            this.handleOnCloseAlert();
+            return;
+        }
         if (this.props.deviceName) {
+            if (uploadArduinoRealtimeFirmware({
+                vm: this.props.vm,
+                deviceId: this.props.deviceId,
+                connectionType: this.props.connectionType,
+                onOpenUploadProgress: this.props.onOpenUploadProgress
+            })) {
+                this.handleOnCloseAlert();
+                return;
+            }
             this.props.vm.uploadFirmwareToPeripheral(this.props.deviceId);
             this.props.onOpenUploadProgress();
         } else {
@@ -31,6 +45,10 @@ class Alert extends React.Component {
         this.handleOnCloseAlert();
     }
     handleOnReconnect () {
+        if (process.env.OPENBLOCK_TAURI_LIGHT === 'true') {
+            this.handleOnCloseAlert();
+            return;
+        }
         this.props.onOpenConnectionModal();
         this.handleOnCloseAlert();
     }
@@ -63,8 +81,8 @@ class Alert extends React.Component {
                     level={level}
                     message={message}
                     showDownload={showDownload}
-                    showUploadFirmware={showUploadFirmware}
-                    showReconnect={showReconnect}
+                    showUploadFirmware={process.env.OPENBLOCK_TAURI_LIGHT !== 'true' && showUploadFirmware}
+                    showReconnect={process.env.OPENBLOCK_TAURI_LIGHT !== 'true' && showReconnect}
                     showSaveNow={showSaveNow}
                     onCloseAlert={this.handleOnCloseAlert}
                     onDownload={downloadProject}
@@ -78,6 +96,7 @@ class Alert extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    connectionType: state.scratchGui.connectionModal.connectionType,
     deviceId: state.scratchGui.device.deviceId,
     deviceName: state.scratchGui.device.deviceName
 });
@@ -95,6 +114,7 @@ const mapDispatchToProps = dispatch => ({
 
 Alert.propTypes = {
     closeButton: PropTypes.bool,
+    connectionType: PropTypes.string,
     content: PropTypes.element,
     deviceId: PropTypes.string,
     extensionName: PropTypes.string,

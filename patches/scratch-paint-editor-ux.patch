@@ -1,0 +1,856 @@
+diff --git a/src/components/paint-editor/paint-editor.jsx b/src/components/paint-editor/paint-editor.jsx
+index 28e5075d..f416ee23 100644
+--- a/src/components/paint-editor/paint-editor.jsx
++++ b/src/components/paint-editor/paint-editor.jsx
+@@ -33,6 +33,7 @@ import SelectMode from '../../containers/select-mode.jsx';
+ import StrokeColorIndicatorComponent from '../../containers/stroke-color-indicator.jsx';
+ import StrokeWidthIndicatorComponent from '../../containers/stroke-width-indicator.jsx';
+ import TextMode from '../../containers/text-mode.jsx';
++import PropertiesPanel from '../../containers/properties-panel.jsx';
+ 
+ import Formats, {isBitmap, isVector} from '../../lib/format';
+ import styles from './paint-editor.css';
+@@ -302,6 +303,7 @@ const PaintEditorComponent = props => (
+                     </InputGroup>
+                 </div>
+             </div>
++            <PropertiesPanel onUpdateImage={props.onUpdateImage} />
+         </div>
+     </div>
+ );
+diff --git a/src/components/paint-editor/paint-editor.css b/src/components/paint-editor/paint-editor.css
+index 77e3ef67..d6ac074c 100644
+--- a/src/components/paint-editor/paint-editor.css
++++ b/src/components/paint-editor/paint-editor.css
+@@ -20,12 +20,20 @@
+     padding-bottom: calc(2 * $grid-unit);
+ }
+ 
++@media (min-width: 961px) {
++    .editor-container-top .row + .row {
++        display: none;
++    }
++}
++
+ .top-align-row {
+     display: flex;
+     flex-direction: row;
+     height: 100%;
+-    padding-top: calc(5 * $grid-unit);
+-    min-width: 524px;
++    padding-top: calc(2 * $grid-unit);
++    min-width: 0;
++    position: relative;
++    overflow: hidden;
+ }
+ 
+ .row + .row {
+@@ -119,7 +127,8 @@ $border-radius: 0.25rem;
+ }
+ 
+ .controls-container {
+-    width: 100%;
++    width: auto;
++    min-width: 0;
+     display: flex;
+     flex-flow: column;
+     flex-grow: 1;
+@@ -130,7 +139,7 @@ $border-radius: 0.25rem;
+ .canvas-container {
+     width: 100%;
+     flex-grow: 1;
+-    min-width: 402px; /* Leave room for the border */
++    min-width: 0;
+     box-sizing: content-box;
+     border: 1px solid #e8edf1;
+     border-radius: .25rem;
+@@ -140,12 +149,14 @@ $border-radius: 0.25rem;
+ 
+ .mode-selector {
+     display: flex;
+-    max-width: 7.5rem;
+-    flex-direction: row;
+-    flex-wrap: wrap;
+-    align-items: flex-start;
+-    align-content: flex-start;
+-    justify-content: space-between;
++    flex: 0 0 3.25rem;
++    max-width: 3.25rem;
++    flex-direction: column;
++    flex-wrap: nowrap;
++    align-items: center;
++    gap: 0.25rem;
++    overflow-y: auto;
++    overflow-x: hidden;
+ }
+ 
+ .zoom-controls {
+@@ -205,6 +216,15 @@ $border-radius: 0.25rem;
+     }
+ }
+ 
++@media (max-width: 960px) {
++    .mode-selector {
++        flex: 0 0 5.25rem;
++        max-width: 5.25rem;
++        flex-direction: row;
++        flex-wrap: wrap;
++    }
++}
++
+ .text-area {
+     background: transparent;
+     border: none;
+diff --git a/src/components/color-picker/color-picker.jsx b/src/components/color-picker/color-picker.jsx
+index 398c5cc6..c1f7a7f5 100644
+--- a/src/components/color-picker/color-picker.jsx
++++ b/src/components/color-picker/color-picker.jsx
+@@ -31,7 +31,11 @@ const messages = defineMessages({
+         defaultMessage: 'Swap',
+         description: 'Label for button that swaps the two colors in a gradient',
+         id: 'paint.colorPicker.swap'
+-    }
++    },
++    hex: {id: 'paint.colorPicker.hex', defaultMessage: 'HEX'},
++    rgb: {id: 'paint.colorPicker.rgb', defaultMessage: 'RGB'},
++    invalid: {id: 'paint.colorPicker.invalid', defaultMessage: 'Enter a valid color'},
++    recent: {id: 'paint.colorPicker.recent', defaultMessage: 'Recent colors'}
+ });
+ class ColorPickerComponent extends React.Component {
+     _makeBackground (channel) {
+@@ -252,6 +256,62 @@ class ColorPickerComponent extends React.Component {
+                         />
+                     </div>
+                 </div>
++                <div className={styles.colorInputs}>
++                    <label className={styles.colorInput}>
++                        <span>{this.props.intl.formatMessage(messages.hex)}</span>
++                        <input
++                            aria-invalid={this.props.invalidColor}
++                            value={this.props.hexValue}
++                            onBlur={() => this.props.onColorInputCommit('hex')}
++                            onChange={event => this.props.onHexInput(event.target.value)}
++                            onKeyDown={event => {
++                                if (event.key === 'Enter') event.currentTarget.blur();
++                            }}
++                        />
++                    </label>
++                    <div className={styles.rgbInputs}>
++                        {this.props.rgbValues.map((value, index) => (
++                            <label
++                                className={styles.colorInput}
++                                key={index}
++                            >
++                                <span>{['R', 'G', 'B'][index]}</span>
++                                <input
++                                    aria-label={`${this.props.intl.formatMessage(messages.rgb)} ${['R', 'G', 'B'][index]}`}
++                                    aria-invalid={this.props.invalidColor}
++                                    max="255"
++                                    min="0"
++                                    type="number"
++                                    value={value}
++                                    onBlur={() => this.props.onColorInputCommit('rgb')}
++                                    onChange={event => this.props.onRgbInput(index, event.target.value)}
++                                    onKeyDown={event => {
++                                        if (event.key === 'Enter') event.currentTarget.blur();
++                                    }}
++                                />
++                            </label>
++                        ))}
++                    </div>
++                    {this.props.invalidColor ? (
++                        <span className={styles.error}>{this.props.intl.formatMessage(messages.invalid)}</span>
++                    ) : null}
++                </div>
++                {this.props.recentColors.length ? (
++                    <div className={styles.recentColors}>
++                        <span>{this.props.intl.formatMessage(messages.recent)}</span>
++                        <div className={styles.recentSwatches}>
++                            {this.props.recentColors.map(color => (
++                                <button
++                                    aria-label={color}
++                                    key={color}
++                                    style={{backgroundColor: color}}
++                                    title={color}
++                                    onClick={() => this.props.onPickRecent(color)}
++                                />
++                            ))}
++                        </div>
++                    </div>
++                ) : null}
+                 <div className={styles.swatchRow}>
+                     <div className={styles.swatches}>
+                         {this.props.mode === Modes.BIT_LINE ||
+@@ -304,7 +364,9 @@ ColorPickerComponent.propTypes = {
+     color2: PropTypes.string,
+     colorIndex: PropTypes.number.isRequired,
+     gradientType: PropTypes.oneOf(Object.keys(GradientTypes)).isRequired,
++    hexValue: PropTypes.string.isRequired,
+     hue: PropTypes.number.isRequired,
++    invalidColor: PropTypes.bool.isRequired,
+     intl: intlShape.isRequired,
+     isEyeDropping: PropTypes.bool.isRequired,
+     mode: PropTypes.oneOf(Object.keys(Modes)),
+@@ -315,12 +377,18 @@ ColorPickerComponent.propTypes = {
+     onChangeGradientTypeSolid: PropTypes.func.isRequired,
+     onChangeGradientTypeVertical: PropTypes.func.isRequired,
+     onHueChange: PropTypes.func.isRequired,
++    onHexInput: PropTypes.func.isRequired,
++    onRgbInput: PropTypes.func.isRequired,
++    onColorInputCommit: PropTypes.func.isRequired,
++    onPickRecent: PropTypes.func.isRequired,
+     onSaturationChange: PropTypes.func.isRequired,
+     onSelectColor: PropTypes.func.isRequired,
+     onSelectColor2: PropTypes.func.isRequired,
+     onSwap: PropTypes.func,
+     onTransparent: PropTypes.func.isRequired,
+     rtl: PropTypes.bool.isRequired,
++    rgbValues: PropTypes.arrayOf(PropTypes.string).isRequired,
++    recentColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+     saturation: PropTypes.number.isRequired,
+     shouldShowGradientTools: PropTypes.bool.isRequired
+ };
+diff --git a/src/containers/color-picker.jsx b/src/containers/color-picker.jsx
+index 14110088..c7a961c1 100644
+--- a/src/containers/color-picker.jsx
++++ b/src/containers/color-picker.jsx
+@@ -31,6 +31,21 @@ const hsvToHex = (h, s, v) =>
+     parseColor(`hsv(${3.6 * h}, ${s}, ${v})`).hex
+ ;
+ 
++const RECENT_COLORS_KEY = 'dogoblock.paint-recent-colors';
++const hexColor = value => /^#[0-9a-f]{6}$/i.test(value);
++const colorInputs = value => {
++    const color = hexColor(value) ? value : '#4c97ff';
++    return {hex: color.toUpperCase(), rgb: parseColor(color).rgb.slice(0, 3).map(String)};
++};
++const loadRecentColors = () => {
++    try {
++        const colors = JSON.parse(window.localStorage.getItem(RECENT_COLORS_KEY) || '[]');
++        return Array.isArray(colors) ? colors.filter(hexColor).slice(0, 8) : [];
++    } catch (error) {
++        return [];
++    }
++};
++
+ // Important! This component ignores new color props except when isEyeDropping
+ // This is to make the HSV <=> RGB conversion stable. The sliders manage their
+ // own changes until unmounted or color changes with props.isEyeDropping = true.
+@@ -47,7 +62,11 @@ class ColorPicker extends React.Component {
+             'handleSaturationChange',
+             'handleBrightnessChange',
+             'handleTransparent',
+-            'handleActivateEyeDropper'
++            'handleActivateEyeDropper',
++            'handleHexInput',
++            'handleRgbInput',
++            'handleColorInputCommit',
++            'handlePickRecent'
+         ]);
+ 
+         const color = props.colorIndex === 0 ? props.color : props.color2;
+@@ -55,9 +74,15 @@ class ColorPicker extends React.Component {
+         this.state = {
+             hue: hsv[0],
+             saturation: hsv[1],
+-            brightness: hsv[2]
++            brightness: hsv[2],
++            ...colorInputs(color),
++            recentColors: loadRecentColors(),
++            invalidColor: false
+         };
+     }
++    componentWillUnmount () {
++        clearTimeout(this.recentColorTimer);
++    }
+     componentWillReceiveProps (newProps) {
+         const color = newProps.colorIndex === 0 ? this.props.color : this.props.color2;
+         const newColor = newProps.colorIndex === 0 ? newProps.color : newProps.color2;
+@@ -67,7 +92,9 @@ class ColorPicker extends React.Component {
+             this.setState({
+                 hue: hsv[0],
+                 saturation: hsv[1],
+-                brightness: hsv[2]
++                brightness: hsv[2],
++                ...colorInputs(newColor),
++                invalidColor: false
+             });
+         }
+     }
+@@ -93,11 +120,62 @@ class ColorPicker extends React.Component {
+         });
+     }
+     handleColorChange () {
+-        this.props.onChangeColor(hsvToHex(
++        const color = hsvToHex(
+             this.state.hue,
+             this.state.saturation,
+             this.state.brightness
+-        ));
++        );
++        this.props.onChangeColor(color);
++        this.setState({...colorInputs(color), invalidColor: false});
++        clearTimeout(this.recentColorTimer);
++        this.recentColorTimer = setTimeout(() => this.rememberColor(color), 300);
++    }
++    rememberColor (color) {
++        const recentColors = [color.toUpperCase()].concat(this.state.recentColors.filter(
++            recent => recent.toUpperCase() !== color.toUpperCase()
++        )).slice(0, 8);
++        this.setState({recentColors: recentColors});
++        try {
++            window.localStorage.setItem(RECENT_COLORS_KEY, JSON.stringify(recentColors));
++        } catch (error) {
++            // Recent colors are optional when local storage is unavailable.
++        }
++    }
++    applyColor (color) {
++        const hsv = this.getHsv(color);
++        this.setState({
++            hue: hsv[0],
++            saturation: hsv[1],
++            brightness: hsv[2],
++            ...colorInputs(color),
++            invalidColor: false
++        });
++        this.props.onChangeColor(color);
++        this.rememberColor(color);
++    }
++    handleHexInput (value) {
++        this.setState({hex: value, invalidColor: false});
++    }
++    handleRgbInput (index, value) {
++        const rgb = this.state.rgb.slice();
++        rgb[index] = value;
++        this.setState({rgb: rgb, invalidColor: false});
++    }
++    handleColorInputCommit (format) {
++        if (format === 'hex') {
++            const normalized = this.state.hex.trim().replace(/^#?/, '#');
++            if (!hexColor(normalized)) return this.setState({invalidColor: true});
++            return this.applyColor(normalized);
++        }
++        const channels = this.state.rgb.map(Number);
++        if (channels.some(channel => !Number.isInteger(channel) || channel < 0 || channel > 255) ||
++            this.state.rgb.some(channel => channel === '')) {
++            return this.setState({invalidColor: true});
++        }
++        this.applyColor(`#${channels.map(channel => channel.toString(16).padStart(2, '0')).join('')}`);
++    }
++    handlePickRecent (color) {
++        this.applyColor(color);
+     }
+     handleTransparent () {
+         this.props.onChangeColor(null);
+@@ -128,10 +206,14 @@ class ColorPicker extends React.Component {
+                 color2={this.props.color2}
+                 colorIndex={this.props.colorIndex}
+                 gradientType={this.props.gradientType}
++                hexValue={this.state.hex}
+                 hue={this.state.hue}
++                invalidColor={this.state.invalidColor}
+                 isEyeDropping={this.props.isEyeDropping}
+                 mode={this.props.mode}
+                 rtl={this.props.rtl}
++                rgbValues={this.state.rgb}
++                recentColors={this.state.recentColors}
+                 saturation={this.state.saturation}
+                 shouldShowGradientTools={this.props.shouldShowGradientTools}
+                 onActivateEyeDropper={this.handleActivateEyeDropper}
+@@ -141,6 +223,10 @@ class ColorPicker extends React.Component {
+                 onChangeGradientTypeSolid={this.handleChangeGradientTypeSolid}
+                 onChangeGradientTypeVertical={this.handleChangeGradientTypeVertical}
+                 onHueChange={this.handleHueChange}
++                onHexInput={this.handleHexInput}
++                onRgbInput={this.handleRgbInput}
++                onColorInputCommit={this.handleColorInputCommit}
++                onPickRecent={this.handlePickRecent}
+                 onSaturationChange={this.handleSaturationChange}
+                 onSelectColor={this.props.onSelectColor}
+                 onSelectColor2={this.props.onSelectColor2}
+diff --git a/src/components/mode-tools/mode-tools.jsx b/src/components/mode-tools/mode-tools.jsx
+index 78771edb..3adf1031 100644
+--- a/src/components/mode-tools/mode-tools.jsx
++++ b/src/components/mode-tools/mode-tools.jsx
+@@ -9,7 +9,7 @@ import {changeBitBrushSize} from '../../reducers/bit-brush-size';
+ import {changeBitEraserSize} from '../../reducers/bit-eraser-size';
+ import {setShapesFilled} from '../../reducers/fill-bitmap-shapes';
+ 
+-import FontDropdown from '../../containers/font-dropdown.jsx';
++import FontDropdown from '../../containers/searchable-font-dropdown.jsx';
+ import LiveInputHOC from '../forms/live-input-hoc.jsx';
+ import Label from '../forms/label.jsx';
+ import {defineMessages, injectIntl, intlShape} from 'react-intl';
+diff --git a/src/lib/fonts.js b/src/lib/fonts.js
+index 93fec3c6..acec837f 100644
+--- a/src/lib/fonts.js
++++ b/src/lib/fonts.js
+@@ -5,6 +5,13 @@ const Fonts = {
+     MARKER: 'Marker',
+     CURLY: 'Curly',
+     PIXEL: 'Pixel',
++    POPPINS: 'Poppins',
++    LATO: 'Lato',
++    ARVO: 'Arvo',
++    BANGERS: 'Bangers',
++    PLAY: 'Play',
++    SHARE: 'Share',
++    SPACE_MONO: 'Space Mono',
+     CHINESE: '"Microsoft YaHei", "微软雅黑", STXihei, "华文细黑"',
+     JAPANESE: '"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic"',
+     KOREAN: 'Malgun Gothic'
+diff --git a/src/components/paint-editor/properties-panel.css b/src/components/paint-editor/properties-panel.css
+new file mode 100644
+index 00000000..11197916
+--- /dev/null
++++ b/src/components/paint-editor/properties-panel.css
+@@ -0,0 +1,113 @@
++@import "../../css/colors.css";
++@import "../../css/units.css";
++
++.panel {
++    flex: 0 0 232px;
++    min-width: 0;
++    border-left: 1px solid $ui-pane-border;
++    background: #fff;
++    overflow: auto;
++}
++
++.panel.closed {
++    flex-basis: 36px;
++    overflow: hidden;
++}
++
++.toggle {
++    width: 100%;
++    min-height: 36px;
++    display: flex;
++    align-items: center;
++    justify-content: space-between;
++    border: 0;
++    border-bottom: 1px solid $ui-pane-border;
++    background: $ui-pane-gray;
++    color: $text-primary;
++    font-weight: bold;
++    cursor: pointer;
++    padding: 0 12px;
++}
++
++.closed .toggle {
++    width: 36px;
++    padding: 0 10px;
++}
++
++.closed .toggle span:first-child {
++    display: none;
++}
++
++.content {
++    padding: 8px 12px 16px;
++}
++
++.section {
++    padding: 9px 0;
++    border-bottom: 1px solid $ui-pane-border;
++}
++
++.section h3 {
++    margin: 0 0 10px;
++    font-size: 0.82rem;
++    color: $text-primary;
++}
++
++.field-grid {
++    display: grid;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    gap: 8px;
++}
++
++.field {
++    min-width: 0;
++    display: flex;
++    align-items: center;
++    gap: 5px;
++    color: $text-primary;
++    font-size: 0.75rem;
++}
++
++.field span {
++    flex: 0 0 25px;
++}
++
++.field input {
++    width: 100%;
++    min-width: 0;
++    height: 30px;
++    border: 1px solid $ui-pane-border;
++    border-radius: 4px;
++    padding: 0 5px;
++    font-size: 0.75rem;
++    color: $text-primary;
++}
++
++.color-row {
++    display: flex;
++    flex-wrap: wrap;
++    gap: 8px;
++}
++
++.hint {
++    color: $text-primary;
++    font-size: 0.75rem;
++}
++
++@media (max-width: 1599px) {
++    .panel.open {
++        position: absolute;
++        top: 0;
++        right: 0;
++        bottom: 0;
++        z-index: 6;
++        width: 232px;
++        box-shadow: -3px 0 12px rgba(0, 0, 0, 0.18);
++    }
++}
++
++@media (max-width: 960px) {
++    .panel {
++        display: none;
++    }
++}
+diff --git a/src/containers/properties-panel.jsx b/src/containers/properties-panel.jsx
+new file mode 100644
+index 00000000..370ac59d
+--- /dev/null
++++ b/src/containers/properties-panel.jsx
+@@ -0,0 +1,163 @@
++import paper from '@scratch/paper';
++import PropTypes from 'prop-types';
++import React from 'react';
++import {connect} from 'react-redux';
++import {defineMessages, injectIntl, intlShape} from 'react-intl';
++
++import FillColorIndicator from './fill-color-indicator.jsx';
++import StrokeColorIndicator from './stroke-color-indicator.jsx';
++import StrokeWidthIndicator from './stroke-width-indicator.jsx';
++import ModeTools from './mode-tools.jsx';
++import FontDropdown from './searchable-font-dropdown.jsx';
++import {redrawSelectionBox} from '../reducers/selected-items';
++import Formats, {isVector} from '../lib/format';
++import Modes from '../lib/modes';
++import styles from '../components/paint-editor/properties-panel.css';
++
++const messages = defineMessages({
++    title: {id: 'paint.properties.title', defaultMessage: 'Properties'},
++    show: {id: 'paint.properties.show', defaultMessage: 'Show properties'},
++    hide: {id: 'paint.properties.hide', defaultMessage: 'Hide properties'},
++    appearance: {id: 'paint.properties.appearance', defaultMessage: 'Appearance'},
++    transform: {id: 'paint.properties.transform', defaultMessage: 'Transform'},
++    text: {id: 'paint.properties.text', defaultMessage: 'Text'},
++    x: {id: 'paint.properties.x', defaultMessage: 'X'},
++    y: {id: 'paint.properties.y', defaultMessage: 'Y'},
++    width: {id: 'paint.properties.width', defaultMessage: 'Width'},
++    height: {id: 'paint.properties.height', defaultMessage: 'Height'},
++    rotation: {id: 'paint.properties.rotation', defaultMessage: 'Rotation'},
++    fontSize: {id: 'paint.properties.fontSize', defaultMessage: 'Size'},
++    multiple: {id: 'paint.properties.multiple', defaultMessage: 'Multiple objects selected'}
++});
++
++const formatValue = value => Number.isFinite(value) ? Math.round(value * 10) / 10 : 0;
++
++class PropertiesPanel extends React.Component {
++    constructor (props) {
++        super(props);
++        this.state = {open: window.innerWidth >= 1600};
++        this.handleToggle = this.handleToggle.bind(this);
++        this.handleGeometryChange = this.handleGeometryChange.bind(this);
++    }
++    handleToggle () {
++        this.setState({open: !this.state.open});
++    }
++    handleGeometryChange (property, inputValue) {
++        const item = this.props.selectedItems[0];
++        const value = Number(inputValue);
++        if (!item || !Number.isFinite(value) || Math.abs(value) > 10000) return;
++
++        const bounds = item.bounds;
++        if (property === 'x' || property === 'y') {
++            item.position = new paper.Point(
++                property === 'x' ? value : item.position.x,
++                property === 'y' ? value : item.position.y
++            );
++        } else if (property === 'width' && value > 0 && bounds.width > 0) {
++            item.scale(value / bounds.width, 1);
++        } else if (property === 'height' && value > 0 && bounds.height > 0) {
++            item.scale(1, value / bounds.height);
++        } else if (property === 'rotation') {
++            item.rotate(value - item.rotation);
++        } else if (property === 'fontSize' && item instanceof paper.PointText && value >= 1 && value <= 500) {
++            item.fontSize = value;
++        } else {
++            return;
++        }
++        this.props.onUpdateImage();
++        this.props.onRedrawSelectionBox();
++    }
++    renderField (name, value) {
++        return (
++            <label className={styles.field}>
++                <span>{this.props.intl.formatMessage(messages[name])}</span>
++                <input
++                    key={`${this.props.selectedItems[0].id}-${name}-${formatValue(value)}`}
++                    aria-label={this.props.intl.formatMessage(messages[name])}
++                    defaultValue={formatValue(value)}
++                    step="0.1"
++                    type="number"
++                    onBlur={event => this.handleGeometryChange(name, event.target.value)}
++                    onKeyDown={event => {
++                        if (event.key === 'Enter') event.currentTarget.blur();
++                    }}
++                />
++            </label>
++        );
++    }
++    render () {
++        const vector = isVector(this.props.format);
++        const item = vector && this.props.selectedItems.length === 1 ? this.props.selectedItems[0] : null;
++        const showTextFont = item instanceof paper.PointText && this.props.mode !== Modes.TEXT;
++        return (
++            <aside className={`${styles.panel} ${this.state.open ? styles.open : styles.closed}`}>
++                <button
++                    aria-expanded={this.state.open}
++                    aria-label={this.props.intl.formatMessage(this.state.open ? messages.hide : messages.show)}
++                    className={styles.toggle}
++                    title={this.props.intl.formatMessage(this.state.open ? messages.hide : messages.show)}
++                    onClick={this.handleToggle}
++                >
++                    <span>{this.props.intl.formatMessage(messages.title)}</span>
++                    <span aria-hidden="true">{this.state.open ? '\u203a' : '\u2039'}</span>
++                </button>
++                {this.state.open ? (
++                    <div className={styles.content}>
++                        {item ? (
++                            <section className={styles.section}>
++                                <h3>{this.props.intl.formatMessage(messages.transform)}</h3>
++                                <div className={styles.fieldGrid}>
++                                    {this.renderField('x', item.position.x)}
++                                    {this.renderField('y', item.position.y)}
++                                    {this.renderField('width', item.bounds.width)}
++                                    {this.renderField('height', item.bounds.height)}
++                                    {this.renderField('rotation', item.rotation)}
++                                </div>
++                            </section>
++                        ) : this.props.selectedItems.length > 1 ? (
++                            <p className={styles.hint}>{this.props.intl.formatMessage(messages.multiple)}</p>
++                        ) : null}
++                        {(item instanceof paper.PointText || this.props.mode === Modes.TEXT) && vector ? (
++                            <section className={styles.section}>
++                                <h3>{this.props.intl.formatMessage(messages.text)}</h3>
++                                {showTextFont ? <FontDropdown onUpdateImage={this.props.onUpdateImage} /> : null}
++                                {item instanceof paper.PointText ? this.renderField('fontSize', item.fontSize) : null}
++                            </section>
++                        ) : null}
++                        <section className={styles.section}>
++                            <h3>{this.props.intl.formatMessage(messages.appearance)}</h3>
++                            <div className={styles.colorRow}>
++                                <FillColorIndicator onUpdateImage={this.props.onUpdateImage} />
++                                {vector ? <StrokeColorIndicator onUpdateImage={this.props.onUpdateImage} /> : null}
++                            </div>
++                            {vector ? <StrokeWidthIndicator onUpdateImage={this.props.onUpdateImage} /> : null}
++                        </section>
++                        <section className={styles.section}>
++                            <ModeTools onUpdateImage={this.props.onUpdateImage} />
++                        </section>
++                    </div>
++                ) : null}
++            </aside>
++        );
++    }
++}
++
++PropertiesPanel.propTypes = {
++    format: PropTypes.oneOf(Object.keys(Formats)),
++    intl: intlShape.isRequired,
++    mode: PropTypes.oneOf(Object.keys(Modes)),
++    onRedrawSelectionBox: PropTypes.func.isRequired,
++    onUpdateImage: PropTypes.func.isRequired,
++    selectedItems: PropTypes.arrayOf(PropTypes.instanceOf(paper.Item)).isRequired
++};
++
++const mapStateToProps = state => ({
++    format: state.scratchPaint.format,
++    mode: state.scratchPaint.mode,
++    selectedItems: state.scratchPaint.selectedItems
++});
++const mapDispatchToProps = dispatch => ({
++    onRedrawSelectionBox: () => dispatch(redrawSelectionBox())
++});
++
++export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(PropertiesPanel));
+diff --git a/src/components/font-dropdown/searchable-font-dropdown.css b/src/components/font-dropdown/searchable-font-dropdown.css
+new file mode 100644
+index 00000000..0e6c8606
+--- /dev/null
++++ b/src/components/font-dropdown/searchable-font-dropdown.css
+@@ -0,0 +1,53 @@
++@import "../../css/colors.css";
++
++.trigger {
++    max-width: 195px;
++    min-width: 120px;
++    overflow: hidden;
++    text-overflow: ellipsis;
++    white-space: nowrap;
++}
++
++.menu {
++    width: 230px;
++    max-height: 290px;
++    padding: 8px;
++    color: $text-primary;
++}
++
++.menu input {
++    width: 100%;
++    height: 32px;
++    padding: 0 8px;
++    border: 1px solid $ui-pane-border;
++    border-radius: 4px;
++}
++
++.list {
++    max-height: 220px;
++    overflow-y: auto;
++    margin-top: 7px;
++}
++
++.list button {
++    display: block;
++    width: 100%;
++    padding: 6px 8px;
++    border: 0;
++    background: #fff;
++    color: $text-primary;
++    text-align: left;
++    font-size: 0.9rem;
++    cursor: pointer;
++}
++
++.list button:hover,
++.list button:focus,
++.list button.selected {
++    background: $ui-background-blue;
++}
++
++.menu p {
++    margin: 8px;
++    font-size: 0.75rem;
++}
+diff --git a/src/containers/searchable-font-dropdown.jsx b/src/containers/searchable-font-dropdown.jsx
+new file mode 100644
+index 00000000..0e01033d
+--- /dev/null
++++ b/src/containers/searchable-font-dropdown.jsx
+@@ -0,0 +1,102 @@
++import paper from '@scratch/paper';
++import PropTypes from 'prop-types';
++import React from 'react';
++import {connect} from 'react-redux';
++import {defineMessages, injectIntl, intlShape} from 'react-intl';
++import getFonts from 'scratch-render-fonts';
++
++import Dropdown from '../components/dropdown/dropdown.jsx';
++import Fonts from '../lib/fonts';
++import {changeFont} from '../reducers/font';
++import styles from '../components/font-dropdown/searchable-font-dropdown.css';
++
++const messages = defineMessages({
++    search: {id: 'paint.fontPicker.search', defaultMessage: 'Search fonts'},
++    empty: {id: 'paint.fontPicker.empty', defaultMessage: 'No matching fonts'},
++    loadError: {id: 'paint.fontPicker.loadError', defaultMessage: 'Could not load this font'}
++});
++const FONT_NAMES = Object.keys(Fonts).map(key => Fonts[key]);
++
++class SearchableFontDropdown extends React.Component {
++    constructor (props) {
++        super(props);
++        this.state = {query: '', loadError: false};
++        this.handleChoose = this.handleChoose.bind(this);
++    }
++    handleChoose (font) {
++        const project = paper.project;
++        const selectedText = this.props.selectedItems.filter(item => item instanceof paper.PointText);
++        const load = document.fonts && document.fonts.load ? document.fonts.load(`40px "${font}"`) : Promise.resolve();
++        Promise.resolve(load).then(() => {
++            if (project !== paper.project) return;
++            selectedText.forEach(item => {
++                if (item.project === project) item.font = font;
++            });
++            this.props.onChangeFont(font);
++            if (selectedText.length) this.props.onUpdateImage();
++            this.setState({query: '', loadError: false});
++            if (this.dropdown) this.dropdown.handleClosePopover();
++        }).catch(() => this.setState({loadError: true}));
++    }
++    render () {
++        const query = this.state.query.toLocaleLowerCase();
++        const fonts = FONT_NAMES.filter(font => font.toLocaleLowerCase().includes(query));
++        return (
++            <Dropdown
++                className={styles.trigger}
++                popoverContent={
++                    <div className={styles.menu}>
++                        <input
++                            aria-label={this.props.intl.formatMessage(messages.search)}
++                            autoFocus
++                            placeholder={this.props.intl.formatMessage(messages.search)}
++                            type="search"
++                            value={this.state.query}
++                            onChange={event => this.setState({query: event.target.value})}
++                        />
++                        <div className={styles.list}>
++                            {fonts.map(font => (
++                                <button
++                                    className={font === this.props.font ? styles.selected : ''}
++                                    key={font}
++                                    style={{fontFamily: `"${font}"`}}
++                                    title={font}
++                                    onClick={() => this.handleChoose(font)}
++                                >
++                                    {font}
++                                </button>
++                            ))}
++                            {!fonts.length ? <p>{this.props.intl.formatMessage(messages.empty)}</p> : null}
++                        </div>
++                        {this.state.loadError ? <p>{this.props.intl.formatMessage(messages.loadError)}</p> : null}
++                    </div>
++                }
++                ref={element => { this.dropdown = element; }}
++                onOpen={() => {
++                    getFonts();
++                    this.setState({query: '', loadError: false});
++                }}
++            >
++                <span style={{fontFamily: `"${this.props.font}"`}}>{this.props.font}</span>
++            </Dropdown>
++        );
++    }
++}
++
++SearchableFontDropdown.propTypes = {
++    font: PropTypes.string,
++    intl: intlShape.isRequired,
++    onChangeFont: PropTypes.func.isRequired,
++    onUpdateImage: PropTypes.func.isRequired,
++    selectedItems: PropTypes.arrayOf(PropTypes.instanceOf(paper.Item)).isRequired
++};
++
++const mapStateToProps = state => ({
++    font: state.scratchPaint.font,
++    selectedItems: state.scratchPaint.selectedItems
++});
++const mapDispatchToProps = dispatch => ({
++    onChangeFont: font => dispatch(changeFont(font))
++});
++
++export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SearchableFontDropdown));

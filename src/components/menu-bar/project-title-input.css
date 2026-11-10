@@ -1,46 +1,33 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
-@import "../../css/z-index.css";
-
-/*
-If project-title-input.jsx is part of a menu bar say menu-bar.jsx, it can have additional css classes that
-can set a width for example or what it should do in a flex box (eg. grow).
-*/
 
 .title-field {
-    border: 1px dashed $ui-black-transparent;
-    border-radius: $form-radius;
-    -webkit-border-radius: $form-radius;
-    -moz-border-radius: $form-radius;
-    background-color: $ui-white-transparent;
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    height: 2.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.625rem;
+    background-color: rgba(255, 255, 255, 0.12);
     background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    height: auto;
-    padding: .5rem;
-}
-
-.title-field {
+    padding: 0 0.75rem;
     color: $ui-white;
-    font-weight: bold;
-    font-size: .8rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    transition: border-color 150ms ease, background-color 150ms ease;
 }
-
-.title-field::placeholder {
-    color: $ui-white;
-    font-weight: normal;
-    font-size: .8rem;
-    font-style: italic;
-}
-
-.title-field:hover {
-    background-color: hsla(0, 100%, 100%, 0.5);
-}
-
+.title-field::placeholder { color: #d4dff4; font-weight: 400; }
+.title-field:hover { border-color: rgba(255, 255, 255, 0.5); background-color: rgba(255, 255, 255, 0.18); }
 .title-field:focus {
-    outline:none;
-    border: 1px solid $ui-transparent;
-    -webkit-box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent;
-    box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent;
-    background-color: $ui-white;
-    color: $text-primary;
+    outline: 2px solid #fff;
+    outline-offset: -3px;
+    border-color: #fff;
+    background-color: #fff;
+    color: #26354d;
+    box-shadow: none;
+    text-overflow: clip;
+}
+@media (prefers-reduced-motion: reduce) {
+    .title-field { transition: none; }
 }

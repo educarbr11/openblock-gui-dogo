@@ -19,6 +19,8 @@ import xIcon from './icon--x.svg';
 import yIcon from './icon--y.svg';
 import showIcon from './icon--show.svg';
 import hideIcon from './icon--hide.svg';
+import draggableIcon from './icon--draggable-on.svg';
+import notDraggableIcon from './icon--draggable-off.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -27,6 +29,26 @@ const messages = defineMessages({
         id: 'gui.SpriteInfo.spritePlaceholder',
         defaultMessage: 'Name',
         description: 'Placeholder text for sprite name'
+    },
+    draggableOn: {
+        id: 'gui.SpriteInfo.draggableOn',
+        defaultMessage: 'Allow dragging during the game',
+        description: 'Tooltip for enabling sprite dragging during the game'
+    },
+    draggableOff: {
+        id: 'gui.SpriteInfo.draggableOff',
+        defaultMessage: 'Do not allow dragging during the game',
+        description: 'Tooltip for disabling sprite dragging during the game'
+    },
+    draggableEnabled: {
+        id: 'gui.SpriteInfo.draggableEnabled',
+        defaultMessage: 'Enabled',
+        description: 'Status shown when sprite dragging is enabled'
+    },
+    draggableDisabled: {
+        id: 'gui.SpriteInfo.draggableDisabled',
+        defaultMessage: 'Disabled',
+        description: 'Status shown when sprite dragging is disabled'
     }
 });
 
@@ -35,6 +57,7 @@ class SpriteInfo extends React.Component {
         return (
             this.props.rotationStyle !== nextProps.rotationStyle ||
             this.props.disabled !== nextProps.disabled ||
+            this.props.draggable !== nextProps.draggable ||
             this.props.name !== nextProps.name ||
             this.props.stageSize !== nextProps.stageSize ||
             this.props.visible !== nextProps.visible ||
@@ -69,6 +92,13 @@ class SpriteInfo extends React.Component {
                 defaultMessage="Size"
                 description="Sprite info size label"
                 id="gui.SpriteInfo.size"
+            />
+        );
+        const draggableLabel = (
+            <FormattedMessage
+                defaultMessage="Draggable"
+                description="Sprite info draggable label"
+                id="gui.SpriteInfo.draggable"
             />
         );
 
@@ -226,6 +256,80 @@ class SpriteInfo extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div className={labelAbove ? styles.column : styles.group}>
+                        {
+                            stageSize === STAGE_DISPLAY_SIZES.large ?
+                                <Label
+                                    secondary
+                                    text={draggableLabel}
+                                /> :
+                                null
+                        }
+                        <div className={styles.radioWrapper}>
+                            <div
+                                aria-label={this.props.intl.formatMessage(messages.draggableOn)}
+                                aria-pressed={Boolean(this.props.draggable)}
+                                className={classNames(
+                                    styles.radio,
+                                    styles.radioFirst,
+                                    styles.iconWrapper,
+                                    styles.draggableRadio,
+                                    styles.draggableOn,
+                                    {
+                                        [styles.isActive]: this.props.draggable && !this.props.disabled,
+                                        [styles.isDisabled]: this.props.disabled
+                                    }
+                                )}
+                                data-testid="sprite-draggable-on"
+                                role="button"
+                                tabIndex={this.props.disabled ? '-1' : '0'}
+                                title={this.props.intl.formatMessage(messages.draggableOn)}
+                                onClick={this.props.onClickDraggable}
+                                onKeyPress={this.props.onPressDraggable}
+                            >
+                                <img
+                                    className={styles.icon}
+                                    src={draggableIcon}
+                                />
+                            </div>
+                            <div
+                                aria-label={this.props.intl.formatMessage(messages.draggableOff)}
+                                aria-pressed={!this.props.draggable}
+                                className={classNames(
+                                    styles.radio,
+                                    styles.radioLast,
+                                    styles.iconWrapper,
+                                    styles.draggableRadio,
+                                    styles.draggableOff,
+                                    {
+                                        [styles.isActive]: !this.props.draggable && !this.props.disabled,
+                                        [styles.isDisabled]: this.props.disabled
+                                    }
+                                )}
+                                data-testid="sprite-draggable-off"
+                                role="button"
+                                tabIndex={this.props.disabled ? '-1' : '0'}
+                                title={this.props.intl.formatMessage(messages.draggableOff)}
+                                onClick={this.props.onClickNotDraggable}
+                                onKeyPress={this.props.onPressNotDraggable}
+                            >
+                                <img
+                                    className={styles.icon}
+                                    src={notDraggableIcon}
+                                />
+                            </div>
+                        </div>
+                        <span
+                            className={classNames(styles.draggableStatus, {
+                                [styles.draggableStatusEnabled]: this.props.draggable
+                            })}
+                            data-testid="sprite-draggable-status"
+                        >
+                            {this.props.intl.formatMessage(
+                                this.props.draggable ? messages.draggableEnabled : messages.draggableDisabled
+                            )}
+                        </span>
+                    </div>
                     <div className={classNames(styles.group, styles.largerInput)}>
                         <Label
                             secondary
@@ -265,6 +369,7 @@ SpriteInfo.propTypes = {
         PropTypes.number
     ]),
     disabled: PropTypes.bool,
+    draggable: PropTypes.bool,
     intl: intlShape,
     name: PropTypes.string,
     onChangeDirection: PropTypes.func,
@@ -274,8 +379,12 @@ SpriteInfo.propTypes = {
     onChangeX: PropTypes.func,
     onChangeY: PropTypes.func,
     onClickNotVisible: PropTypes.func,
+    onClickDraggable: PropTypes.func,
+    onClickNotDraggable: PropTypes.func,
     onClickVisible: PropTypes.func,
     onPressNotVisible: PropTypes.func,
+    onPressDraggable: PropTypes.func,
+    onPressNotDraggable: PropTypes.func,
     onPressVisible: PropTypes.func,
     rotationStyle: PropTypes.string,
     size: PropTypes.oneOfType([

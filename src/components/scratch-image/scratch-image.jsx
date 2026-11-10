@@ -3,6 +3,7 @@ import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import storage from '../../lib/storage';
+import log from '../../lib/log';
 
 class ScratchImage extends React.PureComponent {
     static init () {
@@ -36,6 +37,10 @@ class ScratchImage extends React.PureComponent {
             this._pendingImages.delete(nextImage);
             const imageSource = nextImage.props.imageSource;
             ++this._currentJobs;
+            const completeJob = () => {
+                --this._currentJobs;
+                this.loadPendingImages();
+            };
             storage
                 .load(imageSource.assetType, imageSource.assetId)
                 .then(asset => {
@@ -46,8 +51,10 @@ class ScratchImage extends React.PureComponent {
                             imageURI: dataURI
                         });
                     }
-                    --this._currentJobs;
-                    this.loadPendingImages();
+                    completeJob();
+                }, error => {
+                    log.warn(`Could not load library thumbnail ${imageSource.assetId}`, error);
+                    completeJob();
                 });
         }
     }

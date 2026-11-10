@@ -1,0 +1,33 @@
+{
+    "id": "./",
+    "name": "DoGoBlock",
+    "short_name": "DoGoBlock",
+    "description": "Programação em blocos para robótica, Arduino e micro:bit.",
+    "lang": "pt-BR",
+    "start_url": "./#/editor",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#4C97FF",
+    "theme_color": "#203884",
+    "categories": ["education"],
+    "icons": [
+        {
+            "src": "static/pwa/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "static/pwa/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "static/pwa/icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

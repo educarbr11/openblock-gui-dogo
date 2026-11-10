@@ -1,0 +1,11 @@
+diff --git a/editor/interface/pt-br.json b/editor/interface/pt-br.json
+index 89fd192..504a9c7 100644
+--- a/editor/interface/pt-br.json
++++ b/editor/interface/pt-br.json
+@@ -513,5 +513,5 @@
+     "gui.sharedMessages.pop": "saltar",
+     "gui.sharedMessages.replaceProjectWarning": "Substituir conteúdos do projeto atual?",
+     "gui.sharedMessages.loadFromComputerTitle": "Carregar do seu computador",
+-    "gui.gui.defaultProjectTitle": "Projeto Scratch"
++    "gui.gui.defaultProjectTitle": "Projeto DoGo Block"
+ }

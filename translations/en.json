@@ -1,6 +1,6 @@
 {
   "gui.alerts.lostPeripheralConnection": {
-    "message": "OpenBlock lost connection to {extensionName}.",
+    "message": "DoGoBlock lost connection to {extensionName}.",
     "description": "Message indicating that an extension peripheral has been disconnected"
   },
   "gui.alerts.tryAgain": {
@@ -63,11 +63,11 @@
     "description": "Heading shown when there is an unhandled exception in an unsupported browser"
   },
   "gui.unsupportedBrowser.notRecommended": {
-    "message": "We are very sorry, but it looks like you are using a browser version that OpenBlock does not support. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
+    "message": "We are very sorry, but it looks like you are using a browser version that DoGoBlock does not support. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
     "description": "Error message when the browser does not meet our minimum requirements"
   },
   "gui.unsupportedBrowser.description": {
-    "message": "We are very sorry, but OpenBlock does not support this browser. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
+    "message": "We are very sorry, but DoGoBlock does not support this browser. We recommend updating to the latest version of a supported browser such as Google Chrome, Mozilla Firefox, Microsoft Edge, or Apple Safari.",
     "description": "Error message when the browser does not work at all (IE)"
   },
   "gui.unsupportedBrowser.back": {
@@ -80,7 +80,7 @@
   },
   "gui.unsupportedBrowser.previewfaqlinktext": {
     "message": "FAQ",
-    "description": "link to OpenBlock FAQ page"
+    "description": "link to DoGoBlock FAQ page"
   },
   "gui.cards.all-tutorials": {
     "message": "Tutorials",
@@ -207,8 +207,8 @@
     "description": "Button in prompt for starting a search"
   },
   "gui.connection.unavailable.installscratchlink": {
-    "message": "Make sure you have OpenBlock Link installed and running",
-    "description": "Message for getting OpenBlock Link installed"
+    "message": "Make sure you have DoGoBlock Link installed and running",
+    "description": "Message for getting DoGoBlock Link installed"
   },
   "gui.connection.unavailable.connectUsbEnableBluetooth": {
     "message": "Check that USB cable is connected or Bluetooth is enabled",
@@ -235,7 +235,7 @@
     "description": "Crash Message title"
   },
   "gui.crashMessage.description": {
-    "message": "We are so sorry, but it looks like OpenBlock has crashed. This bug has been automatically reported to the OpenBlock Team. Please refresh your page to try again.",
+    "message": "We are so sorry, but it looks like DoGoBlock has crashed. This bug has been automatically reported to the DoGoBlock Team. Please refresh your page to try again.",
     "description": "Message to inform the user that page has crashed."
   },
   "gui.crashMessage.errorNumber": {
@@ -325,6 +325,10 @@
   "gui.gui.soundsTab": {
     "message": "Sounds",
     "description": "Button to get to the sounds panel"
+  },
+  "gui.gui.stageTab": {
+    "message": "Stage",
+    "description": "Button to get to the stage panel"
   },
   "gui.hardwareConsole.send": {
     "message": "Send",
@@ -931,11 +935,11 @@
     "description": "Label for the backdrops in the stage selector"
   },
   "gui.telemetryOptIn.label": {
-    "message": "Report statistics to improve OpenBlock",
-    "description": "OpenBlock telemetry modal label - for accessibility"
+    "message": "Report statistics to improve DoGoBlock",
+    "description": "DoGoBlock telemetry modal label - for accessibility"
   },
   "gui.telemetryOptIn.body1": {
-    "message": "The OpenBlock Team is always looking to better understand how OpenBlock is used around the world. To help support this effort, you can allow OpenBlock to automatically send usage information to the OpenBlock Team.",
+    "message": "The DoGoBlock Team is always looking to better understand how DoGoBlock is used around the world. To help support this effort, you can allow DoGoBlock to automatically send usage information to the DoGoBlock Team.",
     "description": "First paragraph of body text for telemetry opt-in modal"
   },
   "gui.telemetryOptIn.body2": {
@@ -944,7 +948,7 @@
   },
   "gui.telemetryOptIn.privacyPolicyLink": {
     "message": "Privacy Policy",
-    "description": "Link to the OpenBlock privacy policy"
+    "description": "Link to the DoGoBlock privacy policy"
   },
   "gui.telemetryOptIn.optInText": {
     "message": "Share my usage data with the Openblock Team",
@@ -1099,7 +1103,7 @@
     "description": "WebGL missing title"
   },
   "gui.webglModal.description": {
-    "message": "Unfortunately it looks like your browser or computer {webGlLink}. This technology is needed for OpenBlock to run.",
+    "message": "Unfortunately it looks like your browser or computer {webGlLink}. This technology is needed for DoGoBlock to run.",
     "description": "WebGL missing message"
   },
   "gui.webglModal.webgllink": {
@@ -1112,11 +1116,11 @@
   },
   "gui.webglModal.previewfaq": {
     "message": "To learn more, go to the {previewFaqLink}.",
-    "description": "OpenBlock FAQ description"
+    "description": "DoGoBlock FAQ description"
   },
   "gui.webglModal.previewfaqlinktext": {
     "message": "FAQ",
-    "description": "link to OpenBlock FAQ page"
+    "description": "link to DoGoBlock FAQ page"
   },
   "gui.costumeLibrary.chooseABackdrop": {
     "message": "Choose a Backdrop",
@@ -2415,7 +2419,7 @@
     "description": "Title for uploading a project from your computer"
   },
   "gui.gui.defaultProjectTitle": {
-    "message": "OpenBlock Project",
+    "message": "DoGoBlock Project",
     "description": "Default title for project"
   },
   "gui.desktopMenuBar.about": {
@@ -2433,5 +2437,109 @@
   "gui.menuBar.dataSettings": {
     "message": "Data settings",
     "description": "Menu bar item for data settings"
+  },
+  "microbit.buttonsMenu.any": {
+    "message": "any",
+    "description": "Label for any element in button picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.moved": {
+    "message": "moved",
+    "description": "Label for moved gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.shaken": {
+    "message": "shaken",
+    "description": "Label for shaken gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.gesturesMenu.jumped": {
+    "message": "jumped",
+    "description": "Label for jumped gesture in gesture picker for micro:bit extension"
+  },
+  "microbit.pinStateMenu.on": {
+    "message": "on",
+    "description": "Label for on element in pin state picker for micro:bit extension"
+  },
+  "microbit.pinStateMenu.off": {
+    "message": "off",
+    "description": "Label for off element in pin state picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.front": {
+    "message": "front",
+    "description": "Label for front element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.back": {
+    "message": "back",
+    "description": "Label for back element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.left": {
+    "message": "left",
+    "description": "Label for left element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.right": {
+    "message": "right",
+    "description": "Label for right element in tilt direction picker for micro:bit extension"
+  },
+  "microbit.tiltDirectionMenu.any": {
+    "message": "any",
+    "description": "Label for any direction element in tilt direction picker for micro:bit extension"
+  },
+  "microbitBle.uploadBleFirmware": {
+    "message": "send Bluetooth firmware",
+    "description": "Upload Scratch compatible Bluetooth firmware to the micro:bit"
+  },
+  "microbit.whenButtonPressed": {
+    "message": "when [BTN] button pressed",
+    "description": "When the selected button on the micro:bit is pressed"
+  },
+  "microbit.isButtonPressed": {
+    "message": "[BTN] button pressed?",
+    "description": "Is the selected button on the micro:bit pressed?"
+  },
+  "microbit.whenGesture": {
+    "message": "when [GESTURE]",
+    "description": "When the micro:bit detects the selected gesture"
+  },
+  "microbit.displaySymbol": {
+    "message": "display [MATRIX]",
+    "description": "Display a custom image on the micro:bit display"
+  },
+  "microbit.displayText": {
+    "message": "display text [TEXT]",
+    "description": "Display text on the micro:bit display"
+  },
+  "microbit.defaultTextToDisplay": {
+    "message": "Hello!",
+    "description": "Default text to display on the micro:bit"
+  },
+  "microbit.clearDisplay": {
+    "message": "clear display",
+    "description": "Display nothing on the micro:bit display"
+  },
+  "microbit.whenTilted": {
+    "message": "when tilted [DIRECTION]",
+    "description": "When the micro:bit is tilted in a direction"
+  },
+  "microbit.isTilted": {
+    "message": "tilted [DIRECTION]?",
+    "description": "Is the micro:bit tilted in a direction?"
+  },
+  "microbit.tiltAngle": {
+    "message": "tilt angle [DIRECTION]",
+    "description": "How much the micro:bit is tilted in a direction"
+  },
+  "microbit.whenPinConnected": {
+    "message": "when pin [PIN] connected",
+    "description": "When the pin detects a connection to Earth/Ground"
+  },
+  "microbit.isPinConnected": {
+    "message": "pin [PIN] connected?",
+    "description": "Whether the selected micro:bit pin is connected to Earth/Ground"
+  },
+  "microbit.pinValue": {
+    "message": "pin [PIN] value",
+    "description": "The latest touch connection value for the selected micro:bit pin"
+  },
+  "microbit.setPinValue": {
+    "message": "set pin [PIN] value to [VALUE]",
+    "description": "Set the selected micro:bit pin digital value to 0 or 1"
   }
 }

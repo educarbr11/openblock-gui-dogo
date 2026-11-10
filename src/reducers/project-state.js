@@ -108,6 +108,8 @@ const initialState = {
     error: null,
     projectData: null,
     projectId: null,
+    requestedProjectId: null,
+    pendingCreateNewProject: false,
     loadingState: LoadingState.NOT_LOADED
 };
 
@@ -116,20 +118,33 @@ const reducer = function (state, action) {
 
     switch (action.type) {
     case DONE_CREATING_NEW:
-        // We need to set project id since we just created new project on the server.
-        // No need to load, we should have data already in vm.
-        if (state.loadingState === LoadingState.CREATING_NEW) {
+        // A save requested by "New" must continue to the default project after persisting the current one.
+        if (state.loadingState === LoadingState.CREATING_NEW ||
+            state.loadingState === LoadingState.MANUAL_UPDATING) {
+            if (state.pendingCreateNewProject) {
+                return Object.assign({}, state, {
+                    loadingState: LoadingState.FETCHING_NEW_DEFAULT,
+                    projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
+                    pendingCreateNewProject: true
+                });
+            }
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                pendingCreateNewProject: false
             });
         }
         return state;
     case DONE_FETCHING_WITH_ID:
-        if (state.loadingState === LoadingState.FETCHING_WITH_ID) {
+        if (state.loadingState === LoadingState.FETCHING_WITH_ID &&
+            state.projectId === action.projectId &&
+            state.requestedProjectId === action.projectId) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.LOADING_VM_WITH_ID,
-                projectData: action.projectData
+                projectData: action.projectData,
+                requestedProjectId: null
             });
         }
         return state;
@@ -203,7 +218,8 @@ const reducer = function (state, action) {
         if (state.loadingState === LoadingState.UPDATING_BEFORE_NEW) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_NEW_DEFAULT,
-                projectId: defaultProjectId
+                projectId: defaultProjectId,
+                pendingCreateNewProject: true
             });
         }
         return state;
@@ -229,19 +245,28 @@ const reducer = function (state, action) {
             if (action.projectId === defaultProjectId || action.projectId === null) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_NEW_DEFAULT,
-                    projectId: defaultProjectId
+                    projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
+                    pendingCreateNewProject: false
                 });
             }
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                requestedProjectId: action.projectId,
+                projectData: null,
+                pendingCreateNewProject: false
             });
         } else if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
             // if we were showing a project already, don't transition to default project.
             if (action.projectId !== defaultProjectId && action.projectId !== null) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_WITH_ID,
-                    projectId: action.projectId
+                    projectId: action.projectId,
+                    requestedProjectId: action.projectId,
+                    projectData: null,
+                    pendingCreateNewProject: false
                 });
             }
         } else { // allow any other states to transition to fetching project
@@ -249,12 +274,18 @@ const reducer = function (state, action) {
             if (action.projectId === defaultProjectId || action.projectId === null) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.FETCHING_NEW_DEFAULT,
-                    projectId: defaultProjectId
+                    projectId: defaultProjectId,
+                    requestedProjectId: null,
+                    projectData: null,
+                    pendingCreateNewProject: false
                 });
             }
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_WITH_ID,
-                projectId: action.projectId
+                projectId: action.projectId,
+                requestedProjectId: action.projectId,
+                projectData: null,
+                pendingCreateNewProject: false
             });
         }
         return state;
@@ -268,7 +299,8 @@ const reducer = function (state, action) {
     case START_CREATING_NEW:
         if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
             return Object.assign({}, state, {
-                loadingState: LoadingState.CREATING_NEW
+                loadingState: LoadingState.CREATING_NEW,
+                pendingCreateNewProject: false
             });
         }
         return state;
@@ -279,7 +311,8 @@ const reducer = function (state, action) {
         ].includes(state.loadingState)) {
             return Object.assign({}, state, {
                 loadingState: LoadingState.FETCHING_NEW_DEFAULT,
-                projectId: defaultProjectId
+                projectId: defaultProjectId,
+                pendingCreateNewProject: Boolean(action.createOnLoad)
             });
         }
         return state;
@@ -300,6 +333,12 @@ const reducer = function (state, action) {
                 loadingState: LoadingState.MANUAL_UPDATING
             });
         }
+        if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
+            return Object.assign({}, state, {
+                loadingState: LoadingState.MANUAL_UPDATING,
+                pendingCreateNewProject: false
+            });
+        }
         return state;
     case START_REMIXING:
         if (state.loadingState === LoadingState.SHOWING_WITH_ID) {
@@ -318,7 +357,14 @@ const reducer = function (state, action) {
     case START_UPDATING_BEFORE_CREATING_NEW:
         if (state.loadingState === LoadingState.SHOWING_WITH_ID) {
             return Object.assign({}, state, {
-                loadingState: LoadingState.UPDATING_BEFORE_NEW
+                loadingState: LoadingState.UPDATING_BEFORE_NEW,
+                pendingCreateNewProject: true
+            });
+        }
+        if (state.loadingState === LoadingState.SHOWING_WITHOUT_ID) {
+            return Object.assign({}, state, {
+                loadingState: LoadingState.CREATING_NEW,
+                pendingCreateNewProject: true
             });
         }
         return state;
@@ -355,11 +401,13 @@ const reducer = function (state, action) {
             if (state.projectId === defaultProjectId || state.projectId === null) {
                 return Object.assign({}, state, {
                     loadingState: LoadingState.SHOWING_WITHOUT_ID,
+                    pendingCreateNewProject: false,
                     error: action.error
                 });
             }
             return Object.assign({}, state, {
                 loadingState: LoadingState.SHOWING_WITH_ID,
+                pendingCreateNewProject: false,
                 error: action.error
             });
         }
@@ -395,11 +443,12 @@ const doneCreatingProject = (id, loadingState) => {
     }
 };
 
-const onFetchedProjectData = (projectData, loadingState) => {
+const onFetchedProjectData = (projectData, loadingState, projectId) => {
     switch (loadingState) {
     case LoadingState.FETCHING_WITH_ID:
         return {
             type: DONE_FETCHING_WITH_ID,
+            projectId: projectId,
             projectData: projectData
         };
     case LoadingState.FETCHING_NEW_DEFAULT:
@@ -472,7 +521,10 @@ const setProjectId = id => ({
 
 const requestNewProject = needSave => {
     if (needSave) return {type: START_UPDATING_BEFORE_CREATING_NEW};
-    return {type: START_FETCHING_NEW};
+    return {
+        type: START_FETCHING_NEW,
+        createOnLoad: true
+    };
 };
 
 const requestProjectUpload = loadingState => {

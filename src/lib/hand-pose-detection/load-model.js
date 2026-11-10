@@ -1,25 +1,20 @@
 import getMlVendorPath from '../ml-vendor-path';
+import {acquireResourcePack} from '../resource-pack-service';
 
 const MEDIAPIPE_VERSION = '0.4.1675469240';
-
-const scripts = [
-    getMlVendorPath('tfjs/4.22.0/tf.min.js'),
-    getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}/hands.js`),
-    getMlVendorPath('hand-pose-detection/2.0.0/hand-pose-detection.min.js')
+const scriptPaths = [
+    'tfjs/4.22.0/tf.min.js',
+    'knn-classifier/1.2.6/knn-classifier.min.js',
+    `mediapipe-hands/${MEDIAPIPE_VERSION}/hands.js`,
+    'hand-pose-detection/2.0.0/hand-pose-detection.min.js'
 ];
-
-const solutionPath = getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}`);
 
 let loadingPromise = null;
 
 const runWithBrowserEnvironment = callback => {
-    if (typeof window === 'undefined' || !window.process) {
-        return callback();
-    }
-
+    if (typeof window === 'undefined' || !window.process) return callback();
     const process = window.process;
     window.process = void 0;
-
     return Promise.resolve()
         .then(callback)
         .finally(() => {
@@ -34,11 +29,10 @@ const loadScript = src => new Promise((resolve, reject) => {
             resolve();
             return;
         }
-        existing.addEventListener('load', resolve);
-        existing.addEventListener('error', reject);
+        existing.addEventListener('load', resolve, {once: true});
+        existing.addEventListener('error', reject, {once: true});
         return;
     }
-
     const script = document.createElement('script');
     script.src = src;
     script.async = true;
@@ -46,27 +40,48 @@ const loadScript = src => new Promise((resolve, reject) => {
         script.setAttribute('data-loaded', 'true');
         resolve();
     };
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    script.onerror = () => {
+        script.remove();
+        reject(new Error(`Failed to load ${src}`));
+    };
     document.head.appendChild(script);
 });
 
-const loadHandPoseDetection = () => {
+const loadLibraries = baseUrl => {
     if (!loadingPromise) {
+        const scripts = scriptPaths.map(relativePath => getMlVendorPath(relativePath, baseUrl));
         loadingPromise = scripts.reduce(
             (promise, src) => promise.then(() => loadScript(src)),
             Promise.resolve()
         ).then(() => {
-            if (!window.tf || !window.handPoseDetection || !window.Hands) {
+            if (!window.tf || !window.knnClassifier || !window.handPoseDetection || !window.Hands) {
                 throw new Error('Hand pose detection libraries were not available after loading.');
             }
             return {
                 handPoseDetection: window.handPoseDetection,
-                solutionPath,
+                knnClassifier: window.knnClassifier,
+                tf: window.tf,
                 runWithBrowserEnvironment
             };
-        });
+        })
+            .catch(error => {
+                loadingPromise = null;
+                throw error;
+            });
     }
     return loadingPromise;
 };
+
+const loadHandPoseDetection = () => acquireResourcePack('ai-ml').then(lease =>
+    loadLibraries(lease.baseUrl)
+        .then(libraries => Object.assign({}, libraries, {
+            solutionPath: getMlVendorPath(`mediapipe-hands/${MEDIAPIPE_VERSION}`, lease.baseUrl),
+            releaseResourcePack: lease.release
+        }))
+        .catch(error => {
+            lease.release();
+            throw error;
+        })
+);
 
 export default loadHandPoseDetection;

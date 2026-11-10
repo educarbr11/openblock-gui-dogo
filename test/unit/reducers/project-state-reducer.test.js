@@ -323,6 +323,31 @@ test('requestNewProject, when can create/save, results in UPDATING_BEFORE_NEW ' 
     expect(resultState.projectId).toBe('100');
 });
 
+test('requestNewProject saves a changed project without id before fetching a new default project', () => {
+    const initialState = {
+        projectId: '0',
+        loadingState: LoadingState.SHOWING_WITHOUT_ID,
+        pendingCreateNewProject: false
+    };
+    const action = requestNewProject(true);
+    const resultState = projectStateReducer(initialState, action);
+    expect(resultState.loadingState).toBe(LoadingState.CREATING_NEW);
+    expect(resultState.pendingCreateNewProject).toBe(true);
+});
+
+test('saving a project before New continues by fetching the default project', () => {
+    const initialState = {
+        projectId: '0',
+        loadingState: LoadingState.CREATING_NEW,
+        pendingCreateNewProject: true
+    };
+    const action = doneCreatingProject('100', LoadingState.CREATING_NEW);
+    const resultState = projectStateReducer(initialState, action);
+    expect(resultState.loadingState).toBe(LoadingState.FETCHING_NEW_DEFAULT);
+    expect(resultState.projectId).toBe('0');
+    expect(resultState.pendingCreateNewProject).toBe(true);
+});
+
 test('requestProjectUpload when project not loaded results in state LOADING_VM_FILE_UPLOAD', () => {
     const initialState = {
         projectId: null,

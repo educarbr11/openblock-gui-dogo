@@ -1,0 +1,36 @@
+diff --git a/src/containers/properties-panel.jsx b/src/containers/properties-panel.jsx
+index a1aedf67..1d5c5463 100644
+--- a/src/containers/properties-panel.jsx
++++ b/src/containers/properties-panel.jsx
+@@ -97,7 +97,8 @@ class PropertiesPanel extends React.Component {
+     render () {
+         const vector = isVector(this.props.format);
+         const item = vector && this.props.selectedItems.length === 1 ? this.props.selectedItems[0] : null;
+-        const showTextFont = item instanceof paper.PointText && this.props.mode !== Modes.TEXT;
++        const textMode = this.props.mode === Modes.TEXT || this.props.mode === Modes.BIT_TEXT;
++        const showTextFont = item instanceof paper.PointText || textMode;
+         return (
+             <aside className={`${styles.panel} ${this.state.open ? styles.open : styles.closed}`}>
+                 <button
+@@ -126,10 +127,10 @@ class PropertiesPanel extends React.Component {
+                         ) : this.props.selectedItems.length > 1 ? (
+                             <p className={styles.hint}>{this.props.intl.formatMessage(messages.multiple)}</p>
+                         ) : null}
+-                        {(item instanceof paper.PointText || this.props.mode === Modes.TEXT) && vector ? (
++                        {showTextFont ? (
+                             <section className={styles.section}>
+                                 <h3>{this.props.intl.formatMessage(messages.text)}</h3>
+-                                {showTextFont ? <FontDropdown onUpdateImage={this.props.onUpdateImage} /> : null}
++                                <FontDropdown onUpdateImage={this.props.onUpdateImage} />
+                                 {item instanceof paper.PointText ? this.renderField('fontSize', item.fontSize) : null}
+                             </section>
+                         ) : null}
+@@ -141,7 +142,7 @@ class PropertiesPanel extends React.Component {
+                             </div>
+                             {vector ? <StrokeWidthIndicator onUpdateImage={this.props.onUpdateImage} /> : null}
+                         </section>
+-                        {this.props.canvas && paper.project && paper.project.activeLayer ? (
++                        {this.props.canvas && paper.project && paper.project.activeLayer && !textMode ? (
+                             <section className={styles.section}>
+                                 <ModeTools
+                                     className={styles.contextualTools}

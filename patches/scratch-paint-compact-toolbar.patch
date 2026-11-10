@@ -1,0 +1,31 @@
+diff --git a/src/components/paint-editor/paint-editor.jsx b/src/components/paint-editor/paint-editor.jsx
+index ff8d7912..0b76ae8e 100644
+--- a/src/components/paint-editor/paint-editor.jsx
++++ b/src/components/paint-editor/paint-editor.jsx
+@@ -2,6 +2,7 @@ import paper from '@scratch/paper';
+ import classNames from 'classnames';
+ import {defineMessages, injectIntl, intlShape} from 'react-intl';
+ import React from 'react';
++import MediaQuery from 'react-responsive';
+ import PropTypes from 'prop-types';
+ 
+ import PaperCanvas from '../../containers/paper-canvas.jsx';
+@@ -78,7 +79,8 @@ const PaintEditorComponent = props => (
+                     />
+                 </div>
+                 {/* Second Row */}
+-                {isVector(props.format) ?
++                <MediaQuery maxWidth={960}>
++                    {isVector(props.format) ?
+                     <div className={styles.row}>
+                         <InputGroup
+                             className={classNames(
+@@ -128,6 +130,7 @@ const PaintEditorComponent = props => (
+                                 />
+                             </InputGroup>
+                         </div> : null
+-                }
++                    }
++                </MediaQuery>
+             </div>
+         ) : null}

@@ -1,0 +1,43 @@
+diff --git a/src/components/paint-editor/paint-editor.jsx b/src/components/paint-editor/paint-editor.jsx
+index f416ee23..ff8d7912 100644
+--- a/src/components/paint-editor/paint-editor.jsx
++++ b/src/components/paint-editor/paint-editor.jsx
+@@ -303,7 +303,10 @@ const PaintEditorComponent = props => (
+                     </InputGroup>
+                 </div>
+             </div>
+-            <PropertiesPanel onUpdateImage={props.onUpdateImage} />
++            <PropertiesPanel
++                canvas={props.canvas}
++                onUpdateImage={props.onUpdateImage}
++            />
+         </div>
+     </div>
+ );
+diff --git a/src/containers/properties-panel.jsx b/src/containers/properties-panel.jsx
+index 370ac59d..8fa3d555 100644
+--- a/src/containers/properties-panel.jsx
++++ b/src/containers/properties-panel.jsx
+@@ -132,9 +132,11 @@ class PropertiesPanel extends React.Component {
+                             </div>
+                             {vector ? <StrokeWidthIndicator onUpdateImage={this.props.onUpdateImage} /> : null}
+                         </section>
+-                        <section className={styles.section}>
+-                            <ModeTools onUpdateImage={this.props.onUpdateImage} />
+-                        </section>
++                        {this.props.canvas && paper.project && paper.project.activeLayer ? (
++                            <section className={styles.section}>
++                                <ModeTools onUpdateImage={this.props.onUpdateImage} />
++                            </section>
++                        ) : null}
+                     </div>
+                 ) : null}
+             </aside>
+@@ -143,6 +145,7 @@ class PropertiesPanel extends React.Component {
+ }
+ 
+ PropertiesPanel.propTypes = {
++    canvas: PropTypes.instanceOf(Element),
+     format: PropTypes.oneOf(Object.keys(Formats)),
+     intl: intlShape.isRequired,
+     mode: PropTypes.oneOf(Object.keys(Modes)),

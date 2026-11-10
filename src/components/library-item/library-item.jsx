@@ -20,9 +20,18 @@ import programLanguageCIconURL from './program-language-c.svg';
 import programLanguageCppIconURL from './program-language-cpp.svg';
 import programLanguagePythonIconURL from './program-language-python.svg';
 import programLanguageMicroPythonIconURL from './program-language-microPython.svg';
+import deleteIconURL from '../delete-button/icon--delete.svg';
 
 /* eslint-disable react/prefer-stateless-function */
 class LibraryItemComponent extends React.PureComponent {
+    constructor (props) {
+        super(props);
+        this.handleRemoveResourcePack = this.handleRemoveResourcePack.bind(this);
+    }
+    handleRemoveResourcePack (event) {
+        event.stopPropagation();
+        this.props.onRemoveResourcePack();
+    }
     render () {
         return this.props.featured ? (
             <div
@@ -321,6 +330,74 @@ class LibraryItemComponent extends React.PureComponent {
                         )}
                     </div>
                 ) : null}
+                {this.props.resourcePackStatus ? (
+                    <div className={styles.resourcePackRow}>
+                        <span
+                            className={classNames(styles.resourcePackStatus, {
+                                [styles.resourcePackReady]: this.props.resourcePackStatus.phase === 'ready',
+                                [styles.resourcePackUpdate]:
+                                    this.props.resourcePackStatus.phase === 'updateAvailable',
+                                [styles.resourcePackUnavailable]:
+                                    ['error', 'unsupported'].indexOf(this.props.resourcePackStatus.phase) !== -1
+                            })}
+                        >
+                            {['downloading', 'extracting', 'validating']
+                                .includes(this.props.resourcePackStatus.phase) ? (
+                                    <FormattedMessage
+                                        defaultMessage="Installing"
+                                        description="Resource pack installation in progress badge"
+                                        id="gui.resourcePack.cardInstalling"
+                                    />
+                                ) : this.props.resourcePackStatus.phase === 'ready' ? (
+                                    <FormattedMessage
+                                        defaultMessage="Installed"
+                                        description="Installed optional resource pack status"
+                                        id="gui.resourcePack.cardInstalled"
+                                    />
+                                ) : this.props.resourcePackStatus.phase === 'updateAvailable' ? (
+                                    <FormattedMessage
+                                        defaultMessage="Update available"
+                                        description="Optional resource pack update status"
+                                        id="gui.resourcePack.cardUpdate"
+                                    />
+                                ) : ['error', 'unsupported'].indexOf(this.props.resourcePackStatus.phase) > -1 ? (
+                                    <FormattedMessage
+                                        defaultMessage="Unavailable"
+                                        description="Unavailable optional resource pack status"
+                                        id="gui.resourcePack.cardUnavailable"
+                                    />
+                                ) : (
+                                    <FormattedMessage
+                                        defaultMessage="Optional download"
+                                        description="Optional resource pack download status"
+                                        id="gui.resourcePack.cardOptional"
+                                    />
+                                )}
+                        </span>
+                        {this.props.resourcePackStatus.canUse && this.props.onRemoveResourcePack ? (
+                            <FormattedMessage
+                                defaultMessage="Remove optional resource"
+                                description="Remove installed optional resource pack button tooltip"
+                                id="gui.resourcePack.remove"
+                            >
+                                {title => (
+                                    <button
+                                        aria-label={title}
+                                        className={styles.resourcePackRemove}
+                                        title={title}
+                                        type="button"
+                                        onClick={this.handleRemoveResourcePack}
+                                    >
+                                        <img
+                                            alt=""
+                                            src={deleteIconURL}
+                                        />
+                                    </button>
+                                )}
+                            </FormattedMessage>
+                        ) : null}
+                    </div>
+                ) : null}
             </div>
         ) : (
             <Box
@@ -400,10 +477,15 @@ LibraryItemComponent.propTypes = {
     onKeyPress: PropTypes.func.isRequired,
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
+    onRemoveResourcePack: PropTypes.func,
     onPlay: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
     programMode: PropTypes.arrayOf(PropTypes.string),
     programLanguage: PropTypes.arrayOf(PropTypes.string),
+    resourcePackStatus: PropTypes.shape({
+        canUse: PropTypes.bool,
+        phase: PropTypes.string
+    }),
     serialportRequired: PropTypes.bool,
     showPlayButton: PropTypes.bool,
     version: PropTypes.string

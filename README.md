@@ -19,6 +19,14 @@ OpenBlock Online: [https://openblockcc.github.io/openblock-gui/develop/](https:/
 
 Visit the wiki: [https://wiki.openblock.cc](https://wiki.openblock.cc)
 
+## Dogoblock assets
+
+- [Fluxo de preparação, upload e cadastro de sprites](./docs/sprite-assets.md)
+
+## Dogoblock app instalável (PWA) e offline
+
+- [App instalável, service worker e compilação offline pelo Agent](./docs/pwa-offline.md)
+
 ## Join chat
 
 - Gitter: [https://gitter.im/openblockcc/community](https://gitter.im/openblockcc/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)

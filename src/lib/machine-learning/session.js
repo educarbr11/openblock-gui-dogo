@@ -17,13 +17,14 @@ class MachineLearningSession {
         this.requested = false;
         this.startToken = 0;
         this.startPromise = null;
+        this.resourcePackRelease = null;
     }
 
     _initialState () {
         const saved = this.vm.getMachineLearningModel && this.vm.getMachineLearningModel();
         const classifier = saved && saved.imageClassifier;
         const labels = classifier && Array.isArray(classifier.labels) && classifier.labels.length ?
-            classifier.labels : ['class 1', 'class 2'];
+            classifier.labels : ['Treino 1', 'Treino 2'];
         return {
             activeClass: labels[0],
             classes: labels.map(label => ({
@@ -80,17 +81,26 @@ class MachineLearningSession {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             this._setState({
                 loading: false,
-                error: 'Camera is not available in this browser.'
+                error: 'A câmera não está disponível neste navegador.'
             });
             return Promise.resolve();
         }
-        this.startPromise = Promise.all([
-            loadTensorflow(),
-            navigator.mediaDevices.getUserMedia({video: true})
-        ])
-            .then(([libs, stream]) => {
+        this.startPromise = loadTensorflow()
+            .then(libs => {
+                if (!this.requested || startToken !== this.startToken) {
+                    libs.releaseResourcePack();
+                    return null;
+                }
+                this.resourcePackRelease = libs.releaseResourcePack;
+                return navigator.mediaDevices.getUserMedia({video: true})
+                    .then(stream => [libs, stream]);
+            })
+            .then(result => {
+                if (!result) return;
+                const [libs, stream] = result;
                 if (!this.requested || startToken !== this.startToken) {
                     stream.getTracks().forEach(track => track.stop());
+                    this._releaseResourcePack();
                     return;
                 }
                 this.tf = libs.tf;
@@ -104,6 +114,7 @@ class MachineLearningSession {
                     .then(model => {
                         if (!this.requested || startToken !== this.startToken) {
                             stream.getTracks().forEach(track => track.stop());
+                            this._releaseResourcePack();
                             return;
                         }
                         this.mobileNet = model;
@@ -118,12 +129,38 @@ class MachineLearningSession {
                     });
             })
             .catch(error => {
+                this.startPromise = null;
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                    this.stream = null;
+                }
+                this.videos.forEach(video => {
+                    video.srcObject = null;
+                });
+                this._releaseResourcePack();
                 this._setState({
                     loading: false,
-                    error: error && error.message ? error.message : 'Unable to load camera or machine learning model.'
+                    error: this._cameraErrorMessage(error)
                 });
             });
         return this.startPromise;
+    }
+
+    _cameraErrorMessage (error) {
+        const errorName = error && error.name;
+        if (errorName === 'NotAllowedError' || errorName === 'SecurityError') {
+            return 'Permissão da câmera negada. Autorize o acesso à câmera e tente novamente.';
+        }
+        if (errorName === 'NotFoundError' || errorName === 'DevicesNotFoundError') {
+            return 'Nenhuma câmera foi encontrada neste dispositivo.';
+        }
+        if (errorName === 'NotReadableError' || errorName === 'TrackStartError') {
+            return 'A câmera está sendo usada por outro aplicativo ou não pôde ser iniciada.';
+        }
+        if (errorName === 'OverconstrainedError' || errorName === 'ConstraintNotSatisfiedError') {
+            return 'A câmera disponível não atende aos requisitos do treinamento.';
+        }
+        return 'Não foi possível carregar a câmera ou o modelo de aprendizagem de máquina.';
     }
 
     stop () {
@@ -140,7 +177,15 @@ class MachineLearningSession {
         this.stream = null;
         this.classifier = null;
         this.startPromise = null;
+        this._releaseResourcePack();
         this._setState({loading: true});
+    }
+
+    _releaseResourcePack () {
+        if (!this.resourcePackRelease) return;
+        const release = this.resourcePackRelease;
+        this.resourcePackRelease = null;
+        release();
     }
 
     selectClass (label) {
@@ -150,10 +195,10 @@ class MachineLearningSession {
     addClass () {
         const labels = this.state.classes.map(item => item.label);
         let index = this.state.classes.length + 1;
-        let label = `class ${index}`;
+        let label = `Treino ${index}`;
         while (labels.indexOf(label) > -1) {
             index++;
-            label = `class ${index}`;
+            label = `Treino ${index}`;
         }
         this._setState({
             activeClass: label,

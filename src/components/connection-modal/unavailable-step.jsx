@@ -27,11 +27,19 @@ const UnavailableStep = props => (
                         />
                     </div>
                     <div className={styles.helpStepText}>
-                        <FormattedMessage
-                            defaultMessage="Make sure you have OpenBlock Link installed and running"
-                            description="Message for getting OpenBlock Link installed"
-                            id="gui.connection.unavailable.installscratchlink"
-                        />
+                        {props.isChromeOS || props.isWebSerial ? (
+                            <FormattedMessage
+                                defaultMessage="Use Chrome ou Edge e autorize o acesso à porta USB quando solicitado."
+                                description="Message for enabling Web Serial on ChromeOS"
+                                id="gui.connection.unavailable.webSerialUsbAccess"
+                            />
+                        ) : (
+                            <FormattedMessage
+                                defaultMessage="Make sure you have DoGoBlock Link installed and running"
+                                description="Message for getting DoGoBlock Link installed"
+                                id="gui.connection.unavailable.installscratchlink"
+                            />
+                        )}
                     </div>
                 </div>
                 <div className={styles.scratchLinkHelpStep}>
@@ -45,11 +53,19 @@ const UnavailableStep = props => (
                         />
                     </div>
                     <div className={styles.helpStepText}>
-                        <FormattedMessage
-                            defaultMessage="Check that USB cable is connected or Bluetooth is enabled"
-                            description="Message for making sure USB cable is connected or Bluetooth is enabled"
-                            id="gui.connection.unavailable.connectUsbEnableBluetooth"
-                        />
+                        {props.isChromeOS || props.isWebSerial ? (
+                            <FormattedMessage
+                                defaultMessage="Verifique o cabo USB e o firmware do modo palco da placa."
+                                description="Message for checking ChromeOS Web Serial Arduino setup"
+                                id="gui.connection.unavailable.webSerialUsbFirmware"
+                            />
+                        ) : (
+                            <FormattedMessage
+                                defaultMessage="Check that USB cable is connected or Bluetooth is enabled"
+                                description="Message for making sure USB cable is connected or Bluetooth is enabled"
+                                id="gui.connection.unavailable.connectUsbEnableBluetooth"
+                            />
+                        )}
                     </div>
                 </div>
             </div>
@@ -95,6 +111,8 @@ const UnavailableStep = props => (
 );
 
 UnavailableStep.propTypes = {
+    isChromeOS: PropTypes.bool,
+    isWebSerial: PropTypes.bool,
     onHelp: PropTypes.func,
     onScanning: PropTypes.func
 };

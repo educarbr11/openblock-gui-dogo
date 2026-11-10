@@ -26,14 +26,43 @@ const messages = defineMessages({
         defaultMessage: '{count, plural, one {# hand} other {# hands}}',
         description: 'Hand pose detection result panel hand count text',
         id: 'gui.handPoseDetection.handCount'
+    },
+    trainedGesture: {
+        defaultMessage: 'Trained gesture',
+        description: 'Label for a trained hand gesture prediction',
+        id: 'gui.handPoseDetection.trainedGesture'
+    },
+    noTrainedGesture: {
+        defaultMessage: 'No trained gesture',
+        description: 'Empty trained hand gesture prediction',
+        id: 'gui.handPoseDetection.noTrainedGesture'
+    },
+    stop: {
+        defaultMessage: 'Stop camera',
+        description: 'Button that stops hand detection',
+        id: 'gui.handPoseDetection.stop'
+    },
+    leftHand: {
+        defaultMessage: 'left hand',
+        description: 'Label for a detected left hand',
+        id: 'gui.handPoseDetection.leftHand'
+    },
+    rightHand: {
+        defaultMessage: 'right hand',
+        description: 'Label for a detected right hand',
+        id: 'gui.handPoseDetection.rightHand'
     }
 });
 
 const HandPoseDetectionResult = props => {
     const result = props.result || {};
     const primaryHand = result.primaryHand || (result.hands && result.hands[0]);
-    const gesture = result.gesture || props.intl.formatMessage(messages.empty);
-    const handedness = primaryHand && primaryHand.handedness ? ` - ${primaryHand.handedness}` : '';
+    const trainedGesture = result.trainedGesture || {};
+    const gesture = trainedGesture.label || props.intl.formatMessage(messages.noTrainedGesture);
+    const confidence = trainedGesture.classId ? trainedGesture.confidences[trainedGesture.classId] || 0 : 0;
+    const handSide = primaryHand && primaryHand.handedness === 'left' ? messages.leftHand : messages.rightHand;
+    const handedness = primaryHand && primaryHand.handedness ?
+        ` - ${props.intl.formatMessage(handSide)}` : '';
     const handCount = result.handCount || 0;
 
     return (
@@ -75,10 +104,18 @@ const HandPoseDetectionResult = props => {
                     ) : null}
                 </Box>
                 <Box className={styles.label}>
+                    <Box className={styles.resultLabel}>{props.intl.formatMessage(messages.trainedGesture)}</Box>
                     <Box className={styles.gesture}>{gesture}</Box>
+                    <Box className={styles.confidence}>{`${confidence}%`}</Box>
                     <Box className={styles.meta}>
                         {`${props.intl.formatMessage(messages.handCount, {count: handCount})}${handedness}`}
                     </Box>
+                    <button
+                        className={styles.stopButton}
+                        onClick={props.onStop}
+                    >
+                        {props.intl.formatMessage(messages.stop)}
+                    </button>
                 </Box>
             </Box>
         </Draggable>
@@ -91,6 +128,7 @@ HandPoseDetectionResult.propTypes = {
     loading: PropTypes.bool,
     onCanvasRef: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onStop: PropTypes.func.isRequired,
     onVideoRef: PropTypes.func.isRequired,
     result: PropTypes.shape({
         gesture: PropTypes.string,
@@ -100,6 +138,11 @@ HandPoseDetectionResult.propTypes = {
         })),
         primaryHand: PropTypes.shape({
             handedness: PropTypes.string
+        }),
+        trainedGesture: PropTypes.shape({
+            classId: PropTypes.string,
+            confidences: PropTypes.objectOf(PropTypes.number),
+            label: PropTypes.string
         })
     })
 };

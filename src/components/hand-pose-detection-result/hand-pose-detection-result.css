@@ -91,6 +91,20 @@
     font-weight: 700;
 }
 
+.result-label {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.confidence {
+    margin-top: 1px;
+    color: #047857;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
 .meta {
     margin-top: 3px;
     overflow: hidden;
@@ -98,4 +112,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 0.78rem;
+}
+
+.stop-button {
+    width: 100%;
+    min-height: 30px;
+    margin-top: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    color: #334155;
+    background: white;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 700;
 }
