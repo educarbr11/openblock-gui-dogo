@@ -5,8 +5,9 @@ que o usuário instala. Os repositórios do ecossistema são independentes e fic
 lado a lado. Um teste no GUI não confirma, sozinho, que a biblioteca chegou ao
 compilador online ou ao instalador offline.
 
-O exemplo completo desta estrutura é a extensão
-[Fingerprint UART](./extensions/fingerprint.md).
+Os exemplos completos são [Fingerprint UART](./extensions/fingerprint.md), para
+Arduino, e [LAN entre computadores](./extensions/lan.md), para execução Scratch
+com transporte local no Link e no desktop.
 
 ## 1. Definir a expectativa antes do código
 
@@ -51,6 +52,16 @@ transporte, pinos, capacidade de memória e possibilidade de upload no produto.
 Extensão de programação e extensão Scratch realtime têm contratos diferentes.
 Para a segunda, consulte também
 [`openblock-vm/docs/extensions.md`](../../openblock-vm/docs/extensions.md).
+
+Para extensões Scratch com comunicação externa, siga o contrato da LAN:
+registre o builtin na VM e o catálogo no GUI, separe transporte da semântica dos
+blocos e integre o serviço nativo em Node e Tauri quando ambos forem anunciados.
+Não execute pilhas Scratch diretamente em callbacks de rede: entregue eventos
+ao scheduler. Defina tamanho, fila, timeout, reconexão e limpeza ao parar, sair
+do editor, remover a extensão ou trocar de projeto. Verifique a persistência em
+SB3 sem embutir resultados recebidos, além de um teste entre dois runtimes e
+serviços reais. Canais lógicos e indicação de conexão precisam ter a mesma
+semântica em todos os consumidores.
 
 ## 3. Preparar uma alteração revisável
 

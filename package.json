@@ -21,6 +21,7 @@
     "test:patches": "node scripts/test-dependency-patches.js",
     "sync:device-extensions": "node scripts/sync-device-extensions.js",
     "test:fingerprint": "node scripts/test-fingerprint.js",
+    "test:lan": "node scripts/test-lan.js",
     "test:unit": "",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
     "watch": "NODE_OPTIONS=\"--max-old-space-size=8192 --openssl-legacy-provider\" webpack --colors --watch",

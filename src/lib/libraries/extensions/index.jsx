@@ -17,8 +17,25 @@ import machineLearningIconURL from './machineLearning/machine-learning.png';
 import machineLearningInsetIconURL from './machineLearning/icon-machine-learning-small.svg';
 import handPoseDetectionIconURL from './handPoseDetection/hand-detection.png';
 import handPoseDetectionInsetIconURL from './handPoseDetection/icon-hand-detection-small.svg';
+import lanIconURL from './lan/lan.svg';
+import lanInsetIconURL from './lan/lan-small.svg';
 
 export default [
+    {
+        name: 'LAN',
+        extensionId: 'lan',
+        iconURL: lanIconURL,
+        insetIconURL: lanInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Exchange messages on your local network. Requires DoGoBlock Link or desktop."
+                description="Description of the LAN communication extension for computers"
+                id="gui.extension.lan.description"
+            />
+        ),
+        featured: true,
+        internetConnectionRequired: false
+    },
     {
         name: (
             <FormattedMessage

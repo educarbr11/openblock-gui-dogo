@@ -48,7 +48,13 @@ import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import {getHandPoseDetectionSession} from '../lib/hand-pose-detection/session';
 import {EditorThemeProvider} from '../lib/editor-theme.jsx';
 
-class GUI extends React.Component {
+const isLanEditorActive = props => !props.isPlayerOnly && !props.children && props.isRealtimeMode !== false;
+const updateLanConnection = (vm, active) => {
+    vm.runtime.lanEditorActive = active;
+    vm.runtime.emit(active ? 'LAN_CONNECT_REQUEST' : 'LAN_DISCONNECT_REQUEST');
+};
+
+export class GUI extends React.Component {
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
@@ -58,8 +64,14 @@ class GUI extends React.Component {
         this.props.vm.addListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
         this.props.vm.addListener('HAND_POSE_DETECTION_OPEN_TRAINER', this.props.onOpenHandPoseGestureTrainer);
         getHandPoseDetectionSession(this.props.vm);
+        updateLanConnection(this.props.vm, isLanEditorActive(this.props));
     }
     componentDidUpdate (prevProps) {
+        const wasEditor = isLanEditorActive(prevProps);
+        const isEditor = isLanEditorActive(this.props);
+        if (wasEditor !== isEditor) {
+            updateLanConnection(this.props.vm, isEditor);
+        }
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
             this.props.onUpdateProjectId(this.props.projectId);
         }
@@ -73,6 +85,7 @@ class GUI extends React.Component {
         }
     }
     componentWillUnmount () {
+        updateLanConnection(this.props.vm, false);
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_TRAINER', this.props.onOpenMachineLearningTrainer);
         this.props.vm.removeListener('MACHINE_LEARNING_OPEN_RESULT', this.props.onOpenMachineLearningResult);
         this.props.vm.removeListener('HAND_POSE_DETECTION_OPEN_RESULT', this.props.onOpenHandPoseDetectionResult);
