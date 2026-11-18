@@ -1,4 +1,5 @@
 import ScratchBlocks from 'openblock-blocks';
+import installDevicePinOptions from './device-pin-options';
 
 /**
  * Connect scratch blocks with the vm
@@ -6,6 +7,7 @@ import ScratchBlocks from 'openblock-blocks';
  * @return {ScratchBlocks} ScratchBlocks connected with the vm
  */
 export default function (vm) {
+    installDevicePinOptions(ScratchBlocks, vm);
 
     const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {

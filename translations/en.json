@@ -418,6 +418,10 @@
     "message": "Not loaded",
     "description": "Label to indicate that device extension is not loaded"
   },
+  "gui.extensionLibrary.loadFailed": {
+    "message": "Could not load. Select to try again.",
+    "description": "Recoverable error when loading or unloading an extension"
+  },
   "gui.library.filterPlaceholder": {
     "message": "Search",
     "description": "Placeholder text for library search field"

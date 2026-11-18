@@ -137,6 +137,7 @@
     "gui.extensionLibrary.Processing": "Processando...",
     "gui.extensionLibrary.loaded": "Carregado",
     "gui.extensionLibrary.notLoaded": "Não carregado",
+    "gui.extensionLibrary.loadFailed": "Não foi possível carregar. Selecione para tentar novamente.",
     "gui.library.filterPlaceholder": "Buscar",
     "gui.library.allTag": "Tudo",
     "gui.loader.message1": "Criando blocos...",

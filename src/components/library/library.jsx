@@ -123,7 +123,7 @@ class LibraryComponent extends React.Component {
         if (this.props.autoClose) {
             this.handleClose();
         }
-        this.props.onItemSelected(this.getFilteredData()[id]);
+        return this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose () {
         this.props.onRequestClose();
@@ -357,3 +357,4 @@ LibraryComponent.defaultProps = {
 };
 
 export default injectIntl(LibraryComponent);
+export {LibraryComponent};

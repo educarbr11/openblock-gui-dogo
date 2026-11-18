@@ -45,6 +45,11 @@ class LibraryItemComponent extends React.PureComponent {
                     this.props.hidden ? styles.hidden : null
                 )}
                 onClick={this.props.onClick}
+                onKeyPress={this.props.onKeyPress}
+                onFocus={this.props.onFocus}
+                onBlur={this.props.onBlur}
+                role="button"
+                tabIndex="0"
             >
                 <div className={styles.featuredImageContainer}>
                     {this.props.disabled ? (
@@ -291,7 +296,18 @@ class LibraryItemComponent extends React.PureComponent {
                 ) : null}
                 {this.props.isUnloadble ? (
                     <div className={styles.featuredExtensionMetadataTailRow}>
-                        {this.props.isProcessing ? (
+                        {this.props.selectionError ? (
+                            <div
+                                className={styles.featuredExtensionLoadState}
+                                role="alert"
+                            >
+                                <FormattedMessage
+                                    defaultMessage="Could not load. Select to try again."
+                                    description="Recoverable error when loading or unloading an extension"
+                                    id="gui.extensionLibrary.loadFailed"
+                                />
+                            </div>
+                        ) : this.props.isProcessing ? (
                             <div
                                 className={classNames(styles.featuredExtensionLoadState,
                                     styles.featuredExtensionLoading)}
@@ -464,6 +480,7 @@ LibraryItemComponent.propTypes = {
     isUnloadble: PropTypes.bool,
     isPlaying: PropTypes.bool,
     isProcessing: PropTypes.bool,
+    selectionError: PropTypes.bool,
     learnMore: PropTypes.string,
     manufactor: PropTypes.string,
     name: PropTypes.oneOfType([
