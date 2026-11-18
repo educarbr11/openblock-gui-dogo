@@ -13,9 +13,9 @@
     min-width: 44px;
     min-height: 44px;
     padding: 0 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 0.7rem;
-    background: rgba(255, 255, 255, 0.1);
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
     color: inherit;
     font: inherit;
     cursor: pointer;
@@ -23,12 +23,12 @@
 
 .trigger:hover,
 .trigger[aria-expanded="true"] {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .trigger:focus {
     outline: 2px solid #fff;
-    outline-offset: 2px;
+    outline-offset: -2px;
 }
 
 .caret {

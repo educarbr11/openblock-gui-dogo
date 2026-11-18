@@ -1,5 +1,6 @@
 import ScratchBlocks from 'openblock-blocks';
 import installDevicePinOptions from './device-pin-options';
+import installOperatorNestingColours from './operator-nesting-colours';
 
 /**
  * Connect scratch blocks with the vm
@@ -8,6 +9,7 @@ import installDevicePinOptions from './device-pin-options';
  */
 export default function (vm) {
     installDevicePinOptions(ScratchBlocks, vm);
+    installOperatorNestingColours(ScratchBlocks);
 
     const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
         return {

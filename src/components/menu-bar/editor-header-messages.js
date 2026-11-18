@@ -121,6 +121,21 @@ export default defineMessages({
         defaultMessage: 'Programming mode',
         description: 'Editor header: programMode'
     },
+    programming: {
+        id: 'gui.menuBar.header.programming',
+        defaultMessage: 'Programming',
+        description: 'Short label for the direct programming mode switch'
+    },
+    signIn: {
+        id: 'gui.menuBar.header.signIn',
+        defaultMessage: 'Sign in',
+        description: 'Direct sign-in action in the editor header'
+    },
+    account: {
+        id: 'gui.menuBar.header.account',
+        defaultMessage: 'My account',
+        description: 'Direct account action in the editor header'
+    },
     enabled: {
         id: 'gui.menuBar.header.enabled',
         defaultMessage: 'On',

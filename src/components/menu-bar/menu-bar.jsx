@@ -9,7 +9,7 @@ import React from 'react';
 import {
     AlertCircle, Camera, Check, ChevronDown, Circle, Code, Download, File, FilePlus,
     Image, Info, Link, Loader, MessageSquareWarning, Pencil, RotateCcw, Save,
-    Settings, Upload, Zap
+    Settings, Upload, UserRound, Zap
 } from 'lucide-react';
 
 import VM from 'openblock-vm';
@@ -93,7 +93,6 @@ import headerMessages from './editor-header-messages';
 
 // import mystuffIcon from './icon--mystuff.png';
 // import profileIcon from './icon--profile.png';
-import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
 // import linkSocketIcon from './icon--link-socket.svg';
 // import communityIcon from './icon--community.svg';
@@ -647,10 +646,7 @@ export class MenuBar extends React.Component {
                         className={styles.deviceIcon}
                         src={deviceIcon}
                     />
-                    <span className={styles.actionCopy}>
-                        <span className={styles.deviceLabel}>{deviceLabel}</span>
-                        <span className={styles.connectionState}>{connectionStatus}</span>
-                    </span>
+                    <span className={styles.deviceLabel}>{deviceLabel}</span>
                     <ChevronDown
                         aria-hidden="true"
                         size={14}
@@ -677,12 +673,65 @@ export class MenuBar extends React.Component {
             </div>
         );
     }
+    renderProgramModeControl () {
+        let hint;
+        if (this.props.isToolboxUpdating) hint = 'updatingToolbox';
+        else if (!this.props.deviceId) hint = 'chooseDeviceForMode';
+        else if (!this.props.isSupportSwitchMode) hint = 'unsupportedMode';
+        const checked = !this.props.isRealtimeMode;
+        const label = this.formatHeaderMessage('programMode');
+        const stateLabel = this.formatHeaderMessage(checked ? 'enabled' : 'disabled');
+        return (
+            <button
+                aria-checked={checked}
+                aria-disabled={Boolean(hint)}
+                aria-label={`${label} · ${stateLabel}`}
+                className={classNames(styles.menuBarItem, styles.headerButton, styles.programModeButton)}
+                data-testid="program-mode-toggle"
+                role="switch"
+                title={hint ? this.formatHeaderMessage(hint) : `${label} · ${stateLabel}`}
+                type="button"
+                onClick={hint ? null : this.handleProgramModeSwitchOnChange}
+            >
+                <Code
+                    aria-hidden="true"
+                    size={20}
+                />
+                <span className={styles.programModeLabel}>{this.formatHeaderMessage('programming')}</span>
+                <span
+                    aria-hidden="true"
+                    className={classNames(styles.programModeToggle, {[styles.programModeToggleChecked]: checked})}
+                />
+            </button>
+        );
+    }
+    renderAccountControl () {
+        const signedIn = this.props.isLoggedIn || Boolean(this.props.username);
+        const canOpenAccount = signedIn && typeof this.props.onOpenAccount === 'function';
+        const canSignIn = !signedIn && this.props.canPromptLoginToSave;
+        if (!canOpenAccount && !canSignIn) return null;
+        const label = signedIn ? this.formatHeaderMessage('account') : this.formatHeaderMessage('signIn');
+        const accountName = signedIn ? this.props.username || label : label;
+        const accessibleLabel = signedIn && this.props.username ? `${label}: ${this.props.username}` : label;
+        return (
+            <button
+                aria-label={accessibleLabel}
+                className={classNames(styles.menuBarItem, styles.headerButton, styles.accountButton)}
+                data-testid="header-account"
+                title={accessibleLabel}
+                type="button"
+                onClick={signedIn ? this.props.onOpenAccount : this.props.onRequestLoginToSave}
+            >
+                <UserRound
+                    aria-hidden="true"
+                    size={20}
+                />
+                <span className={styles.accountLabel}>{accountName}</span>
+            </button>
+        );
+    }
     renderMoreActions (isTauriLight) {
         const canUploadFirmware = Boolean(this.props.deviceId && this.props.peripheralName);
-        let modeHint;
-        if (this.props.isToolboxUpdating) modeHint = 'updatingToolbox';
-        else if (!this.props.deviceId) modeHint = 'chooseDeviceForMode';
-        else if (!this.props.isSupportSwitchMode) modeHint = 'unsupportedMode';
         return (
             <React.Fragment>
                 {this.state.isNarrow && this.props.canManageFiles && (
@@ -700,21 +749,19 @@ export class MenuBar extends React.Component {
                         {this.renderFileActions()}
                     </div>
                 )}
-                {this.state.isNarrow && (
+                <div
+                    aria-label={this.formatHeaderMessage('editActions')}
+                    className={styles.actionSection}
+                    role="group"
+                >
                     <div
-                        aria-label={this.formatHeaderMessage('editActions')}
-                        className={styles.actionSection}
-                        role="group"
+                        aria-hidden="true"
+                        className={styles.actionSectionTitle}
                     >
-                        <div
-                            aria-hidden="true"
-                            className={styles.actionSectionTitle}
-                        >
-                            {this.formatHeaderMessage('editActions')}
-                        </div>
-                        {this.renderEditActions()}
+                        {this.formatHeaderMessage('editActions')}
                     </div>
-                )}
+                    {this.renderEditActions()}
+                </div>
                 {this.state.isNarrow && !isTauriLight && (
                     <div
                         aria-label={this.formatHeaderMessage('deviceGroup')}
@@ -784,18 +831,9 @@ export class MenuBar extends React.Component {
                             label={this.formatHeaderMessage('firmware')}
                             onClick={this.handleUploadFirmware}
                         />
-                        <EditorHeaderAction
-                            checked={!this.props.isRealtimeMode}
-                            disabled={Boolean(modeHint)}
-                            hint={modeHint ? this.formatHeaderMessage(modeHint) : null}
-                            icon={Code}
-                            label={this.formatHeaderMessage('programMode')}
-                            stateLabel={this.formatHeaderMessage(this.props.isRealtimeMode ? 'disabled' : 'enabled')}
-                            onClick={this.handleProgramModeSwitchOnChange}
-                        />
                     </div>
                 )}
-                {this.state.isNarrow && this.props.canChangeLanguage && (
+                {this.props.canChangeLanguage && (
                     <div className={styles.actionsLanguage}>
                         <img
                             alt=""
@@ -805,6 +843,13 @@ export class MenuBar extends React.Component {
                         <span>{this.formatHeaderMessage('language')}</span>
                         <LanguageSelector label={this.formatHeaderMessage('language')} />
                     </div>
+                )}
+                {this.state.isNarrow && typeof this.props.onClickAbout === 'function' && (
+                    <EditorHeaderAction
+                        icon={Info}
+                        label={this.formatHeaderMessage('about')}
+                        onClick={this.wrapAboutMenuCallback(this.props.onClickAbout)}
+                    />
                 )}
                 {isScratchDesktop() && (
                     <div
@@ -860,11 +905,10 @@ export class MenuBar extends React.Component {
         if (this.props.hasSaveError) saveState = 'saveError';
         if (this.props.isUpdating) saveState = 'saving';
         const saveStatus = this.formatHeaderMessage(saveState);
-        const SaveStateIcon = this.props.isUpdating ? Loader :
-            this.props.hasSaveError ? AlertCircle : saveState === 'saved' ? Check : Circle;
+        const SaveStateIcon = this.props.isUpdating ? Loader : this.props.hasSaveError ? AlertCircle :
+            saveState === 'saved' ? Check : saveState === 'unsaved' ? Pencil : Circle;
         const saveTitle = this.formatHeaderMessage(this.props.canSave ? 'saveProject' : 'loginToSave');
         const fileLabel = this.props.intl.formatMessage({id: 'gui.menuBar.file', defaultMessage: 'File'});
-        const editLabel = this.props.intl.formatMessage({id: 'gui.menuBar.edit', defaultMessage: 'Edit'});
         return (
             <Box
                 className={classNames(this.props.className, styles.menuBar, {
@@ -891,24 +935,6 @@ export class MenuBar extends React.Component {
                         />
                     </button>
                     <div className={styles.navigationMenus}>
-                        {this.props.canChangeLanguage && (
-                            <div
-                                className={classNames(styles.menuBarItem, styles.languageMenu)}
-                                title={this.formatHeaderMessage('language')}
-                            >
-                                <img
-                                    alt=""
-                                    className={styles.languageIcon}
-                                    src={languageIcon}
-                                />
-                                <img
-                                    alt=""
-                                    className={styles.languageCaret}
-                                    src={dropdownCaret}
-                                />
-                                <LanguageSelector label={this.formatHeaderMessage('language')} />
-                            </div>
-                        )}
                         {this.props.canManageFiles && (
                             <EditorActionsMenu
                                 className={styles.navigationItem}
@@ -924,27 +950,15 @@ export class MenuBar extends React.Component {
                                 {this.renderFileActions()}
                             </EditorActionsMenu>
                         )}
-                        <EditorActionsMenu
-                            className={styles.navigationItem}
-                            compact={this.state.isOverflow}
-                            disabled={!this.props.isRealtimeMode}
-                            icon={<Pencil
-                                aria-hidden="true"
-                                size={18}
-                            />}
-                            label={editLabel}
-                            menuClassName={styles.navigationDropdown}
-                            triggerClassName={classNames(styles.headerButton, styles.menuBarItem)}
-                            triggerTitle={this.props.isRealtimeMode ? editLabel :
-                                this.formatHeaderMessage('editInStageMode')}
-                        >
-                            {this.renderEditActions()}
-                        </EditorActionsMenu>
                     </div>
                     {!isTauriLight && this.renderDeviceControls()}
                 </div>
                 <div className={styles.fileMenu}>
-                    <div className={styles.projectIdentity}>
+                    <div
+                        aria-label={this.formatHeaderMessage('projectActions')}
+                        className={styles.projectIdentity}
+                        role="group"
+                    >
                         {this.props.canEditTitle ? (
                             <div className={styles.titleMenuItem}>
                                 <ProjectTitleInput className={styles.titleFieldGrowable} />
@@ -971,38 +985,41 @@ export class MenuBar extends React.Component {
                                 aria-hidden="true"
                                 size={14}
                             />
-                            <span>{saveStatus}</span>
+                            <span className={styles.srOnly}>{saveStatus}</span>
                         </span>
+                        {(this.props.canSave || this.props.canPromptLoginToSave) && (
+                            <button
+                                aria-busy={this.props.isUpdating}
+                                aria-label={`${saveTitle} · ${saveStatus}`}
+                                className={classNames(
+                                    styles.menuBarItem, styles.headerButton, styles.saveProjectButton
+                                )}
+                                disabled={this.props.isUpdating}
+                                title={`${saveTitle} (${bowser.mac ? '⌘' : 'Ctrl'}+S) · ${saveStatus}`}
+                                type="button"
+                                onClick={this.handleClickSave}
+                            >
+                                <Save
+                                    aria-hidden="true"
+                                    size={18}
+                                />
+                            </button>
+                        )}
                     </div>
-                    {(this.props.canSave || this.props.canPromptLoginToSave) && (
-                        <button
-                            aria-busy={this.props.isUpdating}
-                            aria-label={`${saveTitle} · ${saveStatus}`}
-                            className={classNames(styles.menuBarItem, styles.headerButton, styles.saveProjectButton)}
-                            disabled={this.props.isUpdating}
-                            title={`${saveTitle} (${bowser.mac ? '⌘' : 'Ctrl'}+S) · ${saveStatus}`}
-                            type="button"
-                            onClick={this.handleClickSave}
-                        >
-                            <Save
-                                aria-hidden="true"
-                                size={18}
-                            />
-                            <span className={styles.saveButtonLabel}>
-                                {this.props.isUpdating ? saveStatus : this.formatHeaderMessage('saveProject')}
-                            </span>
-                        </button>
-                    )}
                 </div>
                 <div className={styles.tailMenu}>
+                    {!isTauriLight && this.renderProgramModeControl()}
                     <EditorActionsMenu
-                        compact={this.state.isNarrow}
+                        className={styles.moreMenu}
+                        compact
                         label={this.formatHeaderMessage('more')}
+                        menuClassName={styles.moreDropdown}
                         triggerClassName={classNames(styles.headerButton, styles.moreMenuTrigger)}
                     >
                         {this.renderMoreActions(isTauriLight)}
                     </EditorActionsMenu>
-                    {typeof this.props.onClickAbout === 'function' ?
+                    {this.renderAccountControl()}
+                    {!this.state.isNarrow && typeof this.props.onClickAbout === 'function' ?
                         this.buildAboutMenu(this.props.onClickAbout) : null}
                 </div>
                 {this.props.canSave && (
@@ -1042,6 +1059,7 @@ MenuBar.propTypes = {
     hasSaveError: PropTypes.bool,
     projectChanged: PropTypes.bool,
     isRealtimeMode: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool,
     isRtl: PropTypes.bool,
     isShared: PropTypes.bool,
     isSupportSwitchMode: PropTypes.bool,
@@ -1072,6 +1090,7 @@ MenuBar.propTypes = {
     onClickInstallDriver: PropTypes.func,
     onNoPeripheralIsConnected: PropTypes.func.isRequired,
     onOpenFeedbackModal: PropTypes.func,
+    onOpenAccount: PropTypes.func,
     onProjectTelemetryEvent: PropTypes.func,
     onRequestCloseAbout: PropTypes.func,
     onRequestCloseEdit: PropTypes.func,
@@ -1137,6 +1156,7 @@ const mapStateToProps = (state, ownProps) => {
         realtimeConnection: state.scratchGui.connectionModal.realtimeConnection,
         sessionExists: state.session && typeof state.session.session !== 'undefined',
         username: user ? user.username : null,
+        isLoggedIn: Boolean(user),
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),
         stageSizeMode: state.scratchGui.stageSize.stageSize,

@@ -134,6 +134,7 @@ GUI.propTypes = {
     machineLearningResultVisible: PropTypes.bool,
     canPromptLoginToSave: PropTypes.bool,
     onActivateBlocksTab: PropTypes.func,
+    onOpenAccount: PropTypes.func,
     onProjectLoaded: PropTypes.func,
     onOpenMachineLearningTrainer: PropTypes.func,
     onOpenMachineLearningResult: PropTypes.func,

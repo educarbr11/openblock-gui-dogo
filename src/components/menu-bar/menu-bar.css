@@ -3,24 +3,21 @@
 @import "../../css/z-index.css";
 
 .menu-bar {
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-
-    box-sizing: border-box;
-    height: $menu-bar-height;
-    width: 100%;
     align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    width: 100%;
+    height: $menu-bar-height;
     gap: 1rem;
     padding: 0.375rem 0.75rem;
-
+    background: #203b7c;
+    color: $ui-white;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
-    font-weight: 600;
-    background: linear-gradient(105deg, #10245c 0%, #173979 100%);
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
-    color: $ui-white;
+    font-weight: 500;
 }
 
 .main-menu {
@@ -40,14 +37,10 @@
 
 .file-menu {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: nowrap;
     align-items: center;
-    flex: 1 1 18rem;
+    justify-content: flex-start;
+    flex: 0 1 auto;
     min-width: 0;
-    max-width: none;
-    gap: 0.75rem;
 }
 
 .file-menu .menu-bar-item {
@@ -56,12 +49,11 @@
 
 .tail-menu {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
     align-items: center;
+    justify-content: flex-end;
     flex: 0 0 auto;
     min-width: 0;
+    margin-left: auto;
     gap: 0.5rem;
 }
 
@@ -144,18 +136,21 @@
 }
 
 .title-field-growable {
-    flex-grow: 1;
+    box-sizing: border-box;
+    flex: 1 1 auto;
     width: 100%;
     min-width: 0;
     max-width: none;
 }
 
 .title-menu-item {
-    flex: 1 1 12rem;
-    min-width: 0;
-    max-width: none;
+    display: flex;
+    flex: 0 1 13rem;
+    width: 13rem;
+    min-width: 3rem;
+    max-width: 13rem;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .save-menu-item {
@@ -165,25 +160,24 @@
 }
 
 .save-project-button {
-    flex: 0 auto;
+    flex: 0 0 auto;
+    width: 2.75rem;
     height: 2.75rem;
     min-width: 2.75rem;
-    padding: 0 0.85rem;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    font: inherit;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    background: #0b66d8;
+    padding: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
     color: $ui-white;
-    font-weight: 700;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
-    gap: 0.35rem;
-    transition: background-color 150ms ease, box-shadow 150ms ease;
+    font: inherit;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background-color 150ms ease;
 }
 
 .save-project-button:hover,
 .save-project-button.hoverable:hover {
-    background: #0564d0;
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .save-project-button-icon {
@@ -237,8 +231,19 @@
 }
 
 .author-info {
-    margin-left: .25rem;
-    margin-right: .6875rem;
+    flex: 0 1 13rem;
+    min-width: 0;
+    max-width: 13rem;
+    margin: 0;
+    padding: 0 0.5rem;
+}
+
+.author-info > div {
+    min-width: 0;
+}
+
+.author-info span {
+    max-width: 100%;
 }
 
 .menu-bar-button {
@@ -384,8 +389,7 @@
     max-width: 12rem;
 }
 
-.essential-label,
-.program-mode-label {
+.essential-label {
     display: inline-block;
     min-width: 0;
     overflow: hidden;
@@ -398,7 +402,11 @@
 }
 
 .program-mode-label {
-    max-width: 6.5rem;
+    display: inline-block;
+    color: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .program-mode-switch {
@@ -414,16 +422,15 @@
   padding-right: 2rem;
 }
 
-
 /* Primary controls share a minimum 44px target, including compact layouts. */
 .header-button {
     border: 0;
-    border-radius: 0.625rem;
+    border-radius: 0.25rem;
     background: transparent;
     color: inherit;
     font: inherit;
     cursor: pointer;
-    gap: 0.4rem;
+    gap: 0.375rem;
     transition: background-color 150ms ease;
 }
 
@@ -447,22 +454,21 @@
     flex: 0 1 auto;
     min-width: 0;
     margin: 0;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 0.75rem;
-    background-color: rgba(0, 0, 0, 0.12);
+    border: 0;
+    background: transparent;
 }
 
 .device-select {
     flex: 1 1 auto;
     min-width: 5rem;
-    border-radius: 0.7rem 0 0 0.7rem;
+    border-radius: 0.25rem;
 }
 
 .connection-button {
     flex: 0 0 auto;
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0 0.7rem 0.7rem 0;
-    background: rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.25rem;
+    background: transparent;
 }
 
 .connection-button-connected,
@@ -481,37 +487,52 @@
 .connection-state { font-size: 0.6875rem; font-weight: 400; }
 
 .project-identity {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
-    max-width: 32rem;
-    gap: 0.5rem;
+    padding: 0 0.125rem;
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    gap: 0;
 }
 
-.save-project-button:disabled { background: #496fa6; color: #fff; box-shadow: none; cursor: progress; }
+.project-identity > .device-label {
+    flex: 0 1 auto;
+    max-width: 13rem;
+    padding: 0 0.5rem;
+}
+
+.save-project-button:disabled {
+    background: transparent;
+    color: #c9d3e9;
+    box-shadow: none;
+    cursor: progress;
+}
 .save-button-label { white-space: nowrap; }
 .save-status {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
-    max-width: 10rem;
+    width: 1.375rem;
     color: #d4dff4;
-    font-size: 0.6875rem;
-    font-weight: 400;
-    line-height: 1.2;
-    gap: 0.3rem;
+    line-height: 1;
 }
 .save-status svg { width: 0.875rem; height: 0.875rem; flex: 0 0 auto; }
 .save-status-dirty { color: #ffe3a4; }
 .save-status-error { color: #ffccd2; }
 
 .more-menu-trigger {
+    width: 2.75rem;
+    height: 2.75rem;
     min-width: 2.75rem;
     min-height: 2.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 0.625rem;
-    background: rgba(255, 255, 255, 0.09);
+    padding: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
     color: $ui-white;
     font: inherit;
 }
@@ -619,18 +640,92 @@
 .menu-device-group img { filter: brightness(0) saturate(100%); }
 .actions-language { position: relative; display: flex; align-items: center; min-height: 2.75rem; padding: 0.65rem 0.75rem; color: #26354d; font-size: 0.8125rem; gap: 0.625rem; }
 
+.program-mode-button,
+.account-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0 0.5rem;
+    gap: 0.375rem;
+}
+
+.program-mode-button[aria-disabled="true"] {
+    color: #bdc9e1;
+    cursor: help;
+}
+
+.program-mode-button > svg,
+.account-button > svg {
+    flex: 0 0 auto;
+}
+
+.program-mode-toggle {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: 1.625rem;
+    height: 0.875rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.32);
+}
+
+.program-mode-toggle::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: #fff;
+    content: "";
+    transition: transform 150ms ease;
+}
+
+.program-mode-toggle-checked {
+    background: #7fd8c2;
+}
+
+.program-mode-toggle-checked::after {
+    transform: translateX(0.75rem);
+}
+
+.account-label {
+    display: block;
+    min-width: 0;
+    max-width: 6rem;
+    overflow: hidden;
+    color: inherit;
+    font-size: 0.8125rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* These classes follow the available header width, measured by ResizeObserver. */
 .compact-header { gap: 0.5rem; padding-right: 0.5rem; padding-left: 0.5rem; }
 .compact-header .main-menu { gap: 0.25rem; }
 .compact-header .navigation-menus { gap: 0.125rem; }
-.compact-header .file-menu { gap: 0.5rem; }
+.compact-header .file-menu {
+    flex: 0 1 auto;
+}
 .compact-header .tail-menu { gap: 0.25rem; }
 .compact-header .openblock-logo { max-width: 4rem; }
+.compact-header .title-menu-item { flex-basis: 9rem; width: 9rem; max-width: 9rem; }
+.compact-header .author-info,
+.compact-header .project-identity > .device-label { max-width: 9rem; }
+.compact-header .program-mode-label { display: none; }
+.compact-header .account-label { max-width: 4rem; }
 .compact-header .navigation-item { padding-right: 0.4rem; padding-left: 0.4rem; }
 .compact-header .device-group { margin: 0; }
 .compact-header .device-label { max-width: 7rem; }
-.compact-header .connection-label { max-width: 5rem; }
-.compact-header .save-status {
+.compact-header .connection-label {
+    display: none;
+}
+.sr-only,
+.narrow-header .save-status {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -649,29 +744,74 @@
 .narrow-header .main-menu > .divider { display: none; }
 .narrow-header .brand-button { width: 2.75rem; padding: 0; }
 .narrow-header .openblock-logo { width: 2rem; max-width: 2rem; height: 2rem; }
-.narrow-header .file-menu,
-.narrow-header .project-identity { gap: 0.375rem; }
+.narrow-header .file-menu {
+    flex: 1 1 auto;
+    justify-content: center;
+}
+.narrow-header .project-identity {
+    flex: 1 1 auto;
+    min-width: 6rem;
+    max-width: 11rem;
+    gap: 0;
+}
+.narrow-header .title-menu-item {
+    flex: 1 1 3rem;
+    width: auto;
+    min-width: 3rem;
+    max-width: 8rem;
+}
+.narrow-header .author-info,
+.narrow-header .project-identity > .device-label { flex: 1 1 auto; min-width: 0; max-width: 8rem; }
 .narrow-header .save-project-button { width: 2.75rem; padding: 0; }
+.narrow-header .program-mode-button,
+.narrow-header .account-button { width: 2.75rem; padding: 0; }
+.narrow-header .program-mode-button { flex-direction: column; gap: 0.125rem; }
+.narrow-header .program-mode-toggle { width: 1.25rem; height: 0.625rem; }
+.narrow-header .program-mode-toggle::after { width: 0.375rem; height: 0.375rem; }
+.narrow-header .program-mode-toggle-checked::after { transform: translateX(0.625rem); }
+.narrow-header .account-label { display: none; }
 .narrow-header .save-button-label,
 .narrow-header .more-menu-trigger > span { display: none; }
 .narrow-header .more-menu-trigger { width: 2.75rem; padding-right: 0; padding-left: 0; }
-.narrow-header .tail-menu { gap: 0.25rem; }
+.narrow-header .tail-menu {
+    margin-left: 0;
+    gap: 0.25rem;
+}
 
-[dir="rtl"] .device-select { border-radius: 0 0.7rem 0.7rem 0; }
-[dir="rtl"] .connection-button { border-left: 0; border-right: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.7rem 0 0 0.7rem; }
+/* The dropdown follows the full header so account controls cannot push it off-screen. */
+.menu-bar.narrow-header .more-menu {
+    position: static;
+}
+
+.menu-bar.narrow-header .more-dropdown {
+    top: calc(100% + 0.375rem);
+    right: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+    max-width: none;
+}
+
+[dir="rtl"] .device-select {
+    border-radius: 0.25rem;
+}
+[dir="rtl"] .connection-button {
+    border-left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.25rem;
+}
 [dir="rtl"] .menu-device-group .header-button { border-right: 0; border-radius: 0.5rem; }
+[dir="rtl"] .tail-menu { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .narrow-header .tail-menu { margin-right: 0; }
 
 @media (prefers-reduced-motion: reduce) {
     .header-button,
     .save-project-button,
-    .action-toggle::after { transition: none; }
+    .action-toggle::after,
+    .program-mode-toggle::after { transition: none; }
 }
-
 
 .menu-bar .navigation-dropdown { left: 0; right: auto; }
 [dir="rtl"] .menu-bar .navigation-dropdown { left: auto; right: 0; }
-.file-menu .save-project-button { padding-right: 0.85rem; padding-left: 0.85rem; }
-.file-menu .save-project-button { flex: 0 0 auto; }
 .save-project-button > svg { flex: 0 0 auto; }
 .narrow-header .file-menu .save-project-button { padding: 0; }
 .actions-language > img { filter: brightness(0) saturate(100%); }
@@ -687,11 +827,3 @@
     opacity: 0;
     cursor: pointer;
 }
-
-.header-button.save-project-button {
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: #0b66d8;
-    font-weight: 700;
-}
-.header-button.save-project-button:hover { background: #0564d0; }
-.header-button.save-project-button:disabled { background: #496fa6; }

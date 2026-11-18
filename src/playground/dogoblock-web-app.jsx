@@ -2545,6 +2545,7 @@ class DogoblockWebApp extends React.Component {
                 projectId={projectId}
                 routeProjectId={projectId}
                 onClickLogo={this.handleNavigateHome}
+                onOpenAccount={canPersist ? this.handleNavigateProfile : null}
                 onProjectLoaded={noop}
                 onRequestLoginToSave={this.handleRequestLoginToSave}
                 onShowMessageBox={this.handleShowMessageBox}
