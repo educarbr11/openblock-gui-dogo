@@ -2542,6 +2542,18 @@
     "message": "pin [PIN] value",
     "description": "The latest touch connection value for the selected micro:bit pin"
   },
+  "gui.menuBar.header.programming": {
+    "message": "Programming",
+    "description": "Short label for the direct programming mode switch"
+  },
+  "gui.menuBar.header.signIn": {
+    "message": "Sign in",
+    "description": "Direct sign-in action in the editor header"
+  },
+  "gui.menuBar.header.account": {
+    "message": "My account",
+    "description": "Direct account action in the editor header"
+  },
   "microbit.setPinValue": {
     "message": "set pin [PIN] value to [VALUE]",
     "description": "Set the selected micro:bit pin digital value to 0 or 1"
