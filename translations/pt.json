@@ -727,5 +727,19 @@
     "gui.menuBar.header.language": "Idioma",
     "gui.menuBar.header.settings": "Configurações",
     "gui.menuBar.header.darkTheme": "Tema escuro",
-    "gui.menuBar.header.darkThemeHint": "Alterne a aparência do editor entre clara e escura."
+    "gui.menuBar.header.darkThemeHint": "Alterne a aparência do editor entre clara e escura.",
+    "gui.extension.lan.description": "Troque mensagens com outros editores na rede local. Requer DoGoBlock Link ou desktop.",
+    "gui.alerts.lanUnavailable": "LAN indisponível. Abra ou atualize o DoGoBlock Link/Agent ou o aplicativo desktop e confira sua rede.",
+    "gui.alerts.lanInvalidMessage": "Use um nome de mensagem LAN de 1 a 128 caracteres e um valor de até 1024 caracteres.",
+    "gui.alerts.lanInvalidChannel": "Escolha um canal LAN de 1 a 16.",
+    "gui.alerts.lanMessageQueueFull": "Fila de recebimento LAN cheia. As mensagens mais antigas foram descartadas. Adicione uma espera entre os envios.",
+    "gui.alerts.lanActionFailed": "Não foi possível executar a ação LAN. Aguarde um pouco entre os envios e tente novamente.",
+    "lan.connect": "Conectar à LAN",
+    "lan.defaultMessage": "mensagem",
+    "lan.broadcast": "transmitir mensagem [MESSAGE] na LAN",
+    "lan.broadcastWithValue": "transmitir mensagem [MESSAGE] com valor [VALUE] na LAN",
+    "lan.whenReceived": "quando receber [MESSAGE] transmitida na LAN",
+    "lan.valueReceived": "valor recebido da mensagem [MESSAGE] na LAN",
+    "lan.setChannel": "definir canal LAN para [CHANNEL]",
+    "lan.defaultChannel": "6 (padrão)"
 }

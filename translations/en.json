@@ -2562,6 +2562,45 @@
     "message": "My account",
     "description": "Direct account action in the editor header"
   },
+  "gui.extension.lan.description": {
+    "message": "Exchange messages on your local network. Requires DoGoBlock Link or desktop.",
+    "description": "Description of the LAN communication extension for computers"
+  },
+  "gui.alerts.lanUnavailable": {
+    "message": "LAN unavailable. Check your network and update DoGoBlock Link/Agent or desktop.",
+    "description": "Local network bridge unavailable or disconnected"
+  },
+  "gui.alerts.lanInvalidMessage": {
+    "message": "Use a LAN message name of 1-128 characters and a value of up to 1024 characters.",
+    "description": "Invalid LAN message name or value"
+  },
+  "gui.alerts.lanInvalidChannel": {
+    "message": "Choose a LAN channel from 1 to 16.",
+    "description": "LAN channel outside the supported range"
+  },
+  "gui.alerts.lanMessageQueueFull": {
+    "message": "LAN receive queue full. Older messages were discarded. Add a wait between broadcasts.",
+    "description": "LAN receive queue overflow and pacing guidance"
+  },
+  "gui.alerts.lanActionFailed": {
+    "message": "LAN action failed. Wait briefly between broadcasts and try again.",
+    "description": "LAN send rate or outstanding request limit reached"
+  },
+  "lan.connect": {"message": "Connect to LAN", "description": "Connect the LAN extension to the local bridge"},
+  "lan.defaultMessage": {"message": "message", "description": "Default LAN message name"},
+  "lan.broadcast": {"message": "broadcast message [MESSAGE] on LAN", "description": "Broadcast a LAN message"},
+  "lan.broadcastWithValue": {
+    "message": "broadcast message [MESSAGE] with value [VALUE] on LAN",
+    "description": "Broadcast a LAN message with a value"
+  },
+  "lan.whenReceived": {
+    "message": "when receiving [MESSAGE] broadcast on LAN", "description": "React to an incoming LAN message"
+  },
+  "lan.valueReceived": {
+    "message": "LAN broadcast [MESSAGE] value received", "description": "Read a LAN message value"
+  },
+  "lan.setChannel": {"message": "set LAN channel to [CHANNEL]", "description": "Select a LAN group"},
+  "lan.defaultChannel": {"message": "6 (default)", "description": "Default LAN group"},
   "microbit.setPinValue": {
     "message": "set pin [PIN] value to [VALUE]",
     "description": "Set the selected micro:bit pin digital value to 0 or 1"
