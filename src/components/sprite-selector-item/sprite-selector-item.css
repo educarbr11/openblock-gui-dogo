@@ -25,12 +25,12 @@
 .sprite-selector-item.is-selected {
     box-shadow: 0px 0px 0px 4px $motion-transparent;
     border: 2px solid $motion-primary;
-    background: $ui-white;
+    background: $ui-paper;
 }
 
 .sprite-selector-item:hover {
     border: 2px solid $motion-primary;
-    background: $ui-white;
+    background: $ui-paper;
 }
 
 .sprite-selector-item:hover .sprite-image, .is-selected .sprite-image {

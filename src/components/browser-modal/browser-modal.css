@@ -45,7 +45,7 @@
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-paper;
     padding: 1.5rem 2.25rem;
     text-align: center;
 }
@@ -77,6 +77,6 @@
 }
 
 .faq-link {
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     text-decoration: none;
 }

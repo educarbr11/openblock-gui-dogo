@@ -9,10 +9,11 @@
     font-size: 0.625rem;
     font-weight: bold;
     color: $text-primary;
+    background-color: $ui-paper;
 
     border-width: 1px;
     border-style: solid;
-    border-color: $ui-black-transparent;
+    border-color: var(--editor-control-border, $ui-black-transparent);
     border-radius: 2rem;
 
     outline: none;
@@ -32,11 +33,11 @@
 }
 
 .input-form:hover {
-    border-color: $motion-primary;
+    border-color: var(--editor-focus, $motion-primary);
 }
 
 .input-form:focus {
-    border-color: $motion-primary;
+    border-color: var(--editor-focus, $motion-primary);
     box-shadow: 0 0 0 0.25rem $motion-transparent;
 }
 

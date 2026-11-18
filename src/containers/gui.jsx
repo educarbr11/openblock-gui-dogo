@@ -46,6 +46,7 @@ import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import {getHandPoseDetectionSession} from '../lib/hand-pose-detection/session';
+import {EditorThemeProvider} from '../lib/editor-theme.jsx';
 
 class GUI extends React.Component {
     componentDidMount () {
@@ -105,12 +106,14 @@ class GUI extends React.Component {
             ...componentProps
         } = this.props;
         return (
-            <GUIComponent
-                loading={fetchingProject || isLoading || loadingStateVisible}
-                {...componentProps}
-            >
-                {children}
-            </GUIComponent>
+            <EditorThemeProvider enabled={!this.props.isPlayerOnly && !children}>
+                <GUIComponent
+                    loading={fetchingProject || isLoading || loadingStateVisible}
+                    {...componentProps}
+                >
+                    {children}
+                </GUIComponent>
+            </EditorThemeProvider>
         );
     }
 }
@@ -125,6 +128,7 @@ GUI.propTypes = {
     intl: intlShape,
     isError: PropTypes.bool,
     isLoading: PropTypes.bool,
+    isPlayerOnly: PropTypes.bool,
     isScratchDesktop: PropTypes.bool,
     isShowingProject: PropTypes.bool,
     loadingStateVisible: PropTypes.bool,

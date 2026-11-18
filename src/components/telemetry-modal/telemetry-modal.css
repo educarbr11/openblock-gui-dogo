@@ -41,12 +41,12 @@ $ui-gray: hsla(0, 0%, 95%, 1);
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-paper;
     padding: 1.5rem 2.25rem;
 }
 
 .privacy-policy-link {
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     text-decoration: none;
 }
 
@@ -79,7 +79,7 @@ $ui-gray: hsla(0, 0%, 95%, 1);
     width: 1rem;
     height: 1rem;
     appearance: none;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     vertical-align: middle;
 }
 
@@ -91,7 +91,7 @@ $ui-gray: hsla(0, 0%, 95%, 1);
 
 .radio-buttons input[type="radio"]:checked {
     transition: all .25s ease;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     border: 1px solid $motion-primary;
 }
 

@@ -1,0 +1,59 @@
+/* Editor-only tokens also reach modal and Blockly portals while the editor is mounted. */
+:global([data-editor-theme]) {
+    --editor-background: #e5f0ff;
+    --editor-panel: #e9f1fc;
+    --editor-surface: #fff;
+    --editor-surface-raised: #d9e3f2;
+    --editor-border: rgba(0, 0, 0, 0.15);
+    --editor-control-border: rgba(0, 0, 0, 0.15);
+    --editor-text: #575e75;
+    --editor-text-muted: rgba(87, 94, 117, 0.75);
+    --editor-accent: #203884;
+    --editor-hover: #edf4ff;
+    --editor-disabled-surface: #f5f7fb;
+    --editor-focus: #1769d2;
+    --editor-header: #203b7c;
+    --editor-header-text: #fff;
+    --editor-overlay: hsla(215, 100%, 65%, 0.9);
+    --editor-icon-filter: brightness(0) saturate(100%);
+    --editor-control-icon-filter: none;
+    --editor-surface-dim: rgba(255, 255, 255, 0.75);
+    --editor-selector-fade: linear-gradient(rgba(232, 237, 241, 0), rgba(232, 237, 241, 1));
+    --editor-success-text: #087f5b;
+    --editor-success-surface: #e4f5ec;
+    --editor-warning-text: #9c5a00;
+    --editor-warning-surface: #fff1c7;
+    --editor-error-text: #b42318;
+    --editor-error-surface: #fff2f2;
+    color-scheme: light;
+}
+
+:global([data-editor-theme="dark"]) {
+    --editor-background: #151d2b;
+    --editor-panel: #1b2636;
+    --editor-workspace: #151d2b;
+    --editor-surface: #202c3d;
+    --editor-surface-raised: #29374b;
+    --editor-border: #41516a;
+    --editor-control-border: #667892;
+    --editor-text: #e5ecf6;
+    --editor-text-muted: #afbed2;
+    --editor-accent: #9dbbff;
+    --editor-grid: #344256;
+    --editor-hover: #30415b;
+    --editor-disabled-surface: #253145;
+    --editor-focus: #9dbbff;
+    --editor-header: #15213b;
+    --editor-overlay: rgba(5, 10, 20, 0.82);
+    --editor-icon-filter: brightness(0) invert(0.88);
+    --editor-control-icon-filter: brightness(0) invert(0.88);
+    --editor-surface-dim: rgba(32, 44, 61, 0.85);
+    --editor-selector-fade: linear-gradient(rgba(41, 55, 75, 0), #29374b);
+    --editor-success-text: #85e0b5;
+    --editor-success-surface: #203f38;
+    --editor-warning-text: #ffd18a;
+    --editor-warning-surface: #493c25;
+    --editor-error-text: #ffb0ac;
+    --editor-error-surface: #482b36;
+    color-scheme: dark;
+}

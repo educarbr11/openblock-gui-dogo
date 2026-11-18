@@ -6,11 +6,11 @@
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-paper;
 }
 
 .bottom-area {
-    background-color: $ui-white;
+    background-color: $ui-paper;
     text-align: center;
     display: flex;
     flex-direction: column;

@@ -7,7 +7,7 @@
     align-items: center;
     flex-grow: 1;
 
-    background: $ui-white;
+    background: $ui-paper;
     border-radius: 10rem;
     user-select: none;
     height: $library-filter-bar-height;

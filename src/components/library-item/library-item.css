@@ -14,7 +14,7 @@
     padding: 1rem 1rem 0 1rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
-    background: white;
+    background: $ui-paper;
     border-width: 2px;
     border-style: solid;
     border-color: $ui-black-transparent;
@@ -217,8 +217,8 @@
 
 .featured-extension-load-state {
     padding: 0.6rem 0.75rem;
-    background: $ui-black-transparent;
-    color: white;
+    background: var(--editor-disabled-surface, #f5f7fb);
+    color: $text-primary;
     font-weight: 600;
     font-size: 0.85rem;
     border: none;
@@ -228,10 +228,12 @@
 
 .featured-extension-loaded {
     background: $control-primary;
+    color: #33220a;
 }
 
 .featured-extension-loading {
     background: $motion-primary;
+    color: $ui-white;
 }
 
 .resource-pack-row {
@@ -243,7 +245,7 @@
     margin-top: auto;
     padding: 0.55rem 1.25rem;
     border-top: 1px solid $ui-black-transparent;
-    background: $ui-white-dim;
+    background: $ui-paper-dim;
 }
 
 .resource-pack-status {
@@ -263,7 +265,7 @@
 }
 
 .resource-pack-ready {
-    color: #087f5b;
+    color: var(--editor-success-text, #087f5b);
 }
 
 .resource-pack-ready::before {
@@ -271,7 +273,7 @@
 }
 
 .resource-pack-update {
-    color: #9c5a00;
+    color: var(--editor-warning-text, #9c5a00);
 }
 
 .resource-pack-update::before {
@@ -279,7 +281,7 @@
 }
 
 .resource-pack-unavailable {
-    color: #b42318;
+    color: var(--editor-error-text, #b42318);
 }
 
 .resource-pack-unavailable::before {
@@ -350,7 +352,7 @@
     padding-top: 0.4rem;
     font-weight: bold;
     text-decoration:none;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 .featured-extension-learn-more a:hover {
@@ -369,7 +371,7 @@
     padding-top: 0.4rem;
     font-weight: bold;
     text-decoration:none;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 .featured-extension-help-link a:hover{

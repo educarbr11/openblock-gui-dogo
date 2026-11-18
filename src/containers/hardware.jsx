@@ -11,10 +11,11 @@ import {setCodeEditorValue, toggleLock} from '../reducers/code';
 
 import {STAGE_DISPLAY_SIZES} from '../lib/layout-constants.js';
 import {getLanguageFromDeviceType} from '../lib/device';
+import {EditorThemeContext} from '../lib/editor-theme.jsx';
 
 import HardwareComponent from '../components/hardware/hardware.jsx';
 
-class Hardware extends React.Component {
+export class Hardware extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -31,6 +32,14 @@ class Hardware extends React.Component {
             rules: [{background: 'F9F9F9'}],
             colors: {
                 'editor.background': '#F9F9F9'
+            }
+        });
+        monaco.editor.defineTheme('readOnlyDarkTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [{background: '151D2B'}],
+            colors: {
+                'editor.background': '#151D2B'
             }
         });
     }
@@ -59,6 +68,9 @@ class Hardware extends React.Component {
 
     render () {
         const codeEditorLanguage = getLanguageFromDeviceType(this.props.deviceType);
+        const dark = this.context.theme === 'dark';
+        const codeEditorTheme = this.props.isCodeEditorLocked ?
+            (dark ? 'readOnlyDarkTheme' : 'readOnlyTheme') : (dark ? 'vs-dark' : 'vs');
         const {
             ...props
         } = this.props;
@@ -66,7 +78,7 @@ class Hardware extends React.Component {
             <HardwareComponent
                 codeEditorLanguage={codeEditorLanguage}
                 codeEditorOptions={this.props.isCodeEditorLocked ? {readOnly: true} : {readOnly: false}}
-                codeEditorTheme={this.props.isCodeEditorLocked ? 'readOnlyTheme' : 'vs'}
+                codeEditorTheme={codeEditorTheme}
                 codeEditorValue={this.props.codeEditorValue}
                 isCodeEditorLocked={this.props.isCodeEditorLocked}
                 onCodeEditorWillMount={this.handleCodeEditorWillMount}
@@ -78,6 +90,8 @@ class Hardware extends React.Component {
         );
     }
 }
+
+Hardware.contextType = EditorThemeContext;
 
 Hardware.propTypes = {
     codeEditorValue: PropTypes.string,

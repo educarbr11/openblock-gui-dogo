@@ -125,6 +125,15 @@ const patches = [
         markerText: 'z-index: 20;'
     },
     {
+        label: 'scratch-paint editor theme',
+        dependencyPatch: true,
+        packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-paint'),
+        applyDirectory: 'node_modules/scratch-paint',
+        patchFile: path.join(root, 'patches', 'scratch-paint-editor-theme.patch'),
+        markerFile: path.join(dependencyRoot, 'node_modules', 'scratch-paint', 'src', 'css', 'colors.css'),
+        markerText: '$text-primary: var(--editor-text, #575e75);'
+    },
+    {
         label: 'scratch-render-fonts DoGoBlock families',
         dependencyPatch: true,
         packageDir: path.join(dependencyRoot, 'node_modules', 'scratch-render-fonts'),

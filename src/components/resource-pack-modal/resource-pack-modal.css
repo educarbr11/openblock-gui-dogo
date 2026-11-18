@@ -9,7 +9,7 @@
 
 .body {
     padding: 1.75rem;
-    background: $ui-white;
+    background: $ui-paper;
     overflow-y: auto;
 }
 
@@ -59,7 +59,7 @@
     padding: 0.75rem;
     border: 1px solid $ui-black-transparent;
     border-radius: 0.5rem;
-    background: $ui-white-dim;
+    background: $ui-paper-dim;
 }
 
 .detail-label {
@@ -113,8 +113,8 @@
     padding: 0.8rem 1rem;
     border: 1px solid #e25555;
     border-radius: 0.5rem;
-    background: #fff2f2;
-    color: #9b1c1c;
+    background: var(--editor-error-surface, #fff2f2);
+    color: var(--editor-error-text, #9b1c1c);
     font-size: 0.875rem;
     line-height: 1.4;
 }
@@ -144,8 +144,8 @@
 }
 
 .secondary-button {
-    background: $ui-white;
-    color: $motion-primary;
+    background: $ui-paper;
+    color: var(--editor-accent, $motion-primary);
 }
 
 @media (max-width: 36rem) {

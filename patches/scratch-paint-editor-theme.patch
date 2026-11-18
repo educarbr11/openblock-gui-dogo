@@ -1,0 +1,337 @@
+diff --git a/src/css/colors.css b/src/css/colors.css
+--- a/src/css/colors.css
++++ b/src/css/colors.css
+@@ -2,11 +2,11 @@
+ @todo This file is copied from GUI and should be pulled out into a shared library.
+ See https://github.com/LLK/scratch-paint/issues/13 */
+
+-$ui-pane-border: #D9D9D9;
+-$ui-pane-gray: #F9F9F9;
+-$ui-background-blue: #e8edf1;
++$ui-pane-border: var(--editor-border, #D9D9D9);
++$ui-pane-gray: var(--editor-surface-raised, #F9F9F9);
++$ui-background-blue: var(--editor-background, #e8edf1);
+
+-$text-primary: #575e75;
++$text-primary: var(--editor-text, #575e75);
+
+ $motion-primary: #4C97FF;
+ $motion-tertiary: #3373CC;
+@@ -22,4 +22,4 @@
+
+ $data-primary: #FF8C1A;
+
+-$form-border: #E9EEF2;
++$form-border: var(--editor-control-border, var(--editor-border, #E9EEF2));
+diff --git a/src/components/paint-editor/paint-editor.css b/src/components/paint-editor/paint-editor.css
+--- a/src/components/paint-editor/paint-editor.css
++++ b/src/components/paint-editor/paint-editor.css
+@@ -2,6 +2,7 @@
+ @import "../../css/units.css";
+
+ .editor-container {
++    color: $text-primary;
+     width: 100%;
+     height: 100%;
+     min-width: 0;
+@@ -114,6 +115,7 @@
+     width: 1.25rem;
+     height: 1.25rem;
+     vertical-align: middle;
++    filter: var(--editor-icon-filter, none);
+ }
+
+ .mod-mode-tools {
+@@ -143,7 +145,7 @@
+     flex-grow: 1;
+     min-width: 0;
+     box-sizing: content-box;
+-    border: 1px solid #e8edf1;
++    border: 1px solid var(--editor-border, #e8edf1);
+     border-radius: .25rem;
+     position: relative;
+     overflow: visible;
+diff --git a/src/components/paint-editor/properties-panel.css b/src/components/paint-editor/properties-panel.css
+--- a/src/components/paint-editor/properties-panel.css
++++ b/src/components/paint-editor/properties-panel.css
+@@ -5,7 +5,7 @@
+     flex: 0 0 232px;
+     min-width: 0;
+     border-left: 1px solid $ui-pane-border;
+-    background: #fff;
++    background: var(--editor-surface, #fff);
+     overflow: auto;
+ }
+
+@@ -81,6 +81,8 @@
+     padding: 0 5px;
+     font-size: 0.75rem;
+     color: $text-primary;
++    background: var(--editor-surface, #fff);
++    border-color: var(--editor-control-border, var(--editor-border, #D9D9D9));
+ }
+
+ .color-row {
+diff --git a/src/components/forms/input.css b/src/components/forms/input.css
+--- a/src/components/forms/input.css
++++ b/src/components/forms/input.css
+@@ -17,6 +17,7 @@
+     font-size: 0.75rem;
+     font-weight: bold;
+     color: $text-primary;
++    background: var(--editor-surface, #fff);
+
+     border-width: 1px;
+     border-style: solid;
+diff --git a/src/components/color-picker/color-picker.css b/src/components/color-picker/color-picker.css
+--- a/src/components/color-picker/color-picker.css
++++ b/src/components/color-picker/color-picker.css
+@@ -6,8 +6,8 @@
+ }
+
+ :global(.Popover-body) {
+-    background: white;
+-    border: 1px solid #ddd;
++    background: var(--editor-surface, white);
++    border: 1px solid var(--editor-border, #ddd);
+     padding: 4px;
+     border-radius: 4px;
+     padding: 4px;
+@@ -15,8 +15,8 @@
+ }
+
+ :global(.Popover-tipShape) {
+-    fill: white;
+-    stroke: #ddd;
++    fill: var(--editor-surface, white);
++    stroke: var(--editor-border, #ddd);
+ }
+
+ .clickable {
+@@ -32,7 +32,7 @@
+ .row-header {
+     font-family: "Helvetica Neue", Helvetica, sans-serif;
+     font-size: 0.65rem;
+-    color: #575E75;
++    color: var(--editor-text, #575E75);
+     margin: 8px;
+ }
+
+@@ -49,7 +49,7 @@
+ }
+
+ .divider {
+-    border-top: 1px solid #ddd;
++    border-top: 1px solid var(--editor-border, #ddd);
+     margin: 8px;
+ }
+
+@@ -65,7 +65,7 @@
+ .swatch {
+     width: 1.5rem;
+     height: 1.5rem;
+-    border: 1px solid #ddd;
++    border: 1px solid var(--editor-border, #ddd);
+     border-radius: 4px;
+     box-sizing: content-box;
+     display: flex;
+@@ -128,7 +128,7 @@
+     align-items: center;
+     gap: 5px;
+     min-width: 0;
+-    color: #575e75;
++    color: var(--editor-text, #575e75);
+     font-size: 0.7rem;
+     font-weight: bold;
+ }
+@@ -137,14 +137,15 @@
+     width: 100%;
+     min-width: 0;
+     height: 28px;
+-    border: 1px solid #c5cedc;
++    border: 1px solid var(--editor-control-border, var(--editor-border, #c5cedc));
++    background: var(--editor-surface, #fff);
+     border-radius: 4px;
+     padding: 0 5px;
+-    color: #575e75;
++    color: var(--editor-text, #575e75);
+ }
+
+ .color-input input[aria-invalid="true"] {
+-    border-color: #d13838;
++    border-color: var(--editor-error-text, #d13838);
+ }
+
+ .rgb-inputs {
+@@ -154,13 +155,13 @@
+ }
+
+ .error {
+-    color: #b52828;
++    color: var(--editor-error-text, #b52828);
+     font-size: 0.7rem;
+ }
+
+ .recent-colors {
+     margin: 8px;
+-    color: #575e75;
++    color: var(--editor-text, #575e75);
+     font-size: 0.7rem;
+     font-weight: bold;
+ }
+@@ -175,7 +176,7 @@
+ .recent-swatches button {
+     width: 25px;
+     height: 25px;
+-    border: 1px solid #9da8bd;
++    border: 1px solid var(--editor-border, #9da8bd);
+     border-radius: 3px;
+     cursor: pointer;
+ }
+diff --git a/src/components/font-dropdown/searchable-font-dropdown.css b/src/components/font-dropdown/searchable-font-dropdown.css
+--- a/src/components/font-dropdown/searchable-font-dropdown.css
++++ b/src/components/font-dropdown/searchable-font-dropdown.css
+@@ -18,7 +18,9 @@
+ .menu input {
+     width: 100%;
+     height: 32px;
++    color: $text-primary;
++    background: var(--editor-surface, #fff);
+     padding: 0 8px;
+-    border: 1px solid $ui-pane-border;
++    border: 1px solid var(--editor-control-border, $ui-pane-border);
+     border-radius: 4px;
+ }
+@@ -34,7 +36,7 @@
+     width: 100%;
+     padding: 6px 8px;
+     border: 0;
+-    background: #fff;
++    background: var(--editor-surface, #fff);
+     color: $text-primary;
+     text-align: left;
+     font-size: 0.9rem;
+diff --git a/src/components/tool-select-base/tool-select-base.css b/src/components/tool-select-base/tool-select-base.css
+--- a/src/components/tool-select-base/tool-select-base.css
++++ b/src/components/tool-select-base/tool-select-base.css
+@@ -12,6 +12,7 @@
+     background: none;
+     padding: $grid-unit;
+     font-size: 0.85rem;
++    color: var(--editor-text, #575e75);
+     transition: 0.2s;
+ }
+
+@@ -28,6 +29,7 @@
+     height: 2rem;
+     flex-grow: 1;
+     vertical-align: middle;
++    filter: var(--editor-icon-filter, none);
+ }
+
+ .mod-tool-select.is-selected .tool-select-icon {
+diff --git a/src/components/labeled-icon-button/labeled-icon-button.css b/src/components/labeled-icon-button/labeled-icon-button.css
+--- a/src/components/labeled-icon-button/labeled-icon-button.css
++++ b/src/components/labeled-icon-button/labeled-icon-button.css
+@@ -4,6 +4,7 @@
+
+ .mod-edit-field {
+     background: none;
++    color: var(--editor-text, #575e75);
+     border: none;
+     display: inline-block;
+     padding: .25rem .325rem;
+@@ -19,6 +20,7 @@
+     height: 1.5rem;
+     flex-grow: 1;
+     vertical-align: middle;
++    filter: var(--editor-icon-filter, none);
+ }
+
+ .edit-field-title {
+diff --git a/src/components/fixed-tools/fixed-tools.css b/src/components/fixed-tools/fixed-tools.css
+--- a/src/components/fixed-tools/fixed-tools.css
++++ b/src/components/fixed-tools/fixed-tools.css
+@@ -84,6 +84,7 @@
+     width: 1.25rem;
+     height: 1.25rem;
+     vertical-align: middle;
++    filter: var(--editor-icon-filter, none);
+ }
+
+ [dir="rtl"] .button-group-button-icon {
+@@ -124,6 +125,7 @@
+ }
+
+ .menu-item-icon {
++    filter: var(--editor-icon-filter, none);
+     margin-right: calc(2 * $grid-unit);
+ }
+
+diff --git a/src/components/dropdown/dropdown.css b/src/components/dropdown/dropdown.css
+--- a/src/components/dropdown/dropdown.css
++++ b/src/components/dropdown/dropdown.css
+@@ -7,7 +7,7 @@
+     border-radius: 5px;
+     overflow: visible;
+     min-width: 3.5rem;
+-    color: $motion-primary;
++    color: var(--editor-accent, #4C97FF);
+     padding: .5rem;
+ }
+
+@@ -19,6 +19,7 @@
+     width: .5rem;
+     height: .5rem;
+     vertical-align: middle;
++    filter: var(--editor-icon-filter, none);
+     padding-bottom: .2rem;
+ }
+
+diff --git a/src/components/color-button/color-button.css b/src/components/color-button/color-button.css
+--- a/src/components/color-button/color-button.css
++++ b/src/components/color-button/color-button.css
+@@ -11,7 +11,7 @@
+     flex-basis: 2rem;
+     flex-shrink: 0;
+     height: 100%;
+-    border: 1px solid rgba(0, 0, 0, 0.25);
++    border: 1px solid var(--editor-border, rgba(0, 0, 0, 0.25));
+ }
+
+ [dir="ltr"] .color-button-swatch {
+@@ -32,11 +32,11 @@
+     flex-shrink: 0;
+     height: 100%;
+
+-    border: 1px solid rgba(0, 0, 0, 0.25);
++    border: 1px solid var(--editor-border, rgba(0, 0, 0, 0.25));
+
+     align-items: center;
+     justify-content: center;
+-    color: #575e75;
++    color: var(--editor-text, #575e75);
+     font-size: 0.75rem;
+ }
+
+@@ -67,7 +67,7 @@
+     width: 0.75rem;
+     height: 0.75rem;
+     background: white;
+-    border: 1px solid rgba(0, 0, 0, 0.25);
++    border: 1px solid var(--editor-border, rgba(0, 0, 0, 0.25));
+     /* Make sure it appears below the transparent icon */
+     z-index: 1;
+ }
+diff --git a/src/components/scrollable-canvas/scrollable-canvas.css b/src/components/scrollable-canvas/scrollable-canvas.css
+--- a/src/components/scrollable-canvas/scrollable-canvas.css
++++ b/src/components/scrollable-canvas/scrollable-canvas.css
+@@ -2,7 +2,7 @@
+ $scrollbar-padding: 4px;
+
+ .vertical-scrollbar, .horizontal-scrollbar {
+-    background: rgba(190, 190, 190, 0.8);
++    background: var(--editor-border, rgba(190, 190, 190, 0.8));
+     border-radius: calc($scrollbar-size / 2);
+     width: 100%;
+     height: 100%;

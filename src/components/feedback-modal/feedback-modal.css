@@ -8,7 +8,7 @@
     height: min(48rem, calc(100vh - 2rem));
     max-height: calc(100vh - 2rem);
     margin: 1rem auto;
-    background: $ui-white;
+    background: $ui-paper;
 }
 
 .modal-content > div {
@@ -26,7 +26,7 @@
     min-height: 0;
     flex: 1;
     flex-direction: column;
-    background: $ui-white;
+    background: $ui-paper;
     overflow: hidden;
 }
 
@@ -41,7 +41,7 @@
 
 .success-body {
     padding: 1.5rem;
-    background: $ui-white;
+    background: $ui-paper;
 }
 
 .intro {
@@ -94,7 +94,7 @@
 .category-button-selected {
     border-color: $motion-primary;
     background: $motion-transparent;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     box-shadow: 0 0 0 1px $motion-primary;
 }
 
@@ -110,7 +110,7 @@
     border: 1px solid $ui-black-transparent;
     border-radius: 0.4rem;
     padding: 0.7rem 0.75rem;
-    background: $ui-white;
+    background: $ui-paper;
     color: $text-primary;
     font: inherit;
     user-select: text;
@@ -184,7 +184,7 @@
     border: 1px solid $ui-black-transparent;
     border-radius: 0.35rem;
     padding: 0.45rem 0.65rem;
-    background: $ui-white;
+    background: $ui-paper;
     color: $text-primary;
     font: inherit;
     font-size: 0.76rem;
@@ -195,7 +195,7 @@
 .attachment-button:hover,
 .attachment-button:focus {
     border-color: $motion-primary;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     outline: none;
 }
 
@@ -222,7 +222,7 @@
     height: 4.25rem;
     border: 1px solid $ui-black-transparent;
     border-radius: 0.25rem;
-    background: $ui-white;
+    background: $ui-paper;
     object-fit: cover;
 }
 
@@ -307,7 +307,7 @@
 
 .privacy-notice svg {
     flex: 0 0 auto;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 .submit-error {
@@ -327,7 +327,7 @@
     gap: 0.6rem;
     border-top: 1px solid $ui-black-transparent;
     padding: 0.85rem 1.5rem;
-    background: $ui-white;
+    background: $ui-paper;
     box-shadow: 0 -0.25rem 0.8rem rgba(0, 0, 0, 0.06);
 }
 
@@ -354,7 +354,7 @@
 
 .secondary-button {
     border: 1px solid $ui-black-transparent;
-    background: $ui-white;
+    background: $ui-paper;
     color: $text-primary;
 }
 
@@ -391,7 +391,7 @@
     justify-content: center;
     border-radius: 50%;
     background: $motion-transparent;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 @media screen and (max-width: 640px), screen and (max-height: 620px) {

@@ -28,7 +28,7 @@
     top: -1px;
     right: -1px;
     border: 1px solid $ui-black-transparent;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     height: 34px;
     width: 34px;
     border-radius: 0 0.5rem 0 0;
@@ -40,7 +40,7 @@
     top: calc(34px - 2px);
     right:  -1px;
     border: 1px solid $ui-black-transparent;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     height: 34px;
     width: 34px;
     border-radius: 0 0 0 0.5rem;
@@ -68,7 +68,7 @@
     flex-direction: row;
     justify-content: flex-end;
     height: 42px;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     align-items: center;
     border-top: 1px solid $ui-black-transparent;
 }
@@ -77,10 +77,11 @@
     flex-grow: 1;
     height: 26px;
     margin-left: $space;
-    border: 1px solid $ui-black-transparent;
+    border: 1px solid var(--editor-control-border, $ui-black-transparent);
     box-sizing: border-box;
     border-radius: 0.5rem;
     background-color: $ui-secondary;
+    color: $text-primary;
     overflow:hidden;
 }
 
@@ -115,7 +116,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     padding: 0;
     margin-right: $space;
     white-space: nowrap;
@@ -132,7 +133,7 @@
 }
 
 .menu {
-    background-color: $ui-white;
+    background-color: $ui-paper;
     color: $text-primary;
     bottom: 36px;
     min-width: 0px;
@@ -151,6 +152,7 @@
 
 .menu select {
     border: 1px solid $text-primary;
+    background: $ui-paper;
     color: $text-primary;
 }
 

@@ -89,6 +89,7 @@ import collectMetadata from '../../lib/collect-metadata';
 import styles from './menu-bar.css';
 import EditorActionsMenu from './editor-actions-menu.jsx';
 import EditorHeaderAction from './editor-header-action.jsx';
+import EditorThemeMenuItem from './editor-theme-menu-item.jsx';
 import headerMessages from './editor-header-messages';
 
 // import mystuffIcon from './icon--mystuff.png';
@@ -833,6 +834,7 @@ export class MenuBar extends React.Component {
                         />
                     </div>
                 )}
+                <EditorThemeMenuItem />
                 {this.props.canChangeLanguage && (
                     <div className={styles.actionsLanguage}>
                         <img

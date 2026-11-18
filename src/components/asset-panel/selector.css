@@ -20,7 +20,7 @@
     align-items: center;
     justify-content: space-around;
     padding: 0.75rem 0;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     text-align: center;
     background: none;
 }
@@ -33,7 +33,7 @@ $fade-out-distance: 100px;
     bottom: 0;
     left: 0;
     right:0;
-    background: linear-gradient(rgba(232,237,241, 0),rgba(232,237,241, 1));
+    background: var(--editor-selector-fade, linear-gradient(rgba(232,237,241, 0),rgba(232,237,241, 1)));
     height: $fade-out-distance;
     width: 100%;
     pointer-events: none;
@@ -80,7 +80,7 @@ $fade-out-distance: 100px;
 
 
 .list-item.placeholder {
-    background: white;
+    background: $ui-paper;
     filter: opacity(15%) brightness(0%);
 }
 

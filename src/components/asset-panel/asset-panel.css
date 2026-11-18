@@ -6,7 +6,7 @@
     flex-grow: 1;
     min-width: 0;
     border: 1px solid $ui-black-transparent;
-    background: white;
+    background: $ui-paper;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.85rem;
 }

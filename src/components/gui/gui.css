@@ -4,6 +4,8 @@
 
 .page-wrapper {
     height: 100%;
+    color: $text-primary;
+    background-color: $ui-primary;
 }
 
 .body-wrapper {
@@ -130,8 +132,8 @@
 
 .tab.is-selected {
     height: 90%;
-    color: $motion-primary;
-    background-color: $ui-white;
+    color: var(--editor-accent, $motion-primary);
+    background-color: $ui-paper;
     z-index: 4; /* Make sure selected is always above */
 }
 
@@ -196,8 +198,8 @@
     height: 2rem;
     border: 1px solid $ui-black-transparent;
     border-radius: 4px;
-    background: $ui-white;
-    color: $motion-primary;
+    background: $ui-paper;
+    color: var(--editor-accent, $motion-primary);
     cursor: pointer;
 }
 

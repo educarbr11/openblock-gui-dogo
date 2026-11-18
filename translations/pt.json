@@ -725,5 +725,7 @@
     "gui.menuBar.header.chooseDeviceForFirmware": "Selecione e conecte um dispositivo para enviar o firmware.",
     "gui.menuBar.header.editInStageMode": "As opções de edição estão disponíveis no modo palco.",
     "gui.menuBar.header.language": "Idioma",
-    "gui.menuBar.header.settings": "Configurações"
+    "gui.menuBar.header.settings": "Configurações",
+    "gui.menuBar.header.darkTheme": "Tema escuro",
+    "gui.menuBar.header.darkThemeHint": "Alterne a aparência do editor entre clara e escura."
 }

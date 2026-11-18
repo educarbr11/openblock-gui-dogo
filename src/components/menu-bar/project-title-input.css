@@ -23,8 +23,8 @@
     outline: 2px solid #fff;
     outline-offset: -3px;
     border-color: #fff;
-    background-color: #fff;
-    color: #26354d;
+    background-color: var(--editor-surface, #fff);
+    color: var(--editor-text, #26354d);
     box-shadow: none;
     text-overflow: clip;
 }

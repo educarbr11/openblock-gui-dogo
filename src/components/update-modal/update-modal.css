@@ -7,19 +7,19 @@
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-paper;
     display: flex;
     flex-direction: column;
 }
 
 .header {
-    background: $ui-white;
+    background: $ui-paper;
     height: 0;
 }
 
 .update-title {
     padding: 2rem 2.5rem 1rem 2.5rem;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
     font-weight: 600;
 }
 
@@ -48,7 +48,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     padding-top: 1rem;
     padding-bottom: .75rem;
     padding-left: 2.5rem;
@@ -88,7 +88,7 @@
 }
 
 .primary {
-    background: $ui-white-dim;
+    background: $ui-paper-dim;
     border: 2px solid $text-primary-transparent;
     color: $text-primary-transparent;
 }

@@ -2542,6 +2542,14 @@
     "message": "pin [PIN] value",
     "description": "The latest touch connection value for the selected micro:bit pin"
   },
+  "gui.menuBar.header.darkTheme": {
+    "message": "Dark theme",
+    "description": "Editor appearance toggle in the More menu"
+  },
+  "gui.menuBar.header.darkThemeHint": {
+    "message": "Switch the editor between light and dark appearance.",
+    "description": "Explanation of the editor appearance toggle"
+  },
   "gui.menuBar.header.programming": {
     "message": "Programming",
     "description": "Short label for the direct programming mode switch"
