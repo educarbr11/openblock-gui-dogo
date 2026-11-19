@@ -68,30 +68,31 @@ export class Hardware extends React.Component {
 
     render () {
         const codeEditorLanguage = getLanguageFromDeviceType(this.props.deviceType);
-        const dark = this.context.theme === 'dark';
-        const codeEditorTheme = this.props.isCodeEditorLocked ?
-            (dark ? 'readOnlyDarkTheme' : 'readOnlyTheme') : (dark ? 'vs-dark' : 'vs');
         const {
             ...props
         } = this.props;
+        // react-redux 5 hoists contextType onto Connect, replacing its legacy store context.
         return (
-            <HardwareComponent
-                codeEditorLanguage={codeEditorLanguage}
-                codeEditorOptions={this.props.isCodeEditorLocked ? {readOnly: true} : {readOnly: false}}
-                codeEditorTheme={codeEditorTheme}
-                codeEditorValue={this.props.codeEditorValue}
-                isCodeEditorLocked={this.props.isCodeEditorLocked}
-                onCodeEditorWillMount={this.handleCodeEditorWillMount}
-                onCodeEditorDidMount={this.handleCodeEditorDidMount}
-                onCodeEditorChange={this.handleCodeEditorChange}
-                onClickCodeEditorLock={this.handleClickCodeEditorLock}
-                {...props}
-            />
+            <EditorThemeContext.Consumer>{({theme}) => {
+                const dark = theme === 'dark';
+                const codeEditorTheme = this.props.isCodeEditorLocked ?
+                    (dark ? 'readOnlyDarkTheme' : 'readOnlyTheme') : (dark ? 'vs-dark' : 'vs');
+                return (<HardwareComponent
+                    codeEditorLanguage={codeEditorLanguage}
+                    codeEditorOptions={this.props.isCodeEditorLocked ? {readOnly: true} : {readOnly: false}}
+                    codeEditorTheme={codeEditorTheme}
+                    codeEditorValue={this.props.codeEditorValue}
+                    isCodeEditorLocked={this.props.isCodeEditorLocked}
+                    onCodeEditorWillMount={this.handleCodeEditorWillMount}
+                    onCodeEditorDidMount={this.handleCodeEditorDidMount}
+                    onCodeEditorChange={this.handleCodeEditorChange}
+                    onClickCodeEditorLock={this.handleClickCodeEditorLock}
+                    {...props}
+                />);
+            }}</EditorThemeContext.Consumer>
         );
     }
 }
-
-Hardware.contextType = EditorThemeContext;
 
 Hardware.propTypes = {
     codeEditorValue: PropTypes.string,
