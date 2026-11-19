@@ -29,7 +29,7 @@
     box-sizing: border-box;
     border-radius: 0.5rem;
     margin-top: $space;
-    background-color: rgb(249, 249, 249);
+    background-color: var(--editor-surface, rgb(249, 249, 249));
     overflow: hidden;
 }
 
@@ -43,7 +43,7 @@
     top: -1px;
     right: -1px;
     border: 1px solid $ui-black-transparent;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     height: 34px;
     width: 34px;
     border-radius: 0 0.5rem 0 0.5rem;

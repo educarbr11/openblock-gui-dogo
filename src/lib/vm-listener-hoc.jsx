@@ -10,12 +10,29 @@ import {updateBlockDrag} from '../reducers/block-drag';
 import {updateMonitors} from '../reducers/monitors';
 import {setProjectChanged, setProjectUnchanged} from '../reducers/project-changed';
 import {setRunningState, setTurboState, setStartedState} from '../reducers/vm-status';
-import {showDeviceAlert, showDeviceRealtimeAlert, clearDeviceRealtimeAlert} from '../reducers/alerts';
+import {
+    showDeviceAlert, showDeviceRealtimeAlert, clearDeviceRealtimeAlert, showAlertWithTimeout, closeAlertWithId
+} from '../reducers/alerts';
 import {setRealtimeConnection} from '../reducers/connection-modal';
 import {updateMicIndicator} from '../reducers/mic-indicator';
 import {setDeviceData} from '../reducers/device-data';
 
 import {makeDeviceLibrary} from '../lib/libraries/devices/index.jsx';
+
+const isTauriLight = process.env.OPENBLOCK_TAURI_LIGHT === 'true';
+const LAN_ALERTS_BY_ERROR = {
+    invalid_message: 'lanInvalidMessage',
+    invalid_channel: 'lanInvalidChannel',
+    message_queue_full: 'lanMessageQueueFull'
+};
+
+const getLanAlertId = error => {
+    if (Object.prototype.hasOwnProperty.call(LAN_ALERTS_BY_ERROR, error)) return LAN_ALERTS_BY_ERROR[error];
+    if (typeof error === 'string' && /rate limit|too many pending LAN messages|LAN request failed/i.test(error)) {
+        return 'lanActionFailed';
+    }
+    return 'lanUnavailable';
+};
 
 /*
  * Higher Order Component to manage events emitted by the VM
@@ -33,7 +50,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 'handleTargetsUpdate',
                 'handleDeviceAlert',
                 'handleDeviceRealtimeAlert',
-                'handleDeviceRealtimeSuccess'
+                'handleDeviceRealtimeSuccess',
+                'handleLanStatus'
             ]);
             // We have to start listening to the vm here rather than in
             // componentDidMount because the HOC mounts the wrapped component,
@@ -51,10 +69,13 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.on('PROJECT_CHANGED', this.handleProjectChanged);
             this.props.vm.on('RUNTIME_STARTED', this.props.onRuntimeStarted);
             this.props.vm.on('PROJECT_START', this.props.onGreenFlag);
-            this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.handleDeviceRealtimeAlert);
-            this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.handleDeviceRealtimeSuccess);
+            if (!isTauriLight) {
+                this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
+                this.props.vm.on('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR', this.handleDeviceRealtimeAlert);
+                this.props.vm.on('PERIPHERAL_REALTIME_CONNECT_SUCCESS', this.handleDeviceRealtimeSuccess);
+            }
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
+            this.props.vm.on('LAN_STATUS', this.handleLanStatus);
 
         }
         componentDidMount () {
@@ -63,13 +84,18 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.addEventListener('keyup', this.handleKeyUp);
             }
             this.props.vm.postIOData('userData', {username: this.props.username});
-            // Update device list
-            this.props.vm.extensionManager.getDeviceList().then(data => {
-                this.props.onSetDeviceData(makeDeviceLibrary(data));
-            })
-                .catch(() => {
-                    this.props.onSetDeviceData(makeDeviceLibrary());
-                });
+            if (this.props.shouldUpdateTargets) {
+                this.props.vm.emitTargetsUpdate(false /* Emit the event, but do not trigger project change */);
+            }
+            if (!isTauriLight) {
+                // Update device list
+                this.props.vm.extensionManager.getDeviceList().then(data => {
+                    this.props.onSetDeviceData(makeDeviceLibrary(data));
+                })
+                    .catch(() => {
+                        this.props.onSetDeviceData(makeDeviceLibrary());
+                    });
+            }
         }
         componentDidUpdate (prevProps) {
             if (prevProps.username !== this.props.username) {
@@ -83,14 +109,40 @@ const vmListenerHOC = function (WrappedComponent) {
             }
         }
         componentWillUnmount () {
-            this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
-                this.handleDeviceRealtimeAlert);
-            this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
-                this.handleDeviceRealtimeSuccess);
+            this.props.vm.removeListener('targetsUpdate', this.handleTargetsUpdate);
+            this.props.vm.removeListener('MONITORS_UPDATE', this.props.onMonitorsUpdate);
+            this.props.vm.removeListener('BLOCK_DRAG_UPDATE', this.props.onBlockDragUpdate);
+            this.props.vm.removeListener('TURBO_MODE_ON', this.props.onTurboModeOn);
+            this.props.vm.removeListener('TURBO_MODE_OFF', this.props.onTurboModeOff);
+            this.props.vm.removeListener('PROJECT_RUN_START', this.props.onProjectRunStart);
+            this.props.vm.removeListener('PROJECT_RUN_STOP', this.props.onProjectRunStop);
+            this.props.vm.removeListener('PROJECT_CHANGED', this.handleProjectChanged);
+            this.props.vm.removeListener('RUNTIME_STARTED', this.props.onRuntimeStarted);
+            this.props.vm.removeListener('PROJECT_START', this.props.onGreenFlag);
+            this.props.vm.removeListener('MIC_LISTENING', this.props.onMicListeningUpdate);
+            this.props.vm.removeListener('LAN_STATUS', this.handleLanStatus);
+            if (!isTauriLight) {
+                this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
+                this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
+                    this.handleDeviceRealtimeAlert);
+                this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECT_SUCCESS',
+                    this.handleDeviceRealtimeSuccess);
+            }
             if (this.props.attachKeyboardEvents) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);
+            }
+        }
+        handleLanStatus (state) {
+            if (!state) return;
+            if (state.status === 'connected' || state.status === 'disconnected') {
+                if (this.lanAlertId) this.props.onClearLanAlert(this.lanAlertId);
+                this.lanAlertId = null;
+            } else if (state.status === 'error') {
+                const alertId = getLanAlertId(state.error);
+                if (this.lanAlertId === alertId) return;
+                this.lanAlertId = alertId;
+                this.props.onShowLanAlert(alertId);
             }
         }
         handleProjectChanged () {
@@ -141,16 +193,16 @@ const vmListenerHOC = function (WrappedComponent) {
         }
         handleDeviceRealtimeAlert (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onShowDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(false);
             }
         }
         handleDeviceRealtimeSuccess (data) {
             const device = this.props.deviceData.find(dev => dev.deviceId === data.deviceId);
-            device.message = data.message;
             if (device) {
+                device.message = data.message;
                 this.props.onClearDeviceRealtimeAlert(device);
                 this.props.onSetRealtimeConnection(true);
             }
@@ -181,6 +233,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 onShowDeviceAlert,
                 onShowDeviceRealtimeAlert,
                 onClearDeviceRealtimeAlert,
+                onClearLanAlert,
+                onShowLanAlert,
                 onSetDeviceData,
                 /* eslint-enable no-unused-vars */
                 ...props
@@ -207,6 +261,8 @@ const vmListenerHOC = function (WrappedComponent) {
         onShowDeviceAlert: PropTypes.func.isRequired,
         onShowDeviceRealtimeAlert: PropTypes.func.isRequired,
         onClearDeviceRealtimeAlert: PropTypes.func.isRequired,
+        onClearLanAlert: PropTypes.func.isRequired,
+        onShowLanAlert: PropTypes.func.isRequired,
         onTargetsUpdate: PropTypes.func.isRequired,
         onTurboModeOff: PropTypes.func.isRequired,
         onTurboModeOn: PropTypes.func.isRequired,
@@ -259,6 +315,8 @@ const vmListenerHOC = function (WrappedComponent) {
         onClearDeviceRealtimeAlert: device => {
             dispatch(clearDeviceRealtimeAlert(device));
         },
+        onShowLanAlert: alertId => showAlertWithTimeout(dispatch, alertId),
+        onClearLanAlert: alertId => dispatch(closeAlertWithId(alertId)),
         onSetDeviceData: data => dispatch(setDeviceData(data)),
         onSetRealtimeConnection: state => {
             dispatch(setRealtimeConnection(state));

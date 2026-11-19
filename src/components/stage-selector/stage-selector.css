@@ -11,7 +11,7 @@ $header-height: calc($stage-menu-height - 2px);
     position: relative; /* For the add backdrop button */
     flex-grow: 1;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: $ui-white;
+    background-color: $ui-paper;
     color: $text-primary;
     border-top-left-radius: $space;
     border-top-right-radius: $space;
@@ -40,7 +40,7 @@ $header-height: calc($stage-menu-height - 2px);
     align-items: center;
     justify-content: center;
     height: $header-height;
-    background-color: white;
+    background-color: $ui-paper;
     color: $text-primary;
     border-top-left-radius: $space;
     border-top-right-radius: $space;
@@ -116,4 +116,37 @@ $header-height: calc($stage-menu-height - 2px);
     10% { box-shadow: 0 0 10px #7fff1e; }
     90% { box-shadow: 0 0 10px #7fff1e; }
     100% { box-shadow: none; }
+}
+
+@media screen and (orientation: landscape) and (max-height: 520px) and (max-width: 960px) {
+    .stage-selector {
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .header {
+        height: 1.5rem;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .count {
+        padding: 0.1rem 0.25rem;
+        font-size: 0.5rem;
+    }
+
+    .label {
+        display: none;
+    }
+
+    .costume-canvas {
+        max-width: 2.7rem;
+        max-height: 2rem;
+        margin-top: 0.15rem;
+    }
+
+    .add-button {
+        bottom: 0.35rem;
+        transform: scale(0.75);
+    }
 }

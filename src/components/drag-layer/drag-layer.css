@@ -30,7 +30,7 @@
 
     padding: 0.25rem;
     border: 2px solid $motion-primary;
-    background: $ui-white;
+    background: $ui-paper;
     border-radius: 0.5rem;
 
     /* Use the same drop shadow as stage dragging */

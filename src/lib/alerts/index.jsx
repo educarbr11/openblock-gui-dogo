@@ -16,7 +16,80 @@ const AlertLevels = {
     WARN: 'warn'
 };
 
+const lanAlertIds = ['lanUnavailable', 'lanInvalidMessage', 'lanInvalidChannel',
+    'lanMessageQueueFull', 'lanActionFailed'];
+
 const alerts = [
+    {
+        alertId: 'lanUnavailable',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="LAN unavailable. Check your network and update DoGoBlock Link/Agent or desktop."
+                description="Local network bridge unavailable or disconnected"
+                id="gui.alerts.lanUnavailable"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 10
+    },
+    {
+        alertId: 'lanInvalidMessage',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="Use a LAN message name of 1-128 characters and a value of up to 1024 characters."
+                description="Invalid LAN message name or value"
+                id="gui.alerts.lanInvalidMessage"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 10
+    },
+    {
+        alertId: 'lanInvalidChannel',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="Choose a LAN channel from 1 to 16."
+                description="LAN channel outside the supported range"
+                id="gui.alerts.lanInvalidChannel"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 10
+    },
+    {
+        alertId: 'lanMessageQueueFull',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="LAN receive queue full. Older messages were discarded. Add a wait between broadcasts."
+                description="LAN receive queue overflow and pacing guidance"
+                id="gui.alerts.lanMessageQueueFull"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 10
+    },
+    {
+        alertId: 'lanActionFailed',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="LAN action failed. Wait briefly between broadcasts and try again."
+                description="LAN send rate or outstanding request limit reached"
+                id="gui.alerts.lanActionFailed"
+            />
+        ),
+        level: AlertLevels.WARN,
+        maxDisplaySecs: 10
+    },
     {
         alertId: 'createSuccess',
         alertType: AlertTypes.STANDARD,
@@ -142,7 +215,7 @@ const alerts = [
     },
     {
         alertId: 'saveSuccess',
-        alertType: AlertTypes.INLINE,
+        alertType: AlertTypes.STANDARD,
         clearList: ['saveSuccess', 'saving', 'savingError'],
         content: (
             <FormattedMessage
@@ -157,7 +230,7 @@ const alerts = [
     },
     {
         alertId: 'saving',
-        alertType: AlertTypes.INLINE,
+        alertType: AlertTypes.STANDARD,
         clearList: ['saveSuccess', 'saving', 'savingError'],
         content: (
             <FormattedMessage

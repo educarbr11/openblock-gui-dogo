@@ -19,6 +19,19 @@ OpenBlock Online: [https://openblockcc.github.io/openblock-gui/develop/](https:/
 
 Visit the wiki: [https://wiki.openblock.cc](https://wiki.openblock.cc)
 
+## Desenvolvimento DoGoBlock
+
+- [Fluxo completo para funcionalidades, blocos e extensões](./docs/development-workflow.md)
+- [Extensão Fingerprint UART (AS608/R307)](./docs/extensions/fingerprint.md)
+
+## Dogoblock assets
+
+- [Fluxo de preparação, upload e cadastro de sprites](./docs/sprite-assets.md)
+
+## Dogoblock app instalável (PWA) e offline
+
+- [App instalável, service worker e compilação offline pelo Agent](./docs/pwa-offline.md)
+
 ## Join chat
 
 - Gitter: [https://gitter.im/openblockcc/community](https://gitter.im/openblockcc/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link)

@@ -1,0 +1,38 @@
+diff --git a/src/index.js b/src/index.js
+index bf5d9ae6..0632c5f2 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -6,19 +6,19 @@ const getFonts = function () {
+     if (FONTS) return FONTS;
+     /* eslint-disable global-require */
+     FONTS = {
+-        'Sans Serif': require('base64-loader!./NotoSans-Medium.ttf'),
+-        'Serif': require('base64-loader!./SourceSerifPro-Regular.otf'),
+-        'Handwriting': require('base64-loader!./handlee-regular.ttf'),
+-        'Marker': require('base64-loader!./Knewave.ttf'),
+-        'Curly': require('base64-loader!./Griffy-Regular.ttf'),
+-        'Pixel': require('base64-loader!./Grand9K-Pixel.ttf'),
+-        'Scratch': require('base64-loader!./Scratch.ttf'),
+-        'Poppins': require('base64-loader!./dogoblock-Poppins-Regular.ttf'),
+-        'Lato': require('base64-loader!./dogoblock-Lato-Regular.ttf'),
+-        'Arvo': require('base64-loader!./dogoblock-Arvo-Regular.ttf'),
+-        'Bangers': require('base64-loader!./dogoblock-Bangers-Regular.ttf'),
+-        'Play': require('base64-loader!./dogoblock-Play-Regular.ttf'),
+-        'Share': require('base64-loader!./dogoblock-Share-Regular.ttf'),
+-        'Space Mono': require('base64-loader!./dogoblock-SpaceMono-Regular.ttf')
++        'Sans Serif': require('!!base64-loader!./NotoSans-Medium.ttf'),
++        'Serif': require('!!base64-loader!./SourceSerifPro-Regular.otf'),
++        'Handwriting': require('!!base64-loader!./handlee-regular.ttf'),
++        'Marker': require('!!base64-loader!./Knewave.ttf'),
++        'Curly': require('!!base64-loader!./Griffy-Regular.ttf'),
++        'Pixel': require('!!base64-loader!./Grand9K-Pixel.ttf'),
++        'Scratch': require('!!base64-loader!./Scratch.ttf'),
++        'Poppins': require('!!base64-loader!./dogoblock-Poppins-Regular.ttf'),
++        'Lato': require('!!base64-loader!./dogoblock-Lato-Regular.ttf'),
++        'Arvo': require('!!base64-loader!./dogoblock-Arvo-Regular.ttf'),
++        'Bangers': require('!!base64-loader!./dogoblock-Bangers-Regular.ttf'),
++        'Play': require('!!base64-loader!./dogoblock-Play-Regular.ttf'),
++        'Share': require('!!base64-loader!./dogoblock-Share-Regular.ttf'),
++        'Space Mono': require('!!base64-loader!./dogoblock-SpaceMono-Regular.ttf')
+     };
+     /* eslint-enable global-require */

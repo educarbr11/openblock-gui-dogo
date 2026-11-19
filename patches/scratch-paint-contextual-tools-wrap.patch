@@ -1,0 +1,53 @@
+diff --git a/src/containers/mode-tools.jsx b/src/containers/mode-tools.jsx
+index 95f85229..eb252a2d 100644
+--- a/src/containers/mode-tools.jsx
++++ b/src/containers/mode-tools.jsx
+@@ -212,6 +212,7 @@ class ModeTools extends React.Component {
+     render () {
+         return (
+             <ModeToolsComponent
++                className={this.props.className}
+                 hasSelectedUncurvedPoints={this.hasSelectedUncurvedPoints()}
+                 hasSelectedUnpointedPoints={this.hasSelectedUnpointedPoints()}
+                 onCopyToClipboard={this.props.onCopyToClipboard}
+@@ -228,6 +229,7 @@ class ModeTools extends React.Component {
+ }
+ 
+ ModeTools.propTypes = {
++    className: PropTypes.string,
+     clearSelectedItems: PropTypes.func.isRequired,
+     format: PropTypes.oneOf(Object.keys(Formats)),
+     mode: PropTypes.oneOf(Object.keys(Modes)),
+diff --git a/src/containers/properties-panel.jsx b/src/containers/properties-panel.jsx
+index 8fa3d555..61b73925 100644
+--- a/src/containers/properties-panel.jsx
++++ b/src/containers/properties-panel.jsx
+@@ -134,7 +134,10 @@ class PropertiesPanel extends React.Component {
+                         </section>
+                         {this.props.canvas && paper.project && paper.project.activeLayer ? (
+                             <section className={styles.section}>
+-                                <ModeTools onUpdateImage={this.props.onUpdateImage} />
++                                <ModeTools
++                                    className={styles.contextualTools}
++                                    onUpdateImage={this.props.onUpdateImage}
++                                />
+                             </section>
+                         ) : null}
+                     </div>
+diff --git a/src/components/paint-editor/properties-panel.css b/src/components/paint-editor/properties-panel.css
+index 11197916..ea3726bc 100644
+--- a/src/components/paint-editor/properties-panel.css
++++ b/src/components/paint-editor/properties-panel.css
+@@ -94,6 +94,12 @@
+     font-size: 0.75rem;
+ }
+ 
++.contextual-tools {
++    width: 100%;
++    flex-wrap: wrap;
++    gap: 4px;
++}
++
+ @media (max-width: 1599px) {
+     .panel.open {
+         position: absolute;

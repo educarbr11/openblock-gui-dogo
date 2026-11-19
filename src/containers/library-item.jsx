@@ -16,44 +16,56 @@ class LibraryItem extends React.PureComponent {
             'handleKeyPress',
             'handleMouseEnter',
             'handleMouseLeave',
+            'handleRemoveResourcePack',
             'handlePlay',
             'handleStop',
+            'finishSelection',
             'rotateIcon',
             'startRotatingIcons',
             'stopRotatingIcons'
         ]);
         this.hasIconsArray = Array.isArray(props.icons);
+        this._isMounted = false;
+        this._selectionPending = false;
         this.state = {
             iconIndex: 0,
             isRotatingIcon: false,
-            isProcessing: false
+            isProcessing: false,
+            selectionError: false
         };
     }
-    componentWillUpdate (newProps) {
-        if (this.props.isLoaded !== newProps.isLoaded) {
-            this.setState({
-                isProcessing: false
-            });
-        }
+    componentDidMount () {
+        this._isMounted = true;
     }
     componentWillUnmount () {
+        this._isMounted = false;
         clearInterval(this.intervalId);
     }
     handleBlur (id) {
         this.handleMouseLeave(id);
     }
     handleClick (e) {
-        if (!this.props.disabled) {
-            if (!this.state.isProcessing) {
-                if (this.props.isUnloadble) {
-                    this.setState({
-                        isProcessing: true
-                    });
-                }
-                this.props.onSelect(this.props.id);
-            }
-        }
         e.preventDefault();
+        if (this.props.disabled || this._selectionPending) return;
+        if (!this.props.isUnloadble) return this.props.onSelect(this.props.id);
+
+        this._selectionPending = true;
+        this.setState({isProcessing: true, selectionError: false});
+        let selection;
+        try {
+            selection = this.props.onSelect(this.props.id);
+        } catch (error) {
+            this.finishSelection(true);
+            return Promise.resolve();
+        }
+        return Promise.resolve(selection).then(
+            () => this.finishSelection(),
+            () => this.finishSelection(true)
+        );
+    }
+    finishSelection (selectionError = false) {
+        this._selectionPending = false;
+        if (this._isMounted) this.setState({isProcessing: false, selectionError});
     }
     handleClickLearnMore (e) {
         e.stopPropagation();
@@ -64,9 +76,9 @@ class LibraryItem extends React.PureComponent {
         }
     }
     handleKeyPress (e) {
+        if (e.target && e.currentTarget && e.target !== e.currentTarget) return;
         if (e.key === ' ' || e.key === 'Enter') {
-            e.preventDefault();
-            this.props.onSelect(this.props.id);
+            return this.handleClick(e);
         }
     }
     handleMouseEnter () {
@@ -91,6 +103,11 @@ class LibraryItem extends React.PureComponent {
                 }, this.stopRotatingIcons);
             }
         }
+    }
+    handleRemoveResourcePack (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.props.onRemoveResourcePack) this.props.onRemoveResourcePack();
     }
     handlePlay () {
         this.props.onMouseEnter(this.props.id);
@@ -148,6 +165,7 @@ class LibraryItem extends React.PureComponent {
                 isUnloadble={this.props.isUnloadble}
                 isPlaying={this.props.isPlaying}
                 isProcessing={this.state.isProcessing}
+                selectionError={this.state.selectionError}
                 learnMore={this.props.learnMore}
                 manufactor={this.props.manufactor}
                 name={this.props.name}
@@ -159,10 +177,12 @@ class LibraryItem extends React.PureComponent {
                 onKeyPress={this.handleKeyPress}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
+                onRemoveResourcePack={this.handleRemoveResourcePack}
                 onPlay={this.handlePlay}
                 onStop={this.handleStop}
                 programMode={this.props.programMode}
                 programLanguage={this.props.programLanguage}
+                resourcePackStatus={this.props.resourcePackStatus}
                 version={this.props.version}
             />
         );
@@ -202,9 +222,14 @@ LibraryItem.propTypes = {
     ]),
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
+    onRemoveResourcePack: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
     programLanguage: PropTypes.arrayOf(PropTypes.string),
     programMode: PropTypes.arrayOf(PropTypes.string),
+    resourcePackStatus: PropTypes.shape({
+        canUse: PropTypes.bool,
+        phase: PropTypes.string
+    }),
     showPlayButton: PropTypes.bool,
     version: PropTypes.string
 };
@@ -214,3 +239,4 @@ LibraryItem.defaultProps = {
 };
 
 export default injectIntl(LibraryItem);
+export {LibraryItem};

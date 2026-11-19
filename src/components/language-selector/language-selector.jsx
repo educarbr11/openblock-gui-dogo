@@ -6,6 +6,11 @@ import styles from './language-selector.css';
 
 // supported languages to exclude from the menu, but allow as a URL option
 const ignore = [];
+const selectableLocales = Object.assign({
+    'pt-br': {
+        name: 'Português (Brasil)'
+    }
+}, locales);
 
 const LanguageSelector = ({currentLocale, label, onChange}) => (
     <select
@@ -15,14 +20,14 @@ const LanguageSelector = ({currentLocale, label, onChange}) => (
         onChange={onChange}
     >
         {
-            Object.keys(locales)
+            Object.keys(selectableLocales)
                 .filter(l => !ignore.includes(l))
                 .map(locale => (
                     <option
                         key={locale}
                         value={locale}
                     >
-                        {locales[locale].name}
+                        {selectableLocales[locale].name}
                     </option>
                 ))
         }
