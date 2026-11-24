@@ -17,6 +17,7 @@ run(process.execPath, ['test/lan-session.test.js'], linkRoot);
 run(process.execPath, [path.join(guiRoot, 'node_modules/jest/bin/jest.js'), '--runInBand', '--silent',
     'test/unit/util/vm-listener-lan.test.jsx',
     'test/unit/containers/gui-lan-lifecycle.test.jsx',
+    'test/unit/containers/blocks-lan-connect.test.jsx',
     'test/unit/containers/extension-library-loading.test.jsx'], guiRoot);
 run(process.execPath, ['scripts/test-lan-e2e.js'], guiRoot);
 if (process.argv.includes('--tauri')) {

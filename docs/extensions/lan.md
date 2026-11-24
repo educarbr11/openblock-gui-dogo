@@ -11,6 +11,11 @@ Não gera código Arduino nem usa o rádio ESP-NOW das placas.
 2. Conecte os computadores à mesma rede e adicione **LAN** na biblioteca de
    extensões do modo palco. A categoria tenta conectar automaticamente; o botão
    **Conectar à LAN** permite tentar novamente.
+   Ao clicar, o editor mostra **Conectando ao serviço LAN local…** e depois
+   confirma a conexão ou orienta como reativar o serviço indisponível. Uma nova
+   tentativa manual volta a exibir o resultado, mesmo se o aviso anterior já
+   tiver desaparecido. A confirmação indica acesso ao serviço local; os outros
+   computadores também precisam usar o mesmo canal e permitir multicast na rede.
 3. Mantenha o mesmo canal nos dois projetos. O padrão é **6**, com opções de
    **1 a 16**. Esses canais são grupos de mensagens; não alteram o canal do Wi-Fi.
 4. No computador receptor, monte:
@@ -99,8 +104,9 @@ npm run build
 
 O runner verifica contrato dos blocos, scheduler real, valores por evento,
 isolamento por canal, timeout/reconexão, suspensão, limpeza, arquivo SB3 real,
-alertas e dois editores/serviços independentes com WebSocket e UDP multicast em
-loopback. A opção `--tauri` inclui os testes do bridge Rust. Esses testes não
+alertas, clique no botão Blockly ao abrir um projeto ou adicionar a extensão,
+e dois editores/serviços independentes com o adaptador WebSocket de produção e
+UDP multicast em loopback. A opção `--tauri` inclui os testes do bridge Rust. Esses testes não
 substituem conferir duas máquinas físicas na rede que será usada em aula.
 
 O protocolo é próprio do DoGoBlock; os blocos foram inspirados na referência

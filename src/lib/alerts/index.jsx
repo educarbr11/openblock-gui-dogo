@@ -16,10 +16,39 @@ const AlertLevels = {
     WARN: 'warn'
 };
 
-const lanAlertIds = ['lanUnavailable', 'lanInvalidMessage', 'lanInvalidChannel',
+const lanAlertIds = ['lanConnecting', 'lanConnected', 'lanUnavailable', 'lanInvalidMessage', 'lanInvalidChannel',
     'lanMessageQueueFull', 'lanActionFailed'];
 
 const alerts = [
+    {
+        alertId: 'lanConnecting',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="Connecting to the local LAN service…"
+                description="Progress after manually connecting the LAN extension"
+                id="gui.alerts.lanConnecting"
+            />
+        ),
+        iconSpinner: true,
+        level: AlertLevels.INFO
+    },
+    {
+        alertId: 'lanConnected',
+        alertType: AlertTypes.STANDARD,
+        clearList: lanAlertIds,
+        content: (
+            <FormattedMessage
+                defaultMessage="LAN service connected. Use the same channel on the other computers."
+                description="Local LAN service connected, with channel matching guidance"
+                id="gui.alerts.lanConnected"
+            />
+        ),
+        iconURL: successImage,
+        level: AlertLevels.SUCCESS,
+        maxDisplaySecs: 5
+    },
     {
         alertId: 'lanUnavailable',
         alertType: AlertTypes.STANDARD,

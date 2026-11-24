@@ -729,6 +729,8 @@
     "gui.menuBar.header.darkTheme": "Tema escuro",
     "gui.menuBar.header.darkThemeHint": "Alterne a aparência do editor entre clara e escura.",
     "gui.extension.lan.description": "Troque mensagens com outros editores na rede local. Requer DoGoBlock Link ou desktop.",
+    "gui.alerts.lanConnecting": "Conectando ao serviço LAN local…",
+    "gui.alerts.lanConnected": "Serviço LAN conectado. Use o mesmo canal nos outros computadores.",
     "gui.alerts.lanUnavailable": "LAN indisponível. Abra ou atualize o DoGoBlock Link/Agent ou o aplicativo desktop e confira sua rede.",
     "gui.alerts.lanInvalidMessage": "Use um nome de mensagem LAN de 1 a 128 caracteres e um valor de até 1024 caracteres.",
     "gui.alerts.lanInvalidChannel": "Escolha um canal LAN de 1 a 16.",

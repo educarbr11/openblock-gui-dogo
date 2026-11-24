@@ -2566,6 +2566,14 @@
     "message": "Exchange messages on your local network. Requires DoGoBlock Link or desktop.",
     "description": "Description of the LAN communication extension for computers"
   },
+  "gui.alerts.lanConnecting": {
+    "message": "Connecting to the local LAN service…",
+    "description": "Progress after manually connecting the LAN extension"
+  },
+  "gui.alerts.lanConnected": {
+    "message": "LAN service connected. Use the same channel on the other computers.",
+    "description": "Local LAN service connected, with channel matching guidance"
+  },
   "gui.alerts.lanUnavailable": {
     "message": "LAN unavailable. Check your network and update DoGoBlock Link/Agent or desktop.",
     "description": "Local network bridge unavailable or disconnected"

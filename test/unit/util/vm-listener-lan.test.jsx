@@ -45,6 +45,53 @@ describe('LAN feedback in the editor', () => {
         expect(alerts()[0].type).toBe('scratch-gui/alerts/SHOW_ALERT');
     });
 
+    test('a manual connection immediately shows progress and then confirms success', () => {
+        vm.runtime.emit('LAN_CONNECT_REQUEST', {manual: true});
+        expect(visibleAlerts()).toHaveLength(1);
+        expect(visibleAlerts()[0].alertId).toBe('lanConnecting');
+        expect(visibleAlerts()[0].iconSpinner).toBe(true);
+
+        vm.emit('LAN_STATUS', {status: 'connected', channel: 6});
+        // The client and extension may both report the successful connection.
+        vm.emit('LAN_STATUS', {status: 'connected', channel: 6});
+        expect(visibleAlerts()).toHaveLength(1);
+        expect(visibleAlerts()[0].alertId).toBe('lanConnected');
+        expect(visibleAlerts()[0].level).toBe('success');
+        jest.runAllTimers();
+        expect(visibleAlerts()).toHaveLength(0);
+    });
+
+    test('a manual retry reports the same failure again after its earlier warning expired', () => {
+        vm.emit('LAN_STATUS', {status: 'error', error: 'LAN bridge unavailable'});
+        jest.runAllTimers();
+        expect(visibleAlerts()).toHaveLength(0);
+
+        vm.runtime.emit('LAN_CONNECT_REQUEST', {manual: true});
+        expect(visibleAlerts()[0].alertId).toBe('lanConnecting');
+        vm.emit('LAN_STATUS', {status: 'error', error: 'LAN bridge unavailable'});
+        expect(visibleAlerts()).toHaveLength(1);
+        expect(visibleAlerts()[0].alertId).toBe('lanUnavailable');
+        expect(shownAlerts().map(action => action.alertId)).toEqual([
+            'lanUnavailable', 'lanConnecting', 'lanUnavailable'
+        ]);
+        vm.emit('LAN_STATUS', {status: 'connecting'});
+        vm.emit('LAN_STATUS', {status: 'error', error: 'LAN bridge unavailable'});
+        expect(shownAlerts()).toHaveLength(3);
+    });
+
+    test('automatic activation stays quiet and suspension clears manual connection progress', () => {
+        vm.runtime.emit('LAN_CONNECT_REQUEST');
+        vm.emit('LAN_STATUS', {status: 'connecting'});
+        vm.emit('LAN_STATUS', {status: 'connected'});
+        expect(shownAlerts()).toHaveLength(0);
+
+        vm.runtime.emit('LAN_CONNECT_REQUEST', {manual: true});
+        vm.emit('LAN_STATUS', {status: 'disconnected'});
+        expect(visibleAlerts()).toHaveLength(0);
+        vm.emit('LAN_STATUS', {status: 'connected'});
+        expect(shownAlerts().map(action => action.alertId)).toEqual(['lanConnecting']);
+    });
+
     test('clears the warning after recovery and reports a new outage', () => {
         vm.emit('LAN_STATUS', {status: 'error'});
         vm.emit('LAN_STATUS', {status: 'connected'});
@@ -60,6 +107,9 @@ describe('LAN feedback in the editor', () => {
         vm.emit('LAN_STATUS', {status: 'error'});
         expect(alerts()).toHaveLength(0);
         expect(vm.listenerCount('LAN_STATUS')).toBe(0);
+        expect(vm.runtime.listenerCount('LAN_CONNECT_REQUEST')).toBe(0);
+        vm.runtime.emit('LAN_CONNECT_REQUEST', {manual: true});
+        expect(shownAlerts()).toHaveLength(0);
     });
 
     test('invalid block arguments show guidance instead of suggesting a Link update', () => {

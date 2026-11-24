@@ -81,7 +81,7 @@ const defaultScratchExtensions = [
     'music'
 ];
 
-class Blocks extends React.Component {
+export class Blocks extends React.Component {
     constructor (props) {
         super(props);
         this.ScratchBlocks = VMScratchBlocks(props.vm);
@@ -163,7 +163,13 @@ class Blocks extends React.Component {
         toolboxWorkspace.registerButtonCallback('MAKE_A_VARIABLE', varListButtonCallback(''));
         toolboxWorkspace.registerButtonCallback('MAKE_A_LIST', varListButtonCallback('list'));
         toolboxWorkspace.registerButtonCallback('MAKE_A_PROCEDURE', procButtonCallback);
-        toolboxWorkspace.registerButtonCallback('LAN_CONNECT', () => this.props.vm.runtime.emit('LAN_CONNECT_REQUEST'));
+        this.workspace.registerButtonCallback('LAN_CONNECT', () =>
+            this.props.vm.runtime.emit('LAN_CONNECT_REQUEST', {manual: true}));
+        // Flyout buttons capture their callback when created during inject.
+        // Rebuild a restored LAN toolbox after registering its callback.
+        if (this.props.toolboxXML && this.props.toolboxXML.includes('LAN_CONNECT')) {
+            this.workspace.updateToolbox(this.props.toolboxXML);
+        }
 
         // Store the xml of the toolbox that is actually rendered.
         // This is used in componentDidUpdate instead of prevProps, because

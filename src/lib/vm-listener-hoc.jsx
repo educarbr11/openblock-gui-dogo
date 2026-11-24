@@ -51,7 +51,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 'handleDeviceAlert',
                 'handleDeviceRealtimeAlert',
                 'handleDeviceRealtimeSuccess',
-                'handleLanStatus'
+                'handleLanStatus',
+                'handleLanConnectRequest'
             ]);
             // We have to start listening to the vm here rather than in
             // componentDidMount because the HOC mounts the wrapped component,
@@ -76,6 +77,7 @@ const vmListenerHOC = function (WrappedComponent) {
             }
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
             this.props.vm.on('LAN_STATUS', this.handleLanStatus);
+            this.props.vm.runtime.on('LAN_CONNECT_REQUEST', this.handleLanConnectRequest);
 
         }
         componentDidMount () {
@@ -121,6 +123,8 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.removeListener('PROJECT_START', this.props.onGreenFlag);
             this.props.vm.removeListener('MIC_LISTENING', this.props.onMicListeningUpdate);
             this.props.vm.removeListener('LAN_STATUS', this.handleLanStatus);
+            this.props.vm.runtime.removeListener('LAN_CONNECT_REQUEST', this.handleLanConnectRequest);
+            if (this.lanAlertId === 'lanConnecting') this.props.onClearLanAlert(this.lanAlertId);
             if (!isTauriLight) {
                 this.props.vm.removeListener('PERIPHERAL_CONNECTION_LOST_ERROR', this.handleDeviceAlert);
                 this.props.vm.removeListener('PERIPHERAL_REALTIME_CONNECTION_LOST_ERROR',
@@ -133,12 +137,28 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.removeEventListener('keyup', this.handleKeyUp);
             }
         }
+        handleLanConnectRequest (request) {
+            if (!request || !request.manual) return;
+            this.lanConnectionRequested = true;
+            this.lanAlertId = 'lanConnecting';
+            this.props.onShowLanAlert(this.lanAlertId);
+        }
         handleLanStatus (state) {
             if (!state) return;
+            if (state.status === 'connected' && this.lanConnectionRequested) {
+                this.lanConnectionRequested = false;
+                this.lanAlertId = 'lanConnected';
+                this.props.onShowLanAlert(this.lanAlertId);
+                return;
+            }
+            // A completed operation can repeat the client's connected notification.
+            if (state.status === 'connected' && this.lanAlertId === 'lanConnected') return;
             if (state.status === 'connected' || state.status === 'disconnected') {
+                this.lanConnectionRequested = false;
                 if (this.lanAlertId) this.props.onClearLanAlert(this.lanAlertId);
                 this.lanAlertId = null;
             } else if (state.status === 'error') {
+                this.lanConnectionRequested = false;
                 const alertId = getLanAlertId(state.error);
                 if (this.lanAlertId === alertId) return;
                 this.lanAlertId = alertId;

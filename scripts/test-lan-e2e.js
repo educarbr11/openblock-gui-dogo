@@ -9,6 +9,7 @@ const path = require('path');
 
 const VirtualMachine = require('../../openblock-vm/src/virtual-machine');
 const Sprite = require('../../openblock-vm/src/sprites/sprite');
+const ScratchLinkWebSocket = require('../../openblock-vm/src/util/scratch-link-websocket');
 const OpenBlockLink = require('../../openblock-link/src');
 const WebSocket = require('../../openblock-link/node_modules/ws');
 const formatMessage = require('../../openblock-vm/node_modules/format-message');
@@ -68,44 +69,31 @@ const startLink = async (udpPort, servers) => {
     return server;
 };
 
-/** Real WebSocket adapter implementing the runtime's ScratchLinkSocket interface. */
-class LocalLanSocket {
-    constructor (port, sockets) {
-        this.port = port;
-        this.sockets = sockets;
-    }
-    setOnOpen (callback) {
-        this.onOpen = callback;
-    }
-    setOnClose (callback) {
-        this.onClose = callback;
-    }
-    setOnError (callback) {
-        this.onError = callback;
-    }
-    setHandleMessage (callback) {
-        this.onMessage = callback;
-    }
-    open () {
-        this.socket = new WebSocket(`ws://127.0.0.1:${this.port}/openblock/lan`, {
-            origin: 'http://localhost:8601'
-        });
-        this.sockets.push(this.socket);
-        this.socket.on('open', this.onOpen);
-        this.socket.on('close', this.onClose);
-        this.socket.on('error', this.onError);
-        this.socket.on('message', bytes => this.onMessage(JSON.parse(bytes.toString())));
-    }
-    sendMessage (message) {
-        this.socket.send(JSON.stringify(message));
-    }
-    close () {
-        if (this.socket) this.socket.close();
-    }
-    isOpen () {
-        return Boolean(this.socket && this.socket.readyState === WebSocket.OPEN);
-    }
-}
+const createLanSocket = (port, sockets) => {
+    const socket = new ScratchLinkWebSocket('LAN');
+    const open = socket.open.bind(socket);
+    socket.open = () => {
+        const previousSocket = global.WebSocket;
+        const previousPort = process.env.OPENBLOCK_LINK_PORT;
+        // Supply browser facilities only while the production adapter creates its socket.
+        global.WebSocket = class extends WebSocket {
+            constructor (url) {
+                super(url, {origin: 'http://localhost:8601'});
+                sockets.push(this);
+            }
+        };
+        process.env.OPENBLOCK_LINK_PORT = String(port);
+        try {
+            open();
+        } finally {
+            if (typeof previousSocket === 'undefined') delete global.WebSocket;
+            else global.WebSocket = previousSocket;
+            if (typeof previousPort === 'undefined') delete process.env.OPENBLOCK_LINK_PORT;
+            else process.env.OPENBLOCK_LINK_PORT = previousPort;
+        }
+    };
+    return socket;
+};
 
 const block = (target, id, opcode, options = {}) => target.blocks.createBlock(Object.assign({
     id, opcode, next: null, parent: null, fields: {}, inputs: {}, shadow: false, topLevel: false
@@ -151,7 +139,7 @@ const makeVm = async (server, entries, sockets) => {
     vm.runtime.on('LAN_STATUS', state => entry.statuses.push(state));
     vm.configureScratchLinkSocketFactory(type => {
         assert.strictEqual(type, 'LAN');
-        return new LocalLanSocket(server.port, sockets);
+        return createLanSocket(server.port, sockets);
     });
     vm.extensionManager.loadExtensionIdSync('lan');
     entry.extension = vm.extensionManager._loadedExtensionInstances.get('lan');
@@ -283,7 +271,8 @@ const main = async () => {
         }
     }
     if (failure) throw failure;
-    console.log('LAN E2E passed: two real VMs, two Link servers, UDP multicast loopback, hats, values and channels.');
+    console.log('LAN E2E passed: production WebSocket adapter, two real VMs, two Link servers, ' +
+        'UDP multicast loopback, hats, values and channels.');
 };
 
 main().catch(error => {
