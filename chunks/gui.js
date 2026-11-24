@@ -5748,10 +5748,10 @@ var pwa_install = __webpack_require__(409);
 var app_state_hoc = __webpack_require__(235);
 
 // EXTERNAL MODULE: ./src/components/browser-modal/browser-modal.jsx
-var browser_modal = __webpack_require__(453);
+var browser_modal = __webpack_require__(454);
 
 // EXTERNAL MODULE: ./src/lib/supported-browser.js
-var supported_browser = __webpack_require__(454);
+var supported_browser = __webpack_require__(455);
 
 // EXTERNAL MODULE: ./src/playground/index.css
 var playground = __webpack_require__(1029);
