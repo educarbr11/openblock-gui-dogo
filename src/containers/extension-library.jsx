@@ -69,17 +69,22 @@ class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
+            'handleRemoveResourcePack',
+            'refreshResourcePackStatuses',
             'updateScratchExtensions',
             'updateDeviceExtensions',
             'handleItemSelect'
         ]);
         this.state = {
             scratchExtensions: [],
-            deviceExtensions: []
+            deviceExtensions: [],
+            resourcePackStatuses: {}
         };
+        this._isMounted = false;
     }
 
     componentDidMount () {
+        this._isMounted = true;
         if (this.props.isRealtimeMode) {
             this.updateScratchExtensions();
         } else {
@@ -87,19 +92,40 @@ class ExtensionLibrary extends React.PureComponent {
         }
     }
 
+    componentWillUnmount () {
+        this._isMounted = false;
+    }
+
     updateScratchExtensions () {
-        this.props.vm.extensionManager.getExtensionsList(Object.assign([], extensionLibraryContent))
+        return this.props.vm.extensionManager.getExtensionsList(Object.assign([], extensionLibraryContent))
             .then(data => {
-                if (data) {
+                if (data && this._isMounted) {
                     this.setState({scratchExtensions: data});
+                    this.refreshResourcePackStatuses(data);
                 }
             });
     }
 
+    refreshResourcePackStatuses (extensions = this.state.scratchExtensions) {
+        if (!this.props.onGetResourcePackStatus) return;
+        const packIds = extensions.map(extension => extension.desktopResourcePackId).filter(Boolean)
+            .filter((packId, index, all) => all.indexOf(packId) === index);
+        Promise.all(packIds.map(packId => this.props.onGetResourcePackStatus(packId)
+            .then(status => ({packId, status}))))
+            .then(results => {
+                const resourcePackStatuses = {};
+                results.forEach(result => {
+                    resourcePackStatuses[result.packId] = result.status;
+                });
+                if (this._isMounted) this.setState({resourcePackStatuses});
+            })
+            .catch(() => {});
+    }
+
     updateDeviceExtensions () {
-        this.props.vm.extensionManager.getDeviceExtensionsList()
+        return this.props.vm.extensionManager.getDeviceExtensionsList()
             .then(data => {
-                if (data) {
+                if (data && this._isMounted) {
                     this.setState({deviceExtensions: data});
                 }
             });
@@ -114,40 +140,43 @@ class ExtensionLibrary extends React.PureComponent {
                 // eslint-disable-next-line no-alert
                 url = prompt(this.props.intl.formatMessage(messages.extensionUrl));
             }
-            if (id && !item.disabled) {
+            const loadOrUnload = () => {
                 if (this.props.vm.extensionManager.isExtensionLoaded(url)) {
                     this.props.vm.extensionManager.unloadExtension(url);
-                    this.updateScratchExtensions();
-                } else {
-                    this.props.vm.extensionManager.loadExtensionURL(url).then(() => {
-                        this.updateScratchExtensions();
-                        analytics.event({
-                            category: 'extensions',
-                            action: 'select extension',
-                            label: id
-                        });
-                    });
+                    return this.updateScratchExtensions();
                 }
+                return this.props.vm.extensionManager.loadExtensionURL(url).then(() => {
+                    analytics.event({
+                        category: 'extensions',
+                        action: 'select extension',
+                        label: id
+                    });
+                    return this.updateScratchExtensions();
+                });
+            };
+            if (id && !item.disabled) {
+                return loadOrUnload();
             }
         } else if (id && !item.disabled) {
             if (this.props.vm.extensionManager.isDeviceExtensionLoaded(id)) {
                 this.props.vm.extensionManager.unloadDeviceExtension(id);
-                this.updateDeviceExtensions();
-            } else {
-                this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
-                    this.updateDeviceExtensions();
-                    analytics.event({
-                        category: 'extensions',
-                        action: 'select device extension',
-                        label: id
-                    });
-                })
-                    .catch(err => {
-                        // TODO add a alet device extension load failed. and change the state to bar to failed state
-                        console.error(err); // eslint-disable-line no-console
-                    });
+                return this.updateDeviceExtensions();
             }
+            return this.props.vm.extensionManager.loadDeviceExtension(id).then(() => {
+                analytics.event({
+                    category: 'extensions',
+                    action: 'select device extension',
+                    label: id
+                });
+                return this.updateDeviceExtensions();
+            });
         }
+    }
+    handleRemoveResourcePack (packId) {
+        if (!this.props.onRemoveResourcePack) return;
+        this.props.onRemoveResourcePack(packId)
+            .then(() => this.refreshResourcePackStatuses())
+            .catch(() => this.refreshResourcePackStatuses());
     }
     render () {
         let extensionLibraryThumbnailData = [];
@@ -160,10 +189,16 @@ class ExtensionLibrary extends React.PureComponent {
             }
             return true;
         })
-            .map(extension => ({
-                rawURL: extension.iconURL || extensionIcon,
-                ...extension
-            }))
+            .map(extension => {
+                const packId = extension.desktopResourcePackId;
+                return {
+                    rawURL: extension.iconURL || extensionIcon,
+                    resourcePackStatus: packId ? this.state.resourcePackStatuses[packId] : null,
+                    handleRemoveResourcePack: packId && this.props.onRemoveResourcePack ?
+                        () => this.handleRemoveResourcePack(packId) : null,
+                    ...extension
+                };
+            })
             .sort((a, b) => {
                 if ((b.isLoaded !== true) && (a.isLoaded === true)) return -1;
                 return 1;
@@ -197,6 +232,8 @@ ExtensionLibrary.propTypes = {
     deviceId: PropTypes.string,
     intl: intlShape.isRequired,
     isRealtimeMode: PropTypes.bool,
+    onGetResourcePackStatus: PropTypes.func,
+    onRemoveResourcePack: PropTypes.func,
     onRequestClose: PropTypes.func,
     visible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired // eslint-disable-line react/no-unused-prop-types
@@ -207,6 +244,8 @@ const mapStateToProps = state => ({
     deviceId: state.scratchGui.device.deviceId,
     isRealtimeMode: state.scratchGui.programMode.isRealtimeMode
 });
+
+export {ExtensionLibrary};
 
 export default compose(
     injectIntl,

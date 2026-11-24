@@ -14,7 +14,7 @@
     padding: 1rem 1rem 0 1rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
-    background: white;
+    background: $ui-paper;
     border-width: 2px;
     border-style: solid;
     border-color: $ui-black-transparent;
@@ -217,8 +217,8 @@
 
 .featured-extension-load-state {
     padding: 0.6rem 0.75rem;
-    background: $ui-black-transparent;
-    color: white;
+    background: var(--editor-disabled-surface, #f5f7fb);
+    color: $text-primary;
     font-weight: 600;
     font-size: 0.85rem;
     border: none;
@@ -228,10 +228,86 @@
 
 .featured-extension-loaded {
     background: $control-primary;
+    color: #33220a;
 }
 
 .featured-extension-loading {
     background: $motion-primary;
+    color: $ui-white;
+}
+
+.resource-pack-row {
+    display: flex;
+    width: 100%;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0.55rem 1.25rem;
+    border-top: 1px solid $ui-black-transparent;
+    background: $ui-paper-dim;
+}
+
+.resource-pack-status {
+    color: $text-primary-transparent;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.resource-pack-status::before {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.4rem;
+    border-radius: 50%;
+    background: $text-primary-transparent;
+    content: "";
+}
+
+.resource-pack-ready {
+    color: var(--editor-success-text, #087f5b);
+}
+
+.resource-pack-ready::before {
+    background: #0ca678;
+}
+
+.resource-pack-update {
+    color: var(--editor-warning-text, #9c5a00);
+}
+
+.resource-pack-update::before {
+    background: #f59f00;
+}
+
+.resource-pack-unavailable {
+    color: var(--editor-error-text, #b42318);
+}
+
+.resource-pack-unavailable::before {
+    background: #d92d20;
+}
+
+.resource-pack-remove {
+    display: flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
+    cursor: pointer;
+}
+
+.resource-pack-remove:hover {
+    background: $ui-black-transparent;
+}
+
+.resource-pack-remove img {
+    width: 1rem;
+    height: 1rem;
 }
 
 .featured-extension-requirement {
@@ -276,7 +352,7 @@
     padding-top: 0.4rem;
     font-weight: bold;
     text-decoration:none;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 .featured-extension-learn-more a:hover {
@@ -295,7 +371,7 @@
     padding-top: 0.4rem;
     font-weight: bold;
     text-decoration:none;
-    color: $motion-primary;
+    color: var(--editor-accent, $motion-primary);
 }
 
 .featured-extension-help-link a:hover{

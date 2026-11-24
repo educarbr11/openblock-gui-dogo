@@ -26,10 +26,12 @@ const ProjectTitleInput = ({
     projectTitle
 }) => (
     <BufferedInput
+        aria-label={intl.formatMessage(messages.projectTitlePlaceholder)}
         className={classNames(styles.titleField, className)}
         maxLength="100"
         placeholder={intl.formatMessage(messages.projectTitlePlaceholder)}
         tabIndex="0"
+        title={projectTitle || intl.formatMessage(messages.projectTitlePlaceholder)}
         type="text"
         value={projectTitle}
         onSubmit={onSubmit}

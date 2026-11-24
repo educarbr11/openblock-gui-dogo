@@ -11,10 +11,11 @@ import {setCodeEditorValue, toggleLock} from '../reducers/code';
 
 import {STAGE_DISPLAY_SIZES} from '../lib/layout-constants.js';
 import {getLanguageFromDeviceType} from '../lib/device';
+import {EditorThemeContext} from '../lib/editor-theme.jsx';
 
 import HardwareComponent from '../components/hardware/hardware.jsx';
 
-class Hardware extends React.Component {
+export class Hardware extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -31,6 +32,14 @@ class Hardware extends React.Component {
             rules: [{background: 'F9F9F9'}],
             colors: {
                 'editor.background': '#F9F9F9'
+            }
+        });
+        monaco.editor.defineTheme('readOnlyDarkTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [{background: '151D2B'}],
+            colors: {
+                'editor.background': '#151D2B'
             }
         });
     }
@@ -62,19 +71,25 @@ class Hardware extends React.Component {
         const {
             ...props
         } = this.props;
+        // react-redux 5 hoists contextType onto Connect, replacing its legacy store context.
         return (
-            <HardwareComponent
-                codeEditorLanguage={codeEditorLanguage}
-                codeEditorOptions={this.props.isCodeEditorLocked ? {readOnly: true} : {readOnly: false}}
-                codeEditorTheme={this.props.isCodeEditorLocked ? 'readOnlyTheme' : 'vs'}
-                codeEditorValue={this.props.codeEditorValue}
-                isCodeEditorLocked={this.props.isCodeEditorLocked}
-                onCodeEditorWillMount={this.handleCodeEditorWillMount}
-                onCodeEditorDidMount={this.handleCodeEditorDidMount}
-                onCodeEditorChange={this.handleCodeEditorChange}
-                onClickCodeEditorLock={this.handleClickCodeEditorLock}
-                {...props}
-            />
+            <EditorThemeContext.Consumer>{({theme}) => {
+                const dark = theme === 'dark';
+                const codeEditorTheme = this.props.isCodeEditorLocked ?
+                    (dark ? 'readOnlyDarkTheme' : 'readOnlyTheme') : (dark ? 'vs-dark' : 'vs');
+                return (<HardwareComponent
+                    codeEditorLanguage={codeEditorLanguage}
+                    codeEditorOptions={this.props.isCodeEditorLocked ? {readOnly: true} : {readOnly: false}}
+                    codeEditorTheme={codeEditorTheme}
+                    codeEditorValue={this.props.codeEditorValue}
+                    isCodeEditorLocked={this.props.isCodeEditorLocked}
+                    onCodeEditorWillMount={this.handleCodeEditorWillMount}
+                    onCodeEditorDidMount={this.handleCodeEditorDidMount}
+                    onCodeEditorChange={this.handleCodeEditorChange}
+                    onClickCodeEditorLock={this.handleClickCodeEditorLock}
+                    {...props}
+                />);
+            }}</EditorThemeContext.Consumer>
         );
     }
 }

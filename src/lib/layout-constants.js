@@ -42,6 +42,11 @@ const STAGE_DISPLAY_SIZES = keyMirror({
     small: null,
 
     /**
+     * Compact stage for mobile landscape
+     */
+    mobileLandscape: null,
+
+    /**
      * hide stage
      */
     hide: null
@@ -54,6 +59,7 @@ const STAGE_DISPLAY_SCALES = {};
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = 1; // large mode, wide browser (standard)
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 0.85; // large mode but narrow browser
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
+STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.mobileLandscape] = 0.85; // mobile landscape stage tab
 
 export default {
     standardStageWidth: 480,

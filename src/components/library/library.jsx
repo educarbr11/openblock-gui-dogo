@@ -123,7 +123,7 @@ class LibraryComponent extends React.Component {
         if (this.props.autoClose) {
             this.handleClose();
         }
-        this.props.onItemSelected(this.getFilteredData()[id]);
+        return this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose () {
         this.props.onRequestClose();
@@ -275,6 +275,7 @@ class LibraryComponent extends React.Component {
                             serialportRequired={dataItem.serialportRequired}
                             programMode={dataItem.programMode}
                             programLanguage={dataItem.programLanguage}
+                            resourcePackStatus={dataItem.resourcePackStatus}
                             collaborator={dataItem.collaborator}
                             description={dataItem.description}
                             disabled={dataItem.disabled}
@@ -300,6 +301,7 @@ class LibraryComponent extends React.Component {
                             showPlayButton={this.props.showPlayButton}
                             onMouseEnter={this.handleMouseEnter}
                             onMouseLeave={this.handleMouseLeave}
+                            onRemoveResourcePack={dataItem.handleRemoveResourcePack}
                             onSelect={this.handleSelect}
                             version={dataItem.version}
                         />);
@@ -355,3 +357,4 @@ LibraryComponent.defaultProps = {
 };
 
 export default injectIntl(LibraryComponent);
+export {LibraryComponent};

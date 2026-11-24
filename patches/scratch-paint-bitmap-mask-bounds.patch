@@ -1,0 +1,37 @@
+diff --git a/src/helper/bitmap.js b/src/helper/bitmap.js
+--- a/src/helper/bitmap.js
++++ b/src/helper/bitmap.js
+@@ -404,6 +404,11 @@
+     return trimmedRaster;
+ };
+ 
++const resizeMask = (item, width, height) => {
++    item.bounds = new paper.Rectangle(
++        CENTER.x - (width / 2), CENTER.y - (height / 2), width, height);
++};
++
+ const convertToBitmap = function (clearSelectedItems, onUpdateImage, optFontInlineFn) {
+     // @todo if the active layer contains only rasters, drawing them directly to the raster layer
+     // would be more efficient.
+@@ -444,9 +449,7 @@
+                 item.remove();
+             } else {
+                 // Resize mask for bitmap bounds
+-                item.size.height = ART_BOARD_HEIGHT;
+-                item.size.width = ART_BOARD_WIDTH;
+-                item.setPosition(CENTER);
++                resizeMask(item, ART_BOARD_WIDTH, ART_BOARD_HEIGHT);
+             }
+         }
+         onUpdateImage(false /* skipSnapshot */, Formats.BITMAP /* formatOverride */);
+@@ -472,9 +475,7 @@
+     for (const item of paper.project.activeLayer.children) {
+         if (item.clipMask === true) {
+             // Resize mask for vector bounds
+-            item.size.height = MAX_WORKSPACE_BOUNDS.height;
+-            item.size.width = MAX_WORKSPACE_BOUNDS.width;
+-            item.setPosition(CENTER);
++            resizeMask(item, MAX_WORKSPACE_BOUNDS.width, MAX_WORKSPACE_BOUNDS.height);
+         }
+     }
+     getTrimmedRaster(true /* shouldInsert */);

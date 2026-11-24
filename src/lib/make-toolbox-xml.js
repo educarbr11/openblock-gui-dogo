@@ -351,6 +351,8 @@ const events = function (isInitialSetup, isStage) {
         <block type="event_whenflagclicked"/>
         <block type="event_whenkeypressed">
         </block>
+        <block type="event_whenkeyreleased">
+        </block>
         ${isStage ? `
             <block type="event_whenstageclicked"/>
         ` : `
@@ -776,7 +778,7 @@ const makeToolboxXML = function (isInitialSetup, device = null, isStage = true, 
     if (device && !isRealtimeMode) {
         eventsXML = `
         <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="#FFD500" secondaryColour="#CC9900">
-            ${eventBlock[device.type]}
+            ${eventBlock[device.type] || ''}
             ${categorySeparator}
         </category>
     `;

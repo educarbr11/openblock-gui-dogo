@@ -1,18 +1,21 @@
-$ui-primary: hsla(215, 100%, 95%, 1); /* #E5F0FF */
-$ui-secondary: hsla(215, 75%, 95%, 1); /* #E9F1FC */
-$ui-tertiary: hsla(215, 50%, 90%, 1); /* #D9E3F2 */
+$ui-primary: var(--editor-background, hsla(215, 100%, 95%, 1)); /* #E5F0FF */
+$ui-secondary: var(--editor-panel, hsla(215, 75%, 95%, 1)); /* #E9F1FC */
+$ui-tertiary: var(--editor-surface-raised, hsla(215, 50%, 90%, 1)); /* #D9E3F2 */
 
-$ui-modal-overlay: hsla(215, 100%, 65%, 0.9); /* 90% transparent version of motion-primary */
+$ui-modal-overlay: var(--editor-overlay, hsla(215, 100%, 65%, 0.9));
+
+$ui-paper: var(--editor-surface, #fff);
+$ui-paper-dim: var(--editor-surface-dim, hsla(0, 100%, 100%, 0.75));
 
 $ui-white: hsla(0, 100%, 100%, 1); /* #FFFFFF */
 $ui-white-dim: hsla(0, 100%, 100%, 0.75); /* 25% transparent version of ui-white */
 $ui-white-transparent: hsla(0, 100%, 100%, 0.25); /* 25% transparent version of ui-white */
 $ui-transparent: hsla(0, 100%, 100%, 0); /* 25% transparent version of ui-white */
 
-$ui-black-transparent: hsla(0, 0%, 0%, 0.15); /* 15% transparent version of black */
+$ui-black-transparent: var(--editor-border, hsla(0, 0%, 0%, 0.15));
 
-$text-primary: hsla(225, 15%, 40%, 1); /* #575E75 */
-$text-primary-transparent: hsla(225, 15%, 40%, 0.75);
+$text-primary: var(--editor-text, hsla(225, 15%, 40%, 1)); /* #575E75 */
+$text-primary-transparent: var(--editor-text-muted, hsla(225, 15%, 40%, 0.75));
 
 $motion-primary: hsl(225.6, 60.98%, 32.16%); /* #203884 */
 $motion-tertiary: hsla(215, 60%, 50%, 1); /* #3373CC */

@@ -1,0 +1,71 @@
+/* Blockly keeps its workspace and block palette intact while these surfaces repaint. */
+:global([data-editor-theme="dark"] .blocklySvg) {
+    background-color: var(--editor-workspace, #151d2b);
+}
+
+/* Keep blocklyMainBackground's fill URL so the existing grid remains visible. */
+:global([data-editor-theme="dark"] pattern[id^="blocklyGridPattern"] line) {
+    stroke: var(--editor-grid, #344256);
+}
+
+:global([data-editor-theme="dark"] .blocklyFlyoutBackground) {
+    fill: var(--editor-surface, #202c3d);
+    fill-opacity: 1;
+}
+
+:global([data-editor-theme="dark"] .blocklyToolboxDiv),
+:global([data-editor-theme="dark"] .scratchCategoryMenu),
+:global([data-editor-theme="dark"] .scratchCategoryMenuHorizontal) {
+    background-color: var(--editor-surface, #202c3d);
+    color: var(--editor-text-muted, #afbed2);
+    border-color: var(--editor-border, #41516a);
+}
+
+:global([data-editor-theme="dark"] .scratchCategoryMenuItem.categorySelected) {
+    background-color: var(--editor-surface-raised, #29374b);
+    color: var(--editor-text, #e5ecf6);
+}
+
+:global([data-editor-theme="dark"] .scratchCategoryMenuItem:hover) {
+    color: var(--editor-accent, #9dbbff) !important;
+}
+
+:global([data-editor-theme="dark"] .blocklyFlyoutLabelText),
+:global([data-editor-theme="dark"] .blocklyFlyoutButton .blocklyText) {
+    fill: var(--editor-text, #e5ecf6);
+}
+
+:global([data-editor-theme="dark"] .blocklyFlyoutButtonBackground) {
+    fill: var(--editor-surface-raised, #29374b);
+    stroke: var(--editor-border, #41516a);
+}
+
+:global([data-editor-theme="dark"] .blocklyScrollbarHandle),
+:global([data-editor-theme="dark"] .blocklyFlyout .blocklyScrollbarHandle) {
+    fill: var(--editor-border, #41516a);
+}
+
+:global([data-editor-theme="dark"] .blocklyScrollbarHandle:hover),
+:global([data-editor-theme="dark"] .blocklyScrollbarBackground:hover + .blocklyScrollbarHandle) {
+    fill: var(--editor-text-muted, #afbed2);
+}
+
+/* Blockly's neutral menus and reports are portals attached to document.body. */
+:global([data-editor-theme="dark"] .blocklyWidgetDiv .goog-menu),
+:global([data-editor-theme="dark"] .blocklyTooltipDiv),
+:global([data-editor-theme="dark"] .valueReportBox) {
+    background-color: var(--editor-surface-raised, #29374b);
+    border-color: var(--editor-border, #41516a);
+    color: var(--editor-text, #e5ecf6);
+}
+
+:global([data-editor-theme="dark"] .blocklyWidgetDiv .goog-menuitem),
+:global([data-editor-theme="dark"] .blocklyWidgetDiv .goog-menuitem-content) {
+    color: var(--editor-text, #e5ecf6);
+}
+
+:global([data-editor-theme="dark"] .blocklyWidgetDiv .goog-menuitem-highlight),
+:global([data-editor-theme="dark"] .blocklyWidgetDiv .goog-menuitem-hover) {
+    background-color: var(--editor-surface, #202c3d);
+    border-color: var(--editor-accent, #9dbbff);
+}

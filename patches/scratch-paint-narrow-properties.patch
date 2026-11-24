@@ -1,0 +1,19 @@
+diff --git a/src/components/paint-editor/properties-panel.css b/src/components/paint-editor/properties-panel.css
+--- a/src/components/paint-editor/properties-panel.css
++++ b/src/components/paint-editor/properties-panel.css
+@@ -107,7 +107,13 @@
+ }
+ 
+ @media (max-width: 960px) {
+-    .panel {
+-        display: none;
++    .panel.open {
++        max-width: calc(100% - 44px);
+     }
++    .color-row > div {
++        margin-top: 0;
++    }
++    .color-row label {
++        margin-top: 0;
++    }
+ }
